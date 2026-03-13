@@ -35,3 +35,20 @@ export const env = schema.parse({
   VNPAY_RETURN_URL: process.env.VNPAY_RETURN_URL,
   VNPAY_IPN_URL: process.env.VNPAY_IPN_URL,
 });
+
+
+export const profileSchema = z.object({
+  fullName: z.string().trim().min(2),
+  phone: z.string().trim().min(8).max(15),
+  email: z.string().trim().email(),
+  username: z
+    .string()
+    .trim()
+    .min(3)
+    .max(30)
+    .regex(/^[a-zA-Z0-9._-]+$/)
+    .optional()
+    .nullable(),
+  address: z.string().trim().min(5),
+  password: z.string().min(8),
+});

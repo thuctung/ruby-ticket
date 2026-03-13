@@ -86,12 +86,13 @@ export default function RegisterPage() {
           password: parsed.data.password,
         }),
       });
-
       const json = (await res.json()) as {
         ok: boolean;
         error?: string;
         message?: string;
       };
+
+      console.log('res',json)
 
       if (!res.ok || !json.ok) {
         setError(json.message ?? "Đăng ký thất bại");

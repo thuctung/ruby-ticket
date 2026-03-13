@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import {  useMemo,  } from "react";
 
 import { useLang } from "@/lib/useLang";
 
@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Avatar,
   AvatarFallback,
-  AvatarImage,
 } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -23,61 +22,19 @@ import { LANGS, type LangKey, setLang } from "@/lib/i18n";
 import { t } from "@/lib/i18n/t";
 import { Languages } from "lucide-react";
 
-import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { useProfileStore } from "@/stores/useProfileStore";
+import { ProfileType } from "@/types/profile";
 
-// Demo login helpers removed; now uses Supabase Auth session.
-
-type UserType = {
-  id: string;
-  email?: string;
-  name: string;
-  avatarUrl?: string;
-}
-
+import { ROLES } from "@/commons/constant";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-  const [user, setUser] = useState<UserType| any>(null);
-  const [profileRole, setProfileRole] = useState<string | null>(null);
-  const [profileName, setProfileName] = useState<string | null>(null);
+  const router = useRouter();
   const lang = useLang();
 
-  useEffect(() => {
-    const supabase = createSupabaseBrowserClient();
+  const profile: ProfileType = useProfileStore((state: any) => state.profile);
 
-    const load = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user ||  null);
-
-      if (user) {
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("role,full_name")
-          .eq("user_id", user.id)
-          .maybeSingle();
-
-        const p = profile as { role?: string | null; full_name?: string | null } | null;
-        setProfileRole(p?.role ?? null);
-        setProfileName(p?.full_name ?? null);
-      } else {
-        setProfileRole(null);
-        setProfileName(null);
-      }
-    };
-
-    load();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      load();
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  const { logout }: any = useProfileStore.getState();
 
   const langLabel = useMemo(() => {
     const map: Record<LangKey, string> = {
@@ -88,13 +45,18 @@ export default function Header() {
     };
     return map[lang] ?? t(lang, "lang.vi");
   }, [lang]);
-  const displayName = profileName ?? user?.user_metadata?.full_name ?? user?.email ?? "User";
+  const displayName = profile ? profile.username : "User";
 
   const initials = (() => {
     const base = displayName ?? "U";
     const parts = base.trim().split(/\s+/).slice(0, 2);
-    return parts.map((p:any) => p[0]?.toUpperCase()).join("");
+    return parts.map((p: any) => p[0]?.toUpperCase()).join("");
   })();
+
+  const handleLogout = () => {
+    logout()
+    router.push('/');
+  }
 
   return (
     <header className="border-b bg-background/70 backdrop-blur">
@@ -159,7 +121,7 @@ export default function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {!user ? (
+          {!profile.user_id ? (
             <Button asChild>
               <Link href="/login">{t(lang, "auth.login")}</Link>
             </Button>
@@ -172,7 +134,6 @@ export default function Header() {
                   aria-label="User menu"
                 >
                   <Avatar className="h-8 w-8">
-                    {user.avatarUrl ? <AvatarImage src={user.avatarUrl} /> : null}
                     <AvatarFallback>{initials}</AvatarFallback>
                   </Avatar>
                   <span className="hidden text-sm font-medium md:inline">
@@ -183,23 +144,23 @@ export default function Header() {
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>
                   <div className="space-y-1">
-                    <div className="text-sm font-medium">{user.name}</div>
+                    <div className="text-sm font-medium">{profile.username}</div>
                     <div className="text-xs text-muted-foreground">
-                      {profileRole === "admin"
+                      {profile.role === ROLES.ADMIN
                         ? "Admin"
-                        : profileRole === "affiliate"
+                        : profile.role === ROLES.AFFILIATE
                           ? "Affiliate"
                           : t(lang, "auth.user")}
-                      {user?.email ? ` • ${user.email}` : ""}
+                      {profile?.email ? ` • ${profile.email}` : ""}
                     </div>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {profileRole === "admin" ? (
+                {profile.role === ROLES.ADMIN ? (
                   <DropdownMenuItem asChild>
                     <Link href="/admin">Admin Dashboard</Link>
                   </DropdownMenuItem>
-                ) : profileRole === "affiliate" ? (
+                ) : profile.role === ROLES.AFFILIATE ? (
                   <DropdownMenuItem asChild>
                     <Link href="/affiliate">Affiliate Dashboard</Link>
                   </DropdownMenuItem>
@@ -215,13 +176,7 @@ export default function Header() {
                 )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onSelect={async () => {
-                    const supabase = createSupabaseBrowserClient();
-                    await supabase.auth.signOut();
-                    setUser(null);
-                    setProfileRole(null);
-                    setProfileName(null);
-                  }}
+                  onSelect={handleLogout}
                 >
                   {t(lang, "auth.logout")}
                 </DropdownMenuItem>

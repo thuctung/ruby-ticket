@@ -30,7 +30,6 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    console.log('parsed',parsed)
     const { fullName, phone, email, username, address, password } = parsed.data;
 
     // Create user
@@ -49,7 +48,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
+    console.log('user',created)
     const user = created.user;
     if (!user) {
       return NextResponse.json(
@@ -59,6 +58,7 @@ export async function POST(req: Request) {
     }
 
     // Insert profile (service role bypasses RLS)
+    console.log( fullName, phone, email, username, address, password)
     const { error: profileErr } = await supabaseAdmin.from("profiles").insert({
       user_id: user.id,
       email,
