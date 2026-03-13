@@ -1,0 +1,201 @@
+{
+  "brand": {
+    "name": "Ruby Travel",
+    "tagline": "Da Nang travel tickets — QR via email"
+  },
+  "nav": {
+    "experiences": "Experiences",
+    "how": "How it works",
+    "affiliate": "Affiliate",
+    "faq": "FAQ"
+  },
+  "cta": {
+    "viewExperiences": "View experiences",
+    "buy": "Buy tickets",
+    "buyNow": "Buy now",
+    "goToCheckout": "Go to checkout",
+    "chooseDateBuy": "Choose date & buy",
+    "backHome": "Back to home",
+    "loginSignup": "Log in / Sign up",
+    "viewQuestions": "View questions"
+  },
+  "lang": {
+    "label": "Language",
+    "vi": "Vietnamese",
+    "en": "English",
+    "zh": "Chinese",
+    "ko": "Korean"
+  },
+  "auth": {
+    "login": "Log in",
+    "logout": "Log out",
+    "user": "User",
+    "agent": "Agent",
+    "loginDemoTitle": "Log in (demo UI)",
+    "loginDemoDesc": "This is a demo login to show the avatar in the header. Once Supabase Auth is ready, we’ll switch to real authentication.",
+    "name": "Name",
+    "email": "Email",
+    "loginUser": "Login User",
+    "loginAgent": "Login Agent"
+  },
+  "hero": {
+    "pill": "MVP in progress — VNPAY first, QR via email",
+    "title1": "Explore Da Nang",
+    "title2": "book fast, travel easy",
+    "desc": "Pick a date (from today onward) and choose experiences like Ba Na Hills, Vinpearl, Hoi An Memories, Nui Than Tai or a Han River cruise. Pay with VNPAY and receive a QR ticket via email.",
+    "cardTitle": "Today’s picks",
+    "cardDesc": "Recommended experiences",
+    "city": "Da Nang",
+    "miniPill": "Pay with VNPAY • Receive QR via email"
+  },
+  "home": {
+    "feature": {
+      "noLogin": {
+        "title": "No login required",
+        "desc": "Email + phone is enough"
+      },
+      "instantQR": {
+        "title": "Instant QR",
+        "desc": "Email delivery after payment"
+      }
+    },
+    "highlights": {
+      "fast": {
+        "title": "Fast booking",
+        "desc": "Pick a date, choose tickets, pay with VNPAY. No login needed."
+      },
+      "qr": {
+        "title": "QR via email",
+        "desc": "After successful payment, your QR ticket is sent to email automatically."
+      },
+      "pricing": {
+        "title": "Flexible pricing",
+        "desc": "Base/promo pricing by events, with Central Vietnam option."
+      },
+      "agent": {
+        "title": "Agents",
+        "desc": "Sign up → admin approval → top up wallet → issue tickets faster."
+      }
+    }
+  },
+  "section": {
+    "experiences": {
+      "title": "Featured experiences",
+      "desc": "Generic demo content. We’ll update with real info/prices later.",
+      "priceFrom": "From"
+    },
+    "how": {
+      "title": "How it works",
+      "desc": "A minimal flow to get your tickets fast.",
+      "ctaTitle": "Ready to book?",
+      "ctaDesc": "Choose a date, enter details, pay with VNPAY, get QR."
+    },
+    "faq": {
+      "title": "FAQ",
+      "desc": "Frequently asked questions (demo)",
+      "items": {
+        "needAccount": {
+          "q": "Do I need an account to buy tickets?",
+          "a": "No. Email + phone is enough to receive the QR ticket."
+        },
+        "chooseDate": {
+          "q": "How do I choose a travel date?",
+          "a": "Select a date from today onward. Some tickets may be limited by events/programs."
+        },
+        "payment": {
+          "q": "Which payment methods are supported?",
+          "a": "MVP integrates VNPAY first. MoMo can be added later if needed."
+        },
+        "agent": {
+          "q": "How do agents buy tickets?",
+          "a": "Agents need admin approval and a prepaid wallet. Tickets are issued quickly after wallet deduction."
+        }
+      }
+    },
+    "affiliate": {
+      "title": "Affiliate",
+      "desc": "Create an account → apply as affiliate → admin approval → (agents) top up wallet to issue tickets faster.",
+      "cards": {
+        "sell": {
+          "title": "For ticket sellers",
+          "desc": "A dedicated page for orders & sales tracking (coming soon)."
+        },
+        "wallet": {
+          "title": "Agent wallet",
+          "desc": "Prepaid wallet for agents; wallet is deducted when issuing tickets (MVP).",
+          "note": "Note: we’ll connect Supabase + VNPAY topup later."
+        }
+      }
+    }
+  },
+  "checkout": {
+    "title": "Checkout",
+    "subtitle": "No login needed. Enter details and pay with VNPAY.",
+    "switcher": {
+      "title": "Choose destination"
+    },
+    "form": {
+      "title": "Ticket details",
+      "vnpay": "VNPAY",
+      "date": "Travel date",
+      "destination": "Destination",
+      "ticketType": "Ticket type",
+      "qtyTitle": "Quantity",
+      "qtyDesc": "Enter quantities by passenger type (if applicable)",
+      "centralTitle": "Central Vietnam resident",
+      "centralDesc": "Tick if eligible for Central Vietnam pricing/promo",
+      "email": "Email (QR delivery)",
+      "phone": "Phone number",
+      "note": "Note (optional)",
+      "notePlaceholder": "Example: invoice request, arrival time notes...",
+      "pay": "Pay with VNPAY",
+      "pax": {
+        "adult": "Adult",
+        "senior": "Senior",
+        "child": "Child"
+      }
+    },
+    "summary": {
+      "title": "Summary",
+      "destination": "Destination",
+      "date": "Date",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "total": "Total"
+    }
+  },
+  "product": {
+    "bana": {
+      "name": "Ba Na Hills",
+      "tagline": "Cable car • Golden Bridge • theme park",
+      "badge": "Top",
+      "ticket": {
+        "cap": "Cable-car ticket",
+        "combo": "Combo"
+      }
+    },
+    "vinpearl": {
+      "name": "Vinpearl",
+      "tagline": "Resort & entertainment",
+      "badge": "Hot"
+    },
+    "hoian": {
+      "name": "Hoi An Memories",
+      "tagline": "A must-see evening show",
+      "badge": "Must-see"
+    },
+    "nuiThanTai": {
+      "name": "Nui Than Tai",
+      "tagline": "Hot springs • day retreat",
+      "badge": "Relax"
+    },
+    "cruise": {
+      "name": "Cruise ticket",
+      "tagline": "Han River • night city views",
+      "badge": "Chill"
+    }
+  },
+  "footer": {
+    "powered": "Powered by Next.js • Supabase • VNPAY • Resend"
+  }
+}

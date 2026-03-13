@@ -1,0 +1,201 @@
+{
+  "brand": {
+    "name": "Ruby Travel",
+    "tagline": "岘港旅游门票 — 邮件发送二维码"
+  },
+  "nav": {
+    "experiences": "体验",
+    "how": "使用方式",
+    "affiliate": "分销合作",
+    "faq": "常见问题"
+  },
+  "cta": {
+    "viewExperiences": "查看体验",
+    "buy": "购买门票",
+    "buyNow": "立即购买",
+    "goToCheckout": "前往购买",
+    "chooseDateBuy": "选择日期并购买",
+    "backHome": "返回首页",
+    "loginSignup": "登录 / 注册",
+    "viewQuestions": "查看问题"
+  },
+  "lang": {
+    "label": "语言",
+    "vi": "越南语",
+    "en": "英语",
+    "zh": "中文",
+    "ko": "韩语"
+  },
+  "auth": {
+    "login": "登录",
+    "logout": "退出登录",
+    "user": "用户",
+    "agent": "代理",
+    "loginDemoTitle": "登录（演示）",
+    "loginDemoDesc": "这是演示登录，用于在顶部显示头像。Supabase Auth 准备好后将切换为正式登录。",
+    "name": "姓名",
+    "email": "邮箱",
+    "loginUser": "登录用户",
+    "loginAgent": "登录代理"
+  },
+  "hero": {
+    "pill": "MVP 开发中 — 先接入 VNPAY，邮件发送二维码",
+    "title1": "畅游岘港",
+    "title2": "快速订票，轻松出行",
+    "desc": "选择出行日期（从今天起），并选择巴拿山、Vinpearl、会安记忆、神财山或韩江游船等体验。通过 VNPAY 支付，二维码门票将发送到邮箱。",
+    "cardTitle": "今日推荐",
+    "cardDesc": "精选体验",
+    "city": "岘港",
+    "miniPill": "VNPAY 支付 • 邮箱收二维码"
+  },
+  "home": {
+    "feature": {
+      "noLogin": {
+        "title": "无需登录",
+        "desc": "邮箱 + 手机号即可"
+      },
+      "instantQR": {
+        "title": "二维码秒到",
+        "desc": "支付后自动邮件发送"
+      }
+    },
+    "highlights": {
+      "fast": {
+        "title": "快速订票",
+        "desc": "选日期、选门票、VNPAY 支付，无需登录。"
+      },
+      "qr": {
+        "title": "邮件收二维码",
+        "desc": "支付成功后，二维码门票会自动发送到邮箱。"
+      },
+      "pricing": {
+        "title": "灵活定价",
+        "desc": "活动期间支持基础价/促销价，并可选择中部地区优惠。"
+      },
+      "agent": {
+        "title": "代理",
+        "desc": "注册 → 审核 → 预充值钱包 → 更快出票。"
+      }
+    }
+  },
+  "section": {
+    "experiences": {
+      "title": "热门体验",
+      "desc": "当前为演示内容，后续会更新真实信息与价格。",
+      "priceFrom": "起价"
+    },
+    "how": {
+      "title": "使用方式",
+      "desc": "简单流程，快速拿到门票。",
+      "ctaTitle": "准备好订票了吗？",
+      "ctaDesc": "选日期、填信息、VNPAY 支付、邮箱收二维码。"
+    },
+    "faq": {
+      "title": "常见问题",
+      "desc": "常见问题（演示）",
+      "items": {
+        "needAccount": {
+          "q": "需要注册账号才能买票吗？",
+          "a": "不需要。邮箱 + 手机号即可接收二维码门票。"
+        },
+        "chooseDate": {
+          "q": "如何选择出行日期？",
+          "a": "选择今天起的日期。部分门票可能受活动/项目限制。"
+        },
+        "payment": {
+          "q": "支持哪些支付方式？",
+          "a": "MVP 先接入 VNPAY，如有需要后续可增加 MoMo。"
+        },
+        "agent": {
+          "q": "代理如何购票？",
+          "a": "代理需管理员审核并使用预充值钱包，扣款后可快速出票。"
+        }
+      }
+    },
+    "affiliate": {
+      "title": "分销合作",
+      "desc": "注册账号 → 申请分销合作 → 管理员审核 →（代理）先充值钱包以便更快出票。",
+      "cards": {
+        "sell": {
+          "title": "适合卖票的人",
+          "desc": "后续将提供订单与销售数据页面（敬请期待）。"
+        },
+        "wallet": {
+          "title": "代理钱包",
+          "desc": "代理先充值钱包，出票时从钱包扣款（MVP）。",
+          "note": "提示：后续将接入 Supabase + VNPAY 充值。"
+        }
+      }
+    }
+  },
+  "checkout": {
+    "title": "购买门票",
+    "subtitle": "无需登录。填写信息并使用 VNPAY 支付。",
+    "switcher": {
+      "title": "选择目的地"
+    },
+    "form": {
+      "title": "购票信息",
+      "vnpay": "VNPAY",
+      "date": "出行日期",
+      "destination": "目的地",
+      "ticketType": "票种",
+      "qtyTitle": "数量",
+      "qtyDesc": "按人群类型填写数量（如适用）",
+      "centralTitle": "中部地区居民",
+      "centralDesc": "符合中部地区优惠/促销请勾选",
+      "email": "邮箱（接收二维码）",
+      "phone": "手机号",
+      "note": "备注（可选）",
+      "notePlaceholder": "例如：发票需求、到达时间说明...",
+      "pay": "VNPAY 支付",
+      "pax": {
+        "adult": "成人",
+        "senior": "老人",
+        "child": "儿童"
+      }
+    },
+    "summary": {
+      "title": "汇总",
+      "destination": "目的地",
+      "date": "日期",
+      "subtotal": "小计",
+      "discount": "优惠",
+      "total": "合计"
+    }
+  },
+  "product": {
+    "bana": {
+      "name": "巴拿山",
+      "tagline": "缆车 • 金桥 • 乐园",
+      "badge": "Top",
+      "ticket": {
+        "cap": "缆车票",
+        "combo": "套票"
+      }
+    },
+    "vinpearl": {
+      "name": "Vinpearl",
+      "tagline": "度假 & 娱乐体验",
+      "badge": "Hot"
+    },
+    "hoian": {
+      "name": "会安记忆",
+      "tagline": "值得一看的夜间演出",
+      "badge": "必看"
+    },
+    "nuiThanTai": {
+      "name": "神财山",
+      "tagline": "温泉 • 一日度假",
+      "badge": "放松"
+    },
+    "cruise": {
+      "name": "游船票",
+      "tagline": "韩江 • 夜景观光",
+      "badge": "Chill"
+    }
+  },
+  "footer": {
+    "powered": "Powered by Next.js • Supabase • VNPAY • Resend"
+  }
+}

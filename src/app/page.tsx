@@ -1,293 +1,358 @@
-const features = [
-  {
-    title: "Mua vé nhanh trong 1 phút",
-    desc: "Chọn ngày đi, chọn loại vé, nhập email + SĐT, thanh toán VNPAY là xong.",
-  },
-  {
-    title: "Nhận mã vé QR qua email",
-    desc: "Sau khi thanh toán thành công, hệ thống phát hành vé và gửi QR tự động.",
-  },
-  {
-    title: "Đại lý (Agent) nạp ví trước",
-    desc: "Agent được admin duyệt, nạp tiền ví để xuất vé nhanh cho khách.",
-  },
-  {
-    title: "Giá linh hoạt theo sự kiện",
-    desc: "Admin cập nhật giá chính/khuyến mãi, hỗ trợ checkbox “người miền Trung”.",
-  },
-];
+"use client";
 
-const sampleTickets = [
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import Header from "@/components/site/Header";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { t } from "@/lib/i18n/t";
+import { useLang } from "@/lib/useLang";
+
+const highlights = [
   {
-    name: "Combo Vé",
-    badge: "Phổ biến",
-    items: ["Người lớn", "Người già", "Trẻ em"],
+    titleKey: "home.highlights.fast.title",
+    descKey: "home.highlights.fast.desc",
   },
   {
-    name: "Vé Cáp",
-    badge: "Tiện lợi",
-    items: ["Người lớn", "Người già", "Trẻ em"],
+    titleKey: "home.highlights.qr.title",
+    descKey: "home.highlights.qr.desc",
   },
-];
+  {
+    titleKey: "home.highlights.pricing.title",
+    descKey: "home.highlights.pricing.desc",
+  },
+  {
+    titleKey: "home.highlights.agent.title",
+    descKey: "home.highlights.agent.desc",
+  },
+] as const;
+
+const danangExperiences = [
+  {
+    key: "bana",
+    nameKey: "product.bana.name",
+    taglineKey: "product.bana.tagline",
+    badgeKey: "product.bana.badge",
+  },
+  {
+    key: "vinpearl",
+    nameKey: "product.vinpearl.name",
+    taglineKey: "product.vinpearl.tagline",
+    badgeKey: "product.vinpearl.badge",
+  },
+  {
+    key: "hoian-memories",
+    nameKey: "product.hoian.name",
+    taglineKey: "product.hoian.tagline",
+    badgeKey: "product.hoian.badge",
+  },
+  {
+    key: "nui-than-tai",
+    nameKey: "product.nuiThanTai.name",
+    taglineKey: "product.nuiThanTai.tagline",
+    badgeKey: "product.nuiThanTai.badge",
+  },
+  {
+    key: "cruise",
+    nameKey: "product.cruise.name",
+    taglineKey: "product.cruise.tagline",
+    badgeKey: "product.cruise.badge",
+  },
+] as const;
+
+const faqs = [
+  {
+    qKey: "section.faq.items.needAccount.q",
+    aKey: "section.faq.items.needAccount.a",
+  },
+  {
+    qKey: "section.faq.items.chooseDate.q",
+    aKey: "section.faq.items.chooseDate.a",
+  },
+  {
+    qKey: "section.faq.items.payment.q",
+    aKey: "section.faq.items.payment.a",
+  },
+  {
+    qKey: "section.faq.items.agent.q",
+    aKey: "section.faq.items.agent.a",
+  },
+] as const;
 
 export default function Home() {
+  const lang = useLang();
+
   return (
-    <main className="min-h-screen bg-white text-gray-900">
-      {/* Top bar */}
-      <header className="border-b bg-white/70 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-violet-600" />
-            <div className="leading-tight">
-              <div className="font-semibold">Travel Tickets</div>
-              <div className="text-xs text-gray-500">MVP bán vé du lịch</div>
-            </div>
-          </div>
-          <nav className="hidden items-center gap-6 text-sm text-gray-600 md:flex">
-            <a className="hover:text-gray-900" href="#tickets">
-              Vé
-            </a>
-            <a className="hover:text-gray-900" href="#how">
-              Cách hoạt động
-            </a>
-            <a className="hover:text-gray-900" href="#agent">
-              Đại lý
-            </a>
-          </nav>
-          <div className="flex items-center gap-2">
-            <a
-              href="#tickets"
-              className="inline-flex items-center justify-center rounded-lg border px-3 py-2 text-sm font-medium hover:bg-gray-50"
-            >
-              Xem vé
-            </a>
-            <a
-              href="#cta"
-              className="inline-flex items-center justify-center rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-gray-800"
-            >
-              Mua ngay
-            </a>
-          </div>
-        </div>
-      </header>
+    <main className="min-h-screen flex flex-col bg-background text-foreground">
+      <Header />
 
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-[-160px] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-gradient-to-br from-blue-200 via-violet-200 to-pink-200 blur-3xl opacity-70" />
+          <div className="absolute left-1/2 top-[-180px] h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-gradient-to-br from-sky-200 via-blue-200 to-violet-200 blur-3xl opacity-70" />
+          <div className="absolute -bottom-24 -right-24 h-[380px] w-[380px] rounded-full bg-gradient-to-br from-violet-200 via-fuchsia-200 to-pink-200 blur-3xl opacity-60" />
         </div>
 
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-14 md:grid-cols-2 md:py-20">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1 text-xs text-gray-700">
+            <div className="inline-flex items-center gap-2 rounded-full border bg-background px-3 py-1 text-xs text-muted-foreground">
               <span className="h-2 w-2 rounded-full bg-green-500" />
-              MVP đang build — thanh toán VNPAY trước
+              {t(lang, "hero.pill")}
             </div>
+
             <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
-              Bán vé du lịch online —
+              {t(lang, "hero.title1")}
               <span className="block bg-gradient-to-r from-blue-700 to-violet-700 bg-clip-text text-transparent">
-                nhanh, gọn, có QR
+                {t(lang, "hero.title2")}
               </span>
             </h1>
-            <p className="text-base leading-relaxed text-gray-600 md:text-lg">
-              Khách lẻ không cần đăng nhập. Chỉ cần chọn ngày đi, chọn loại vé,
-              nhập email + SĐT và thanh toán. Vé QR sẽ được gửi tự động qua email.
+
+            <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
+              {t(lang, "hero.desc")}
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#tickets"
-                className="inline-flex items-center justify-center rounded-lg bg-gray-900 px-5 py-3 text-sm font-medium text-white hover:bg-gray-800"
-              >
-                Xem loại vé
-              </a>
-              <a
-                href="#how"
-                className="inline-flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-medium hover:bg-gray-50"
-              >
-                Cách hoạt động
-              </a>
+              <Button size="lg" asChild>
+                <a href="/checkout">{t(lang, "cta.buyNow")}</a>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <a href="#experiences">{t(lang, "cta.viewExperiences")}</a>
+              </Button>
             </div>
 
             <div className="grid grid-cols-2 gap-4 pt-2 text-sm">
-              <div className="rounded-xl border bg-white p-4">
-                <div className="font-semibold">Giá linh hoạt</div>
-                <div className="text-gray-600">Giá chính/khuyến mãi + miền Trung</div>
-              </div>
-              <div className="rounded-xl border bg-white p-4">
-                <div className="font-semibold">Agent wallet</div>
-                <div className="text-gray-600">Nạp ví trước, xuất vé nhanh</div>
-              </div>
+              <Card>
+                <CardHeader className="space-y-1">
+                  <CardTitle className="text-base">
+                    {t(lang, "home.feature.noLogin.title")}
+                  </CardTitle>
+                  <CardDescription>
+                    {t(lang, "home.feature.noLogin.desc")}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader className="space-y-1">
+                  <CardTitle className="text-base">
+                    {t(lang, "home.feature.instantQR.title")}
+                  </CardTitle>
+                  <CardDescription>
+                    {t(lang, "home.feature.instantQR.desc")}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
             </div>
           </div>
 
+          {/* Right visual */}
           <div className="relative">
-            <div className="rounded-2xl border bg-white p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm font-medium">Demo checkout (mock)</div>
-                  <div className="text-xs text-gray-500">UI preview</div>
+            <Card className="shadow-sm">
+              <CardHeader>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <CardTitle className="text-base">
+                      {t(lang, "hero.cardTitle")}
+                    </CardTitle>
+                    <CardDescription>{t(lang, "hero.cardDesc")}</CardDescription>
+                  </div>
+                  <Badge variant="outline">{t(lang, "hero.city")}</Badge>
                 </div>
-                <div className="rounded-full border px-2 py-1 text-xs text-gray-600">
-                  VNPAY
-                </div>
-              </div>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {danangExperiences.slice(0, 4).map((x) => (
+                  <a
+                    key={x.key}
+                    href={`/checkout?product=${x.key}`}
+                    className="flex items-center justify-between rounded-xl border bg-muted/20 p-4 hover:bg-muted/30"
+                  >
+                    <div>
+                      <div className="font-medium">{t(lang, x.nameKey)}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {t(lang, x.taglineKey)}
+                      </div>
+                    </div>
+                    <Badge>{t(lang, x.badgeKey)}</Badge>
+                  </a>
+                ))}
 
-              <div className="mt-6 space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border p-3">
-                    <div className="text-xs text-gray-500">Ngày đi</div>
-                    <div className="mt-1 text-sm font-medium">Chọn ngày</div>
-                  </div>
-                  <div className="rounded-xl border p-3">
-                    <div className="text-xs text-gray-500">Loại vé</div>
-                    <div className="mt-1 text-sm font-medium">Combo / Vé cáp</div>
+                <div className="pt-2">
+                  <Button className="w-full" size="lg" asChild>
+                    <a href="/checkout">{t(lang, "cta.goToCheckout")}</a>
+                  </Button>
+                  <div className="mt-2 text-center text-xs text-muted-foreground">
+                    {t(lang, "hero.miniPill")}
                   </div>
                 </div>
-
-                <div className="rounded-xl border p-3">
-                  <div className="text-xs text-gray-500">Số lượng</div>
-                  <div className="mt-1 text-sm text-gray-700">
-                    Người lớn • Người già • Trẻ em
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between rounded-xl border bg-gray-50 p-3">
-                  <div className="text-sm">
-                    <div className="font-medium">Checkbox</div>
-                    <div className="text-xs text-gray-500">Người miền Trung</div>
-                  </div>
-                  <div className="h-6 w-10 rounded-full bg-gray-200 p-1">
-                    <div className="h-4 w-4 rounded-full bg-white shadow" />
-                  </div>
-                </div>
-
-                <div className="rounded-xl border p-3">
-                  <div className="text-xs text-gray-500">Liên hệ</div>
-                  <div className="mt-1 text-sm text-gray-700">Email + SĐT</div>
-                </div>
-
-                <div className="rounded-xl border p-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Tạm tính</span>
-                    <span className="font-medium">1.200.000đ</span>
-                  </div>
-                  <div className="mt-1 flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Khuyến mãi</span>
-                    <span className="font-medium">-100.000đ</span>
-                  </div>
-                  <div className="mt-3 flex items-center justify-between border-t pt-3 text-sm">
-                    <span className="font-semibold">Tổng</span>
-                    <span className="font-semibold">1.100.000đ</span>
-                  </div>
-                </div>
-
-                <button className="w-full rounded-lg bg-gray-900 px-4 py-3 text-sm font-medium text-white hover:bg-gray-800">
-                  Thanh toán VNPAY
-                </button>
-
-                <div className="text-center text-xs text-gray-500">
-                  Sau khi thanh toán: phát hành vé + gửi QR qua email
-                </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section id="how" className="border-t bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="flex items-end justify-between gap-6">
-            <div>
-              <h2 className="text-2xl font-semibold">Cách hệ thống hoạt động</h2>
-              <p className="mt-2 text-sm text-gray-600">
-                Thiết kế để ship MVP nhanh, sau này mở rộng connect đối tác.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {features.map((f) => (
-              <div key={f.title} className="rounded-2xl border p-6">
-                <div className="text-base font-semibold">{f.title}</div>
-                <div className="mt-2 text-sm text-gray-600">{f.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Ticket types */}
-      <section id="tickets" className="border-t bg-gray-50">
+      {/* Experiences */}
+      <section id="experiences" className="border-t bg-muted/30">
         <div className="mx-auto max-w-6xl px-6 py-14">
           <div className="flex flex-col gap-2">
-            <h2 className="text-2xl font-semibold">Loại vé</h2>
-            <p className="text-sm text-gray-600">
-              Demo UI. Dữ liệu thật sẽ lấy từ Supabase.
+            <h2 className="text-2xl font-semibold">
+              {t(lang, "section.experiences.title")}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {t(lang, "section.experiences.desc")}
             </p>
           </div>
 
-          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {sampleTickets.map((t) => (
-              <div key={t.name} className="rounded-2xl border bg-white p-6">
-                <div className="flex items-center justify-between">
-                  <div className="text-lg font-semibold">{t.name}</div>
-                  <div className="rounded-full bg-gray-900 px-3 py-1 text-xs text-white">
-                    {t.badge}
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {danangExperiences.map((x) => (
+              <Card key={x.key} className="rounded-2xl">
+                <CardHeader>
+                  <div className="flex items-center justify-between gap-3">
+                    <CardTitle className="text-lg">{t(lang, x.nameKey)}</CardTitle>
+                    <Badge>{t(lang, x.badgeKey)}</Badge>
                   </div>
-                </div>
-                <div className="mt-4 space-y-2 text-sm text-gray-700">
-                  {t.items.map((i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-blue-600" />
-                      {i}
+                  <CardDescription>{t(lang, x.taglineKey)}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="h-28 w-full rounded-xl bg-gradient-to-br from-sky-200 via-blue-200 to-violet-200" />
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm">
+                      <div className="text-muted-foreground">
+                        {t(lang, "section.experiences.priceFrom")}
+                      </div>
+                      <div className="font-semibold">xxx.xxxđ</div>
                     </div>
-                  ))}
-                </div>
-                <div className="mt-6 flex items-center justify-between">
-                  <div className="text-sm">
-                    <div className="text-gray-500">Giá từ</div>
-                    <div className="font-semibold">xxx.xxxđ</div>
+                    <Button asChild>
+                      <a href={`/checkout?product=${x.key}`}>
+                        {t(lang, "cta.chooseDateBuy")}
+                      </a>
+                    </Button>
                   </div>
-                  <a
-                    href="#cta"
-                    className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
-                  >
-                    Chọn vé
-                  </a>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Agent */}
-      <section id="agent" className="border-t bg-white">
+      {/* How it works */}
+      <section id="how" className="border-t bg-background">
         <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="rounded-2xl border bg-gradient-to-br from-white to-gray-50 p-8">
-            <h2 className="text-2xl font-semibold">Dành cho đại lý (Agent)</h2>
-            <p className="mt-2 max-w-2xl text-sm text-gray-600">
-              Agent đăng ký tài khoản → gửi yêu cầu làm agent → admin duyệt → nạp ví
-              trước → xuất vé cho khách nhanh, hệ thống tự gửi QR qua email.
+          <div>
+            <h2 className="text-2xl font-semibold">{t(lang, "section.how.title")}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(lang, "section.how.desc")}
             </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row" id="cta">
-              <button className="rounded-lg bg-gray-900 px-5 py-3 text-sm font-medium text-white hover:bg-gray-800">
-                Đăng ký Agent (sắp có)
-              </button>
-              <button className="rounded-lg border px-5 py-3 text-sm font-medium hover:bg-gray-50">
-                Liên hệ hợp tác
-              </button>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {highlights.map((f) => (
+              <Card key={f.titleKey} className="rounded-2xl">
+                <CardHeader>
+                  <CardTitle className="text-base">{t(lang, f.titleKey)}</CardTitle>
+                  <CardDescription>{t(lang, f.descKey)}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-col items-start justify-between gap-4 rounded-2xl border bg-muted/20 p-6 md:flex-row md:items-center">
+            <div>
+              <div className="font-semibold">{t(lang, "section.how.ctaTitle")}</div>
+              <div className="text-sm text-muted-foreground">
+                {t(lang, "section.how.ctaDesc")}
+              </div>
             </div>
+            <Button size="lg" asChild>
+              <a href="/checkout">{t(lang, "cta.buyNow")}</a>
+            </Button>
           </div>
         </div>
       </section>
 
-      <footer className="border-t bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-8 text-sm text-gray-600">
-          <div>© {new Date().getFullYear()} Travel Tickets</div>
-          <div className="text-xs">Powered by Next.js • Supabase • VNPAY • Resend</div>
+      {/* Collaborator */}
+      <section id="collaborator" className="border-t bg-background">
+        <div className="mx-auto max-w-6xl px-6 py-14">
+          <div>
+            <h2 className="text-2xl font-semibold">
+              {t(lang, "section.affiliate.title")}
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(lang, "section.affiliate.desc")}
+            </p>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            <Card className="rounded-2xl">
+              <CardHeader>
+                <CardTitle className="text-base">
+                  {t(lang, "section.affiliate.cards.sell.title")}
+                </CardTitle>
+                <CardDescription>
+                  {t(lang, "section.affiliate.cards.sell.desc")}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-3 sm:flex-row">
+                <Button asChild>
+                  <a href="/register">Đăng ký làm Affiliate</a>
+                </Button>
+                <Button variant="outline" asChild>
+                  <a href="#faq">{t(lang, "cta.viewQuestions")}</a>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="rounded-2xl">
+              <CardHeader>
+                <CardTitle className="text-base">
+                  {t(lang, "section.affiliate.cards.wallet.title")}
+                </CardTitle>
+                <CardDescription>
+                  {t(lang, "section.affiliate.cards.wallet.desc")}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-sm text-muted-foreground">
+                  {t(lang, "section.affiliate.cards.wallet.note")}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="border-t bg-background">
+        <div className="mx-auto max-w-6xl px-6 py-14">
+          <div>
+            <h2 className="text-2xl font-semibold">{t(lang, "section.faq.title")}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(lang, "section.faq.desc")}
+            </p>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {faqs.map((x) => (
+              <Card key={x.qKey} className="rounded-2xl">
+                <CardHeader>
+                  <CardTitle className="text-base">{t(lang, x.qKey)}</CardTitle>
+                  <CardDescription>{t(lang, x.aKey)}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer className="mt-auto border-t bg-background">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+          <div>
+            © {new Date().getFullYear()} {t(lang, "brand.name")}
+          </div>
+          <div className="text-xs">{t(lang, "footer.powered")}</div>
         </div>
       </footer>
     </main>

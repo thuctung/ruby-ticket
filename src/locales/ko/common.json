@@ -1,0 +1,201 @@
+{
+  "brand": {
+    "name": "Ruby Travel",
+    "tagline": "다낭 여행 티켓 — 이메일로 QR 발송"
+  },
+  "nav": {
+    "experiences": "체험",
+    "how": "이용 방법",
+    "affiliate": "제휴",
+    "faq": "FAQ"
+  },
+  "cta": {
+    "viewExperiences": "체험 보기",
+    "buy": "티켓 구매",
+    "buyNow": "지금 구매",
+    "goToCheckout": "결제하러 가기",
+    "chooseDateBuy": "날짜 선택 후 구매",
+    "backHome": "홈으로",
+    "loginSignup": "로그인 / 가입",
+    "viewQuestions": "질문 보기"
+  },
+  "lang": {
+    "label": "언어",
+    "vi": "베트남어",
+    "en": "영어",
+    "zh": "중국어",
+    "ko": "한국어"
+  },
+  "auth": {
+    "login": "로그인",
+    "logout": "로그아웃",
+    "user": "사용자",
+    "agent": "에이전트",
+    "loginDemoTitle": "로그인(데모)",
+    "loginDemoDesc": "헤더에 아바타를 표시하기 위한 데모 로그인입니다. Supabase Auth 준비 후 실제 로그인으로 전환합니다.",
+    "name": "이름",
+    "email": "이메일",
+    "loginUser": "사용자 로그인",
+    "loginAgent": "에이전트 로그인"
+  },
+  "hero": {
+    "pill": "MVP 개발 중 — VNPAY 우선, 이메일 QR 발송",
+    "title1": "다낭 여행",
+    "title2": "빠르게 예약하고 편하게 즐기세요",
+    "desc": "여행 날짜(오늘부터)를 선택하고 바나힐, 빈펄, 호이안 메모리즈, 누이탄타이 또는 한강 크루즈를 선택하세요. VNPAY로 결제하면 QR 티켓이 이메일로 전송됩니다.",
+    "cardTitle": "오늘의 추천",
+    "cardDesc": "추천 체험",
+    "city": "다낭",
+    "miniPill": "VNPAY 결제 • 이메일 QR 수신"
+  },
+  "home": {
+    "feature": {
+      "noLogin": {
+        "title": "로그인 불필요",
+        "desc": "이메일 + 전화번호만 있으면 됩니다"
+      },
+      "instantQR": {
+        "title": "즉시 QR",
+        "desc": "결제 후 이메일로 자동 발송"
+      }
+    },
+    "highlights": {
+      "fast": {
+        "title": "빠른 예약",
+        "desc": "날짜 선택 → 티켓 선택 → VNPAY 결제. 로그인 없이 구매 가능."
+      },
+      "qr": {
+        "title": "이메일로 QR",
+        "desc": "결제 성공 후 QR 티켓이 이메일로 자동 전송됩니다."
+      },
+      "pricing": {
+        "title": "유연한 가격",
+        "desc": "이벤트별 기본/프로모션 가격, 중부 지역 옵션 지원."
+      },
+      "agent": {
+        "title": "에이전트",
+        "desc": "가입 → 관리자 승인 → 지갑 충전 → 빠른 발권."
+      }
+    }
+  },
+  "section": {
+    "experiences": {
+      "title": "추천 체험",
+      "desc": "현재는 데모 콘텐츠이며 추후 실제 정보/가격으로 업데이트됩니다.",
+      "priceFrom": "부터"
+    },
+    "how": {
+      "title": "이용 방법",
+      "desc": "간단한 절차로 빠르게 티켓을 받습니다.",
+      "ctaTitle": "예약할 준비 되셨나요?",
+      "ctaDesc": "날짜 선택 → 정보 입력 → VNPAY 결제 → 이메일 QR 수신"
+    },
+    "faq": {
+      "title": "FAQ",
+      "desc": "자주 묻는 질문(데모)",
+      "items": {
+        "needAccount": {
+          "q": "티켓 구매에 계정이 필요한가요?",
+          "a": "필요 없습니다. 이메일 + 전화번호로 QR 티켓을 받습니다."
+        },
+        "chooseDate": {
+          "q": "여행 날짜는 어떻게 선택하나요?",
+          "a": "오늘부터의 날짜를 선택하세요. 일부 티켓은 이벤트/프로그램에 따라 제한될 수 있습니다."
+        },
+        "payment": {
+          "q": "어떤 결제 수단을 지원하나요?",
+          "a": "MVP는 VNPAY를 먼저 연동합니다. 필요 시 MoMo를 추가할 수 있습니다."
+        },
+        "agent": {
+          "q": "에이전트는 어떻게 구매하나요?",
+          "a": "관리자 승인이 필요하며 선충전 지갑을 사용합니다. 지갑 차감 후 빠르게 발권됩니다."
+        }
+      }
+    },
+    "affiliate": {
+      "title": "제휴",
+      "desc": "계정 생성 → 제휴 신청 → 관리자 승인 →(에이전트) 지갑 선충전 후 빠른 발권",
+      "cards": {
+        "sell": {
+          "title": "티켓 판매자용",
+          "desc": "주문/매출 관리 페이지 제공 예정(추후 구현)."
+        },
+        "wallet": {
+          "title": "에이전트 지갑",
+          "desc": "에이전트는 지갑을 선충전하고 발권 시 지갑에서 차감됩니다(MVP).",
+          "note": "안내: 추후 Supabase + VNPAY 충전을 연동합니다."
+        }
+      }
+    }
+  },
+  "checkout": {
+    "title": "결제",
+    "subtitle": "로그인 없이 구매 가능합니다. 정보 입력 후 VNPAY 결제.",
+    "switcher": {
+      "title": "목적지 선택"
+    },
+    "form": {
+      "title": "티켓 정보",
+      "vnpay": "VNPAY",
+      "date": "여행 날짜",
+      "destination": "목적지",
+      "ticketType": "티켓 종류",
+      "qtyTitle": "수량",
+      "qtyDesc": "해당되는 경우 유형별 수량을 입력하세요",
+      "centralTitle": "중부 지역 거주",
+      "centralDesc": "중부 지역 할인/프로모션 대상이면 체크",
+      "email": "이메일(QR 발송)",
+      "phone": "전화번호",
+      "note": "메모(선택)",
+      "notePlaceholder": "예: 세금계산서 요청, 도착 시간 메모...",
+      "pay": "VNPAY로 결제",
+      "pax": {
+        "adult": "성인",
+        "senior": "노인",
+        "child": "아동"
+      }
+    },
+    "summary": {
+      "title": "요약",
+      "destination": "목적지",
+      "date": "날짜",
+      "subtotal": "소계",
+      "discount": "할인",
+      "total": "총액"
+    }
+  },
+  "product": {
+    "bana": {
+      "name": "바나힐",
+      "tagline": "케이블카 • 골든 브리지 • 테마파크",
+      "badge": "Top",
+      "ticket": {
+        "cap": "케이블카 티켓",
+        "combo": "콤보"
+      }
+    },
+    "vinpearl": {
+      "name": "빈펄",
+      "tagline": "리조트 & 엔터테인먼트",
+      "badge": "Hot"
+    },
+    "hoian": {
+      "name": "호이안 메모리즈",
+      "tagline": "꼭 봐야 할 야간 공연",
+      "badge": "Must-see"
+    },
+    "nuiThanTai": {
+      "name": "누이탄타이",
+      "tagline": "온천 • 당일 힐링",
+      "badge": "Relax"
+    },
+    "cruise": {
+      "name": "크루즈 티켓",
+      "tagline": "한강 • 야경 감상",
+      "badge": "Chill"
+    }
+  },
+  "footer": {
+    "powered": "Powered by Next.js • Supabase • VNPAY • Resend"
+  }
+}

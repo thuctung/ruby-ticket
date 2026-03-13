@@ -1,0 +1,201 @@
+{
+  "brand": {
+    "name": "Ruby Travel",
+    "tagline": "Vé du lịch Đà Nẵng — nhận QR qua email"
+  },
+  "nav": {
+    "experiences": "Trải nghiệm",
+    "how": "Cách hoạt động",
+    "affiliate": "Cộng tác viên",
+    "faq": "FAQ"
+  },
+  "cta": {
+    "viewExperiences": "Xem trải nghiệm",
+    "buy": "Mua vé",
+    "buyNow": "Mua vé ngay",
+    "goToCheckout": "Đi tới mua vé",
+    "chooseDateBuy": "Chọn ngày & mua",
+    "backHome": "Về trang chủ",
+    "loginSignup": "Đăng nhập / Đăng ký",
+    "viewQuestions": "Xem câu hỏi"
+  },
+  "lang": {
+    "label": "Ngôn ngữ",
+    "vi": "Tiếng Việt",
+    "en": "English",
+    "zh": "中文",
+    "ko": "한국어"
+  },
+  "auth": {
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "user": "User",
+    "agent": "Agent",
+    "loginDemoTitle": "Đăng nhập (demo UI)",
+    "loginDemoDesc": "Tạm thời là login demo để hiện avatar trên header. Khi bạn tạo xong Supabase Auth, mình sẽ thay bằng đăng nhập thật.",
+    "name": "Tên",
+    "email": "Email",
+    "loginUser": "Login User",
+    "loginAgent": "Login Agent"
+  },
+  "hero": {
+    "pill": "MVP đang build — VNPAY trước, QR email",
+    "title1": "Du lịch Đà Nẵng",
+    "title2": "đặt vé nhanh, đi chơi liền",
+    "desc": "Chọn ngày đi (từ hôm nay trở đi), chọn điểm đến như Bà Nà Hills, Vinpearl, Ký ức Hội An, Núi Thần Tài hoặc du thuyền sông Hàn. Thanh toán VNPAY và nhận QR qua email.",
+    "cardTitle": "Top pick hôm nay",
+    "cardDesc": "Gợi ý trải nghiệm nổi bật",
+    "city": "Đà Nẵng",
+    "miniPill": "Thanh toán VNPAY • Nhận QR qua email"
+  },
+  "home": {
+    "feature": {
+      "noLogin": {
+        "title": "Không cần đăng nhập",
+        "desc": "Chỉ email + SĐT để nhận vé"
+      },
+      "instantQR": {
+        "title": "Nhận QR tức thì",
+        "desc": "Tự động gửi email sau thanh toán"
+      }
+    },
+    "highlights": {
+      "fast": {
+        "title": "Đặt vé nhanh",
+        "desc": "Chọn ngày đi, chọn vé, thanh toán VNPAY. Không cần đăng nhập."
+      },
+      "qr": {
+        "title": "Nhận QR qua email",
+        "desc": "Thanh toán xong là có mã vé QR gửi về email tự động."
+      },
+      "pricing": {
+        "title": "Giá linh hoạt",
+        "desc": "Giá chính/khuyến mãi theo sự kiện, hỗ trợ nhóm “người miền Trung”."
+      },
+      "agent": {
+        "title": "Đại lý (Agent)",
+        "desc": "Đăng ký → admin duyệt → nạp ví trước → xuất vé nhanh cho khách."
+      }
+    }
+  },
+  "section": {
+    "experiences": {
+      "title": "Trải nghiệm nổi bật",
+      "desc": "Bản generic demo. Sau này bạn đưa nội dung/giá thật, mình sẽ update.",
+      "priceFrom": "Giá từ"
+    },
+    "how": {
+      "title": "Cách hoạt động",
+      "desc": "Quy trình tối giản để bạn đặt vé nhanh.",
+      "ctaTitle": "Sẵn sàng đặt vé?",
+      "ctaDesc": "Chọn ngày đi, nhập thông tin, thanh toán VNPAY và nhận QR."
+    },
+    "faq": {
+      "title": "FAQ",
+      "desc": "Câu hỏi thường gặp (demo)",
+      "items": {
+        "needAccount": {
+          "q": "Có cần tạo tài khoản để mua vé không?",
+          "a": "Không cần. Bạn chỉ cần email + SĐT để nhận QR vé."
+        },
+        "chooseDate": {
+          "q": "Chọn ngày đi như thế nào?",
+          "a": "Bạn chọn ngày đi (từ hôm nay trở đi). Một số vé có thể giới hạn theo chương trình/sự kiện."
+        },
+        "payment": {
+          "q": "Thanh toán bằng gì?",
+          "a": "MVP ưu tiên tích hợp VNPAY trước. Sau sẽ thêm MoMo nếu cần."
+        },
+        "agent": {
+          "q": "Đại lý mua vé bằng cách nào?",
+          "a": "Đại lý cần được admin duyệt và nạp ví trước, sau đó xuất vé nhanh cho khách."
+        }
+      }
+    },
+    "affiliate": {
+      "title": "Cộng tác viên",
+      "desc": "Đăng ký tài khoản → gửi yêu cầu cộng tác viên → admin duyệt → (nếu là agent) nạp ví trước để xuất vé nhanh cho khách.",
+      "cards": {
+        "sell": {
+          "title": "Dành cho bạn muốn bán vé",
+          "desc": "Có trang riêng quản lý đơn, theo dõi doanh số (sẽ build sau)."
+        },
+        "wallet": {
+          "title": "Agent wallet",
+          "desc": "Agent nạp tiền trước, hệ thống trừ ví khi xuất vé (MVP).",
+          "note": "Lưu ý: phần này sẽ nối Supabase + VNPAY Topup sau."
+        }
+      }
+    }
+  },
+  "checkout": {
+    "title": "Mua vé",
+    "subtitle": "Khách lẻ không cần đăng nhập. Điền thông tin và thanh toán VNPAY.",
+    "switcher": {
+      "title": "Chọn điểm đến"
+    },
+    "form": {
+      "title": "Thông tin mua vé",
+      "vnpay": "VNPAY",
+      "date": "Ngày đi",
+      "destination": "Điểm đến",
+      "ticketType": "Loại vé",
+      "qtyTitle": "Số lượng",
+      "qtyDesc": "Nhập số lượng theo từng đối tượng (tuỳ vé)",
+      "centralTitle": "Người miền Trung",
+      "centralDesc": "Tick nếu thuộc nhóm áp dụng giá/khuyến mãi miền Trung",
+      "email": "Email nhận vé (QR)",
+      "phone": "Số điện thoại",
+      "note": "Ghi chú (tuỳ chọn)",
+      "notePlaceholder": "Ví dụ: cần xuất hoá đơn, lưu ý giờ đến...",
+      "pay": "Thanh toán VNPAY",
+      "pax": {
+        "adult": "Người lớn",
+        "senior": "Người già",
+        "child": "Trẻ em"
+      }
+    },
+    "summary": {
+      "title": "Tóm tắt",
+      "destination": "Điểm đến",
+      "date": "Ngày đi",
+      "subtotal": "Tạm tính",
+      "discount": "Khuyến mãi",
+      "total": "Tổng"
+    }
+  },
+  "product": {
+    "bana": {
+      "name": "Bà Nà Hills",
+      "tagline": "Cáp treo • Cầu Vàng • khu vui chơi",
+      "badge": "Top",
+      "ticket": {
+        "cap": "Vé cáp",
+        "combo": "Combo"
+      }
+    },
+    "vinpearl": {
+      "name": "Vinpearl",
+      "tagline": "Resort & trải nghiệm giải trí",
+      "badge": "Hot"
+    },
+    "hoian": {
+      "name": "Ký ức Hội An",
+      "tagline": "Show diễn buổi tối đáng xem",
+      "badge": "Must-see"
+    },
+    "nuiThanTai": {
+      "name": "Núi Thần Tài",
+      "tagline": "Tắm khoáng • nghỉ dưỡng trong ngày",
+      "badge": "Relax"
+    },
+    "cruise": {
+      "name": "Vé du thuyền",
+      "tagline": "Chill sông Hàn • ngắm cầu về đêm",
+      "badge": "Chill"
+    }
+  },
+  "footer": {
+    "powered": "Powered by Next.js • Supabase • VNPAY • Resend"
+  }
+}
