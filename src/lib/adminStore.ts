@@ -20,14 +20,14 @@ export type AffiliateAccount = {
   passwordUpdatedAt?: string; // ISO
 };
 
-export type PaxType = "adult" | "senior" | "child";
+export type PaxType =  string;
 
-export type PriceTier = "customer" | "affiliate";
+export type PriceTier =  string;
 
 export type PriceRow = {
   id: string;
   productKey: ProductKey;
-  ticketOption?: "cap" | "combo";
+  ticketOption?: string;
   paxType: PaxType;
   tier: PriceTier;
   basePrice: number;

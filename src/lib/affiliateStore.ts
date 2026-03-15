@@ -2,7 +2,7 @@
 
 import type { ProductKey } from "@/lib/products";
 
-export type TicketOption = "cap" | "combo";
+export type TicketOption =  string;
 
 export type AffiliateSale = {
   id: string;

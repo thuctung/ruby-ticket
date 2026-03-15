@@ -38,7 +38,7 @@ export default function AffiliateIssuePage() {
   const [productKey, setProductKey] = useState<ProductKey>("bana");
   const product = getProduct(productKey);
 
-  const [ticketOption, setTicketOption] = useState<"cap" | "combo">("cap");
+  const [ticketOption, setTicketOption] = useState<string>("cap");
 
   const [travelDate, setTravelDate] = useState(todayISO());
   const [isCentralRegion, setIsCentralRegion] = useState(false);
