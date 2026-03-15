@@ -39,11 +39,11 @@
     "loginAgent": "Login Agent"
   },
   "hero": {
-    "pill": "MVP đang build — VNPAY trước, QR email",
+    "pill": "Lấy vé nhanh - hỗ trợ 24/7",
     "title1": "Du lịch Đà Nẵng",
     "title2": "đặt vé nhanh, đi chơi liền",
     "desc": "Chọn ngày đi (từ hôm nay trở đi), chọn điểm đến như Bà Nà Hills, Vinpearl, Ký ức Hội An, Núi Thần Tài hoặc du thuyền sông Hàn. Thanh toán VNPAY và nhận QR qua email.",
-    "cardTitle": "Top pick hôm nay",
+    "cardTitle": "Lựa chọn nhiều nhất",
     "cardDesc": "Gợi ý trải nghiệm nổi bật",
     "city": "Đà Nẵng",
     "miniPill": "Thanh toán VNPAY • Nhận QR qua email"
@@ -196,6 +196,6 @@
     }
   },
   "footer": {
-    "powered": "Powered by Next.js • Supabase • VNPAY • Resend"
+    "powered": "Powered TMK • VNPAY • Resend"
   }
 }

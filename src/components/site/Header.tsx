@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {  useMemo,  } from "react";
+import { useEffect, useMemo, } from "react";
 
 import { useLang } from "@/lib/useLang";
 
@@ -20,21 +20,33 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LANGS, type LangKey, setLang } from "@/lib/i18n";
 import { t } from "@/lib/i18n/t";
-import { Languages } from "lucide-react";
+import { Languages, Menu } from "lucide-react";
 
-import { useProfileStore } from "@/stores/useProfileStore";
-import { ProfileType } from "@/types/profile";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
+import {  useProfileStore } from "@/stores/useProfileStore";
+import { CommonType, ProfileType } from "@/types";
 
 import { ROLES } from "@/commons/constant";
 import { useRouter } from "next/navigation";
+import { sv_getCurrentProfile } from "@/app/api/client/profiles";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { useCommonStore } from "@/stores/useCommonStore";
+import Image from "next/image";
 
 export default function Header() {
   const router = useRouter();
   const lang = useLang();
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
+  const supabase = createSupabaseBrowserClient()
 
-  const { logout }: any = useProfileStore.getState();
+  const { logout, setProfile }: any = useProfileStore.getState();
+  const { setGlobalLoading , setIsShowToast, setToastMessage}: CommonType | any = useCommonStore.getState();
 
   const langLabel = useMemo(() => {
     const map: Record<LangKey, string> = {
@@ -54,52 +66,94 @@ export default function Header() {
   })();
 
   const handleLogout = () => {
-    logout()
+    logout();
+    sessionStorage.clear();
+    supabase.auth.signOut();
     router.push('/');
   }
 
+  const loadUser = async () => {
+    try {
+      setGlobalLoading(true)
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        const user = session.user;
+        const {profile, error}: any = await sv_getCurrentProfile(user.id);
+        if(error){
+        setToastMessage(error);
+        return;
+        }
+        setProfile(profile);
+      }
+    } catch (e) {
+      setToastMessage('Có lỗi xảy ra')
+    } finally {
+      setGlobalLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadUser()
+  }, [])
+
   return (
-    <header className="border-b bg-background/70 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <>
+     <header className="sticky top-0 z-50 border-b bg-background/70 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6">
+
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-violet-600" />
+          <div>
+            <Image
+              src="/logo1.png"
+              alt="Ruby Travel"
+              width={60}
+              height={60}
+              className="rounded-lg"
+            />
+          </div>
           <div className="leading-tight">
-            <div className="font-semibold">{t(lang, "brand.name")}</div>
-            <div className="text-xs text-muted-foreground">
-              {t(lang, "brand.tagline")}
+            <div className="font-semibold">Ruby Travel</div>
+            <div className="hidden text-xs text-muted-foreground sm:block">
+              Vé du lịch Đà Nẵng 
             </div>
           </div>
         </Link>
 
+        {/* Desktop nav */}
         <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-          <a className="hover:text-foreground" href="#experiences">
-            {t(lang, "nav.experiences")}
-          </a>
-          <a className="hover:text-foreground" href="#how">
-            {t(lang, "nav.how")}
-          </a>
-          <a className="hover:text-foreground" href="#collaborator">
-            {t(lang, "nav.affiliate")}
-          </a>
-          <a className="hover:text-foreground" href="#faq">
-            {t(lang, "nav.faq")}
-          </a>
+          <Link href="#experiences" className="hover:text-foreground">
+            Trải nghiệm
+          </Link>
+
+          <Link href="#how" className="hover:text-foreground">
+            Cách hoạt động
+          </Link>
+
+          <Link href="#collaborator" className="hover:text-foreground">
+            Cộng tác viên
+          </Link>
+
+          <Link href="#faq" className="hover:text-foreground">
+            FAQ
+          </Link>
         </nav>
 
+        {/* Right side */}
         <div className="flex items-center gap-2">
-          <Button variant="outline" asChild>
-            <Link href="#experiences">{t(lang, "cta.viewExperiences")}</Link>
-          </Button>
 
           {/* Language */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" size="sm">
                 <Languages className="h-4 w-4" />
-                <span className="hidden sm:inline">{langLabel}</span>
+               <span className="hidden sm:inline">{langLabel}</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-44">
+
+           <DropdownMenuContent align="end" className="w-44">
               <DropdownMenuLabel>{t(lang, "lang.label")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {LANGS.map((l) => (
@@ -121,6 +175,7 @@ export default function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* User menu */}
           {!profile.user_id ? (
             <Button asChild>
               <Link href="/login">{t(lang, "auth.login")}</Link>
@@ -183,8 +238,39 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           )}
+
+          {/* Mobile menu */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="md:hidden"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+
+            <SheetContent side="right" className="w-[280px]">
+              <nav className="mt-8 flex flex-col gap-6 text-lg">
+                <Link href="#experiences">
+                  Trải nghiệm
+                </Link>
+                <Link href="#how">
+                  Cách hoạt động
+                </Link>
+                <Link href="#collaborator">
+                  Cộng tác viên
+                </Link>
+                <Link href="#faq">
+                  FAQ
+                </Link>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
+    </>
   );
 }

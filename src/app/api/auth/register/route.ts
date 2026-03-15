@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { ROLES } from "@/commons/constant";
 
 const schema = z.object({
   fullName: z.string().trim().min(2),
@@ -40,6 +41,7 @@ export async function POST(req: Request) {
       user_metadata: {
         full_name: fullName,
       },
+       app_metadata: { role: ROLES.AFFILIATE }
     });
 
     if (createErr) {
@@ -48,7 +50,6 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    console.log('user',created)
     const user = created.user;
     if (!user) {
       return NextResponse.json(

@@ -1,5 +1,7 @@
+import { sv_getCurrentProfile } from "@/app/api/client/profiles";
 import { ACC_STATUS, ROLES } from "@/commons/constant";
-import { ProfileType } from "@/types/profile";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { ProfileType } from "@/types";
 import { create } from "zustand";
 
 const initValue: ProfileType = {
@@ -37,3 +39,4 @@ export const useProfileStore = create((set) => ({
       errorMessage:''
     })),
 }));
+

@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { REGISTER_AFFILIATE } from "@/commons/apiURL";
 
 const schema = z
   .object({
@@ -74,7 +75,7 @@ export default function RegisterPage() {
 
       setErrors({});
 
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch(REGISTER_AFFILIATE, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
