@@ -1,16 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 import Footer from "@/components/site/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ACC_STATUS, ROLES } from "@/commons/constant";
-import { sv_Login } from "@/app/api/client/login";
-import { ProfileStoteType, useProfileStore } from "@/stores/useProfileStore";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 export default function UpdatePassword() {
