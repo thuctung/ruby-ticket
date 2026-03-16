@@ -1,3 +1,4 @@
+import { ConfirmProvider } from "@/components/site/Confirm";
 import Footer from "@/components/site/Footer";
 import Header from "@/components/site/Header";
 import FloatingContact from "@/components/ui/float-contact";
@@ -12,9 +13,10 @@ export default function RootLayout({
     return (
         <main className="min-h-screen flex flex-col bg-background text-foreground">
             <Header />
-            {children}
+                {children}
             <Footer />
-            <FloatingContact/>
+            <ConfirmProvider/>
+            <FloatingContact />
         </main>
     );
 }

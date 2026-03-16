@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { ROLES } from "@/commons/constant";
+import { DB_TABLE_NAME, ROLES } from "@/commons/constant";
 
 const schema = z.object({
   fullName: z.string().trim().min(2),
@@ -59,8 +59,7 @@ export async function POST(req: Request) {
     }
 
     // Insert profile (service role bypasses RLS)
-    console.log( fullName, phone, email, username, address, password)
-    const { error: profileErr } = await supabaseAdmin.from("profiles").insert({
+    const { error: profileErr } = await supabaseAdmin.from(DB_TABLE_NAME.PROFILES).insert({
       user_id: user.id,
       email,
       username: username || null,
@@ -79,7 +78,7 @@ export async function POST(req: Request) {
     }
 
     // Insert affiliate application
-    const { error: appErr } = await supabaseAdmin.from("affiliate_applications").insert({
+    const { error: appErr } = await supabaseAdmin.from(DB_TABLE_NAME.AFF_APPLICATION).insert({
       user_id: user.id,
       full_name: fullName,
       phone,

@@ -9,10 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ACC_STATUS, ROLES } from "@/commons/constant";
-import { sv_Login } from "@/app/api/client/login";
 import { ProfileStoteType, useProfileStore } from "@/stores/useProfileStore";
-import { Dialog } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/site/ForgotPassword";
+import { sv_Login } from "./api";
 
 export default function Login() {
   const router = useRouter();
@@ -46,7 +45,6 @@ export default function Login() {
   };
 
   const closeDialog = (value:boolean) => {
-    console.log('value',value)
     setOpenForgotpass(value)
   }
 

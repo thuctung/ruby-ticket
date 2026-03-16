@@ -1,5 +1,6 @@
 "use client";
-import AffiliateMgt from "@/mainContainers/admin/AffiliateMgt";
+
+import AffiliateMgt from "@/app-controler/admin/affiliate-mgt";
 
 export default function AdminAffiliatesPage() {
 

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ProfileType } from "@/types";
 import { ACC_STATUS } from "@/commons/constant";
 import { getStatusName } from "../constants";
+import { formatVND } from "@/helpers/money";
 
 type AffiTableProps = {
     profiles: ProfileType[],
@@ -29,8 +30,10 @@ export function AffiTable({ profiles, onResetPass, onUpdateStatus }: AffiTablePr
                     <th className="p-3">Tên</th>
                     <th className="p-3">UserName</th>
                     <th className="p-3">Email</th>
+                    <th className="p-3">Phone</th>
                     <th className="p-3">Trạng thái</th>
                     <th className="p-3">Ngày đăng ký</th>
+                    <th className="p-3">Số dư</th>
                     <th className="p-3">Action</th>
                 </tr>
             </thead>
@@ -47,12 +50,15 @@ export function AffiTable({ profiles, onResetPass, onUpdateStatus }: AffiTablePr
                             <td className="p-3 font-medium">{profile.full_name}</td>
                             <td className="p-3">{profile.username}</td>
                             <td className="p-3">{profile.email}</td>
+                            <td className="p-3">{profile.phone}</td>
                             <td className="p-3">
                                 <span className={`rounded-full border px-2 py-1 text-xs  ${statusClass[profile.status]}`}>
                                     {getStatusName(profile.status)}
                                 </span>
                             </td>
                             <td className="p-3">{profile.created_at?.slice(0, 10)}</td>
+                  <td className="p-3">{formatVND(profile.balance) || '0'}</td>
+
                             <td className="p-3">
                                 <div className="flex flex-wrap gap-2">
                                     {profile.status === ACC_STATUS.PENDING ? (

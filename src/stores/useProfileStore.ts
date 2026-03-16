@@ -1,4 +1,3 @@
-import { sv_getCurrentProfile } from "@/app/api/client/profiles";
 import { ACC_STATUS, ROLES } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { ProfileType } from "@/types";
@@ -11,6 +10,7 @@ const initValue: ProfileType = {
   full_name: '',
   phone: '',
   address: '',
+  balance:0,
   role: ROLES.CUSTOMER,
   status: ACC_STATUS.PENDING,
 }

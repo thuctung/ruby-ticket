@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { SearchAffiType, SearchTableType } from "@/types";
-import { LIMIT_TABLE } from "@/commons/constant";
+import { DB_TABLE_NAME, LIMIT_TABLE } from "@/commons/constant";
 
 export async function POST(request: Request) {
    const body:SearchTableType = await request.json();
@@ -17,43 +17,24 @@ export async function POST(request: Request) {
   const { status,username, email}:SearchAffiType = searchValue
 
  let query = supabaseAdmin
-    .from('profiles')
-    .select(
-      `
-      user_id,
-      username,
-      full_name,
-      email,
-      phone,
-      status,
-      role,
-      balance,
-      created_at
-    `,
+    .from(DB_TABLE_NAME.VIEW_PROFILE_TOPUP)
+    .select('*',
       { count: "exact" }
     )
-    .neq("role", "admin")
-    .order("updated_at", { ascending: false })
     .range(offset, offset + LIMIT_TABLE - 1);
 
-
-const filters = [];
-
 if (username?.trim()) {
-  filters.push(`username.ilike.%${username.trim()}%`);
+  query = query.ilike("username", `%${username.trim()}%`)
 }
+
 if (status?.trim()) {
-  filters.push(`status.eq.${status.trim()}`);
+  query = query.eq("status", status.trim())
 }
 
 if (email?.trim()) {
-  filters.push(`email.ilike.%${email.trim()}%`);
+  query = query.ilike("email", `%${email.trim()}%`)
 }
-
-if (filters.length) {
-  query = query.or(filters.join(','));
-}
-  const { data: profiles, error, count } = await query;
+  const { data: listTopup, error, count } = await query;
 
 
   if (error) {
@@ -61,7 +42,7 @@ if (filters.length) {
   }
 
   return NextResponse.json({
-    profiles: profiles || [],
+    listTopup: listTopup || [],
     total: count || 0,
     currentPage,
     totalPages: count ? Math.ceil(count / LIMIT_TABLE) : 0,

@@ -1,4 +1,4 @@
-export type ProfileType = {
+export interface ProfileType {
   user_id: string;
   email: string | null;
   username: string | null;
@@ -7,6 +7,7 @@ export type ProfileType = {
   address: string | null;
   role:string;
   status: string;
+  balance: number;
   created_at?:string | null
 };
 

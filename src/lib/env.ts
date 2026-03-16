@@ -16,6 +16,7 @@ const schema = z.object({
   VNPAY_URL: z.string().url(),
   VNPAY_RETURN_URL: z.string().url(),
   VNPAY_IPN_URL: z.string().url(),
+
 });
 
 export const env = schema.parse({

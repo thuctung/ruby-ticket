@@ -11,15 +11,15 @@ import {
 } from "@/components/ui/select"
 import { useState } from "react"
 import { ACC_STATUS } from "@/commons/constant"
-import { SearchAffiType } from "@/types"
-import { getStatusName } from "../constants"
+import { SearchAffiType, StatusType } from "@/types"
 
 
 type AffiliateSearch = {
-    onSearch:(value: SearchAffiType) =>void
+    onSearch:(value: SearchAffiType) =>void,
+    listStatus:StatusType[]
 }
 
-export function AffiliateSearch({ onSearch }: any) {
+export function AffiliateSearch({listStatus, onSearch }: any) {
   const [filters, setFilters] = useState({
    username: "",
     email: "",
@@ -43,11 +43,7 @@ export function AffiliateSearch({ onSearch }: any) {
     onSearch(empty)
   }
 
-  const listStatus = [
-    {title:getStatusName(ACC_STATUS.APPROVED) , value:ACC_STATUS.APPROVED},
-    {title:getStatusName(ACC_STATUS.PENDING) , value:ACC_STATUS.PENDING},
-    {title:getStatusName(ACC_STATUS.SUSPENDED) , value:ACC_STATUS.SUSPENDED},
-  ]
+  
 
   return (
     <div className="mb-4 pl-4 flex flex-wrap items-center gap-3">
@@ -74,7 +70,7 @@ export function AffiliateSearch({ onSearch }: any) {
         </SelectTrigger>
 
         <SelectContent>
-            {listStatus.map(item => <SelectItem key={item.value} value={item.value}>{item.title}</SelectItem>)}
+            {listStatus.map((item:StatusType) => <SelectItem key={item.value} value={item.value}>{item.title}</SelectItem>)}
         </SelectContent>
       </Select>
 

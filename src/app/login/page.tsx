@@ -1,5 +1,5 @@
 "use client";
-import Login from "@/mainContainers/login";
+import Login from "@/app-controler/login";
 
 export default function LoginPage() {
 

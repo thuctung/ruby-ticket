@@ -1,9 +1,6 @@
 "use client";
 
-import api from "@/axios";
-import { FORGOR_PASSWORD } from "@/commons/apiURL";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";

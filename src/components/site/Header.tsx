@@ -33,10 +33,10 @@ import { CommonType, ProfileType } from "@/types";
 
 import { ROLES } from "@/commons/constant";
 import { useRouter } from "next/navigation";
-import { sv_getCurrentProfile } from "@/app/api/client/profiles";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import Image from "next/image";
+import { sv_getCurrentProfile } from "@/app-controler/login/api";
 
 export default function Header() {
   const router = useRouter();
