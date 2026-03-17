@@ -22,6 +22,7 @@ export async function POST(req: Request) {
   let query = supabaseAdmin
     .from(DB_TABLE_NAME.WALLET_TRANSACTION)
     .select("*", { count: "exact" })
+    .order('created_at',{ascending:false})
 
  // filter user
   if (user_id) {

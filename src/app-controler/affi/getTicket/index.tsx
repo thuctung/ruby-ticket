@@ -311,7 +311,7 @@ export default function GetTicketPageControler() {
                             disabled={profile?.balance < finalMoenyToPay}
                             onClick={handlPayment}
                         >
-                            {profile?.balance > finalMoenyToPay ? 'Xuất vé' : 'Số dư không đủ'}
+                            {profile?.balance >= finalMoenyToPay ? 'Xuất vé' : 'Số dư không đủ'}
                         </Button>
                     </div>
                 </CardContent>
