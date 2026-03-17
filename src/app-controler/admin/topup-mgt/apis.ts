@@ -1,5 +1,5 @@
 import api from "@/axios";
-import { GET_LIST_TOPUP_MGT, UPDATE_AFFILIATE_ROLE, UPDATE_AFFILIATE_STATUS, UPDATE_STATUS_TOPUP_MGT } from "@/commons/apiURL";
+import { ADD_TRANSACTION, GET_LIST_TOPUP_MGT, UPDATE_AFFILIATE_ROLE, UPDATE_AFFILIATE_STATUS, UPDATE_STATUS_TOPUP_MGT } from "@/commons/apiURL";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType, ProfileUpdateStatusType, SearchAffiType, SearchTableType } from "@/types";
 import { get } from "lodash";
@@ -13,6 +13,7 @@ export const getListTopupMgt = async (searchValue: SearchTableType<SearchAffiTyp
     try {
         const response = await api.post(GET_LIST_TOPUP_MGT, searchValue);
         const data = get(response, ['data']) || [];
+        
         return data
     } catch (err: any) {
         setToastMessage(err.response?.data?.error || err.message || 'Lỗi khi tải danh sách');
@@ -31,4 +32,12 @@ export const updateTopupMgtStatus = async (topup_id:string) => {
     } finally {
         setGlobalLoading(false);
     }
+}
+
+export const createTraction =  (param:any) => {
+    try {
+        api.post(ADD_TRANSACTION,param);
+    } catch (err: any) {
+        setToastMessage(err.response?.data?.error || err.message || 'Có lỗi xảy');
+    } 
 }

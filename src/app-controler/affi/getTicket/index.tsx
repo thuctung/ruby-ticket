@@ -7,6 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+
 import {
     Select,
     SelectContent,
@@ -14,118 +17,38 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { formatVND } from "@/lib/money";
-import { getWallet, issueTicketFromWallet, calcTotal } from "@/lib/affiliateStore";
-import { getSessionUser } from "@/lib/sessionUser";
-import type { ProductKey } from "@/lib/products";
-import { listProducts, getProduct } from "@/lib/products";
 import { useLang } from "@/lib/useLang";
 import { t } from "@/lib/i18n/t";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
-import { LOCATIONS, PERSONS } from "@/commons/constant";
-import { LocationType, PersonType, TicketType, TicketByLocationType, ProductType, ResultTicketSlectedType, ItemSelectType } from "@/types/ticket";
-import { createOrderTicket, getProducts, getTicletByLocation } from "./api";
-import { get, result } from "lodash";
+import { LocationType,  TicketType, TicketByLocationType, ProductType, ResultTicketSlectedType, ItemSelectType, TicketResultQRType } from "@/types/ticket";
+import { createOrderTicket, getLocation, getProducts, getTicletByLocation } from "./api";
+import { get,  } from "lodash";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
 import { useCommonStore } from "@/stores/useCommonStore";
+import dayjs from "dayjs";
+import TicketResultQR from "./components/TicketResultQR";
 
-const todayISO = () => {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    return d.toISOString().slice(0, 10);
-};
+
 
 export default function GetTicketPageControler() {
     const lang = useLang();
-    const products = listProducts();
 
 
     const profile: ProfileType = useProfileStore((state: any) => state.profile);
 
 
-    const [balance, setBalance] = useState(0);
 
-    const [productKey, setProductKey] = useState<ProductKey>("bana");
-    const product = getProduct(productKey);
+    const { setToastMessage }: CommonType | any = useCommonStore.getState();
 
-    const [ticketOption, setTicketOption] = useState<string>("cap");
+    const [discount, setDiscount] = useState(0);
 
-    const [travelDate, setTravelDate] = useState(todayISO());
-    const [isCentralRegion, setIsCentralRegion] = useState(false);
+    const [locationList, setLocationList] = useState<LocationType[]>([]);
 
-    const [qtyAdult, setQtyAdult] = useState(1);
-    const [qtySenior, setQtySenior] = useState(0);
-    const [qtyChild, setQtyChild] = useState(0);
-
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [note, setNote] = useState("");
-
-    useEffect(() => {
-        const load = () => setBalance(getWallet().balance);
-        load();
-
-        const onStorage = () => load();
-        window.addEventListener("storage", onStorage);
-        return () => window.removeEventListener("storage", onStorage);
-    }, []);
-
-    // sync fields when switching product
-    useEffect(() => {
-        const p = getProduct(productKey);
-        if (!p.showCentralRegionCheckbox) setIsCentralRegion(false);
-
-        if (!p.paxTypes.includes("adult")) setQtyAdult(0);
-        if (!p.paxTypes.includes("senior")) setQtySenior(0);
-        if (!p.paxTypes.includes("child")) setQtyChild(0);
-
-        if (p.ticketOptions?.length) {
-            const first = p.ticketOptions[0]?.key;
-            setTicketOption((prev) => {
-                if (prev === "combo" || prev === "cap") return prev;
-                return first === "combo" || first === "cap" ? first : "cap";
-            });
-        }
-
-        // ensure at least 1
-        setTimeout(() => {
-            const totalQty =
-                (p.paxTypes.includes("adult") ? qtyAdult : 0) +
-                (p.paxTypes.includes("senior") ? qtySenior : 0) +
-                (p.paxTypes.includes("child") ? qtyChild : 0);
-            if (totalQty === 0) {
-                if (p.paxTypes.includes("adult")) setQtyAdult(1);
-                else if (p.paxTypes.includes("child")) setQtyChild(1);
-            }
-        }, 0);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productKey]);
-
-    const totals = useMemo(() => {
-        return calcTotal({
-            productKey,
-            ticketOption: productKey === "bana" ? ticketOption : undefined,
-            isCentralRegion,
-            qtyAdult,
-            qtySenior,
-            qtyChild,
-        });
-    }, [productKey, ticketOption, isCentralRegion, qtyAdult, qtySenior, qtyChild]);
-
-    const canIssue = useMemo(() => {
-        const totalQty = qtyAdult + qtySenior + qtyChild;
-        return travelDate >= todayISO() && totalQty > 0 && email.includes("@");
-    }, [travelDate, qtyAdult, qtySenior, qtyChild, email]);
-
-    const { setGlobalLoading, setIsShowToast, setToastMessage }: CommonType | any = useCommonStore.getState();
-    const { logout, setProfile }: any = useProfileStore.getState();
-
-    const [discount, setDiscount] = useState(0)
     const [location, setLocation] = useState('BANA');
 
-    const [dateUse, setDateUse] = useState('');
+    const [dateUse, setDateUse] = useState<Date>();
 
     const [ticketLocation, setTicketLocation] = useState<TicketByLocationType[]>([])
 
@@ -136,6 +59,16 @@ export default function GetTicketPageControler() {
     const [ticketCategory, setTicketCategory] = useState<any>({
     })
 
+    const [openQR, setOpenQR] = useState(false);
+    const [resultTicketQR, setTicketResultQR] = useState<TicketResultQRType[]>([]);
+
+    const locationName = useMemo(() => locationList.find(item => item.code === location)?.name || '', [location, locationList])
+
+
+    const onCloseQR = () => {
+        setOpenQR(false);
+        setTicketCategory({})
+    }
 
     const fetchTicketType = async () => {
         const data: TicketByLocationType[] | any = await getTicletByLocation(location);
@@ -154,7 +87,7 @@ export default function GetTicketPageControler() {
 
     const updateCategoryNum = (key: string, value: number) => {
         setTicketCategory((pre: any) => ({ ...pre, [key]: value }));
-        
+
     }
 
     const handleChangeLocation = (locationCode: string) => {
@@ -169,6 +102,7 @@ export default function GetTicketPageControler() {
             total: 0,
         }
         const listKey = Object.keys(ticketCategory);
+
         listKey.forEach((keyCategory: string) => {
             const count = ticketCategory[keyCategory] || 0;
             if (count > 0) {
@@ -199,31 +133,39 @@ export default function GetTicketPageControler() {
     }, [resultTicketSelect])
 
     const checkBalance = async () => {
-        const { profile: data, error }: any = await sv_getCurrentProfile(profile.user_id);
-        if (error) {
-            setToastMessage(error);
+        if (profile?.balance < finalMoenyToPay) {
+            setToastMessage('Số dư hiện tại không đủ !');
             return false;
         }
-        if (data) {
-            setProfile(data);
-            if (data?.balance < finalMoenyToPay) {
-                setToastMessage('Số dư hiện tại không đủ !');
-                return false;
-            }
-            return true
-        }
-        setToastMessage('Có lỗi xảy ra!');
-        return false
+        return true
     }
 
     const handlPayment = async () => {
+        if (!dateUse) {
+            setToastMessage('Vui lòng chọn ngày'); return
+        }
         if (!finalMoenyToPay) return;
+
         const resultBalance = await checkBalance();
         if (resultBalance) {
-            const data = await createOrderTicket(profile.user_id, resultTicketSelect.listItemSelect)
-            console.log("data", data)
+            const data = await createOrderTicket(profile.user_id, resultTicketSelect.listItemSelect, finalMoenyToPay, dayjs(dateUse).format('YYYY-MM-DD'))
+
+            if (data?.success) {
+                setTicketResultQR(data?.tickets)
+                sv_getCurrentProfile(profile.user_id);
+                setOpenQR(true)
+            }
         }
     }
+
+    const fetchLocation = async () => {
+        const resLocation = await getLocation();
+        setLocationList(resLocation)
+    }
+
+    useEffect(() => {
+        fetchLocation()
+    }, [])
 
     useEffect(() => {
         if (ticketType) {
@@ -265,24 +207,25 @@ export default function GetTicketPageControler() {
                                     <SelectValue placeholder={t(lang, "checkout.switcher.title")} />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {LOCATIONS.map((location: LocationType) => (
+                                    {locationList.map((location: LocationType) => (
                                         <SelectItem key={location.code} value={location.code}>
                                             {location.name}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>
-                            <p className="text-xs text-muted-foreground">{t(lang, product.taglineKey)}</p>
                         </div>
 
                         <div className="space-y-2">
                             <Label>{t(lang, "checkout.form.date")}</Label>
-                            <Input
-                                type="date"
-                                min={todayISO()}
-                                value={dateUse}
-                                onChange={(e) => setDateUse(e.target.value)}
+                            <DatePicker
+                                onSelect={(date: any) => setDateUse(date)}
+                                selected={dateUse}
+                                dateFormat="dd-MM-yyyy"
+                                className="border p-1 rounded-sm"
+                                minDate={new Date()}
                             />
+
                         </div>
                     </div>
                     <div className="space-y-2">
@@ -302,8 +245,7 @@ export default function GetTicketPageControler() {
                             ))}
                         </div>
                     </div>
-                    {product.showCentralRegionCheckbox ? (
-                        <div className="flex items-center justify-between rounded-xl border bg-muted/20 p-4">
+                     <div className="flex items-center justify-between rounded-xl border bg-muted/20 p-4">
                             <div>
                                 <div className="font-medium">{t(lang, "checkout.form.centralTitle")}</div>
                                 <div className="text-sm text-muted-foreground">
@@ -313,11 +255,9 @@ export default function GetTicketPageControler() {
                             <input
                                 type="checkbox"
                                 className="h-5 w-5"
-                                checked={isCentralRegion}
-                                onChange={(e) => setIsCentralRegion(e.target.checked)}
+                               
                             />
                         </div>
-                    ) : null}
 
                     <div className="space-y-3">
                         <div>
@@ -325,7 +265,7 @@ export default function GetTicketPageControler() {
                             <div className="text-sm text-muted-foreground">{t(lang, "checkout.form.qtyDesc")}</div>
                         </div>
 
-                        <div className={`grid grid-cols-1 gap-4 ${product.paxTypes.length >= 3 ? "sm:grid-cols-3" : product.paxTypes.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-1"}`}>
+                        <div className={`grid grid-cols-1 gap-4 ${productFilter.length >= 3 ? "sm:grid-cols-3" : productFilter.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-1"}`}>
                             {
                                 productFilter.map((item: ProductType) => <div key={item.id} className="space-y-2">
                                     <Label>{item.category_name}</Label>
@@ -337,11 +277,6 @@ export default function GetTicketPageControler() {
                     </div>
 
                     <Separator />
-
-                    <div className="space-y-2">
-                        <Label>{t(lang, "checkout.form.note")}</Label>
-                        <Textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder={t(lang, "checkout.form.notePlaceholder")} />
-                    </div>
 
                     <Card className="rounded-2xl">
                         <CardHeader>
@@ -381,6 +316,8 @@ export default function GetTicketPageControler() {
                     </div>
                 </CardContent>
             </Card>
+
+            {openQR && <TicketResultQR tickets={resultTicketQR} onClose={onCloseQR} location={locationName} dateUse={dateUse} />}
         </div>
     );
 }

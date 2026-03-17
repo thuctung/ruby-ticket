@@ -17,6 +17,14 @@ export const UPDATE_STATUS_TOPUP_MGT = '/api/auth/admin/topup-mgt/update-status'
 
 export const GET_PRODUCTS = '/api/auth/affiliate/get-ticket/get-product'
 
+export const GET_LOCATIONS = '/api/auth/affiliate/get-ticket/get-location'
+
 export const GET_TICKE_TYPE = '/api/auth/affiliate/get-ticket/get-ticket-type'
 
 export const CREATE_ORDER_TICKET = '/api/auth/affiliate/get-ticket/create-order'
+
+export const GET_TRANSACTION = '/api/auth/affiliate/transaction/get-transaction'
+
+export const ADD_TRANSACTION = '/api/auth/affiliate/transaction/add-new'
+
+

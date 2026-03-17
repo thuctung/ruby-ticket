@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { SearchAffiType, SearchTableType } from "@/types";
-import { LIMIT_TABLE } from "@/commons/constant";
+import { DB_TABLE_NAME, LIMIT_TABLE } from "@/commons/constant";
 
 export async function POST(request: Request) {
    const body:SearchTableType = await request.json();
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   const { status,username, email}:SearchAffiType = searchValue
 
  let query = supabaseAdmin
-    .from('profiles')
+    .from(DB_TABLE_NAME.PROFILES)
     .select(
       `
       user_id,

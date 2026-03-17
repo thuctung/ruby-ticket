@@ -42,3 +42,9 @@ export type ResultTicketSlectedType = {
     listItemSelect:ItemSelectType[],
     total:number
 }
+
+export type TicketResultQRType = {
+    ticket_variant_code:string,
+    ticket_code:string,
+    ticket_name:string,
+}

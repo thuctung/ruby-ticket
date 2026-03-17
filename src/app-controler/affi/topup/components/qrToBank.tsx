@@ -12,6 +12,7 @@ import {
     DialogContent,
     DialogTitle,
 } from "@/components/ui/dialog"
+import { CODE_BANK } from "@/commons/code-bank"
 
 
 type BankTransferQRProps = {
@@ -19,6 +20,7 @@ type BankTransferQRProps = {
     onDone:() => void,
     isOpen:boolean,
 }
+
 
 export default function BankTransferQR({
     dataQR,
@@ -37,11 +39,12 @@ export default function BankTransferQR({
                 <div className="space-y-4">
                     <img src={dataQR.qr} className="w-64 mx-auto" />
                     <div className="text-sm space-y-2">
-                        <Row
+                        {BANK_INFO.bankName ? <Row
                             label="Ngân hàng"
-                            value={BANK_INFO.bankName}
+                            value={ CODE_BANK[BANK_INFO.bankName]}
                             onCopy={() => copy(BANK_INFO.bankName)}
-                        />
+                        />: null}
+                        
                         <Row
                             label="Số tài khoản"
                             value={BANK_INFO.bankNum}

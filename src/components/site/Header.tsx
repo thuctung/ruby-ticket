@@ -80,12 +80,11 @@ export default function Header() {
       } = await supabase.auth.getSession();
       if (session) {
         const user = session.user;
-        const {profile, error}: any = await sv_getCurrentProfile(user.id);
+        const { error}: any = await sv_getCurrentProfile(user.id);
         if(error){
         setToastMessage(error);
         return;
         }
-        setProfile(profile);
       }
     } catch (e) {
       setToastMessage('Có lỗi xảy ra')

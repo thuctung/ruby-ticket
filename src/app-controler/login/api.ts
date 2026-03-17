@@ -44,6 +44,9 @@ export const sv_getCurrentProfile = async (userId: string): Promise<any> => {
             .select("*",)
             .eq("user_id", userId)
             .single();
+        if(profile){
+            setProfile(profile)
+        }
         return { profile, error }
     } catch (e) {
 

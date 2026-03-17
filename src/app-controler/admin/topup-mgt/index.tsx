@@ -9,7 +9,7 @@ import { get } from "lodash";
 import { AffiliateSearch } from "../affiliate-mgt/components/search-form";
 import { listTopupMgtStatus } from "./components/constants";
 import { TopupMgtList } from "./components/topupList";
-import { getListTopupMgt, updateTopupMgtStatus } from "./apis";
+import { createTraction, getListTopupMgt, updateTopupMgtStatus } from "./apis";
 
 
 
@@ -23,7 +23,7 @@ export default function TopupMgtControl() {
             username: '',
             status: '',
         },
-        currentPage: 1
+        currentPage: 1,
     })
 
     const handleUpdateSearch = useCallback((value: SearchAffiType) => {
@@ -40,11 +40,17 @@ export default function TopupMgtControl() {
         setListTopMgt(data)
     }, [params])
 
-    const handleUpdateStatus = useCallback(async (topup_id: string) => {
+    const handleUpdateStatus = useCallback(async (topupItem: TopupMgtResponseType) => {
         
-        const response = await updateTopupMgtStatus(topup_id);
+        const response = await updateTopupMgtStatus(topupItem.topup_id);
         if (response?.data) {
-            handleGetListAff()
+            createTraction({
+            user_id:topupItem.user_id,
+            amount:topupItem.amount,
+            payment_code:topupItem.payment_code
+        });
+            handleGetListAff();
+            
         }
     }, [handleGetListAff])
 

@@ -1,19 +1,14 @@
-
 import { NextResponse } from "next/server";
 
 
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { DB_TABLE_NAME } from "@/commons/constant";
 
-export async function POST(req: Request) {
-  const { user_id, items, total_amount , p_date_use} = await req.json()
+export async function GET(req: Request) {
 
-  const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_BY_TICKET, {
-    listticketsubmit: items,
-    p_user_id: user_id,
-    p_date_use,
-    total_amount,
-  })
+  const { data, error }: any = await supabaseAdmin
+    .from(DB_TABLE_NAME.LOCATIONS)
+    .select('*')
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

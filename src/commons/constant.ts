@@ -8,6 +8,12 @@ export const ACC_STATUS = {
 }
 
 
+export const TYPE_TRANSACTION = {
+    ADD: 'add',
+    PAID: 'PAID',
+    TICKET_BUY:'ticket_buy'
+}
+
 export const ROLES = {
     CUSTOMER: 'customer',
     AFFILIATE: 'affiliate',
@@ -36,6 +42,7 @@ export const SIDEBAR_AFF: MenuMgtType[] = [
     { link: '/affiliate/topup', lable: 'Nạp tiền' },
     { link: '/affiliate/get-ticket', lable: 'Rút vé' },
     { link: '/affiliate/stats', lable: 'Thống kê' },
+    { link: '/affiliate/transaction', lable: 'Lịch sử giao dịch' },
 ]
 
 export const DB_TABLE_NAME = {
@@ -47,7 +54,9 @@ export const DB_TABLE_NAME = {
     TICKET_TYPES:'ticket_types',
     TICKET_TICKET_VARIANT:'ticket_variants',
     VIEW_TICET_VARIANTS_AND_CATEGORY:'ticket_variants_and_category',
-    FUNC_BY_TICKET :'buy_tickets'
+    FUNC_BY_TICKET :'buy_tickets',
+    LOCATIONS :'locations',
+    WALLET_TRANSACTION:'wallet_transactions'
 }
 
 

@@ -26,3 +26,11 @@ export interface TopupMgtResponseType extends ProfileType, TopupHistoryResponseT
     created_at: string,
     topup_id:string
 }
+
+
+export interface  TractionResponseType {
+    amount:number,
+    created_at:string,
+    description:string,
+    type:string
+}

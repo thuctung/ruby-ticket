@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 
 type TopupHistoryProps = {
     history: TopupMgtResponseType[],
-    onApproveTopup: (id: string) => void
+    onApproveTopup: (id: TopupMgtResponseType) => void
 }
 
 export function TopupMgtList({ history, onApproveTopup }: TopupHistoryProps) {
@@ -69,7 +69,7 @@ export function TopupMgtList({ history, onApproveTopup }: TopupHistoryProps) {
                                             <div className="flex flex-wrap gap-2">
                                                 <Button
                                                     size="sm"
-                                                    onClick={() => onApproveTopup(item.topup_id)}
+                                                    onClick={() => onApproveTopup(item)}
                                                     disabled={item.status !== TOPUPS_STATUS.PENDING}
                                                 >
                                                     {TOPUPS_STATUS.PENDING ? 'Chấp nhận' : 'Đã duyệt'}
