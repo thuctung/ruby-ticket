@@ -1,9 +1,7 @@
-
-
 import { useLang } from "@/lib/useLang";
 
 import { HeroSection } from "./components/HeroSection";
-import { HighlightsSection} from "./components/HighlightsSection";
+import { HighlightsSection } from "./components/HighlightsSection";
 import { ExperiencesSection } from "./components/ExperiencesSection";
 import { CollaboratorSection } from "./components/CollaboratorSection";
 import { FaqSection } from "./components/FaqSection";
@@ -15,26 +13,15 @@ type LocationRow = {
   pre_price?: number | string;
 };
 
-const LOCATION_CODE_TO_PRODUCT_KEY: Record<string, (typeof EXPERIENCES)[number]["key"]> = {
-  BANA: "bana",
-  VINPER: "vinpearl",
-  KWHOIAN: "hoian-memories",
-  NUITHANTAI: "nui-than-tai",
-  DUTHUYEN: "cruise",
-};
-
 export default function HomePage({ locations }: { locations: LocationRow[] }) {
-  const lang = 'vi';
-
-  const topPicks = EXPERIENCES.slice(0, 4)
+  const lang = "vi";
+  const topPicks = EXPERIENCES.slice(0, 4);
 
   const locationCards = () => {
-    const list = (locations || [])
-      .filter((x) => Boolean(x?.code))
+    const list = locations
       .map((x) => {
         const code = String(x.code);
-        const productKey = LOCATION_CODE_TO_PRODUCT_KEY[code];
-        const exp = EXPERIENCES.find((e) => e.key === productKey);
+        const exp = EXPERIENCES.find((e) => e.key === code);
         if (!exp) return null;
         const price = Number(x.pre_price ?? 0) || 0;
         return {
@@ -53,10 +40,8 @@ export default function HomePage({ locations }: { locations: LocationRow[] }) {
       exp: (typeof EXPERIENCES)[number];
     }>;
 
-    return list
-  }
-
-  console.log('locationCards',locationCards())
+    return list;
+  };
 
   return (
     <main className="min-h-screen flex flex-col bg-background text-foreground">
@@ -66,10 +51,9 @@ export default function HomePage({ locations }: { locations: LocationRow[] }) {
         locationCards={locationCards()}
         fallbackExperiences={EXPERIENCES}
       />
-      <HighlightsSection lang={lang}  />
+      <HighlightsSection lang={lang} />
       <CollaboratorSection lang={lang} />
-      <FaqSection lang={lang}  />
+      <FaqSection lang={lang} />
     </main>
   );
 }
-

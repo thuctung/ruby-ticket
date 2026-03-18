@@ -1,10 +1,11 @@
 import HomePage from "@/app-controler/homepage";
 import { DB_TABLE_NAME } from "@/commons/constant";
-import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { createSupabaseServerClient } from "@/lib/supabase/server-ssr";
 
-const srrSupbase = createSupabaseBrowserClient()
+export const revalidate = 3600;
 
 export default async function Home() {
+  const srrSupbase = await createSupabaseServerClient();
   const { data } = await srrSupbase
     .from(DB_TABLE_NAME.LOCATIONS)
     .select("code,name,pre_price")
