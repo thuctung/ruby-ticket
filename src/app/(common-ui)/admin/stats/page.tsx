@@ -65,7 +65,7 @@ export default function AdminStatsPage() {
 
   const totals = useMemo(() => {
     const tickets = filtered.reduce(
-      (acc, s) => acc + s.qtyAdult + s.qtySenior + s.qtyChild,
+      (acc, s) => acc + s.qtyLON + s.qtyGIA + s.qtyNHO + s.qtyChung + s.qtyCHILDANDAUL,
       0
     );
     const revenue = filtered.reduce((acc, s) => acc + s.total, 0);
@@ -171,7 +171,8 @@ export default function AdminStatsPage() {
                 </tr>
               ) : (
                 rows.map((r) => {
-                  const qty = r.qtyAdult + r.qtySenior + r.qtyChild;
+                  const qty =
+                    r.qtyLON + r.qtyGIA + r.qtyNHO + r.qtyChung + r.qtyCHILDANDAUL;
                   return (
                     <tr key={r.id} className="border-t">
                       <td className="p-3">{r.createdAt.slice(0, 10)}</td>

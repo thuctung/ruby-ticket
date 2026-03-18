@@ -1,8 +1,5 @@
 import api from "@/axios";
 import { CREATE_ORDER_TICKET, GET_LOCATIONS, GET_PRODUCTS, GET_QR_TOPUP, GET_TICKE_TYPE } from "@/commons/apiURL";
-import { DB_TABLE_NAME } from "@/commons/constant";
-import { getCodeTopup, } from "@/helpers/genCode";
-import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import { ItemSelectType } from "@/types/ticket";
@@ -75,7 +72,6 @@ export const createOrderTicket = async (user_id: string, ticketsSelected: ItemSe
         }
         return data
     } catch (e) {
-        console.log(e)
         setToastMessage('Có lỗi xảy ra! Thử lại sau');
     } finally {
         setGlobalLoading(false)

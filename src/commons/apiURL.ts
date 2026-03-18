@@ -27,4 +27,12 @@ export const GET_TRANSACTION = '/api/auth/affiliate/transaction/get-transaction'
 
 export const ADD_TRANSACTION = '/api/auth/affiliate/transaction/add-new'
 
+export const GET_LIST_INVENTORY = '/api/auth/admin/inventory/get-list'
+export const UPSERT_INVENTORY = '/api/auth/admin/inventory/upsert'
+
+export const GET_LIST_PRICING = '/api/auth/admin/pricing/get-list'
+export const UPSERT_PRICING = '/api/auth/admin/pricing/upsert'
+
+export const GET_HOME_HIGHLIGHTS = '/api/public/home/highlights'
+
 

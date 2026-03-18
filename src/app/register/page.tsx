@@ -93,7 +93,6 @@ export default function RegisterPage() {
         message?: string;
       };
 
-      console.log('res',json)
 
       if (!res.ok || !json.ok) {
         setError(json.message ?? "Đăng ký thất bại");

@@ -6,7 +6,6 @@ export async function POST(request: Request) {
     const {
         email
     } = await request.json();
-    console.log(email)
     const{error} :any= supabaseAdmin.auth.resetPasswordForEmail(email, );
 
     if (error) {

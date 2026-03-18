@@ -1,17 +1,11 @@
-import CheckoutPageClient from "@/app/(common-ui)/checkout/CheckoutPageClient";
-import { productKeySchema } from "@/lib/products";
+import CheckoutControlerPage from "@/app-controler/checkout-client";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
 
-export default async function CheckoutPage({
-  searchParams,
-}: {
-  // Next 16+ may pass searchParams as a Promise (sync-dynamic-apis)
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const sp = searchParams ? await searchParams : undefined;
-  const raw = sp?.product;
-  const product = Array.isArray(raw) ? raw[0] : raw;
-  const parsed = productKeySchema.safeParse(product ?? "bana");
-  const productKey = parsed.success ? parsed.data : "bana";
-
-  return <CheckoutPageClient productKey={productKey} />;
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<Loader2 className="h-8 w-8 animate-spin text-primary" />}>
+      <CheckoutControlerPage />
+    </Suspense>
+  );
 }

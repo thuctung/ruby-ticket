@@ -42,9 +42,11 @@ export const checkoutSchema = z
 
     isCentralRegion: z.boolean().default(false),
 
-    qtyAdult: z.coerce.number().int().min(0).max(99),
-    qtySenior: z.coerce.number().int().min(0).max(99),
-    qtyChild: z.coerce.number().int().min(0).max(99),
+    qtyLON: z.coerce.number().int().min(0).max(99),
+    qtyGIA: z.coerce.number().int().min(0).max(99),
+    qtyNHO: z.coerce.number().int().min(0).max(99),
+    qtyChung: z.coerce.number().int().min(0).max(99),
+    qtyCHILDANDAUL: z.coerce.number().int().min(0).max(99),
 
     email: z.string().email("Email không hợp lệ"),
     phone: z
@@ -57,12 +59,12 @@ export const checkoutSchema = z
     note: z.string().max(500).optional().or(z.literal("")),
   })
   .superRefine((v, ctx) => {
-    const totalQty = v.qtyAdult + v.qtySenior + v.qtyChild;
+    const totalQty = v.qtyLON + v.qtyGIA + v.qtyNHO + v.qtyChung + v.qtyCHILDANDAUL;
     if (totalQty <= 0) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Bạn cần chọn ít nhất 1 vé",
-        path: ["qtyAdult"],
+        path: ["qtyLON"],
       });
     }
 
@@ -84,25 +86,39 @@ export const checkoutSchema = z
     }
 
     // If a product doesn't support a pax type, its quantity must be 0.
-    if (!product.paxTypes.includes("adult") && v.qtyAdult !== 0) {
+    if (!product.paxTypes.includes("LON") && v.qtyLON !== 0) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Sản phẩm này không áp dụng vé Người lớn",
-        path: ["qtyAdult"],
+        path: ["qtyLON"],
       });
     }
-    if (!product.paxTypes.includes("senior") && v.qtySenior !== 0) {
+    if (!product.paxTypes.includes("GIA") && v.qtyGIA !== 0) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Sản phẩm này không áp dụng vé Người già",
-        path: ["qtySenior"],
+        message: "Sản phẩm này không áp dụng vé Người cao tuổi",
+        path: ["qtyGIA"],
       });
     }
-    if (!product.paxTypes.includes("child") && v.qtyChild !== 0) {
+    if (!product.paxTypes.includes("NHO") && v.qtyNHO !== 0) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Sản phẩm này không áp dụng vé Trẻ em",
-        path: ["qtyChild"],
+        path: ["qtyNHO"],
+      });
+    }
+    if (!product.paxTypes.includes("Chung") && v.qtyChung !== 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Sản phẩm này không áp dụng loại vé Chung",
+        path: ["qtyChung"],
+      });
+    }
+    if (!product.paxTypes.includes("CHILDANDAUL") && v.qtyCHILDANDAUL !== 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Sản phẩm này không áp dụng loại vé Người lớn & Trẻ em",
+        path: ["qtyCHILDANDAUL"],
       });
     }
 
@@ -119,9 +135,11 @@ export const checkoutSchema = z
 export type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 
 type Pricing = {
-  adult: number;
-  senior: number;
-  child: number;
+  LON: number;
+  GIA: number;
+  NHO: number;
+  Chung: number;
+  CHILDANDAUL: number;
   centralDiscount: number; // percentage 0..1
 };
 
@@ -129,13 +147,13 @@ type Pricing = {
 // Bà Nà has ticketOptions, so we model pricing by option.
 const PRICING: Record<ProductKey, Pricing | Record<string, Pricing>> = {
   bana: {
-    cap: { adult: 1200000, senior: 1050000, child: 800000, centralDiscount: 0.1 },
-    combo: { adult: 1450000, senior: 1300000, child: 980000, centralDiscount: 0.1 },
+    cap: { LON: 1200000, GIA: 1050000, NHO: 800000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.1 },
+    combo: { LON: 1450000, GIA: 1300000, NHO: 980000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.1 },
   },
-  vinpearl: { adult: 1100000, senior: 980000, child: 760000, centralDiscount: 0.08 },
-  "hoian-memories": { adult: 600000, senior: 0, child: 450000, centralDiscount: 0 },
-  "nui-than-tai": { adult: 700000, senior: 620000, child: 520000, centralDiscount: 0.1 },
-  cruise: { adult: 450000, senior: 0, child: 320000, centralDiscount: 0 },
+  vinpearl: { LON: 1100000, GIA: 980000, NHO: 760000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.08 },
+  "hoian-memories": { LON: 600000, GIA: 0, NHO: 450000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0 },
+  "nui-than-tai": { LON: 700000, GIA: 620000, NHO: 520000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.1 },
+  cruise: { LON: 450000, GIA: 0, NHO: 320000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0 },
 };
 
 export function CheckoutForm({
@@ -156,10 +174,12 @@ export function CheckoutForm({
     isCentralRegion: defaultValues?.isCentralRegion ?? false,
     ticketOption:
       defaultValues?.ticketOption ?? product.ticketOptions?.[0]?.key,
-    qtyAdult:
-      defaultValues?.qtyAdult ?? (product.paxTypes.includes("adult") ? 1 : 0),
-    qtySenior: defaultValues?.qtySenior ?? 0,
-    qtyChild: defaultValues?.qtyChild ?? 0,
+    qtyLON:
+      defaultValues?.qtyLON ?? (product.paxTypes.includes("LON") ? 1 : 0),
+    qtyGIA: defaultValues?.qtyGIA ?? 0,
+    qtyNHO: defaultValues?.qtyNHO ?? 0,
+    qtyChung: defaultValues?.qtyChung ?? 0,
+    qtyCHILDANDAUL: defaultValues?.qtyCHILDANDAUL ?? 0,
     email: defaultValues?.email ?? "",
     phone: defaultValues?.phone ?? "",
     note: defaultValues?.note ?? "",
@@ -182,15 +202,18 @@ export function CheckoutForm({
         // reset checkbox if not supported
         isCentralRegion: p.showCentralRegionCheckbox ? prev.isCentralRegion : false,
         // zero-out unsupported pax types
-        qtyAdult: p.paxTypes.includes("adult") ? prev.qtyAdult : 0,
-        qtySenior: p.paxTypes.includes("senior") ? prev.qtySenior : 0,
-        qtyChild: p.paxTypes.includes("child") ? prev.qtyChild : 0,
+        qtyLON: p.paxTypes.includes("LON") ? prev.qtyLON : 0,
+        qtyGIA: p.paxTypes.includes("GIA") ? prev.qtyGIA : 0,
+        qtyNHO: p.paxTypes.includes("NHO") ? prev.qtyNHO : 0,
+        qtyChung: p.paxTypes.includes("Chung") ? prev.qtyChung : 0,
+        qtyCHILDANDAUL: p.paxTypes.includes("CHILDANDAUL") ? prev.qtyCHILDANDAUL : 0,
       };
 
       // if all quantities become 0 after switching, set a sensible default
-      if (next.qtyAdult + next.qtySenior + next.qtyChild === 0) {
-        if (p.paxTypes.includes("adult")) next.qtyAdult = 1;
-        else if (p.paxTypes.includes("child")) next.qtyChild = 1;
+      if (next.qtyLON + next.qtyGIA + next.qtyNHO + next.qtyChung + next.qtyCHILDANDAUL === 0) {
+        if (p.paxTypes.includes("LON")) next.qtyLON = 1;
+        else if (p.paxTypes.includes("NHO")) next.qtyNHO = 1;
+        else if (p.paxTypes.includes("Chung")) next.qtyChung = 1;
       }
 
       return next;
@@ -211,9 +234,11 @@ export function CheckoutForm({
 
   const calc = useMemo(() => {
     const subtotal =
-      values.qtyAdult * pricing.adult +
-      values.qtySenior * pricing.senior +
-      values.qtyChild * pricing.child;
+      values.qtyLON * pricing.LON +
+      values.qtyGIA * pricing.GIA +
+      values.qtyNHO * pricing.NHO +
+      values.qtyChung * pricing.Chung +
+      values.qtyCHILDANDAUL * pricing.CHILDANDAUL;
 
     const discount = values.isCentralRegion
       ? Math.round(subtotal * pricing.centralDiscount)
@@ -222,7 +247,7 @@ export function CheckoutForm({
     const total = Math.max(0, subtotal - discount);
 
     return { subtotal, discount, total };
-  }, [pricing, values.isCentralRegion, values.qtyAdult, values.qtyChild, values.qtySenior]);
+  }, [pricing, values.isCentralRegion, values.qtyLON, values.qtyGIA, values.qtyNHO, values.qtyChung, values.qtyCHILDANDAUL]);
 
   const setField = <K extends keyof CheckoutFormValues>(
     key: K,
@@ -266,14 +291,14 @@ export function CheckoutForm({
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-      <Card className="lg:col-span-3">
-        <CardHeader>
+      <Card className="lg:col-span-3 rounded-2xl shadow-md">
+        <CardHeader className="pb-4">
           <div className="flex items-center justify-between gap-4">
-            <CardTitle>{t(lang, "checkout.form.title")}</CardTitle>
-            <Badge variant="outline">{t(lang, "checkout.form.vnpay")}</Badge>
+            <CardTitle className="text-xl font-extrabold">{t(lang, "checkout.form.title")}</CardTitle>
+            <Badge variant="outline" className="rounded-full">{t(lang, "checkout.form.vnpay")}</Badge>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 pt-0">
           {/* Date + product */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
@@ -311,9 +336,8 @@ export function CheckoutForm({
                   <Button
                     key={opt.key}
                     type="button"
-                    variant={
-                      values.ticketOption === opt.key ? "default" : "outline"
-                    }
+                    variant={values.ticketOption === opt.key ? "default" : "outline"}
+                    className="rounded-xl"
                     onClick={() => setField("ticketOption", opt.key)}
                   >
                     {t(lang, opt.labelKey)}
@@ -344,61 +368,95 @@ export function CheckoutForm({
                     : "sm:grid-cols-1"
               }`}
             >
-              {product.paxTypes.includes("adult") && (
+              {product.paxTypes.includes("LON") && (
                 <div className="space-y-2">
-                  <Label htmlFor="qtyAdult">{t(lang, "checkout.form.pax.adult")}</Label>
+                  <Label htmlFor="qtyLON">{t(lang, "checkout.form.pax.adult")}</Label>
                   <Input
-                    id="qtyAdult"
+                    id="qtyLON"
                     inputMode="numeric"
                     type="number"
                     min={0}
                     max={99}
-                    value={values.qtyAdult}
+                    value={values.qtyLON}
                     onChange={(e) =>
-                      setField("qtyAdult", Number(e.target.value))
+                      setField("qtyLON", Number(e.target.value))
                     }
                   />
                 </div>
               )}
 
-              {product.paxTypes.includes("senior") && (
+              {product.paxTypes.includes("GIA") && (
                 <div className="space-y-2">
-                  <Label htmlFor="qtySenior">{t(lang, "checkout.form.pax.senior")}</Label>
+                  <Label htmlFor="qtyGIA">{t(lang, "checkout.form.pax.senior")}</Label>
                   <Input
-                    id="qtySenior"
+                    id="qtyGIA"
                     inputMode="numeric"
                     type="number"
                     min={0}
                     max={99}
-                    value={values.qtySenior}
+                    value={values.qtyGIA}
                     onChange={(e) =>
-                      setField("qtySenior", Number(e.target.value))
+                      setField("qtyGIA", Number(e.target.value))
                     }
                   />
                 </div>
               )}
 
-              {product.paxTypes.includes("child") && (
+              {product.paxTypes.includes("NHO") && (
                 <div className="space-y-2">
-                  <Label htmlFor="qtyChild">{t(lang, "checkout.form.pax.child")}</Label>
+                  <Label htmlFor="qtyNHO">{t(lang, "checkout.form.pax.child")}</Label>
                   <Input
-                    id="qtyChild"
+                    id="qtyNHO"
                     inputMode="numeric"
                     type="number"
                     min={0}
                     max={99}
-                    value={values.qtyChild}
+                    value={values.qtyNHO}
                     onChange={(e) =>
-                      setField("qtyChild", Number(e.target.value))
+                      setField("qtyNHO", Number(e.target.value))
+                    }
+                  />
+                </div>
+              )}
+
+              {product.paxTypes.includes("Chung") && (
+                <div className="space-y-2">
+                  <Label htmlFor="qtyChung">Vé Chung</Label>
+                  <Input
+                    id="qtyChung"
+                    inputMode="numeric"
+                    type="number"
+                    min={0}
+                    max={99}
+                    value={values.qtyChung}
+                    onChange={(e) =>
+                      setField("qtyChung", Number(e.target.value))
+                    }
+                  />
+                </div>
+              )}
+
+              {product.paxTypes.includes("CHILDANDAUL") && (
+                <div className="space-y-2">
+                  <Label htmlFor="qtyCHILDANDAUL">Vé Người lớn & Trẻ em</Label>
+                  <Input
+                    id="qtyCHILDANDAUL"
+                    inputMode="numeric"
+                    type="number"
+                    min={0}
+                    max={99}
+                    value={values.qtyCHILDANDAUL}
+                    onChange={(e) =>
+                      setField("qtyCHILDANDAUL", Number(e.target.value))
                     }
                   />
                 </div>
               )}
             </div>
 
-            {(errors.qtyAdult || errors.qtySenior || errors.qtyChild) && (
+            {(errors.qtyLON || errors.qtyGIA || errors.qtyNHO || errors.qtyChung || errors.qtyCHILDANDAUL) && (
               <p className="text-sm text-destructive">
-                {errors.qtyAdult || errors.qtySenior || errors.qtyChild}
+                {errors.qtyLON || errors.qtyGIA || errors.qtyNHO || errors.qtyChung || errors.qtyCHILDANDAUL}
               </p>
             )}
           </div>
@@ -470,12 +528,12 @@ export function CheckoutForm({
 
           <Button
             type="button"
-            className="w-full"
+            className="w-full rounded-xl"
             size="lg"
             disabled={submitting}
             onClick={handleSubmit}
           >
-            {submitting ? "..." : t(lang, "checkout.form.pay")}
+            {submitting ? "..." : `${t(lang, "checkout.form.pay")} • ${formatVND(calc.total)}`}
           </Button>
 
           {errors.form && (
@@ -485,11 +543,11 @@ export function CheckoutForm({
       </Card>
 
       {/* Summary */}
-      <Card className="lg:col-span-2">
-        <CardHeader>
-          <CardTitle>{t(lang, "checkout.summary.title")}</CardTitle>
+      <Card className="lg:col-span-2 lg:sticky lg:top-24 rounded-2xl shadow-md">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg font-extrabold">{t(lang, "checkout.summary.title")}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3 text-sm">
+        <CardContent className="space-y-3 text-sm pt-0">
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">
               {t(lang, "checkout.summary.destination")}

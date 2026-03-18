@@ -29,7 +29,7 @@ export type ProductConfig = {
 
   // UI/logic toggles
   showCentralRegionCheckbox: boolean;
-  paxTypes: ("adult" | "senior" | "child")[];
+  paxTypes: ("LON" | "GIA" | "NHO" | "Chung" | "CHILDANDAUL")[];
 
   // Some products (e.g. Bà Nà) have sub-types like "vé cáp" or "combo"
   ticketOptions?: { key: string; labelKey: "product.bana.ticket.cap" | "product.bana.ticket.combo" }[];
@@ -42,7 +42,7 @@ export const PRODUCTS: Record<ProductKey, ProductConfig> = {
     taglineKey: "product.bana.tagline",
     badgeKey: "product.bana.badge",
     showCentralRegionCheckbox: true,
-    paxTypes: ["adult", "senior", "child"],
+    paxTypes: ["LON", "GIA", "NHO"],
     ticketOptions: [
       { key: "cap", labelKey: "product.bana.ticket.cap" },
       { key: "combo", labelKey: "product.bana.ticket.combo" },
@@ -54,7 +54,7 @@ export const PRODUCTS: Record<ProductKey, ProductConfig> = {
     taglineKey: "product.vinpearl.tagline",
     badgeKey: "product.vinpearl.badge",
     showCentralRegionCheckbox: true,
-    paxTypes: ["adult", "senior", "child"],
+    paxTypes: ["LON", "GIA", "NHO"],
   },
   "hoian-memories": {
     key: "hoian-memories",
@@ -62,7 +62,7 @@ export const PRODUCTS: Record<ProductKey, ProductConfig> = {
     taglineKey: "product.hoian.tagline",
     badgeKey: "product.hoian.badge",
     showCentralRegionCheckbox: false,
-    paxTypes: ["adult", "child"],
+    paxTypes: ["LON", "NHO"],
   },
   "nui-than-tai": {
     key: "nui-than-tai",
@@ -70,7 +70,7 @@ export const PRODUCTS: Record<ProductKey, ProductConfig> = {
     taglineKey: "product.nuiThanTai.tagline",
     badgeKey: "product.nuiThanTai.badge",
     showCentralRegionCheckbox: true,
-    paxTypes: ["adult", "senior", "child"],
+    paxTypes: ["LON", "GIA", "NHO"],
   },
   cruise: {
     key: "cruise",
@@ -78,7 +78,7 @@ export const PRODUCTS: Record<ProductKey, ProductConfig> = {
     taglineKey: "product.cruise.tagline",
     badgeKey: "product.cruise.badge",
     showCentralRegionCheckbox: false,
-    paxTypes: ["adult", "child"],
+    paxTypes: ["LON", "NHO"],
   },
 };
 

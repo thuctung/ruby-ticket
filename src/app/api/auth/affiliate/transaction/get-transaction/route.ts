@@ -14,7 +14,6 @@ export async function POST(req: Request) {
         from,
         to,
     } = body;
-    console.log('body',body)
 
   const fromIdx = (currentPage - 1) * LIMIT_TABLE
   const toIdx = fromIdx + LIMIT_TABLE - 1

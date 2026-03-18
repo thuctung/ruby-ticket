@@ -18,9 +18,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LANGS, type LangKey, setLang } from "@/lib/i18n";
 import { t } from "@/lib/i18n/t";
-import { Languages, Menu } from "lucide-react";
+import {  Menu } from "lucide-react";
 
 import {
   Sheet,
@@ -32,31 +31,24 @@ import {  useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
 
 import { ROLES } from "@/commons/constant";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import Image from "next/image";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
+import Languages from "./Languages";
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const lang = useLang();
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const supabase = createSupabaseBrowserClient()
 
-  const { logout, setProfile }: any = useProfileStore.getState();
-  const { setGlobalLoading , setIsShowToast, setToastMessage}: CommonType | any = useCommonStore.getState();
+  const { logout,  }: any = useProfileStore.getState();
+  const { setGlobalLoading , setToastMessage}: CommonType | any = useCommonStore.getState();
 
-  const langLabel = useMemo(() => {
-    const map: Record<LangKey, string> = {
-      vi: t(lang, "lang.vi"),
-      en: t(lang, "lang.en"),
-      zh: t(lang, "lang.zh"),
-      ko: t(lang, "lang.ko"),
-    };
-    return map[lang] ?? t(lang, "lang.vi");
-  }, [lang]);
   const displayName = profile ? profile.username : "User";
 
   const initials = (() => {
@@ -99,43 +91,55 @@ export default function Header() {
 
   return (
     <>
-     <header className="sticky top-0 z-50 border-b bg-background/70 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6">
+     <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div>
+        <Link
+          href="/"
+          className="flex items-center gap-3 group"
+         
+        >
+          <div className="relative transition-transform group-hover:scale-105">
             <Image
               src="/logo1.png"
               alt="Ruby Travel"
-              width={60}
-              height={60}
-              className="rounded-lg"
+              width={48}
+              height={48}
+              className="object-contain mix-blend-multiply"
             />
           </div>
           <div className="leading-tight">
-            <div className="font-semibold">Ruby Travel</div>
-            <div className="hidden text-xs text-muted-foreground sm:block">
-              Vé du lịch Đà Nẵng 
+            <div className="font-bold text-lg text-slate-900">Ruby Travel</div>
+            <div className="hidden text-[10px] font-bold text-blue-600 uppercase tracking-widest sm:block">
+              Đà Nẵng Tickets
             </div>
           </div>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-          <Link href="#experiences" className="hover:text-foreground">
+        <nav className="hidden items-center gap-8 text-sm font-semibold text-slate-500 md:flex">
+          <Link  onClick={(e) => {
+            if (pathname === "/") {
+              e.preventDefault();
+              const el = document.getElementById("experiences");
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            }
+          }} href="/#experiences" className="hover:text-blue-600 transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">
             Trải nghiệm
           </Link>
 
-          <Link href="#how" className="hover:text-foreground">
-            Cách hoạt động
+          <Link href="/thanh-tuu" className="hover:text-blue-600 transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">
+            Thành tựu
           </Link>
 
-          <Link href="#collaborator" className="hover:text-foreground">
-            Cộng tác viên
+          <Link href="/checkout" className="hover:text-blue-600 transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">
+            Đặt vé
           </Link>
 
-          <Link href="#faq" className="hover:text-foreground">
+          <Link href="/faq" className="hover:text-blue-600 transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">
             FAQ
           </Link>
         </nav>
@@ -144,35 +148,7 @@ export default function Header() {
         <div className="flex items-center gap-2">
 
           {/* Language */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Languages className="h-4 w-4" />
-               <span className="hidden sm:inline">{langLabel}</span>
-              </Button>
-            </DropdownMenuTrigger>
-
-           <DropdownMenuContent align="end" className="w-44">
-              <DropdownMenuLabel>{t(lang, "lang.label")}</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {LANGS.map((l) => (
-                <DropdownMenuItem
-                  key={l.key}
-                  onSelect={() => {
-                    setLang(l.key);
-                  }}
-                >
-                  {l.key === "vi"
-                    ? t(lang, "lang.vi")
-                    : l.key === "en"
-                      ? t(lang, "lang.en")
-                      : l.key === "zh"
-                        ? t(lang, "lang.zh")
-                        : t(lang, "lang.ko")}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {/* <Languages /> */}
 
           {/* User menu */}
           {!profile.user_id ? (

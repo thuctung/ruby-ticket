@@ -20,7 +20,7 @@ export type AffiliateAccount = {
   passwordUpdatedAt?: string; // ISO
 };
 
-export type PaxType =  string;
+export type PaxType = "LON" | "GIA" | "NHO" | "Chung" | "CHILDANDAUL";
 
 export type PriceTier =  string;
 
@@ -208,7 +208,8 @@ export function adminStats(params: { from: string; to: string }) {
   const byDay = new Map<string, { day: string; count: number; revenue: number }>();
 
   for (const s of filtered) {
-    const count = s.qtyAdult + s.qtySenior + s.qtyChild;
+    const count =
+      s.qtyLON + s.qtyGIA + s.qtyNHO + s.qtyChung + s.qtyCHILDANDAUL;
 
     const p = byProduct.get(s.productKey) ?? { productKey: s.productKey, count: 0, revenue: 0 };
     p.count += count;
@@ -228,7 +229,10 @@ export function adminStats(params: { from: string; to: string }) {
     byDay.set(day, d);
   }
 
-  const totalTickets = filtered.reduce((acc, s) => acc + s.qtyAdult + s.qtySenior + s.qtyChild, 0);
+  const totalTickets = filtered.reduce(
+    (acc, s) => acc + s.qtyLON + s.qtyGIA + s.qtyNHO + s.qtyChung + s.qtyCHILDANDAUL,
+    0
+  );
   const totalRevenue = filtered.reduce((acc, s) => acc + s.total, 0);
 
   return {

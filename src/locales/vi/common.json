@@ -81,7 +81,7 @@
   "section": {
     "experiences": {
       "title": "Trải nghiệm nổi bật",
-      "desc": "Bản generic demo. Sau này bạn đưa nội dung/giá thật, mình sẽ update.",
+      "desc": "",
       "priceFrom": "Giá từ"
     },
     "how": {
@@ -92,7 +92,7 @@
     },
     "faq": {
       "title": "FAQ",
-      "desc": "Câu hỏi thường gặp (demo)",
+      "desc": "Câu hỏi thường gặp",
       "items": {
         "needAccount": {
           "q": "Có cần tạo tài khoản để mua vé không?",

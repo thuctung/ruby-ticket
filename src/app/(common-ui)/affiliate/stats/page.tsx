@@ -51,7 +51,7 @@ export default function AffiliateStatsPage() {
 
   const totals = useMemo(() => {
     const tickets = filtered.reduce(
-      (acc, s) => acc + s.qtyAdult + s.qtySenior + s.qtyChild,
+      (acc, s) => acc + s.qtyLON + s.qtyGIA + s.qtyNHO + s.qtyChung + s.qtyCHILDANDAUL,
       0
     );
     const revenue = filtered.reduce((acc, s) => acc + s.total, 0);

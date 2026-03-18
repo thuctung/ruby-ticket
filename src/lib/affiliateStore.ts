@@ -11,9 +11,11 @@ export type AffiliateSale = {
   travelDate: string; // YYYY-MM-DD
   productKey: ProductKey;
   ticketOption?: TicketOption;
-  qtyAdult: number;
-  qtySenior: number;
-  qtyChild: number;
+  qtyLON: number;
+  qtyGIA: number;
+  qtyNHO: number;
+  qtyChung: number;
+  qtyCHILDANDAUL: number;
   email: string;
   phone: string;
   subtotal: number;
@@ -71,32 +73,36 @@ function uid(prefix = "S") {
 }
 
 type Pricing = {
-  adult: number;
-  senior: number;
-  child: number;
+  LON: number;
+  GIA: number;
+  NHO: number;
+  Chung: number;
+  CHILDANDAUL: number;
   centralDiscount: number; // 0..1
 };
 
 const PRICING: Record<ProductKey, Pricing | Record<TicketOption, Pricing>> = {
   bana: {
-    cap: { adult: 1200000, senior: 1050000, child: 800000, centralDiscount: 0.1 },
-    combo: { adult: 1450000, senior: 1300000, child: 980000, centralDiscount: 0.1 },
+    cap: { LON: 1200000, GIA: 1050000, NHO: 800000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.1 },
+    combo: { LON: 1450000, GIA: 1300000, NHO: 980000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.1 },
   },
-  vinpearl: { adult: 1100000, senior: 980000, child: 760000, centralDiscount: 0.08 },
-  "hoian-memories": { adult: 600000, senior: 0, child: 450000, centralDiscount: 0 },
-  "nui-than-tai": { adult: 700000, senior: 620000, child: 520000, centralDiscount: 0.1 },
-  cruise: { adult: 450000, senior: 0, child: 320000, centralDiscount: 0 },
+  vinpearl: { LON: 1100000, GIA: 980000, NHO: 760000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.08 },
+  "hoian-memories": { LON: 600000, GIA: 0, NHO: 450000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0 },
+  "nui-than-tai": { LON: 700000, GIA: 620000, NHO: 520000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.1 },
+  cruise: { LON: 450000, GIA: 0, NHO: 320000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0 },
 };
 
 export function calcTotal(params: {
   productKey: ProductKey;
   ticketOption?: TicketOption;
   isCentralRegion?: boolean;
-  qtyAdult: number;
-  qtySenior: number;
-  qtyChild: number;
+  qtyLON: number;
+  qtyGIA: number;
+  qtyNHO: number;
+  qtyChung: number;
+  qtyCHILDANDAUL: number;
 }) {
-  const { productKey, ticketOption, isCentralRegion, qtyAdult, qtySenior, qtyChild } =
+  const { productKey, ticketOption, isCentralRegion, qtyLON, qtyGIA, qtyNHO, qtyChung, qtyCHILDANDAUL } =
     params;
 
   const pricing = (() => {
@@ -110,7 +116,7 @@ export function calcTotal(params: {
   })();
 
   const subtotal =
-    qtyAdult * pricing.adult + qtySenior * pricing.senior + qtyChild * pricing.child;
+    qtyLON * pricing.LON + qtyGIA * pricing.GIA + qtyNHO * pricing.NHO + qtyChung * pricing.Chung + qtyCHILDANDAUL * pricing.CHILDANDAUL;
   const discount = isCentralRegion ? Math.round(subtotal * pricing.centralDiscount) : 0;
   const total = Math.max(0, subtotal - discount);
 
@@ -123,9 +129,11 @@ export function issueTicketFromWallet(input: {
   productKey: ProductKey;
   ticketOption?: TicketOption;
   isCentralRegion?: boolean;
-  qtyAdult: number;
-  qtySenior: number;
-  qtyChild: number;
+  qtyLON: number;
+  qtyGIA: number;
+  qtyNHO: number;
+  qtyChung: number;
+  qtyCHILDANDAUL: number;
   email: string;
   phone: string;
 }) {
@@ -145,9 +153,11 @@ export function issueTicketFromWallet(input: {
     travelDate: input.travelDate,
     productKey: input.productKey,
     ticketOption: input.ticketOption,
-    qtyAdult: input.qtyAdult,
-    qtySenior: input.qtySenior,
-    qtyChild: input.qtyChild,
+    qtyLON: input.qtyLON,
+    qtyGIA: input.qtyGIA,
+    qtyNHO: input.qtyNHO,
+    qtyChung: input.qtyChung,
+    qtyCHILDANDAUL: input.qtyCHILDANDAUL,
     email: input.email,
     phone: input.phone,
     ...totals,
@@ -163,7 +173,7 @@ export function sumByDay(sales: AffiliateSale[]) {
   for (const s of sales) {
     const day = s.createdAt.slice(0, 10);
     const cur = map.get(day) ?? { day, count: 0, revenue: 0 };
-    cur.count += s.qtyAdult + s.qtySenior + s.qtyChild;
+    cur.count += s.qtyLON + s.qtyGIA + s.qtyNHO + s.qtyChung + s.qtyCHILDANDAUL;
     cur.revenue += s.total;
     map.set(day, cur);
   }
@@ -175,7 +185,7 @@ export function sumByProduct(sales: AffiliateSale[]) {
   for (const s of sales) {
     const key = s.productKey;
     const cur = map.get(key) ?? { productKey: key, count: 0, revenue: 0 };
-    cur.count += s.qtyAdult + s.qtySenior + s.qtyChild;
+    cur.count += s.qtyLON + s.qtyGIA + s.qtyNHO + s.qtyChung + s.qtyCHILDANDAUL;
     cur.revenue += s.total;
     map.set(key, cur);
   }

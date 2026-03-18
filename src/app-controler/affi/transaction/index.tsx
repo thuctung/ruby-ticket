@@ -36,7 +36,6 @@ export default function TransactionPageControl() {
     const [totalPages, setTotalPage] = useState(0);
 
     const handleChangeForm = (value: SearchTraction) => {
-        console.log('value',value)
         setParams(pre => ({
             ...pre,
             searchValue: {...value}

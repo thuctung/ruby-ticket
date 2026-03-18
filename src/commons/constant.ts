@@ -56,7 +56,9 @@ export const DB_TABLE_NAME = {
     VIEW_TICET_VARIANTS_AND_CATEGORY:'ticket_variants_and_category',
     FUNC_BY_TICKET :'buy_tickets',
     LOCATIONS :'locations',
-    WALLET_TRANSACTION:'wallet_transactions'
+    WALLET_TRANSACTION:'wallet_transactions',
+    INVENTORY: 'inventory',
+    PRICING: 'pricing'
 }
 
 
@@ -90,5 +92,8 @@ export const LOCATIONS: LocationType[] = [
 
 export const PERSONS:PersonType[] = [
     {code:'LON', name:'Người lớn'},
-    {code:'NHO', name:'Trẻ em/ Người già'},
+    {code:'GIA', name:'Người cao tuổi'},
+    {code:'NHO', name:'Trẻ em'},
+    {code:'Chung', name:'Chung'},
+    {code:'CHILDANDAUL', name:'Người lớn & Trẻ em'},
 ]

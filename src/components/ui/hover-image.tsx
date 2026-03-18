@@ -9,7 +9,6 @@ type Props = {
 }
 
 export default function HoverImage({ image, hoverImage, className }: Props) {
-    console.log('image',image)
   return (
     <div className={`group relative overflow-hidden ${className}`}>
 

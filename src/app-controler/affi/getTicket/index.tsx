@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,72 +22,73 @@ import { useLang } from "@/lib/useLang";
 import { t } from "@/lib/i18n/t";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
-import { LocationType,  TicketType, TicketByLocationType, ProductType, ResultTicketSlectedType, ItemSelectType, TicketResultQRType } from "@/types/ticket";
+import { LocationType,  TicketByLocationType, ProductType, ResultTicketSlectedType, TicketResultQRType, ItemSelectType } from "@/types/ticket";
 import { createOrderTicket, getLocation, getProducts, getTicletByLocation } from "./api";
-import { get,  } from "lodash";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
 import { useCommonStore } from "@/stores/useCommonStore";
-import dayjs from "dayjs";
 import TicketResultQR from "./components/TicketResultQR";
-
-
+import { formatVNTime } from "@/helpers/dateTime";
 
 export default function GetTicketPageControler() {
     const lang = useLang();
-
-
     const profile: ProfileType = useProfileStore((state: any) => state.profile);
-
-
-
     const { setToastMessage }: CommonType | any = useCommonStore.getState();
 
     const [discount, setDiscount] = useState(0);
-
     const [locationList, setLocationList] = useState<LocationType[]>([]);
-
     const [location, setLocation] = useState('BANA');
-
-    const [dateUse, setDateUse] = useState<Date>();
-
+    const [dateUse, setDateUse] = useState<Date>(new Date());
     const [ticketLocation, setTicketLocation] = useState<TicketByLocationType[]>([])
-
-    const [productFilter, setProductFilter] = useState([]); // lay thong tin gia ve
-
-    const [ticketType, setTicetType] = useState<string>(''); // cap or combo
-
-    const [ticketCategory, setTicketCategory] = useState<any>({
-    })
-
+    const [productFilter, setProductFilter] = useState<any[]>([]); 
+    const [ticketType, setTicetType] = useState<string>(''); 
+    const [ticketCategory, setTicketCategory] = useState<any>({})
     const [openQR, setOpenQR] = useState(false);
     const [resultTicketQR, setTicketResultQR] = useState<TicketResultQRType[]>([]);
 
     const locationName = useMemo(() => locationList.find(item => item.code === location)?.name || '', [location, locationList])
-
 
     const onCloseQR = () => {
         setOpenQR(false);
         setTicketCategory({})
     }
 
-    const fetchTicketType = async () => {
-        const data: TicketByLocationType[] | any = await getTicletByLocation(location);
+    const handleGetLocation = useCallback(async () => {
+        const resLocation = await getLocation();
+        setLocationList(resLocation)
+    }, []);
+
+    const handleGetTicketType = useCallback(async (locCode: string) => {
+        const data: TicketByLocationType[] | any = await getTicletByLocation(locCode);
         if (data?.length) {
             setTicketLocation(data)
             setTicetType(data[0].code)
         }
-    }
+    }, []);
 
-    const fetchProduct = async (ticketType: string) => {
-        const data: TicketType[] | any = await getProducts(ticketType);
-        if (data?.length) {
-            setProductFilter(data)
+    const handleGetProduct = useCallback(async (tType: string) => {
+        const data: any[] = await getProducts(tType);
+        setProductFilter(data || [])
+    }, []);
+
+    useEffect(() => {
+        handleGetLocation();
+    }, [handleGetLocation]);
+
+    useEffect(() => {
+        if (location) {
+            handleGetTicketType(location);
         }
-    }
+    }, [location, handleGetTicketType]);
+
+    useEffect(() => {
+        if (ticketType) {
+            handleGetProduct(ticketType);
+        }
+        setTicketCategory({})
+    }, [ticketType, handleGetProduct]);
 
     const updateCategoryNum = (key: string, value: number) => {
         setTicketCategory((pre: any) => ({ ...pre, [key]: value }));
-
     }
 
     const handleChangeLocation = (locationCode: string) => {
@@ -96,7 +97,6 @@ export default function GetTicketPageControler() {
     }
 
     const sumMoneyTicket = (): ResultTicketSlectedType => {
-
         const result: ResultTicketSlectedType = {
             listItemSelect: [],
             total: 0,
@@ -106,15 +106,17 @@ export default function GetTicketPageControler() {
         listKey.forEach((keyCategory: string) => {
             const count = ticketCategory[keyCategory] || 0;
             if (count > 0) {
-                const productPrice: ProductType | any = productFilter.find((item: ProductType) => item.category_code === keyCategory);
-                if (productPrice) {
-                    const money = productPrice?.price * count;
+                const product: any = productFilter.find((item: any) => item.category_code === keyCategory);
+                if (product) {
+                    const price = product.price;
+                    const money = price * count;
+                    
                     result.listItemSelect.push({
-                        name: productPrice.ticket_name,
+                        name: product.ticket_name,
                         total: money,
                         quantity: count,
-                        id: productPrice?.id,
-                        code: productPrice?.code
+                        id: product.id,
+                        code: product.code
                     })
                     result.total += money
                 }
@@ -123,14 +125,14 @@ export default function GetTicketPageControler() {
         return result
     }
 
-    const resultTicketSelect: ResultTicketSlectedType = useMemo(() => sumMoneyTicket(), [ticketCategory]);
+    const resultTicketSelect: ResultTicketSlectedType = useMemo(() => sumMoneyTicket(), [ticketCategory, productFilter]);
 
     const finalMoenyToPay = useMemo(() => {
         if (discount) {
             return resultTicketSelect.total - resultTicketSelect.total * discount
         }
         return resultTicketSelect.total
-    }, [resultTicketSelect])
+    }, [resultTicketSelect, discount])
 
     const checkBalance = async () => {
         if (profile?.balance < finalMoenyToPay) {
@@ -148,7 +150,7 @@ export default function GetTicketPageControler() {
 
         const resultBalance = await checkBalance();
         if (resultBalance) {
-            const data = await createOrderTicket(profile.user_id, resultTicketSelect.listItemSelect, finalMoenyToPay, dayjs(dateUse).format('YYYY-MM-DD'))
+            const data = await createOrderTicket(profile.user_id, resultTicketSelect.listItemSelect, finalMoenyToPay, formatVNTime(dateUse, 'YYYY-MM-DD'))
 
             if (data?.success) {
                 setTicketResultQR(data?.tickets)
@@ -157,28 +159,6 @@ export default function GetTicketPageControler() {
             }
         }
     }
-
-    const fetchLocation = async () => {
-        const resLocation = await getLocation();
-        setLocationList(resLocation)
-    }
-
-    useEffect(() => {
-        fetchLocation()
-    }, [])
-
-    useEffect(() => {
-        if (ticketType) {
-            fetchProduct(ticketType)
-        }
-        setTicketCategory({})
-    }, [ticketType])
-
-    useEffect(() => {
-        if (location) {
-            fetchTicketType()
-        }
-    }, [location])
 
 
 
@@ -217,16 +197,15 @@ export default function GetTicketPageControler() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label>{t(lang, "checkout.form.date")}</Label>
-                            <DatePicker
-                                onSelect={(date: any) => setDateUse(date)}
-                                selected={dateUse}
-                                dateFormat="dd-MM-yyyy"
-                                className="border p-1 rounded-sm"
-                                minDate={new Date()}
-                            />
-
-                        </div>
+                        <Label>{t(lang, "checkout.form.date")}</Label>
+                        <DatePicker
+                            selected={dateUse}
+                            onChange={(date: Date | null) => date && setDateUse(date)}
+                            dateFormat="dd/MM/yyyy"
+                            className=" w-full rounded-md border bg-background px-3 text-sm"
+                            minDate={new Date()}
+                        />
+                    </div>
                     </div>
                     <div className="space-y-2">
                         <Label>{t(lang, "checkout.form.ticketType")}</Label>
@@ -245,7 +224,7 @@ export default function GetTicketPageControler() {
                             ))}
                         </div>
                     </div>
-                     <div className="flex items-center justify-between rounded-xl border bg-muted/20 p-4">
+                    <div className="flex items-center justify-between rounded-xl border bg-muted/20 p-4">
                             <div>
                                 <div className="font-medium">{t(lang, "checkout.form.centralTitle")}</div>
                                 <div className="text-sm text-muted-foreground">
@@ -255,7 +234,8 @@ export default function GetTicketPageControler() {
                             <input
                                 type="checkbox"
                                 className="h-5 w-5"
-                               
+                                checked={discount > 0}
+                                onChange={(e) => setDiscount(e.target.checked ? 0.1 : 0)} // Assume 10% discount for central
                             />
                         </div>
 
@@ -267,12 +247,27 @@ export default function GetTicketPageControler() {
 
                         <div className={`grid grid-cols-1 gap-4 ${productFilter.length >= 3 ? "sm:grid-cols-3" : productFilter.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-1"}`}>
                             {
-                                productFilter.map((item: ProductType) => <div key={item.id} className="space-y-2">
-                                    <Label>{item.category_name}</Label>
-                                    <Input name={item.category_code} type="number" min={0} max={200} value={get(ticketCategory, item.category_code, 0)} onChange={(e) => updateCategoryNum(item.category_code, Number(e.target.value))} />
-                                </div>)
+                                productFilter.map((item: any) => {
+                                    const price = item.price;
+                                    
+                                    return (
+                                        <div key={item.id} className="space-y-2 border p-3 rounded-xl">
+                                            <div className="flex justify-between items-center">
+                                                <Label className="font-bold">{item.category_name}</Label>
+                                                <span className="text-xs text-blue-600 font-medium">{formatVND(price)}</span>
+                                            </div>
+                                            <Input 
+                                                name={item.category_code} 
+                                                type="number" 
+                                                min={0} 
+                                                max={200} 
+                                                value={ticketCategory[item.category_code] || 0} 
+                                                onChange={(e) => updateCategoryNum(item.category_code, Number(e.target.value))} 
+                                            />
+                                        </div>
+                                    )
+                                })
                             }
-
                         </div>
                     </div>
 
@@ -310,8 +305,10 @@ export default function GetTicketPageControler() {
                         <Button
                             disabled={profile?.balance < finalMoenyToPay}
                             onClick={handlPayment}
+                            size="lg"
+                            className="w-full sm:w-auto rounded-xl px-10"
                         >
-                            {profile?.balance >= finalMoenyToPay ? 'Xuất vé' : 'Số dư không đủ'}
+                            {profile?.balance < finalMoenyToPay ? 'Số dư không đủ' : 'Xuất vé'}
                         </Button>
                     </div>
                 </CardContent>

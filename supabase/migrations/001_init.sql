@@ -113,10 +113,85 @@ drop policy if exists "aff_app_read_own" on public.affiliate_applications;
 create policy "aff_app_read_own" on public.affiliate_applications
 for select using (auth.uid() = user_id);
 
--- Admin can read/update all applications
-drop policy if exists "aff_app_admin_read_all" on public.affiliate_applications;
-create policy "aff_app_admin_read_all" on public.affiliate_applications
-for select using (
+-- Admin can update all applications
+drop policy if exists "aff_app_admin_update_all" on public.affiliate_applications;
+create policy "aff_app_admin_update_all" on public.affiliate_applications
+for update using (
+  exists (
+    select 1 from public.profiles p
+    where p.user_id = auth.uid() and p.role = 'admin'
+  )
+);
+
+-- Inventory (capacity per product per date)
+create table if not exists public.inventory (
+  id uuid primary key default gen_random_uuid(),
+  product_key text not null,
+  date date not null,
+  capacity integer not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (product_key, date)
+);
+
+create index if not exists inventory_product_key_date_idx on public.inventory(product_key, date);
+
+drop trigger if exists inventory_set_updated_at on public.inventory;
+create trigger inventory_set_updated_at
+before update on public.inventory
+for each row execute function public.set_updated_at();
+
+-- Pricing (base price + promo per product/ticket-option/pax-type/tier)
+create table if not exists public.pricing (
+  id uuid primary key default gen_random_uuid(),
+  product_key text not null,
+  ticket_option text,
+  pax_type text not null,
+  tier text not null,
+  base_price numeric not null default 0,
+  promo_price numeric,
+  central_eligible boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists pricing_product_key_idx on public.pricing(product_key);
+
+drop trigger if exists pricing_set_updated_at on public.pricing;
+create trigger pricing_set_updated_at
+before update on public.pricing
+for each row execute function public.set_updated_at();
+
+-- RLS for Inventory and Pricing
+alter table public.inventory enable row level security;
+alter table public.pricing enable row level security;
+
+-- Inventory policies
+-- Everyone can read inventory (to check availability)
+drop policy if exists "inventory_read_all" on public.inventory;
+create policy "inventory_read_all" on public.inventory
+for select using (true);
+
+-- Admin can manage inventory
+drop policy if exists "inventory_admin_manage" on public.inventory;
+create policy "inventory_admin_manage" on public.inventory
+for all using (
+  exists (
+    select 1 from public.profiles p
+    where p.user_id = auth.uid() and p.role = 'admin'
+  )
+);
+
+-- Pricing policies
+-- Everyone can read pricing
+drop policy if exists "pricing_read_all" on public.pricing;
+create policy "pricing_read_all" on public.pricing
+for select using (true);
+
+-- Admin can manage pricing
+drop policy if exists "pricing_admin_manage" on public.pricing;
+create policy "pricing_admin_manage" on public.pricing
+for all using (
   exists (
     select 1 from public.profiles p
     where p.user_id = auth.uid() and p.role = 'admin'

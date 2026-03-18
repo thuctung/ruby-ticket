@@ -6,7 +6,7 @@ import { TractionResponseType } from "@/types";
 import {  TYPE_TRANSACTION } from "@/commons/constant";
 import { getTypeName } from "../constants";
 import { formatVND } from "@/helpers/money";
-import dayjs from "dayjs";
+import { formatVNTime } from "@/helpers/dateTime";
 
 type TractionTableProps = {
     transactions: TractionResponseType[],
@@ -47,7 +47,7 @@ export function TractionTable({ transactions, }: TractionTableProps) {
                                 {getTypeName(transactions.type)}
                             </span></td>
                             <td className="p-3">{formatVND(transactions.amount)}</td>
-                            <td className="p-3">{dayjs(transactions.created_at).format('DD/MM/YYYY hh:mm:ss')}</td>
+                            <td className="p-3">{formatVNTime(transactions.created_at)}</td>
                             <td className="p-3">{transactions.description}</td>
                         </tr>
                     ))

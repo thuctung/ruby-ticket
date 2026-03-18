@@ -26,6 +26,7 @@ export type ProductType = {
     category:string,
     category_code:string,
     category_name:string,
+    code:string
 }
 
 export interface PersonType extends LocationType {}
