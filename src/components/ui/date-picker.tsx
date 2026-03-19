@@ -1,4 +1,4 @@
-import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
+import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import DatePicker from "react-datepicker";
 
@@ -21,14 +21,16 @@ export default function DatePickerCustom({
       onChange(dayjs(value).format(BASIC_DATE_FORMAT));
     }
   };
+  const minDateForm = dayjs(maxDate).format(SERVER_DATE_FORMAT);
+  const maxDateForm = dayjs(maxDate).format(SERVER_DATE_FORMAT);
   return (
     <DatePicker
       {...props}
       value={value}
       onSelect={(value) => handleChange(value)}
       className="border p-1 rounded-sm"
-      maxDate={maxDate ? new Date(maxDate) : undefined}
-      minDate={minDate ? new Date(minDate) : undefined}
+      maxDate={maxDate ? new Date(maxDateForm) : undefined}
+      minDate={minDate ? new Date(minDateForm) : undefined}
     />
   );
 }

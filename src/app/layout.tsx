@@ -1,11 +1,9 @@
-
-
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ToastMessage from "@/components/ui/toast-message";
 import { LoadingGlobal } from "@/components/ui/loading";
-
+import "react-datepicker/dist/react-datepicker.css";
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-sans",
   subsets: ["latin", "vietnamese"],
@@ -25,24 +23,16 @@ export const metadata: Metadata = {
   },
 };
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
-
   return (
-    <html
-      lang="vi"
-      className={`${beVietnamPro.variable} ${geistMono.variable}`}
-    >
+    <html lang="vi" className={`${beVietnamPro.variable} ${geistMono.variable}`}>
       <body className="antialiased">{children}</body>
-      <ToastMessage/>
-      <LoadingGlobal/>
+      <ToastMessage />
+      <LoadingGlobal />
     </html>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
 import { QRBankResponseType } from "@/types";
@@ -14,9 +13,10 @@ type BankTransferQRProps = {
   dataQR: QRBankResponseType;
   onDone?: () => void;
   isOpen: boolean;
+  mesage?: string;
 };
 
-export default function BankTransferQR({ dataQR, isOpen, onDone }: BankTransferQRProps) {
+export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankTransferQRProps) {
   const copy = (text?: string) => {
     if (text) {
       navigator.clipboard.writeText(text);
@@ -46,6 +46,7 @@ export default function BankTransferQR({ dataQR, isOpen, onDone }: BankTransferQ
             <Row label="Nội dung CK" value={dataQR.code} onCopy={() => copy(dataQR.code)} />
           </div>
         </div>
+        <span className="text-sm text-center text-red-500">{mesage}</span>
         <div className="w-full flex justify-center mt-6">
           {onDone && <Button onClick={onDone}>Xong</Button>}
         </div>

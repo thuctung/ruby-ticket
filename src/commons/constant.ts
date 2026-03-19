@@ -72,3 +72,9 @@ export const PAYMENT_STATUS = {
   COMPLETED: "completed",
   FAILED: "failed",
 };
+
+export const AGENT_CODE = {
+  CUSTOMER: "customer",
+  LEVEL_1: "level_1",
+  LEVEL_2: "level_2",
+};

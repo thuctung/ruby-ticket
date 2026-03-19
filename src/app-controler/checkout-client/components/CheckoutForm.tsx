@@ -35,9 +35,9 @@ import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { isEmpty } from "lodash";
 import { checkoutSchema } from "../contants";
+import { AGENT_CODE } from "@/commons/constant";
 
 type CheckoutFormProps = {
-  productKey: string;
   location: string;
   locations: LocationType[];
   agentCode?: string;
@@ -59,7 +59,7 @@ export function CheckoutForm({
   onChangeLocation,
   location,
   locations,
-  agentCode = "customer",
+  agentCode = AGENT_CODE.CUSTOMER,
 }: CheckoutFormProps) {
   const lang = useLang();
 
@@ -183,7 +183,7 @@ export function CheckoutForm({
 
   const fetchTicketTypeByLocation = async () => {
     const data = await getTicketType(location);
-    if (data) {
+    if (data?.length) {
       setTicketTypes(data);
       setTickeTypeCode(data[0].code);
     }
@@ -192,7 +192,6 @@ export function CheckoutForm({
   const fetchTicketVariant = async () => {
     const data = await getTicketVariant(ticketTypeCode);
     if (data) {
-      console.log("data", data);
       setTicketVariants(data);
     }
   };
@@ -229,9 +228,6 @@ export function CheckoutForm({
             <CardTitle className="text-xl font-extrabold">
               {t(lang, "checkout.form.title")}
             </CardTitle>
-            <Badge variant="outline" className="rounded-full">
-              {t(lang, "checkout.form.vnpay")}
-            </Badge>
           </div>
         </CardHeader>
         <CardContent className="space-y-6 pt-0">
@@ -344,38 +340,42 @@ export function CheckoutForm({
           <Separator />
 
           {/* Contact */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="email">{t(lang, "checkout.form.email")}</Label>
-              <Input
-                id="email"
-                onChange={(e) => setFieldFormData("email", e.target.value)}
-                placeholder="email@domain.com"
-                value={formData.email}
-              />
-              {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone">{t(lang, "checkout.form.phone")}</Label>
-              <Input
-                id="phone"
-                onChange={(e) => setFieldFormData("phone", e.target.value)}
-                placeholder="09xxxxxxxx"
-                value={formData.phone}
-              />
-              {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
-            </div>
-          </div>
+          {agentCode === AGENT_CODE.CUSTOMER ? (
+            <>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="email">{t(lang, "checkout.form.email")}</Label>
+                  <Input
+                    id="email"
+                    onChange={(e) => setFieldFormData("email", e.target.value)}
+                    placeholder="email@domain.com"
+                    value={formData.email}
+                  />
+                  {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">{t(lang, "checkout.form.phone")}</Label>
+                  <Input
+                    id="phone"
+                    onChange={(e) => setFieldFormData("phone", e.target.value)}
+                    placeholder="09xxxxxxxx"
+                    value={formData.phone}
+                  />
+                  {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
+                </div>
+              </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="note">{t(lang, "checkout.form.note")}</Label>
-            <Textarea
-              id="description"
-              placeholder={t(lang, "checkout.form.notePlaceholder")}
-              value={formData.description}
-              onChange={(e) => setFieldFormData("description", e.target.value)}
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="note">{t(lang, "checkout.form.note")}</Label>
+                <Textarea
+                  id="description"
+                  placeholder={t(lang, "checkout.form.notePlaceholder")}
+                  value={formData.description}
+                  onChange={(e) => setFieldFormData("description", e.target.value)}
+                />
+              </div>
+            </>
+          ) : null}
         </CardContent>
       </Card>
 
@@ -404,7 +404,7 @@ export function CheckoutForm({
                 <div className="space-y-1">
                   <span className="font-medium">{item.ticketName}</span>
                 </div>
-                <span className="text-sm ">{item.numerTicet}</span>
+                <span className="text-sm ">{Number(item.numerTicet)}</span>
               </div>
               <div className="flex items-center justify-between ">
                 <div className="space-y-1">
@@ -428,15 +428,17 @@ export function CheckoutForm({
             <span className="text-base font-semibold">{formatVND(totalMoney)}</span>
           </div>
 
-          <Button
-            type="button"
-            className="w-full rounded-xl"
-            size="lg"
-            disabled={totalMoney === 0 || loadingGetPice}
-            onClick={handleSubmit}
-          >
-            Thanh toán {formatVND(totalMoney)}
-          </Button>
+          {agentCode === AGENT_CODE.CUSTOMER ? (
+            <Button
+              type="button"
+              className="w-full rounded-xl"
+              size="lg"
+              disabled={totalMoney === 0 || loadingGetPice}
+              onClick={handleSubmit}
+            >
+              Thanh toán {formatVND(totalMoney)}
+            </Button>
+          ) : null}
 
           {loadingGetPice && (
             <div className="absolute inset-0 grid place-items-center bg-white/50">

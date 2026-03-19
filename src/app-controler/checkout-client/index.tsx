@@ -152,13 +152,19 @@ export default function CheckoutControlerPage() {
       <section className="mx-auto w-full max-w-6xl flex-1 p-6">
         <CheckoutForm
           location={loactionKey}
-          productKey={loactionKey}
           locations={locationList}
           onChangeLocation={onChangeLocation}
           onSubmit={handleSubmitTicket}
         />
       </section>
-      {openQR && <BankTransferQR dataQR={qrPaymant} isOpen={openQR} onDone={handleDoneQR} />}
+      {openQR && (
+        <BankTransferQR
+          dataQR={qrPaymant}
+          isOpen={openQR}
+          onDone={handleDoneQR}
+          mesage="Vui lòng đợi khi thanh toán và không tắt cửa sổ này"
+        />
+      )}
 
       {openDownloadTicke && (
         <TicketResultQR
