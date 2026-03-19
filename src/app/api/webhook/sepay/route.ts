@@ -7,6 +7,7 @@ export async function POST(req: Request) {
     const body = await req.json();
 
     const payment_content = body.content || "";
+    const transferAmount = Number(body.amount);
     const parts = payment_content.trim().split(/\s+/);
 
     const payment_code = parts[0];
@@ -19,10 +20,14 @@ export async function POST(req: Request) {
         .single();
 
       if (order && order.status === PAYMENT_STATUS.PENDING) {
+        let status = PAYMENT_STATUS.COMPLETED;
+        if (transferAmount < order.total_amount) {
+          status = PAYMENT_STATUS.FAILED;
+        }
         await supabaseAdmin
           .from(DB_TABLE_NAME.ORDERS)
           .update({
-            status: PAYMENT_STATUS.COMPLETED,
+            status,
             paid_at: new Date().toISOString(),
           })
           .eq("payment_code", payment_code);

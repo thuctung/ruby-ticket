@@ -121,6 +121,9 @@ export default function CheckoutControlerPage() {
             if (payload.new.status === PAYMENT_STATUS.COMPLETED) {
               setLoadingMessage("Thanh toán thành công!, đang xử lý vé...");
               getTicketData();
+            } else if (payload.new.status === PAYMENT_STATUS.FAILED) {
+              setToastMessage("Thanh toán thất bại! Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ");
+              handleDoneQR();
             }
           }
         )
