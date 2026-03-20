@@ -1,32 +1,53 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { t } from "@/lib/i18n/t";
-import {
-  ChevronRight,
-  MapPin,
-  QrCode,
-  ShieldCheck,
-  Star,
-} from "lucide-react";
+import { ChevronRight, MapPin, QrCode, ShieldCheck, Star } from "lucide-react";
 import { ExperienceCard, LangKey, LocationCard } from "@/types";
+import Link from "next/link";
 
 type HeroSectionProps = {
   lang: LangKey;
   topPicks: ExperienceCard[];
+};
 
-}
-
-export function HeroSection({
-  lang,
-  topPicks,
-}: HeroSectionProps) {
+export function HeroSection({ lang, topPicks }: HeroSectionProps) {
+  const locationItems = [
+    {
+      name: "Bà Nà Hills",
+      desc: "Cáp treo • Cầu Vàng • khu vui chơi",
+      type: "TOP",
+      iconPath:
+        "M3 13V9l4-3 5 3v4l-4 3-5-3zm0 0l4-3.333L12 13M12 9l4 3.333M16 13v4l-4 3-5-3V13m16.5-6.5a1 1 0 11-2 0 1 1 0 012 0zm0 0v10m-2 0a1 1 0 112 0 1 1 0 01-2 0z",
+      color: "bg-orange-50 text-orange-600",
+      titleColor: "text-blue-700",
+      link: "/checkout?product=BANA",
+    },
+    {
+      name: "Vinpearl",
+      desc: "Resort & trải nghiệm giải trí",
+      iconPath:
+        "M20 7v10m-4-3h4m0-7a3 3 0 013 3v4a3 3 0 01-3 3M4 17V7a3 3 0 013-3h10a3 3 0 013 3v10m-7-5h3a3 3 0 013 3v4a3 3 0 01-3 3H7a3 3 0 01-3-3v-4a3 3 0 013-3h3",
+      color: "bg-blue-50 text-blue-600",
+      link: "/checkout?product=VINPER",
+    },
+    {
+      name: "Ký ức Hội An",
+      desc: "Show diễn buổi tối đáng xem",
+      iconPath:
+        "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+      color: "bg-pink-50 text-pink-600",
+      link: "/checkout?product=KWHOIAN",
+    },
+    {
+      name: "Núi Thần Tài",
+      desc: "Tắm khoáng • nghỉ dưỡng trong ngày",
+      iconPath:
+        "M13.5 13a4.5 4.5 0 01-9 0v-2.25l-2.25.75L0 9l4.5-1.5 4.5 1.5-2.25 2.25v2.25a2.25 2.25 0 004.5 0v-2.25l-2.25.75L6.75 9l4.5-1.5L15 9l-2.25 2.25v2.25a2.25 2.25 0 004.5 0v-2.25l-2.25.75L15 9l4.5-1.5 4.5 1.5-2.25 2.25v2.25a4.5 4.5 0 01-9 0v-2.25l-2.25.75L11.25 9l4.5-1.5L18 9l-2.25 2.25v2.25z",
+      color: "bg-emerald-50 text-emerald-600",
+      link: "/checkout?product=NUITHANTAI",
+    },
+  ];
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/50 to-background pt-10 pb-20">
       <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -131,36 +152,67 @@ export function HeroSection({
                   </Badge>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4 p-6 bg-white">
-                {topPicks.map((x) => (
-                  <a
-                    key={x.key}
-                    href={`/checkout?product=${x.key}`}
-                    className="group flex items-center justify-between rounded-2xl border border-slate-100 bg-slate-50/30 p-4 transition-all hover:border-blue-200 hover:bg-blue-50/50"
-                  >
-                    <div className="flex items-center gap-4">
+              <CardContent className="space-y-4 p-4 bg-white">
+                {locationItems.map((item, idx) => (
+                  <Link href={item.link} key={idx}>
+                    <div
+                      className={`w-full max-w-2xl bg-white rounded-[2rem] p-3 flex items-center gap-5 cursor-pointer transition-all duration-300 group ${idx === 0 ? "border border-blue-200" : "border border-slate-100"}`}
+                    >
                       <div
-                        className={`h-10 w-10 rounded-xl bg-gradient-to-br ${x.color} flex items-center justify-center text-white shadow-sm`}
+                        className={`w-16 h-16 rounded-[1.25rem] flex items-center justify-center transition-all duration-300 shadow-sm ${item.color} group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-slate-100`}
                       >
-                        <Star className="h-5 w-5" />
+                        <svg
+                          className="w-8 h-8"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d={item.iconPath}
+                          />
+                        </svg>
                       </div>
-                      <div>
-                        <div className="font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
-                          {t(lang, x.nameKey)}
+
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center gap-3">
+                          <h3
+                            className={`text-xl font-bold tracking-tight ${item.titleColor || "text-slate-800"}`}
+                          >
+                            {item.name}
+                          </h3>
+                          {item.type && (
+                            <span className="px-3 py-1 text-xs font-black bg-amber-100 text-amber-700 rounded-full uppercase tracking-widest">
+                              {item.type}
+                            </span>
+                          )}
                         </div>
-                        <div className="text-xs text-slate-500 font-medium">
-                          {t(lang, x.taglineKey)}
-                        </div>
+                        <p className="text-slate-500 font-medium text-sm leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
+
+                      <div
+                        className={`p-1.5 rounded-full transition-all duration-300 ${idx === 0 ? "bg-blue-100/50 text-blue-500" : "text-slate-300 opacity-30 group-hover:opacity-100 group-hover:translate-x-1"}`}
+                      >
+                        <svg
+                          className="h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2.5}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
                       </div>
                     </div>
-                    {x.key === "BANA" ? (
-                      <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100 border-none px-2.5 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider">
-                        {t(lang, x.badgeKey)}
-                      </Badge>
-                    ) : (
-                      <ChevronRight className="h-5 w-5 text-slate-300 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
-                    )}
-                  </a>
+                  </Link>
                 ))}
 
                 <div className="pt-4">

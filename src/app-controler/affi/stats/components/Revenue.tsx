@@ -28,7 +28,7 @@ export function Revenue({ total, ticket, from, to }: RevenueProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
           <p className="text-blue-600 text-sm font-semibold uppercase tracking-wider mb-1">
-            Doanh thu
+            Tổng tiền
           </p>
           <div className="flex items-baseline gap-1">
             <span className="text-2xl font-bold text-blue-900">{formatVND(total)}</span>

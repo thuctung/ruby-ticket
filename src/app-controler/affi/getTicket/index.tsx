@@ -119,8 +119,8 @@ export default function GetTicketPageControler() {
           <CardTitle>Rút vé / Xuất vé (trừ tiền ví)</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-muted-foreground">Số dư ví</div>
+          <div className="flex items-center justify-end">
+            <div className="text-sm text-muted-foreground mr-2">Số dư: </div>
             <div className="text-lg font-semibold">
               {profile.balance ? formatVND(profile.balance) : 0}
             </div>

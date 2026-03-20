@@ -39,14 +39,14 @@
     "loginAgent": "에이전트 로그인"
   },
   "hero": {
-    "pill": "MVP 개발 중 — VNPAY 우선, 이메일 QR 발송",
+    "pill": "MVP 개발 중 — QR 우선, 이메일 QR 발송",
     "title1": "다낭 여행",
     "title2": "빠르게 예약하고 편하게 즐기세요",
     "desc": "여행 날짜(오늘부터)를 선택하고 바나힐, 빈펄, 호이안 메모리즈, 누이탄타이 또는 한강 크루즈를 선택하세요. VNPAY로 결제하면 QR 티켓이 이메일로 전송됩니다.",
     "cardTitle": "오늘의 추천",
     "cardDesc": "추천 체험",
     "city": "다낭",
-    "miniPill": "VNPAY 결제 • 이메일 QR 수신"
+    "miniPill": "QR 결제 • 이메일 QR 수신"
   },
   "home": {
     "feature": {
@@ -62,7 +62,7 @@
     "highlights": {
       "fast": {
         "title": "빠른 예약",
-        "desc": "날짜 선택 → 티켓 선택 → VNPAY 결제. 로그인 없이 구매 가능."
+        "desc": "날짜 선택 → 티켓 선택 → QR 결제. 로그인 없이 구매 가능."
       },
       "qr": {
         "title": "이메일로 QR",
@@ -88,7 +88,7 @@
       "title": "이용 방법",
       "desc": "간단한 절차로 빠르게 티켓을 받습니다.",
       "ctaTitle": "예약할 준비 되셨나요?",
-      "ctaDesc": "날짜 선택 → 정보 입력 → VNPAY 결제 → 이메일 QR 수신"
+      "ctaDesc": "날짜 선택 → 정보 입력 → QR 결제 → 이메일 QR 수신"
     },
     "faq": {
       "title": "FAQ",
@@ -123,20 +123,20 @@
         "wallet": {
           "title": "에이전트 지갑",
           "desc": "에이전트는 지갑을 선충전하고 발권 시 지갑에서 차감됩니다(MVP).",
-          "note": "안내: 추후 Supabase + VNPAY 충전을 연동합니다."
+          "note": "안내: 추후 Supabase + QR 충전을 연동합니다."
         }
       }
     }
   },
   "checkout": {
     "title": "결제",
-    "subtitle": "로그인 없이 구매 가능합니다. 정보 입력 후 VNPAY 결제.",
+    "subtitle": "로그인 없이 구매 가능합니다. 정보 입력 후 QR 결제.",
     "switcher": {
       "title": "목적지 선택"
     },
     "form": {
       "title": "티켓 정보",
-      "vnpay": "VNPAY",
+      "vnpay": "QR",
       "date": "여행 날짜",
       "destination": "목적지",
       "ticketType": "티켓 종류",
@@ -196,6 +196,6 @@
     }
   },
   "footer": {
-    "powered": "Powered TMK • VNPAY • Resend"
+    "powered": "Powered TMK • QR • Resend"
   }
 }

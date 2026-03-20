@@ -12,22 +12,15 @@ export default function Footer() {
   return (
     <footer className="mt-auto border-t border-slate-900/10 bg-slate-950 text-slate-100">
       <div className="h-1 w-full bg-gradient-to-r from-blue-600 via-violet-600 to-pink-600" />
-      <div className="mx-auto max-w-6xl px-6 py-14">
+      <div className="mx-auto max-w-6xl px-6 py-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
               <div className="relative h-12 w-12 rounded-2xl bg-white p-2 shadow-sm">
-                <Image
-                  src="/logo1.png"
-                  alt="Ruby Travel"
-                  fill
-                  className="object-contain"
-                />
+                <Image src="/logo1.png" alt="Ruby Travel" fill className="object-contain" />
               </div>
               <div className="leading-tight">
-                <div className="text-lg font-extrabold text-white">
-                  {t(lang, "brand.name")}
-                </div>
+                <div className="text-lg font-extrabold text-white">{t(lang, "brand.name")}</div>
                 <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-200">
                   Ruby Travel
                 </div>
@@ -85,7 +78,9 @@ export default function Footer() {
                   <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">
                     Địa điểm
                   </div>
-                  <div className="font-semibold text-white">72 Hoàng Văn Thái, Hòa Khánh, Đà Nẵng</div>
+                  <div className="font-semibold text-white">
+                    72 Hoàng Văn Thái, Hòa Khánh, Đà Nẵng
+                  </div>
                 </div>
               </div>
             </div>

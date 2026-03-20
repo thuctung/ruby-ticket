@@ -1,32 +1,33 @@
-import { I18nKey } from "@/lib/i18n/keys"
+import { I18nKey } from "@/lib/i18n/keys";
 
 export type CommonType = {
-    loadingGlobal: boolean,
-    messageToast: string,
-    confirm: ConfirmType
+  loadingGlobal: boolean;
+  messageToast: string;
+  confirm: ConfirmType;
 
-    setGlobalLoading: (value: boolean) => void,
+  setGlobalLoading: (value: boolean) => void;
 
-    setToastMessage: (value: string) => void,
+  setToastMessage: (value: string) => void;
 
-    showConfirm: (value: ConfirmType) => void,
-}
+  showConfirm: (value: ConfirmType) => void;
+};
 
 export type ConfirmType = {
-    message: string | null,
-    okFunc: Function | null
-}
+  message: string | null;
+  okFunc: Function | null;
+};
 
 export type MenuMgtType = {
-    link: string,
-    lable: string
-}
+  link: string;
+  lable: string;
+  color?: string;
+  icon?: any;
+};
 
 export type StatusType = {
-    title:string,
-    value:string
-}
-
+  title: string;
+  value: string;
+};
 
 export type LocationCard = {
   id: string;
@@ -35,7 +36,6 @@ export type LocationCard = {
   pre_price: number;
   exp: ExperienceCard;
 };
-
 
 export type ExperienceCard = {
   key: string;
@@ -47,6 +47,5 @@ export type ExperienceCard = {
   color: string;
   category: string;
 };
-
 
 export type LangKey = "vi" | "en" | "zh" | "ko";

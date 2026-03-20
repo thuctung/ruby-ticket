@@ -67,14 +67,12 @@ export default function TransactionPageControl() {
         <CardTitle>Lịch sử giao dịch</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <Card>
-          <TransactionSearch
-            onChangeForm={handleChangeForm}
-            onReset={handleResetForm}
-            searchValue={params.searchValue}
-            listStatus={TYPE_LIST}
-          />
-        </Card>
+        <TransactionSearch
+          onChangeForm={handleChangeForm}
+          onReset={handleResetForm}
+          searchValue={params.searchValue}
+          listStatus={TYPE_LIST}
+        />
         <TractionTable transactions={listTransaction} />
         <Pagination
           onChange={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}

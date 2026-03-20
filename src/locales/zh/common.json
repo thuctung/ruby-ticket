@@ -39,14 +39,14 @@
     "loginAgent": "登录代理"
   },
   "hero": {
-    "pill": "MVP 开发中 — 先接入 VNPAY，邮件发送二维码",
+    "pill": "MVP 开发中 — 先接入 QR，邮件发送二维码",
     "title1": "畅游岘港",
     "title2": "快速订票，轻松出行",
-    "desc": "选择出行日期（从今天起），并选择巴拿山、Vinpearl、会安记忆、神财山或韩江游船等体验。通过 VNPAY 支付，二维码门票将发送到邮箱。",
+    "desc": "选择出行日期（从今天起），并选择巴拿山、Vinpearl、会安记忆、神财山或韩江游船等体验。通过 QR 支付，二维码门票将发送到邮箱。",
     "cardTitle": "今日推荐",
     "cardDesc": "精选体验",
     "city": "岘港",
-    "miniPill": "VNPAY 支付 • 邮箱收二维码"
+    "miniPill": "QR 支付 • 邮箱收二维码"
   },
   "home": {
     "feature": {
@@ -62,7 +62,7 @@
     "highlights": {
       "fast": {
         "title": "快速订票",
-        "desc": "选日期、选门票、VNPAY 支付，无需登录。"
+        "desc": "选日期、选门票、QR 支付，无需登录。"
       },
       "qr": {
         "title": "邮件收二维码",
@@ -88,7 +88,7 @@
       "title": "使用方式",
       "desc": "简单流程，快速拿到门票。",
       "ctaTitle": "准备好订票了吗？",
-      "ctaDesc": "选日期、填信息、VNPAY 支付、邮箱收二维码。"
+      "ctaDesc": "选日期、填信息、QR 支付、邮箱收二维码。"
     },
     "faq": {
       "title": "常见问题",
@@ -104,7 +104,7 @@
         },
         "payment": {
           "q": "支持哪些支付方式？",
-          "a": "MVP 先接入 VNPAY，如有需要后续可增加 MoMo。"
+          "a": "MVP 先接入 QR，如有需要后续可增加 MoMo。"
         },
         "agent": {
           "q": "代理如何购票？",
@@ -123,20 +123,20 @@
         "wallet": {
           "title": "代理钱包",
           "desc": "代理先充值钱包，出票时从钱包扣款（MVP）。",
-          "note": "提示：后续将接入 Supabase + VNPAY 充值。"
+          "note": "提示：后续将接入 Supabase + QR 充值。"
         }
       }
     }
   },
   "checkout": {
     "title": "购买门票",
-    "subtitle": "无需登录。填写信息并使用 VNPAY 支付。",
+    "subtitle": "无需登录。填写信息并使用 QR 支付。",
     "switcher": {
       "title": "选择目的地"
     },
     "form": {
       "title": "购票信息",
-      "vnpay": "VNPAY",
+      "vnpay": "QR",
       "date": "出行日期",
       "destination": "目的地",
       "ticketType": "票种",
@@ -148,7 +148,7 @@
       "phone": "手机号",
       "note": "备注（可选）",
       "notePlaceholder": "例如：发票需求、到达时间说明...",
-      "pay": "VNPAY 支付",
+      "pay": "QR 支付",
       "pax": {
         "adult": "成人",
         "senior": "老人",
@@ -196,6 +196,6 @@
     }
   },
   "footer": {
-    "powered": "Powered TMK • VNPAY • Resend"
+    "powered": "Powered TMK • QR • Resend"
   }
 }

@@ -23,13 +23,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
 
-import { ROLES } from "@/commons/constant";
+import { MENUS, ROLES } from "@/commons/constant";
 import { usePathname, useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import Image from "next/image";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
-import Languages from "./Languages";
+import { UserPopup } from "./PopupUser";
 
 export default function Header() {
   const router = useRouter();
@@ -82,35 +82,10 @@ export default function Header() {
     loadUser();
   }, []);
 
-  const menus = [
-    {
-      link: "/#experiences",
-      name: "Trải nghiệm",
-      icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
-    },
-    {
-      link: "/checkout",
-      name: "Mua vé tham quan",
-      icon: "M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z",
-    },
-    {
-      link: "/thanh-tuu",
-      name: "Thành tựu",
-      icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 000 4h2a2 2 0 000-4H9z",
-    },
-
-    {
-      link: "/faq",
-      name: "Hỏi đáp (FAQ)",
-      icon: "M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
-    },
-  ];
-
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative transition-transform group-hover:scale-105">
               <Image
@@ -131,7 +106,7 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden items-center gap-8 text-sm font-semibold text-slate-500 md:flex">
-            {menus.map((item, idx) => (
+            {MENUS.map((item, idx) => (
               <Link
                 key={idx}
                 onClick={(e) => {
@@ -166,7 +141,7 @@ export default function Header() {
                 <DropdownMenuTrigger asChild>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-2 rounded-full border bg-background px-2 py-1 hover:bg-muted/30"
+                    className="inline-flex items-center gap-2   bg-background px-2 py-1 hover:bg-muted/30"
                     aria-label="User menu"
                   >
                     <Avatar className="h-8 w-8">
@@ -176,42 +151,7 @@ export default function Header() {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>
-                    <div className="space-y-1">
-                      <div className="text-sm font-medium">{profile.username}</div>
-                      <div className="text-xs text-muted-foreground">
-                        {profile.role === ROLES.ADMIN
-                          ? "Admin"
-                          : profile.role === ROLES.AFFILIATE
-                            ? "Affiliate"
-                            : t(lang, "auth.user")}
-                        {profile?.email ? ` • ${profile.email}` : ""}
-                      </div>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {profile.role === ROLES.ADMIN ? (
-                    <DropdownMenuItem asChild>
-                      <Link href="/admin">Admin Dashboard</Link>
-                    </DropdownMenuItem>
-                  ) : profile.role === ROLES.AFFILIATE ? (
-                    <DropdownMenuItem asChild>
-                      <Link href="/affiliate">Affiliate Dashboard</Link>
-                    </DropdownMenuItem>
-                  ) : (
-                    <>
-                      <DropdownMenuItem asChild>
-                        <Link href="/checkout">{t(lang, "cta.buy")}</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <a href="#collaborator">{t(lang, "nav.affiliate")}</a>
-                      </DropdownMenuItem>
-                    </>
-                  )}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onSelect={handleLogout}>
-                    {t(lang, "auth.logout")}
-                  </DropdownMenuItem>
+                  <UserPopup profile={profile} handleLogout={handleLogout} />
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
@@ -237,7 +177,7 @@ export default function Header() {
                 {/* List Menu Item */}
                 <nav className="flex-1 overflow-y-auto py-4">
                   <ul className="space-y-1">
-                    {menus.map((item, idx) => (
+                    {MENUS.map((item, idx) => (
                       <li key={idx}>
                         <Link
                           onClick={(e) => {

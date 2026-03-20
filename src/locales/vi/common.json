@@ -42,11 +42,11 @@
     "pill": "Lấy vé nhanh - hỗ trợ 24/7",
     "title1": "Du lịch Đà Nẵng",
     "title2": "đặt vé nhanh, đi chơi liền",
-    "desc": "Chọn ngày đi (từ hôm nay trở đi), chọn điểm đến như Bà Nà Hills, Vinpearl, Ký ức Hội An, Núi Thần Tài hoặc du thuyền sông Hàn. Thanh toán VNPAY và nhận QR qua email.",
+    "desc": "Chọn ngày đi (từ hôm nay trở đi), chọn điểm đến như Bà Nà Hills, Vinpearl, Ký ức Hội An, Núi Thần Tài hoặc du thuyền sông Hàn. Thanh toán QR và nhận QR qua email.",
     "cardTitle": "Lựa chọn nhiều nhất",
     "cardDesc": "Gợi ý trải nghiệm nổi bật",
     "city": "Đà Nẵng",
-    "miniPill": "Thanh toán VNPAY • Nhận QR qua email"
+    "miniPill": "Thanh toán QR • Nhận QR qua email"
   },
   "home": {
     "feature": {
@@ -62,7 +62,7 @@
     "highlights": {
       "fast": {
         "title": "Đặt vé nhanh",
-        "desc": "Chọn ngày đi, chọn vé, thanh toán VNPAY. Không cần đăng nhập."
+        "desc": "Chọn ngày đi, chọn vé, thanh toán QR. Không cần đăng nhập."
       },
       "qr": {
         "title": "Nhận QR qua email",
@@ -88,7 +88,7 @@
       "title": "Cách hoạt động",
       "desc": "Quy trình tối giản để bạn đặt vé nhanh.",
       "ctaTitle": "Sẵn sàng đặt vé?",
-      "ctaDesc": "Chọn ngày đi, nhập thông tin, thanh toán VNPAY và nhận QR."
+      "ctaDesc": "Chọn ngày đi, nhập thông tin, thanh toán QR và nhận QR."
     },
     "faq": {
       "title": "FAQ",
@@ -104,7 +104,7 @@
         },
         "payment": {
           "q": "Thanh toán bằng gì?",
-          "a": "MVP ưu tiên tích hợp VNPAY trước. Sau sẽ thêm MoMo nếu cần."
+          "a": "MVP ưu tiên tích hợp QR trước. Sau sẽ thêm MoMo nếu cần."
         },
         "agent": {
           "q": "Đại lý mua vé bằng cách nào?",
@@ -118,25 +118,25 @@
       "cards": {
         "sell": {
           "title": "Dành cho bạn muốn bán vé",
-          "desc": "Có trang riêng quản lý đơn, theo dõi doanh số (sẽ build sau)."
+          "desc": "Có trang riêng quản lý đơn, theo dõi doanh số ."
         },
         "wallet": {
           "title": "Agent wallet",
           "desc": "Agent nạp tiền trước, hệ thống trừ ví khi xuất vé (MVP).",
-          "note": "Lưu ý: phần này sẽ nối Supabase + VNPAY Topup sau."
+          "note": "Tối ưu hiệu suất bán vé."
         }
       }
     }
   },
   "checkout": {
     "title": "Mua vé",
-    "subtitle": "Khách lẻ không cần đăng nhập. Điền thông tin và thanh toán VNPAY.",
+    "subtitle": "Khách lẻ không cần đăng nhập. Điền thông tin và thanh toán QR.",
     "switcher": {
       "title": "Chọn điểm đến"
     },
     "form": {
       "title": "Thông tin mua vé",
-      "vnpay": "VNPAY",
+      "vnpay": "QR",
       "date": "Ngày đi",
       "destination": "Điểm đến",
       "ticketType": "Loại vé",
@@ -148,7 +148,7 @@
       "phone": "Số điện thoại",
       "note": "Ghi chú (tuỳ chọn)",
       "notePlaceholder": "Ví dụ: cần xuất hoá đơn, lưu ý giờ đến...",
-      "pay": "Thanh toán VNPAY",
+      "pay": "Thanh toán QR",
       "pax": {
         "adult": "Người lớn",
         "senior": "Người già",
@@ -196,6 +196,6 @@
     }
   },
   "footer": {
-    "powered": "Powered TMK • VNPAY • Resend"
+    "powered": "Powered TMK • QR • Resend"
   }
 }

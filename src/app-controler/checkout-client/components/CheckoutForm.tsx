@@ -236,7 +236,7 @@ export function CheckoutForm({
                     onChange={(e) => onChangeLocation(e.target.value)}
                     className="w-full p-2 border border-gray-200 rounded-xl bg-gray-50 text-lg font-medium focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
                   >
-                    {locations.map((p) => (
+                    {locations?.map((p) => (
                       <option key={p.code} value={p.code}>
                         {p.name}
                       </option>

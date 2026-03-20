@@ -29,13 +29,7 @@ export const checkoutSchema = z
       .min(10, "Bạn chưa chọn ngày đi")
       .refine((v) => v >= todayISO(), "Ngày đi phải từ hôm nay trở đi"),
 
-    productKey: z.enum([
-      "bana",
-      "vinpearl",
-      "hoian-memories",
-      "nui-than-tai",
-      "cruise",
-    ]),
+    productKey: z.enum(["bana", "vinpearl", "hoian-memories", "nui-than-tai", "cruise"]),
 
     // optional unless the selected product requires it (e.g. Bà Nà: vé cáp/combo)
     ticketOption: z.string().optional(),
@@ -73,8 +67,7 @@ export const checkoutSchema = z
     // Ticket option required when product declares ticketOptions
     if (product.ticketOptions?.length) {
       const ok = Boolean(
-        v.ticketOption &&
-          product.ticketOptions.some((o) => o.key === v.ticketOption)
+        v.ticketOption && product.ticketOptions.some((o) => o.key === v.ticketOption)
       );
       if (!ok) {
         ctx.addIssue({
@@ -147,12 +140,47 @@ type Pricing = {
 // Bà Nà has ticketOptions, so we model pricing by option.
 const PRICING: Record<ProductKey, Pricing | Record<string, Pricing>> = {
   bana: {
-    cap: { LON: 1200000, GIA: 1050000, NHO: 800000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.1 },
-    combo: { LON: 1450000, GIA: 1300000, NHO: 980000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.1 },
+    cap: {
+      LON: 1200000,
+      GIA: 1050000,
+      NHO: 800000,
+      Chung: 0,
+      CHILDANDAUL: 0,
+      centralDiscount: 0.1,
+    },
+    combo: {
+      LON: 1450000,
+      GIA: 1300000,
+      NHO: 980000,
+      Chung: 0,
+      CHILDANDAUL: 0,
+      centralDiscount: 0.1,
+    },
   },
-  vinpearl: { LON: 1100000, GIA: 980000, NHO: 760000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.08 },
-  "hoian-memories": { LON: 600000, GIA: 0, NHO: 450000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0 },
-  "nui-than-tai": { LON: 700000, GIA: 620000, NHO: 520000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0.1 },
+  vinpearl: {
+    LON: 1100000,
+    GIA: 980000,
+    NHO: 760000,
+    Chung: 0,
+    CHILDANDAUL: 0,
+    centralDiscount: 0.08,
+  },
+  "hoian-memories": {
+    LON: 600000,
+    GIA: 0,
+    NHO: 450000,
+    Chung: 0,
+    CHILDANDAUL: 0,
+    centralDiscount: 0,
+  },
+  "nui-than-tai": {
+    LON: 700000,
+    GIA: 620000,
+    NHO: 520000,
+    Chung: 0,
+    CHILDANDAUL: 0,
+    centralDiscount: 0.1,
+  },
   cruise: { LON: 450000, GIA: 0, NHO: 320000, Chung: 0, CHILDANDAUL: 0, centralDiscount: 0 },
 };
 
@@ -172,10 +200,8 @@ export function CheckoutForm({
     travelDate: defaultValues?.travelDate ?? todayISO(),
     productKey: defaultValues?.productKey ?? productKey,
     isCentralRegion: defaultValues?.isCentralRegion ?? false,
-    ticketOption:
-      defaultValues?.ticketOption ?? product.ticketOptions?.[0]?.key,
-    qtyLON:
-      defaultValues?.qtyLON ?? (product.paxTypes.includes("LON") ? 1 : 0),
+    ticketOption: defaultValues?.ticketOption ?? product.ticketOptions?.[0]?.key,
+    qtyLON: defaultValues?.qtyLON ?? (product.paxTypes.includes("LON") ? 1 : 0),
     qtyGIA: defaultValues?.qtyGIA ?? 0,
     qtyNHO: defaultValues?.qtyNHO ?? 0,
     qtyChung: defaultValues?.qtyChung ?? 0,
@@ -240,19 +266,22 @@ export function CheckoutForm({
       values.qtyChung * pricing.Chung +
       values.qtyCHILDANDAUL * pricing.CHILDANDAUL;
 
-    const discount = values.isCentralRegion
-      ? Math.round(subtotal * pricing.centralDiscount)
-      : 0;
+    const discount = values.isCentralRegion ? Math.round(subtotal * pricing.centralDiscount) : 0;
 
     const total = Math.max(0, subtotal - discount);
 
     return { subtotal, discount, total };
-  }, [pricing, values.isCentralRegion, values.qtyLON, values.qtyGIA, values.qtyNHO, values.qtyChung, values.qtyCHILDANDAUL]);
+  }, [
+    pricing,
+    values.isCentralRegion,
+    values.qtyLON,
+    values.qtyGIA,
+    values.qtyNHO,
+    values.qtyChung,
+    values.qtyCHILDANDAUL,
+  ]);
 
-  const setField = <K extends keyof CheckoutFormValues>(
-    key: K,
-    val: CheckoutFormValues[K]
-  ) => {
+  const setField = <K extends keyof CheckoutFormValues>(key: K, val: CheckoutFormValues[K]) => {
     setValues((prev) => ({ ...prev, [key]: val }));
   };
 
@@ -282,7 +311,7 @@ export function CheckoutForm({
 
       // Placeholder action
       alert(
-        `OK (mock) — sẽ tích hợp VNPAY sau\n\nĐiểm đến: ${t(lang, product.nameKey)}\nTổng: ${formatVND(calc.total)}\nNgày đi: ${res.data.travelDate}`
+        `OK (mock) — sẽ tích hợp QR sau\n\nĐiểm đến: ${t(lang, product.nameKey)}\nTổng: ${formatVND(calc.total)}\nNgày đi: ${res.data.travelDate}`
       );
     } finally {
       setSubmitting(false);
@@ -294,8 +323,12 @@ export function CheckoutForm({
       <Card className="lg:col-span-3 rounded-2xl shadow-md">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between gap-4">
-            <CardTitle className="text-xl font-extrabold">{t(lang, "checkout.form.title")}</CardTitle>
-            <Badge variant="outline" className="rounded-full">{t(lang, "checkout.form.vnpay")}</Badge>
+            <CardTitle className="text-xl font-extrabold">
+              {t(lang, "checkout.form.title")}
+            </CardTitle>
+            <Badge variant="outline" className="rounded-full">
+              {t(lang, "checkout.form.vnpay")}
+            </Badge>
           </div>
         </CardHeader>
         <CardContent className="space-y-6 pt-0">
@@ -310,18 +343,14 @@ export function CheckoutForm({
                 min={todayISO()}
                 onChange={(e) => setField("travelDate", e.target.value)}
               />
-              {errors.travelDate && (
-                <p className="text-sm text-destructive">{errors.travelDate}</p>
-              )}
+              {errors.travelDate && <p className="text-sm text-destructive">{errors.travelDate}</p>}
             </div>
 
             <div className="space-y-2">
               <Label>{t(lang, "checkout.form.destination")}</Label>
               <div className="rounded-xl border bg-muted/20 p-3">
                 <div className="text-sm font-medium">{t(lang, product.nameKey)}</div>
-                <div className="text-xs text-muted-foreground">
-                  {t(lang, product.taglineKey)}
-                </div>
+                <div className="text-xs text-muted-foreground">{t(lang, product.taglineKey)}</div>
               </div>
               <input type="hidden" value={values.productKey} readOnly />
             </div>
@@ -378,9 +407,7 @@ export function CheckoutForm({
                     min={0}
                     max={99}
                     value={values.qtyLON}
-                    onChange={(e) =>
-                      setField("qtyLON", Number(e.target.value))
-                    }
+                    onChange={(e) => setField("qtyLON", Number(e.target.value))}
                   />
                 </div>
               )}
@@ -395,9 +422,7 @@ export function CheckoutForm({
                     min={0}
                     max={99}
                     value={values.qtyGIA}
-                    onChange={(e) =>
-                      setField("qtyGIA", Number(e.target.value))
-                    }
+                    onChange={(e) => setField("qtyGIA", Number(e.target.value))}
                   />
                 </div>
               )}
@@ -412,9 +437,7 @@ export function CheckoutForm({
                     min={0}
                     max={99}
                     value={values.qtyNHO}
-                    onChange={(e) =>
-                      setField("qtyNHO", Number(e.target.value))
-                    }
+                    onChange={(e) => setField("qtyNHO", Number(e.target.value))}
                   />
                 </div>
               )}
@@ -429,9 +452,7 @@ export function CheckoutForm({
                     min={0}
                     max={99}
                     value={values.qtyChung}
-                    onChange={(e) =>
-                      setField("qtyChung", Number(e.target.value))
-                    }
+                    onChange={(e) => setField("qtyChung", Number(e.target.value))}
                   />
                 </div>
               )}
@@ -446,17 +467,23 @@ export function CheckoutForm({
                     min={0}
                     max={99}
                     value={values.qtyCHILDANDAUL}
-                    onChange={(e) =>
-                      setField("qtyCHILDANDAUL", Number(e.target.value))
-                    }
+                    onChange={(e) => setField("qtyCHILDANDAUL", Number(e.target.value))}
                   />
                 </div>
               )}
             </div>
 
-            {(errors.qtyLON || errors.qtyGIA || errors.qtyNHO || errors.qtyChung || errors.qtyCHILDANDAUL) && (
+            {(errors.qtyLON ||
+              errors.qtyGIA ||
+              errors.qtyNHO ||
+              errors.qtyChung ||
+              errors.qtyCHILDANDAUL) && (
               <p className="text-sm text-destructive">
-                {errors.qtyLON || errors.qtyGIA || errors.qtyNHO || errors.qtyChung || errors.qtyCHILDANDAUL}
+                {errors.qtyLON ||
+                  errors.qtyGIA ||
+                  errors.qtyNHO ||
+                  errors.qtyChung ||
+                  errors.qtyCHILDANDAUL}
               </p>
             )}
           </div>
@@ -475,9 +502,7 @@ export function CheckoutForm({
                 type="checkbox"
                 className="h-5 w-5"
                 checked={values.isCentralRegion}
-                onChange={(e) =>
-                  setField("isCentralRegion", e.target.checked)
-                }
+                onChange={(e) => setField("isCentralRegion", e.target.checked)}
               />
             </div>
           )}
@@ -498,9 +523,7 @@ export function CheckoutForm({
                 value={values.email}
                 onChange={(e) => setField("email", e.target.value)}
               />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email}</p>
-              )}
+              {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">{t(lang, "checkout.form.phone")}</Label>
@@ -510,9 +533,7 @@ export function CheckoutForm({
                 value={values.phone}
                 onChange={(e) => setField("phone", e.target.value)}
               />
-              {errors.phone && (
-                <p className="text-sm text-destructive">{errors.phone}</p>
-              )}
+              {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
             </div>
           </div>
 
@@ -536,43 +557,35 @@ export function CheckoutForm({
             {submitting ? "..." : `${t(lang, "checkout.form.pay")} • ${formatVND(calc.total)}`}
           </Button>
 
-          {errors.form && (
-            <p className="text-sm text-destructive">{errors.form}</p>
-          )}
+          {errors.form && <p className="text-sm text-destructive">{errors.form}</p>}
         </CardContent>
       </Card>
 
       {/* Summary */}
       <Card className="lg:col-span-2 lg:sticky lg:top-24 rounded-2xl shadow-md">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-extrabold">{t(lang, "checkout.summary.title")}</CardTitle>
+          <CardTitle className="text-lg font-extrabold">
+            {t(lang, "checkout.summary.title")}
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm pt-0">
           <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">
-              {t(lang, "checkout.summary.destination")}
-            </span>
+            <span className="text-muted-foreground">{t(lang, "checkout.summary.destination")}</span>
             <span className="font-medium">{t(lang, product.nameKey)}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">
-              {t(lang, "checkout.summary.date")}
-            </span>
+            <span className="text-muted-foreground">{t(lang, "checkout.summary.date")}</span>
             <span className="font-medium">{values.travelDate}</span>
           </div>
 
           <Separator />
 
           <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">
-              {t(lang, "checkout.summary.subtotal")}
-            </span>
+            <span className="text-muted-foreground">{t(lang, "checkout.summary.subtotal")}</span>
             <span className="font-medium">{formatVND(calc.subtotal)}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">
-              {t(lang, "checkout.summary.discount")}
-            </span>
+            <span className="text-muted-foreground">{t(lang, "checkout.summary.discount")}</span>
             <span className="font-medium">-{formatVND(calc.discount)}</span>
           </div>
           <div className="flex items-center justify-between pt-2">
@@ -581,8 +594,8 @@ export function CheckoutForm({
           </div>
 
           <div className="pt-3 text-xs text-muted-foreground">
-            Lưu ý: giá đang là mock để test UI + validate. Khi nối Supabase,
-            hệ thống sẽ tính theo pricing rules của admin.
+            Lưu ý: giá đang là mock để test UI + validate. Khi nối Supabase, hệ thống sẽ tính theo
+            pricing rules của admin.
           </div>
         </CardContent>
       </Card>

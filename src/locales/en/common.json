@@ -39,14 +39,14 @@
     "loginAgent": "Login Agent"
   },
   "hero": {
-    "pill": "MVP in progress — VNPAY first, QR via email",
+    "pill": "MVP in progress — QR first, QR via email",
     "title1": "Explore Da Nang",
     "title2": "book fast, travel easy",
-    "desc": "Pick a date (from today onward) and choose experiences like Ba Na Hills, Vinpearl, Hoi An Memories, Nui Than Tai or a Han River cruise. Pay with VNPAY and receive a QR ticket via email.",
+    "desc": "Pick a date (from today onward) and choose experiences like Ba Na Hills, Vinpearl, Hoi An Memories, Nui Than Tai or a Han River cruise. Pay with QR and receive a QR ticket via email.",
     "cardTitle": "Today’s picks",
     "cardDesc": "Recommended experiences",
     "city": "Da Nang",
-    "miniPill": "Pay with VNPAY • Receive QR via email"
+    "miniPill": "Pay with QR • Receive QR via email"
   },
   "home": {
     "feature": {
@@ -62,7 +62,7 @@
     "highlights": {
       "fast": {
         "title": "Fast booking",
-        "desc": "Pick a date, choose tickets, pay with VNPAY. No login needed."
+        "desc": "Pick a date, choose tickets, pay with QR. No login needed."
       },
       "qr": {
         "title": "QR via email",
@@ -88,7 +88,7 @@
       "title": "How it works",
       "desc": "A minimal flow to get your tickets fast.",
       "ctaTitle": "Ready to book?",
-      "ctaDesc": "Choose a date, enter details, pay with VNPAY, get QR."
+      "ctaDesc": "Choose a date, enter details, pay with QR, get QR."
     },
     "faq": {
       "title": "FAQ",
@@ -104,7 +104,7 @@
         },
         "payment": {
           "q": "Which payment methods are supported?",
-          "a": "MVP integrates VNPAY first. MoMo can be added later if needed."
+          "a": "MVP integrates QR first. MoMo can be added later if needed."
         },
         "agent": {
           "q": "How do agents buy tickets?",
@@ -123,20 +123,20 @@
         "wallet": {
           "title": "Agent wallet",
           "desc": "Prepaid wallet for agents; wallet is deducted when issuing tickets (MVP).",
-          "note": "Note: we’ll connect Supabase + VNPAY topup later."
+          "note": "Note: we’ll connect Supabase + QR topup later."
         }
       }
     }
   },
   "checkout": {
     "title": "Checkout",
-    "subtitle": "No login needed. Enter details and pay with VNPAY.",
+    "subtitle": "No login needed. Enter details and pay with QR.",
     "switcher": {
       "title": "Choose destination"
     },
     "form": {
       "title": "Ticket details",
-      "vnpay": "VNPAY",
+      "vnpay": "QR",
       "date": "Travel date",
       "destination": "Destination",
       "ticketType": "Ticket type",
@@ -148,7 +148,7 @@
       "phone": "Phone number",
       "note": "Note (optional)",
       "notePlaceholder": "Example: invoice request, arrival time notes...",
-      "pay": "Pay with VNPAY",
+      "pay": "Pay with QR",
       "pax": {
         "adult": "Adult",
         "senior": "Senior",
@@ -196,6 +196,6 @@
     }
   },
   "footer": {
-    "powered": "Powered TMK • VNPAY • Resend"
+    "powered": "Powered TMK • QR • Resend"
   }
 }
