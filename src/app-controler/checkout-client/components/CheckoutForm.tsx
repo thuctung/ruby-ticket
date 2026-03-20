@@ -3,31 +3,16 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   DataFormTicketSubmit,
   LocationType,
   PriceCustomerType,
   ProductType,
   PromotionType,
-  ResumSlectedType,
+  ResumSelectedType,
   TicketByLocationType,
 } from "@/types/ticket";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
 import { formatVND } from "@/lib/money";
-import { t } from "@/lib/i18n/t";
 import { useLang } from "@/lib/useLang";
 import { getPriceCustomer, getPromotionByLocation, getTicketType, getTicketVariant } from "../api";
 import DatePickerCustom from "@/components/ui/date-picker";
@@ -36,6 +21,9 @@ import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { isEmpty } from "lodash";
 import { checkoutSchema } from "../contants";
 import { AGENT_CODE } from "@/commons/constant";
+import { useDebounce } from "@/helpers/useDebounce";
+import { useCommonStore } from "@/stores/useCommonStore";
+import { CommonType } from "@/types";
 
 type CheckoutFormProps = {
   location: string;
@@ -61,9 +49,8 @@ export function CheckoutForm({
   locations,
   agentCode = AGENT_CODE.CUSTOMER,
 }: CheckoutFormProps) {
-  const lang = useLang();
-
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { setToastMessage }: CommonType | any = useCommonStore.getState();
 
   const [ticketTypes, setTicketTypes] = useState<TicketByLocationType[]>([]);
   const [ticketTypeCode, setTickeTypeCode] = useState("");
@@ -77,7 +64,7 @@ export function CheckoutForm({
   const [formData, setFormData] = useState<any>(initFormValues);
 
   const [totalMoney, setTotalMoney] = useState(0);
-  const [resumSelected, setResumeSelected] = useState<ResumSlectedType[]>([]);
+  const [resumSelected, setResumeSelected] = useState<ResumSelectedType[]>([]);
 
   const [loadingGetPice, setLodingPrice] = useState(false);
 
@@ -88,6 +75,7 @@ export function CheckoutForm({
   };
 
   const setTicKetSelected = (code: string, val: any) => {
+    console.log(code, val);
     setCountTicketSelected((p: any) => ({ ...p, [code]: val }));
   };
 
@@ -104,16 +92,15 @@ export function CheckoutForm({
         const priceTicket = mapPriceSelect.get(key) ?? 0;
         const totalPriceTicket = numerTicet * priceTicket;
         const ticketVariant = ticketVariants.find((t) => t.code === key);
-        console.log(ticketVariant);
         totalMoney += totalPriceTicket;
-
-        const result = {
+        const result: ResumSelectedType = {
           base_price: ticketVariant?.price || 0,
           finalprice: priceTicket,
           totalPriceTicket,
           ticketName: ticketVariant?.ticket_name || "",
           numerTicet,
           ticket_variant_code: key,
+          date_use: formData.date_use,
         };
         res.push(result);
       });
@@ -122,22 +109,30 @@ export function CheckoutForm({
     setTotalMoney(totalMoney);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleValidateForm = (e: React.FormEvent) => {
+    if (agentCode !== AGENT_CODE.CUSTOMER) return true;
     e.preventDefault();
     const result = checkoutSchema.safeParse(formData);
     if (!result.success) {
-      console.log(result.error.format());
       const fieldErrors: Record<string, string> = {};
       result.error.issues.forEach((issue) => {
         fieldErrors[String(issue.path[0])] = issue.message;
       });
       setErrors(fieldErrors);
-    } else {
+      setToastMessage("Chưa nhập thông tin");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    if (handleValidateForm(e)) {
       const submit: DataFormTicketSubmit = {
         total_amount: totalMoney,
         formData,
         listTicket: resumSelected,
         locationNameSelected,
+        date_use: formData.date_use,
       };
       onSubmit(submit);
       setErrors({});
@@ -209,9 +204,12 @@ export function CheckoutForm({
     }
   }, [ticketTypeCode]);
 
+  const debouncedCount = useDebounce(countTicketSelected, 1000, setLodingPrice);
+  const debouncedPromo = useDebounce(isPromo, 1000, setLodingPrice);
+
   useEffect(() => {
     getPriceTicet();
-  }, [isPromo, countTicketSelected]);
+  }, [debouncedCount, debouncedPromo]);
 
   useEffect(() => {
     setTotalMoney(0);
@@ -221,232 +219,241 @@ export function CheckoutForm({
   }, [location, ticketTypeCode]);
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-      <Card className="lg:col-span-3 rounded-2xl shadow-md">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between gap-4">
-            <CardTitle className="text-xl font-extrabold">
-              {t(lang, "checkout.form.title")}
-            </CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-6 pt-0">
-          {/* Date + product */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <div className="space-y-2">
-                <div className="text-sm font-medium">{t(lang, "checkout.switcher.title")}</div>
-                <Select value={location} onValueChange={(value) => onChangeLocation(value)}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={t(lang, "checkout.switcher.title")} />
-                  </SelectTrigger>
-                  <SelectContent>
+    <div className="bg-gray-50 min-h-screen p-4 md:p-8 text-gray-800">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* COLUMN 1: FORM THÔNG TIN (Chiếm 2/3 width) */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* BLOCK 1: HÀNH TRÌNH & LOẠI VÉ */}
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
+              <h2 className="text-xl font-bold mb-6 text-gray-900">1. Thông tin chuyến đi</h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-600">Điểm đến</label>
+                  <select
+                    value={location}
+                    onChange={(e) => onChangeLocation(e.target.value)}
+                    className="w-full p-2 border border-gray-200 rounded-xl bg-gray-50 text-lg font-medium focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
+                  >
                     {locations.map((p) => (
-                      <SelectItem key={p.code} value={p.code}>
+                      <option key={p.code} value={p.code}>
                         {p.name}
-                      </SelectItem>
+                      </option>
                     ))}
-                  </SelectContent>
-                </Select>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-600">Ngày đi</label>
+                  <div className="w-full p-2 border border-gray-200 rounded-xl bg-gray-50 text-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition">
+                    <DatePickerCustom
+                      style={{
+                        width: "100%",
+                      }}
+                      className="okok"
+                      value={formData.date_use}
+                      onChange={(val: any) => setFieldFormData("date_use", val)}
+                      minDate={toDate}
+                      name="date_use"
+                      id="date_use"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-600">Loại vé</label>
+                <div className="grid grid-cols-2 gap-3 bg-gray-100 p-1.5 rounded-xl border border-gray-200">
+                  {ticketTypes.map((opt) => (
+                    <button
+                      key={opt.code}
+                      className={` transition p-2 rounded-lg font-bold text-lg  ${opt.code === ticketTypeCode ? "bg-white text-blue-700  shadow-sm border border-gray-200 flex justify-center items-center gap-2" : "text-gray-600  font-medium text-lg hover:bg-gray-200"} `}
+                      type="button"
+                      onClick={() => setTickeTypeCode(opt.code)}
+                    >
+                      {opt.name}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            <div className="space-y-2 mt-2">
-              <Label>{t(lang, "checkout.form.date")}</Label>
-              <DatePickerCustom
-                value={formData.date_use}
-                onChange={(val: any) => setFieldFormData("date_use", val)}
-                minDate={toDate}
-                name="date_use"
-                id="date_use"
-              />
-            </div>
-          </div>
 
-          {ticketTypes?.length ? (
-            <div className="space-y-2">
-              <Label>{t(lang, "checkout.form.ticketType")}</Label>
-              <div className="grid grid-cols-2 gap-2">
-                {ticketTypes.map((opt) => (
-                  <Button
-                    key={opt.code}
-                    type="button"
-                    variant={ticketTypeCode === opt.code ? "default" : "outline"}
-                    className="rounded-xl"
-                    onClick={() => setTickeTypeCode(opt.code)}
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
+              <h2 className="text-xl font-bold mb-6 text-gray-900">2. Số lượng vé</h2>
+              <p className="text-sm text-gray-500 mb-6">
+                Nhập số lượng theo từng đối tượng (tùy theo loại vé bạn chọn)
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-1 rounded-xl border border-gray-100 mb-6">
+                {ticketVariants.map((item) => (
+                  <div
+                    className="bg-white p-2 rounded-lg border border-gray-100 text-center shadow-inner"
+                    key={item.code}
                   >
-                    {opt.name}
-                  </Button>
+                    <label className="block text-gray-900 font-medium mb-3 text-medium">
+                      {item.category_name}
+                    </label>
+                    <input
+                      id={item.code}
+                      inputMode="numeric"
+                      type="number"
+                      min={0}
+                      max={99}
+                      value={countTicketSelected[item.code] ?? 0}
+                      onChange={(e) => setTicKetSelected(item.code, e.target.value)}
+                      className="w-24 text-center p-1 text-xl font-black text-blue-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition"
+                    />
+                  </div>
                 ))}
               </div>
-            </div>
-          ) : null}
 
-          {/* Quantities */}
-          <div className="space-y-3">
-            <div>
-              <div className="font-medium">{t(lang, "checkout.form.qtyTitle")}</div>
-              <div className="text-sm text-muted-foreground">
-                {t(lang, "checkout.form.qtyDesc")}
-              </div>
-            </div>
-
-            <div
-              className={`grid grid-cols-1 gap-4 ${
-                ticketVariants.length >= 3
-                  ? "sm:grid-cols-3"
-                  : ticketVariants.length === 2
-                    ? "sm:grid-cols-2"
-                    : "sm:grid-cols-1"
-              }`}
-            >
-              {ticketVariants.map((item) => (
-                <div className="space-y-2" key={item.code}>
-                  <Label htmlFor={item.code}>{item.category_name}</Label>
-                  <Input
-                    id={item.code}
-                    inputMode="numeric"
-                    type="number"
-                    min={0}
-                    max={99}
-                    value={countTicketSelected[item.code] ?? 0}
-                    onChange={(e) => setTicKetSelected(item.code, e.target.value)}
-                  />
+              {promotionList.length ? (
+                <div className=" rounded-xl border bg-muted/20 p-4">
+                  {promotionList.map((p) => (
+                    <div key={p.code} className="flex items-start justify-between mb-2">
+                      <div>
+                        <p className="text-lg font-bold text-orange-950 cursor-pointer">
+                          {p.promo_name}
+                        </p>
+                        <span className="text-sm text-orange-800">
+                          Chú ý:Giá vé áp dụng cho {p.promo_name}, vui lòng xuất căn cước khi vào
+                          cổng.
+                        </span>
+                      </div>
+                      <input
+                        id="central_resident"
+                        type="checkbox"
+                        checked={isPromo[p.code] || false}
+                        onChange={(e) => setIsPromoSelected(p.code, e.target.checked)}
+                        className="w-6 h-6 rounded-md border-gray-300 text-orange-600 focus:ring-orange-200 transition"
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
+              ) : null}
             </div>
+            {agentCode === AGENT_CODE.CUSTOMER ? (
+              <div className="bg-white p-4 md:p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h2 className="text-xl font-bold mb-6 text-gray-900">3. Thông tin nhận vé</h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-600">
+                      Email nhận vé (QR Code)
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      onChange={(e) => setFieldFormData("email", e.target.value)}
+                      value={formData.email}
+                      placeholder="Ví dụ: nguyenvan@gmail.com"
+                      className="w-full p-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-200 transition"
+                    />
+                    {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-600">
+                      Số điện thoại liên hệ
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="Ví dụ: 0987654321"
+                      id="phone"
+                      onChange={(e) => setFieldFormData("phone", e.target.value)}
+                      value={formData.phone}
+                      className="w-full p-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-200 transition"
+                    />
+                    {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-600">Ghi chú (Tùy chọn)</label>
+                  <textarea
+                    rows={3}
+                    id="description"
+                    value={formData.description}
+                    onChange={(e) => setFieldFormData("description", e.target.value)}
+                    placeholder="Ví dụ: Cần xuất hóa đơn GTGT, giờ đón dự kiến..."
+                    className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-200 transition"
+                  ></textarea>
+                </div>
+              </div>
+            ) : null}
           </div>
 
-          {promotionList.length ? (
-            <div className=" rounded-xl border bg-muted/20 p-4">
-              {promotionList.map((p) => (
-                <div key={p.code} className="flex items-start justify-between mb-2">
-                  <div>
-                    <p className="font-medium">{p.promo_name}</p>
-                    <span className="text-xs italic">
-                      Chú ý:Giá vé áp dụng cho {p.promo_name}, vui lòng xuất căn cước khi vào cổng.
+          <div className="lg:col-span-1">
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 sticky top-10 relative">
+              <h3 className="text-2xl font-bold mb-6 text-gray-950">Tóm tắt đơn hàng</h3>
+
+              <div className="space-y-4 text-gray-700 pb-6 mb-6 border-b border-gray-100">
+                <div className="flex justify-between items-center text-lg">
+                  <span className="text-gray-500">Điểm đến</span>
+                  <span className="font-semibold text-gray-900">{locationNameSelected}</span>
+                </div>
+                <div className="flex justify-between items-center text-lg">
+                  <span className="text-gray-500">Ngày đi</span>
+                  <span className="font-semibold text-gray-900">{formData.date_use}</span>
+                </div>
+              </div>
+              {resumSelected.map((item, index) => (
+                <div key={index}>
+                  <div className="text-gray-600 pt-2 text-sm pl-4 border-l-2 border-gray-100 space-y-1">
+                    <div className="flex justify-between">
+                      <span>{item.ticketName}</span>
+                      <span> x {Number(item.numerTicet)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-xs">Giá gốc:</span>
+                      <span className="text-xs line-through ">{formatVND(item.base_price)}</span>
+                    </div>
+                    <div className="f-width text-right ">
+                      <span className="font-semibold">{formatVND(item.finalprice)}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <div className="space-y-6">
+                <div className="flex justify-between items-baseline pt-4 border-t-2 border-dashed border-gray-200">
+                  <span className="text-base font-medium text-gray-950">Tổng cộng</span>
+                  <div className="text-right">
+                    <span className="text-medium font-extrabold text-blue-900 tracking-tight">
+                      {formatVND(totalMoney)}
                     </span>
                   </div>
-                  <input
-                    aria-label="isCentralRegion"
-                    type="checkbox"
-                    className="h-5 w-5"
-                    checked={isPromo[p.code] || false}
-                    onChange={(e) => setIsPromoSelected(p.code, e.target.checked)}
-                  />
                 </div>
-              ))}
+
+                <button
+                  disabled={totalMoney === 0 || loadingGetPice}
+                  onClick={handleSubmit}
+                  className="w-full bg-blue-700 hover:bg-blue-800 text-white p-2 rounded-xl font-extrabold text-xl shadow-md transition duration-150 transform hover:-translate-y-0.5 active:translate-y-0 flex justify-center items-center gap-3"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                    />
+                  </svg>
+                  {agentCode === AGENT_CODE.CUSTOMER ? "Thanh toán" : "Xuuất vé"}
+                </button>
+              </div>
+              {loadingGetPice && (
+                <div className="absolute inset-0 grid place-items-center bg-white/50">
+                  <div className="w-8 h-8 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+                </div>
+              )}
             </div>
-          ) : null}
-          <Separator />
-
-          {/* Contact */}
-          {agentCode === AGENT_CODE.CUSTOMER ? (
-            <>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="email">{t(lang, "checkout.form.email")}</Label>
-                  <Input
-                    id="email"
-                    onChange={(e) => setFieldFormData("email", e.target.value)}
-                    placeholder="email@domain.com"
-                    value={formData.email}
-                  />
-                  {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">{t(lang, "checkout.form.phone")}</Label>
-                  <Input
-                    id="phone"
-                    onChange={(e) => setFieldFormData("phone", e.target.value)}
-                    placeholder="09xxxxxxxx"
-                    value={formData.phone}
-                  />
-                  {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="note">{t(lang, "checkout.form.note")}</Label>
-                <Textarea
-                  id="description"
-                  placeholder={t(lang, "checkout.form.notePlaceholder")}
-                  value={formData.description}
-                  onChange={(e) => setFieldFormData("description", e.target.value)}
-                />
-              </div>
-            </>
-          ) : null}
-        </CardContent>
-      </Card>
-
-      {/* Summary */}
-      <Card className="lg:col-span-2 lg:sticky lg:top-24 rounded-2xl shadow-md relative">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-extrabold">
-            {t(lang, "checkout.summary.title")}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 text-sm pt-0">
-          <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">{t(lang, "checkout.summary.destination")}</span>
-            <span className="font-medium">{locationNameSelected}</span>
           </div>
-          <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">{t(lang, "checkout.summary.date")}</span>
-            <span className="font-medium">{formData.date_use}</span>
-          </div>
-
-          <Separator />
-
-          {resumSelected.map((item, index) => (
-            <div key={index}>
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <span className="font-medium">{item.ticketName}</span>
-                </div>
-                <span className="text-sm ">{Number(item.numerTicet)}</span>
-              </div>
-              <div className="flex items-center justify-between ">
-                <div className="space-y-1">
-                  <span className="text-muted-foreground">Giá công bố</span>
-                </div>
-                <span className="text-sm line-through text-gray-500">
-                  {formatVND(item.base_price)}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <span className="text-muted-foreground">Khuyến mãi</span>
-                </div>
-                <span className="text-sm ">{formatVND(item.finalprice)}</span>
-              </div>
-            </div>
-          ))}
-          <Separator />
-          <div className="flex items-center justify-between pt-2">
-            <span className="font-semibold">Tổng cộng</span>
-            <span className="text-base font-semibold">{formatVND(totalMoney)}</span>
-          </div>
-
-          {agentCode === AGENT_CODE.CUSTOMER ? (
-            <Button
-              type="button"
-              className="w-full rounded-xl"
-              size="lg"
-              disabled={totalMoney === 0 || loadingGetPice}
-              onClick={handleSubmit}
-            >
-              Thanh toán {formatVND(totalMoney)}
-            </Button>
-          ) : null}
-
-          {loadingGetPice && (
-            <div className="absolute inset-0 grid place-items-center bg-white/50">
-              <div className="w-8 h-8 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

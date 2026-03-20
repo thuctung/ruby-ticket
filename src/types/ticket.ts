@@ -36,6 +36,7 @@ export type ItemSelectType = {
   quantity: number;
   code: string;
   id: string;
+  price: number;
 };
 
 export type ResultTicketSlectedType = {
@@ -47,6 +48,7 @@ export type TicketResultQRType = {
   ticket_variant_code: string;
   ticket_code: string;
   ticket_name: string;
+  dateUse: string;
 };
 
 export type PromotionType = {
@@ -62,18 +64,34 @@ export type PriceCustomerType = {
   price: number;
 };
 
-export type ResumSlectedType = {
+export type ResumSelectedType = {
   base_price: number;
   finalprice: number;
   totalPriceTicket: number;
   ticketName: string;
   numerTicet: number;
   ticket_variant_code: string;
+  date_use: string;
 };
 
 export type DataFormTicketSubmit = {
   total_amount: number;
-  listTicket: ResumSlectedType[];
+  listTicket: ResumSelectedType[];
   formData?: any;
   locationNameSelected: string;
+  date_use: string;
+};
+
+export type TicketSubmitAgentType = {
+  ticket_variant_code: string;
+  quantity: number;
+  price: number;
+};
+
+export type ParamCreateTicketAgentType = {
+  user_id: string;
+  items: TicketSubmitAgentType[];
+  total_amount: number;
+  date_use: string;
+  email: string;
 };

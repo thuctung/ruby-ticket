@@ -14,12 +14,6 @@ export const GET_LIST_TOPUP_MGT = "/api/auth/admin/topup-mgt/get-list";
 
 export const UPDATE_STATUS_TOPUP_MGT = "/api/auth/admin/topup-mgt/update-status";
 
-export const GET_PRODUCTS = "/api/auth/affiliate/get-ticket/get-product";
-
-export const GET_LOCATIONS = "/api/auth/affiliate/get-ticket/get-location";
-
-export const GET_TICKE_TYPE = "/api/auth/affiliate/get-ticket/get-ticket-type";
-
 export const CREATE_ORDER_TICKET = "/api/auth/affiliate/get-ticket/create-order";
 
 export const GET_TRANSACTION = "/api/auth/affiliate/transaction/get-transaction";
@@ -37,3 +31,7 @@ export const UPSERT_PRICING = "/api/auth/admin/pricing/upsert";
 export const GET_HOME_HIGHLIGHTS = "/api/public/home/highlights";
 
 export const CLIENT_GET_QR_CODE = "/api/public/checkout";
+
+export const GET_TICKET_SALE = "/api/auth/affiliate/stats/get-history";
+
+export const COUNT_TICKET_SALE = "/api/auth/affiliate/stats/count-ticket";

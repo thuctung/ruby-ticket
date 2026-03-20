@@ -51,7 +51,7 @@ export const DB_TABLE_NAME = {
   TICKET_TYPES: "ticket_types",
   TICKET_TICKET_VARIANT: "ticket_variants",
   VIEW_TICET_VARIANTS_AND_CATEGORY: "ticket_variants_and_category",
-  FUNC_BY_TICKET: "buy_tickets",
+  FUNC_BY_TICKET: "buy_tickets_final",
   LOCATIONS: "locations",
   WALLET_TRANSACTION: "wallet_transactions",
   PROMOTION: "promotion",
@@ -59,6 +59,7 @@ export const DB_TABLE_NAME = {
   PROMOTION_PRICE: "promotion_price",
   PROMOTION_LOCATION: "promotion_location",
   ORDERS: "orders",
+  VIEW_TICET_SALE: "view_sale_history",
 };
 
 export const BANK_INFO = {

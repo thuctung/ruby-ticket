@@ -32,3 +32,16 @@ export interface TractionResponseType {
   description: string;
   type: string;
 }
+
+export interface TicketSalteResponseType {
+  created_at: string;
+  location_name: string;
+  quantity: number;
+  total: number;
+  ticket_name: string;
+}
+
+export type CountTicketSaleResponse = {
+  quantity: number;
+  total: number;
+};

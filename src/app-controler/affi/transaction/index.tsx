@@ -51,12 +51,10 @@ export default function TransactionPageControl() {
     const { data, totalPages }: any = await getListTransaction(params, profile.user_id);
     if (data) {
       setListTransaction(data);
-      setTotalPage(totalPages);
     }
+    setTotalPage(totalPages);
   };
-  const handleUpdateSearch = () => {
-    fetchTransaction();
-  };
+
   useEffect(() => {
     if (profile.user_id) {
       fetchTransaction();
@@ -74,7 +72,6 @@ export default function TransactionPageControl() {
             onChangeForm={handleChangeForm}
             onReset={handleResetForm}
             searchValue={params.searchValue}
-            onSearch={handleUpdateSearch}
             listStatus={TYPE_LIST}
           />
         </Card>

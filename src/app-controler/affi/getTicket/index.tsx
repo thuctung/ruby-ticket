@@ -2,54 +2,42 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { formatVND } from "@/lib/money";
-import { useLang } from "@/lib/useLang";
-import { t } from "@/lib/i18n/t";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
 import {
   LocationType,
-  TicketByLocationType,
-  ProductType,
-  ResultTicketSlectedType,
   TicketResultQRType,
-  ItemSelectType,
+  DataFormTicketSubmit,
+  TicketSubmitAgentType,
+  ParamCreateTicketAgentType,
+  ResumSelectedType,
 } from "@/types/ticket";
-import { createOrderTicket, getLocation, getProducts, getTicletByLocation } from "./api";
-import { sv_getCurrentProfile } from "@/app-controler/login/api";
+import { createOrderTicket, getLocation } from "./api";
 import { useCommonStore } from "@/stores/useCommonStore";
 import TicketResultQR from "./components/TicketResultQR";
-import { BASIC_DATE_FORMAT, formatVNTime } from "@/helpers/dateTime";
+import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import { CheckoutForm } from "@/app-controler/checkout-client/components/CheckoutForm";
 import { AGENT_CODE } from "@/commons/constant";
+import { get } from "lodash";
+import { LodingMessage } from "@/components/ui/loading-message";
 
 export default function GetTicketPageControler() {
-  const lang = useLang();
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
+  const { setProfile }: CommonType | any = useProfileStore.getState();
 
   const [locationList, setLocationList] = useState<LocationType[]>([]);
   const [location, setLocation] = useState("BANA");
-  const [dateUse, setDateUse] = useState<Date>(new Date());
-  const [ticketCategory, setTicketCategory] = useState<any>({});
   const [openQR, setOpenQR] = useState(false);
   const [resultTicketQR, setTicketResultQR] = useState<TicketResultQRType[]>([]);
+
+  const [loadingMessageGetTicket, setLoadingMessageGetTicket] = useState("");
 
   const locationName = useMemo(
     () => locationList.find((item) => item.code === location)?.name || "",
@@ -58,12 +46,13 @@ export default function GetTicketPageControler() {
 
   const onCloseQR = () => {
     setOpenQR(false);
-    setTicketCategory({});
   };
 
   const handleGetLocation = useCallback(async () => {
     const resLocation = await getLocation();
-    setLocationList(resLocation);
+    if (resLocation) {
+      setLocationList(resLocation);
+    }
   }, []);
 
   useEffect(() => {
@@ -74,7 +63,54 @@ export default function GetTicketPageControler() {
     setLocation(locationCode);
   };
 
-  const onSubmit = (values: any) => {};
+  const handleGetTicket = (listTicket: ResumSelectedType[]) => {
+    setLoadingMessageGetTicket("Đang xử lý vé...");
+    setTimeout(() => {
+      const data: TicketResultQRType[] =
+        listTicket.flatMap((item) => {
+          return Array.from({ length: item.numerTicet }, () => ({
+            ticket_variant_code: item.ticket_variant_code,
+            ticket_name: item.ticketName,
+            ticket_code: "DSSDFSDF",
+            dateUse: item.date_use,
+          }));
+        }) || [];
+      setTicketResultQR(data);
+      setOpenQR(true);
+      setLoadingMessageGetTicket("");
+    }, 5000);
+  };
+
+  const handleFormSubmit = async (values: DataFormTicketSubmit) => {
+    const { total_amount, listTicket, date_use } = values;
+    if (total_amount > profile.balance) {
+      setToastMessage("Số dư không đủ!!");
+      return;
+    }
+    if (profile) {
+      const items: TicketSubmitAgentType[] = listTicket.map((item) => ({
+        ticket_variant_code: item.ticket_variant_code,
+        quantity: item.numerTicet,
+        price: Number(item.finalprice),
+      }));
+      const params: ParamCreateTicketAgentType = {
+        items,
+        user_id: profile.user_id || "",
+        date_use: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
+        email: profile.email || "",
+        total_amount,
+      };
+      const data = await createOrderTicket(params);
+      if (data) {
+        const currentBalance = get(data, "remaining_balance") || profile.balance - total_amount;
+        setProfile({
+          ...profile,
+          balance: currentBalance,
+        });
+        handleGetTicket(listTicket);
+      }
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -91,32 +127,22 @@ export default function GetTicketPageControler() {
           </div>
           <Separator />
           <CheckoutForm
-            onSubmit={onSubmit}
+            onSubmit={handleFormSubmit}
             onChangeLocation={handleChangeLocation}
             agentCode={AGENT_CODE.LEVEL_1}
             location={location}
             locations={locationList}
           />
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center justify-end">
-            <Button
-              disabled={profile?.balance < 0}
-              size="lg"
-              className="w-full sm:w-auto rounded-xl px-10"
-            >
-              {profile?.balance < 0 ? "Số dư không đủ" : "Xuất vé"}
-            </Button>
-          </div>
         </CardContent>
       </Card>
 
       {openQR && (
-        <TicketResultQR
-          tickets={resultTicketQR}
-          onClose={onCloseQR}
-          location={locationName}
-          dateUse={dayjs(dateUse).format(BASIC_DATE_FORMAT)}
-        />
+        <TicketResultQR tickets={resultTicketQR} onClose={onCloseQR} location={locationName} />
       )}
+      <LodingMessage
+        loading={Boolean(loadingMessageGetTicket)}
+        messsage={loadingMessageGetTicket}
+      />
     </div>
   );
 }

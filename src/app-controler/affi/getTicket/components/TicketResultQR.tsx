@@ -5,24 +5,25 @@ import QRCodePDF from "qrcode";
 import QRCode from "react-qr-code";
 import { getFontBase64 } from "./getFont";
 import { TicketResultQRType } from "@/types/ticket";
+import dayjs from "dayjs";
+import { FULL_DATE_FORMAT } from "@/helpers/dateTime";
+import { useCommonStore } from "@/stores/useCommonStore";
+import { CommonType } from "@/types";
 
 type TicketResultQRProps = {
   tickets: TicketResultQRType[];
   onClose: () => void;
   location: string;
-  dateUse: string;
 };
-export default function TicketResultQR({
-  tickets,
-  onClose,
-  location,
-  dateUse,
-}: TicketResultQRProps) {
+export default function TicketResultQR({ tickets, onClose, location }: TicketResultQRProps) {
+  const { showConfirm }: CommonType | any = useCommonStore.getState();
+
   const downloadPDF = async () => {
     const pdf = new jsPDF({
       unit: "px",
       format: [350, 360],
     });
+
     const fontBase64 = await getFontBase64();
 
     pdf.addFileToVFS("Roboto.ttf", fontBase64);
@@ -52,7 +53,7 @@ export default function TicketResultQR({
       pdf.text(t.ticket_code, 175, 125, { align: "center" });
 
       pdf.setFontSize(12);
-      pdf.text(dateUse, 175, 145, { align: "center" });
+      pdf.text(t.dateUse || "", 175, 145, { align: "center" });
 
       // ===== QR =====
       const qr = await QRCodePDF.toDataURL(t.ticket_code);
@@ -69,12 +70,16 @@ export default function TicketResultQR({
       pdf.text("Vé chỉ sử dụng 1 lần - Không hoàn trả", 175, 340, { align: "center" });
     }
 
-    pdf.save("tickets.pdf");
+    pdf.save(`${location}-${dayjs(new Date()).format(FULL_DATE_FORMAT)}.pdf`);
   };
 
   const handleClose = () => {
-    onClose();
-    downloadPDF();
+    showConfirm({
+      message: "Đã tải vé về ?",
+      okFunc: () => {
+        onClose();
+      },
+    });
   };
 
   if (!tickets?.length) return null;
@@ -104,11 +109,10 @@ export default function TicketResultQR({
 
                 <p className="text-sm mt-3">{t.ticket_code}</p>
 
-                {dateUse && <p className="text-xs text-gray-500 mt-3">{dateUse}</p>}
-
+                <p className="text-xs text-gray-500 mt-3">{t.dateUse}</p>
                 {/* QR */}
                 <div className="flex justify-center mt-3">
-                  <QRCode value={`${t.ticket_code}|${dateUse || ""}`} size={110} />
+                  <QRCode value={t.ticket_code} size={110} />
                 </div>
 
                 {/* Đại lý */}
