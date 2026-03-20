@@ -48,7 +48,7 @@ export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankT
         </div>
         <span className="text-sm text-center text-red-500">{mesage}</span>
         <div className="w-full flex justify-center mt-6">
-          {onDone && <Button onClick={onDone}>Xong</Button>}
+          {onDone && <Button onClick={onDone}>Đã chuyển khoản</Button>}
         </div>
       </DialogContent>
     </Dialog>

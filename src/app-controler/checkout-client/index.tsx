@@ -126,6 +126,7 @@ export default function CheckoutControlerPage() {
           }
         )
         .subscribe();
+
       return () => {
         clientSupbase.removeChannel(channel);
       };

@@ -1,11 +1,9 @@
+import { DrafDATA } from "@/app-controler/admin/topup-mgt/components/constants";
 import api from "@/axios";
-import { GET_QR_TOPUP } from "@/commons/apiURL";
 import { DB_TABLE_NAME } from "@/commons/constant";
-import { getCodeTopup } from "@/helpers/genCode";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
-import { get } from "lodash";
 
 const supabaseClient = createSupabaseBrowserClient();
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();

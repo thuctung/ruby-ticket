@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME, PAYMENT_STATUS } from "@/commons/constant";
+import { DB_TABLE_NAME, PAYMENT_STATUS, TYPE_TRANSFER } from "@/commons/constant";
 import { getCodeTopup } from "@/helpers/genCode";
 
 export async function POST(request: Request) {
   const { user_email, total_amount, phone, description } = await request.json();
-  const payment_code = getCodeTopup("CL");
+  const payment_code = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
   const { data, error } = await supabaseAdmin
     .from(DB_TABLE_NAME.ORDERS)
     .insert([

@@ -21,7 +21,7 @@ export const ROLES = {
 
 export const TOPUPS_STATUS = {
   PENDING: "pending",
-  APPROVED: "approved",
+  APPROVED: "completed",
   REJECTED: "rejected",
 };
 
@@ -60,6 +60,7 @@ export const DB_TABLE_NAME = {
   PROMOTION_LOCATION: "promotion_location",
   ORDERS: "orders",
   VIEW_TICET_SALE: "view_sale_history",
+  FUNC_AFF_ADD_MONEY: "handle_topup_webhook",
 };
 
 export const BANK_INFO = {
@@ -78,4 +79,9 @@ export const AGENT_CODE = {
   CUSTOMER: "customer",
   LEVEL_1: "level_1",
   LEVEL_2: "level_2",
+};
+
+export const TYPE_TRANSFER = {
+  CUSTOMER: "CMT",
+  AFF: "AFF",
 };
