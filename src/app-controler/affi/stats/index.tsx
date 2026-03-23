@@ -53,10 +53,10 @@ export default function AffiliateStatsControler() {
   };
 
   const handleResetForm = () => {
-    setParams((pre) => ({
-      ...pre,
+    setParams({
       searchValue: intForm,
-    }));
+      currentPage:1
+    });
   };
 
   const fetchTicketSale = async () => {
@@ -90,7 +90,6 @@ export default function AffiliateStatsControler() {
         },
         { quantity: 0, total: 0 }
       );
-      console.log(result);
       setCountTicket(result);
     }
   };
@@ -137,7 +136,7 @@ export default function AffiliateStatsControler() {
         </CardContent>
       </Card>
       <Pagination
-        onChange={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
+        onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
         page={params.currentPage}
         totalPages={totalPages}
       />

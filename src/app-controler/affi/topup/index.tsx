@@ -13,6 +13,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { DB_TABLE_NAME, PAYMENT_STATUS } from "@/commons/constant";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
+import Pagination from "@/components/ui/pagination";
 
 export default function AffiliateTopupPageControl() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -23,6 +24,8 @@ export default function AffiliateTopupPageControl() {
   const [urlQR, setQR] = useState<QRBankResponseType | null>();
 
   const [isShowPopup, setIsShowPopup] = useState(false);
+  const [curentPage, setCurentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const handleAfterCreateTopup = () => {
     handleGetHistory();
@@ -36,9 +39,10 @@ export default function AffiliateTopupPageControl() {
   };
 
   const handleGetHistory = async () => {
-    const data: [] | null = await getListTopupByAff(profile.user_id);
+    const { data, totalPages }: any = await getListTopupByAff(profile.user_id, curentPage);
     if (data?.length) {
       setHistory(data);
+      setTotalPages(totalPages);
     }
   };
 
@@ -57,7 +61,7 @@ export default function AffiliateTopupPageControl() {
     if (profile.user_id) {
       handleGetHistory();
     }
-  }, [profile.user_id]);
+  }, [profile.user_id, curentPage]);
 
   useEffect(() => {
     if (urlQR?.code) {
@@ -100,6 +104,11 @@ export default function AffiliateTopupPageControl() {
         />
       )}
       <TopupHistory history={history} />
+      <Pagination
+        onChangePage={(page) =>  setCurentPage(page)}
+        page={curentPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 }

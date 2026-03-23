@@ -13,7 +13,7 @@ type AffiliateSearch = {
   listStatus: StatusType[];
 };
 
-export function AffiliateSearch({ listStatus, onSearch }: any) {
+export function AffiliateSearch({ listStatus, onSearch ,}: any) {
   const [filters, setFilters] = useState({
     username: "",
     email: "",

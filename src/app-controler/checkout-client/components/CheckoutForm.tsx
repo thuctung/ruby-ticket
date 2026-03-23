@@ -127,12 +127,14 @@ export function CheckoutForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     if (handleValidateForm(e)) {
+      const promoCode = Object.keys(isPromo).find(key => isPromo[key] === true);
       const submit: DataFormTicketSubmit = {
         total_amount: totalMoney,
         formData,
         listTicket: resumSelected,
         locationNameSelected,
         date_use: formData.date_use,
+        promoCode,
       };
       onSubmit(submit);
       setErrors({});

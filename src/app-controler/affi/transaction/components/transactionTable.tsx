@@ -18,7 +18,7 @@ export function TractionTable({ transactions }: TractionTableProps) {
 
   return (
     <div className="overflow-auto rounded-2xl border">
-      <div className="overflow-x-auto bg-white rounded-3xl border border-gray-100 shadow-sm">
+      <div className="bg-white rounded-3xl border border-gray-100 shadow-sm table-wrapper">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-gray-50">

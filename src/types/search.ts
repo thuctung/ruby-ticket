@@ -21,3 +21,10 @@ export interface SearchTicketSale {
   from: string;
   to: string;
 }
+
+export interface AdminSearchReport {
+  location?: string;
+  from: string;
+  to: string;
+  email?:string
+}

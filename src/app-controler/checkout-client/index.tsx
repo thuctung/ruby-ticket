@@ -3,8 +3,13 @@
 import { useLang } from "@/lib/useLang";
 import { CheckoutForm } from "./components/CheckoutForm";
 import { useEffect, useState } from "react";
-import { getLocationClient, getQRPaymentClient } from "./api";
-import { DataFormTicketSubmit, LocationType, TicketResultQRType } from "@/types/ticket";
+import { getLocationClient, customerCreateOrderTicket } from "./api";
+import {
+  ClientOrderItem,
+  DataFormTicketSubmit,
+  LocationType,
+  TicketResultQRType,
+} from "@/types/ticket";
 import { useSearchParams } from "next/navigation";
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
@@ -12,9 +17,12 @@ import { get } from "lodash";
 import { CommonType, QRBankResponseType } from "@/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { DB_TABLE_NAME, PAYMENT_STATUS } from "@/commons/constant";
+import { DB_TABLE_NAME, PAYMENT_STATUS, TYPE_TRANSFER } from "@/commons/constant";
 import TicketResultQR from "../affi/getTicket/components/TicketResultQR";
 import { LodingMessage } from "@/components/ui/loading-message";
+import { getCodeTopup } from "@/helpers/genCode";
+import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
+import dayjs from "dayjs";
 
 export default function CheckoutControlerPage() {
   const lang = useLang();
@@ -40,7 +48,6 @@ export default function CheckoutControlerPage() {
     qr: "",
     code: "",
     amount: 0,
-    orderId: "",
   });
 
   const fetchLoction = async () => {
@@ -57,24 +64,36 @@ export default function CheckoutControlerPage() {
   };
 
   const handleSubmitTicket = async (values: DataFormTicketSubmit) => {
+    const { formData, total_amount, listTicket ,promoCode} = values;
     setItemTicketOrder(values);
-    const { formData, total_amount } = values;
+    const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
+
     const { email, phone, description }: any = formData;
-    const data = await getQRPaymentClient({
+
+    const listTicketSubmit = listTicket.map((item) => ({
+      ticket_variant_code: item.ticket_variant_code,
+      price: item.finalprice,
+      quantity: item.numerTicet,
+      date_use: dayjs(item.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
+    }));
+
+    const dataSubmit: ClientOrderItem = {
       user_email: email,
       total_amount,
       phone: phone,
       description: description,
-    });
-    const result = get(data, "data", {});
-    const { paymentContent, orderId } = result;
-    if (paymentContent) {
-      const qrLink = getBankInfo(total_amount, paymentContent);
+      listTicketSubmit,
+      paymentCode,
+      promoCode
+    };
+
+    const data = await customerCreateOrderTicket(dataSubmit);
+    if (data) {
+      const qrLink = getBankInfo(total_amount, paymentCode);
       setQRPayment({
         qr: qrLink,
-        code: paymentContent,
+        code: paymentCode,
         amount: total_amount,
-        orderId,
       });
       setOpenQR(true);
     }
