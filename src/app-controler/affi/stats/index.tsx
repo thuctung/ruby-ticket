@@ -1,17 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { formatVND } from "@/lib/money";
-import { listSales, sumByDay, sumByProduct } from "@/lib/affiliateStore";
-import { useLang } from "@/lib/useLang";
-import { t } from "@/lib/i18n/t";
-import { getProduct } from "@/lib/products";
-import type { ProductKey } from "@/lib/products";
+
 import { countTicketSale, getAffHistory, getLocation } from "./api";
 import {
   CountTicketSaleResponse,
@@ -29,19 +22,6 @@ import Pagination from "@/components/ui/pagination";
 import { TicketSaleTable } from "./components/TicketSalteTable";
 import { Revenue } from "./components/Revenue";
 
-const todayISO = () => {
-  const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString().slice(0, 10);
-};
-
-const daysAgoISO = (days: number) => {
-  const d = new Date();
-  d.setDate(d.getDate() - days);
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString().slice(0, 10);
-};
-
 const df_From = dayjs(new Date()).add(-30, "day").format(BASIC_DATE_FORMAT);
 const df_To = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
@@ -52,40 +32,6 @@ const intForm: SearchTicketSale = {
 };
 
 export default function AffiliateStatsControler() {
-  const lang = useLang();
-
-  const [from, setFrom] = useState(daysAgoISO(7));
-  const [to, setTo] = useState(todayISO());
-  const [all, setAll] = useState(listSales());
-
-  useEffect(() => {
-    const load = () => setAll(listSales());
-    load();
-
-    const onStorage = () => load();
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
-  }, []);
-
-  const filtered = useMemo(() => {
-    return all.filter((s) => {
-      const day = s.createdAt.slice(0, 10);
-      return day >= from && day <= to;
-    });
-  }, [all, from, to]);
-
-  const totals = useMemo(() => {
-    const tickets = filtered.reduce(
-      (acc, s) => acc + s.qtyLON + s.qtyGIA + s.qtyNHO + s.qtyChung + s.qtyCHILDANDAUL,
-      0
-    );
-    const revenue = filtered.reduce((acc, s) => acc + s.total, 0);
-    return { tickets, revenue };
-  }, [filtered]);
-
-  const byDay = useMemo(() => sumByDay(filtered), [filtered]);
-  const byProduct = useMemo(() => sumByProduct(filtered), [filtered]);
-
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const [totalPages, setTotalPage] = useState(0);
   const [locationList, setLocationList] = useState<LocationType[]>([]);
@@ -134,7 +80,6 @@ export default function AffiliateStatsControler() {
       params.searchValue.to,
       profile.user_id
     );
-    console.log(data);
     if (data) {
       const result = data.reduce(
         (acc: { quantity: number; total: number }, item: CountTicketSaleResponse) => {

@@ -45,3 +45,8 @@ export type CountTicketSaleResponse = {
   quantity: number;
   total: number;
 };
+
+export type AgentType = {
+  code: string;
+  name: string;
+};

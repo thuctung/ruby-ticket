@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Pagination from "@/components/ui/pagination";
 
 import {
   AdminAffiResponseType,
@@ -15,7 +16,6 @@ import { get } from "lodash";
 import { AffiTable } from "./components/afffi-table";
 import { AffiliateSearch } from "./components/search-form";
 import { listAccStatus } from "./constants";
-import Pagination from "@/components/ui/pagination";
 
 export default function AffiliateMgt() {
   const [response, setRespose] = useState<AdminAffiResponseType>();

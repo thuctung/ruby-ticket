@@ -35,3 +35,7 @@ export const CLIENT_GET_QR_CODE = "/api/public/checkout";
 export const GET_TICKET_SALE = "/api/auth/affiliate/stats/get-history";
 
 export const COUNT_TICKET_SALE = "/api/auth/affiliate/stats/count-ticket";
+
+export const UPDATE_PROFILE = "/api/auth/affiliate/profile/update";
+
+export const CHANGE_PASSWORD = "/api/auth/affiliate/profile/change-password";
