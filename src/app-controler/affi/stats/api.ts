@@ -11,7 +11,7 @@ import { get } from "lodash";
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 const clientSupbase = createSupabaseBrowserClient();
 
-export const getAffHistory = async (params: SearchTableType<SearchTicketSale>, user_id: string) => {
+export const getAffHistory = async (params: SearchTableType<SearchTicketSale>, user_id?: string) => {
   try {
     setGlobalLoading(true);
     const { currentPage, searchValue } = params;

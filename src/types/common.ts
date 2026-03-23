@@ -1,4 +1,5 @@
 import { I18nKey } from "@/lib/i18n/keys";
+import { MouseEventHandler } from "react";
 
 export type CommonType = {
   loadingGlobal: boolean;
@@ -49,3 +50,22 @@ export type ExperienceCard = {
 };
 
 export type LangKey = "vi" | "en" | "zh" | "ko";
+
+export type ButtonProp = {
+  onClick: MouseEventHandler;
+  classMore?: string;
+};
+
+export type SelectBoxProps = {
+  value: string;
+  onChange: (value: string) => void;
+  firstOption?: boolean;
+  children: any;
+};
+
+export type InputProps = {
+  value: string;
+  onChange: (value: string) => void;
+  type: string;
+  placeholder: string;
+};

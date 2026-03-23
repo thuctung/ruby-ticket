@@ -25,7 +25,7 @@ export const TOPUPS_STATUS = {
   REJECTED: "rejected",
 };
 
-export const LIMIT_TABLE = 20;
+export const LIMIT_TABLE = 10;
 
 export const SIDEBAR_ADMIN: MenuMgtType[] = [
   {
@@ -43,11 +43,11 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
     lable: "Quản lý nạp tiền",
     icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z",
   },
-  {
-    link: "/admin/inventory",
-    lable: "Nhập vé",
-    icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 000 4h2a2 2 0 000-4H9z",
-  },
+  // {
+  //   link: "/admin/inventory",
+  //   lable: "Nhập vé",
+  //   icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 000 4h2a2 2 0 000-4H9z",
+  // },
   { link: "/admin/stats", lable: "Thống kê", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
 ];
 
@@ -68,13 +68,20 @@ export const SIDEBAR_AFF: MenuMgtType[] = [
     lable: "Lịch sử giao dịch",
     icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
   },
+  {
+    link: "/affiliate/profile",
+    lable: "Thông tin các nhân",
+    icon: "M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z",
+  },
 ];
 
 export const DB_TABLE_NAME = {
   TOPUPS: "topups",
   PROFILES: "profiles",
   VIEW_PROFILE_TOPUP: "topups_with_profiles",
+  VIEW_ADMIN_REPORT: "admin_order_report",
   FUC_UPADTE_STAUS_BALANCE: "approve_topup",
+  FUC_CUSTOMER_BUY_TICKET: "customer_buy_ticket",
   AFF_APPLICATION: "affiliate_applications",
   TICKET_TYPES: "ticket_types",
   TICKET_TICKET_VARIANT: "ticket_variants",
@@ -89,6 +96,7 @@ export const DB_TABLE_NAME = {
   ORDERS: "orders",
   VIEW_TICET_SALE: "view_sale_history",
   FUNC_AFF_ADD_MONEY: "handle_topup_webhook",
+  AGENTS: "agents",
 };
 
 export const BANK_INFO = {

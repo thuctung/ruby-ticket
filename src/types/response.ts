@@ -45,3 +45,30 @@ export type CountTicketSaleResponse = {
   quantity: number;
   total: number;
 };
+
+export type CountReportResponse = {
+  quantity: number;
+  total_amount: number;
+};
+
+export type AgentType = {
+  code: string;
+  name: string;
+};
+
+
+export type AdminReportResponseType = {
+  buy_by:string;
+  date_use:string;
+  location_name:string;
+  user_email:string;
+  order_id:string;
+  phone:string;
+  price:number;
+  quantity:number;
+  total_amount:number;
+  subtotal:number;
+  ticket_name:string;
+  sale_date:string
+  promo_name:string
+}

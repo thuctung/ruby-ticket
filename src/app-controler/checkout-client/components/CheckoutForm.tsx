@@ -13,7 +13,6 @@ import {
 } from "@/types/ticket";
 
 import { formatVND } from "@/lib/money";
-import { useLang } from "@/lib/useLang";
 import { getPriceCustomer, getPromotionByLocation, getTicketType, getTicketVariant } from "../api";
 import DatePickerCustom from "@/components/ui/date-picker";
 import dayjs from "dayjs";
@@ -24,6 +23,7 @@ import { AGENT_CODE } from "@/commons/constant";
 import { useDebounce } from "@/helpers/useDebounce";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
+import { GetTicketIcon } from "@/components/ui/icons/getTicket";
 
 type CheckoutFormProps = {
   location: string;
@@ -127,12 +127,14 @@ export function CheckoutForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     if (handleValidateForm(e)) {
+      const promoCode = Object.keys(isPromo).find(key => isPromo[key] === true);
       const submit: DataFormTicketSubmit = {
         total_amount: totalMoney,
         formData,
         listTicket: resumSelected,
         locationNameSelected,
         date_use: formData.date_use,
+        promoCode,
       };
       onSubmit(submit);
       setErrors({});
@@ -428,21 +430,8 @@ export function CheckoutForm({
                   onClick={handleSubmit}
                   className="w-full bg-blue-700 hover:bg-blue-800 text-white p-2 rounded-xl font-extrabold text-xl shadow-md transition duration-150 transform hover:-translate-y-0.5 active:translate-y-0 flex justify-center items-center gap-3"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                    />
-                  </svg>
-                  {agentCode === AGENT_CODE.CUSTOMER ? "Thanh toán" : "Xuuất vé"}
+                  <GetTicketIcon />
+                  {agentCode === AGENT_CODE.CUSTOMER ? "Thanh toán" : "Xuất vé"}
                 </button>
               </div>
               {loadingGetPice && (

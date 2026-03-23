@@ -17,7 +17,13 @@ export default function Footer() {
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
               <div className="relative h-12 w-12 rounded-2xl bg-white p-2 shadow-sm">
-                <Image src="/logo1.png" alt="Ruby Travel" fill className="object-contain" />
+                <Image
+                  src="/logo1.png"
+                  alt="Ruby Travel"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
               </div>
               <div className="leading-tight">
                 <div className="text-lg font-extrabold text-white">{t(lang, "brand.name")}</div>

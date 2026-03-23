@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Pagination from "@/components/ui/pagination";
 
 import {
   AdminAffiResponseType,
@@ -15,12 +16,13 @@ import { get } from "lodash";
 import { AffiTable } from "./components/afffi-table";
 import { AffiliateSearch } from "./components/search-form";
 import { listAccStatus } from "./constants";
-import Pagination from "@/components/ui/pagination";
 
 export default function AffiliateMgt() {
   const [response, setRespose] = useState<AdminAffiResponseType>();
 
+
   const profiles = useMemo(() => get(response, "profiles"), [response]) || [];
+
   const [totalPages, setTotalPage] = useState(0);
 
   const [params, setParams] = useState<SearchTableType<SearchAffiType>>({
@@ -34,6 +36,7 @@ export default function AffiliateMgt() {
 
   const handleGetListAff = useCallback(async () => {
     const data = await getListAffi(params);
+    setTotalPage(get(data,'totalPages', 1))
     setRespose(data);
   }, [params]);
 
@@ -53,10 +56,10 @@ export default function AffiliateMgt() {
 
   const handleUpdateSearch = useCallback(
     (value: SearchAffiType) => {
-      setParams((pre) => ({
-        ...pre,
+      setParams({
         searchValue: value,
-      }));
+        currentPage:1
+      });
     },
     [setParams]
   );
@@ -64,6 +67,7 @@ export default function AffiliateMgt() {
   const handleResetPass = useCallback(() => {
     updateRole();
   }, []);
+
 
   useEffect(() => {
     handleGetListAff();
@@ -77,7 +81,7 @@ export default function AffiliateMgt() {
         </CardHeader>
         <CardContent className="space-y-6">
           <Card>
-            <AffiliateSearch onSearch={handleUpdateSearch} listStatus={listAccStatus} />
+            <AffiliateSearch onSearch={handleUpdateSearch} listStatus={listAccStatus}  />
           </Card>
           <AffiTable
             profiles={profiles}
@@ -85,7 +89,7 @@ export default function AffiliateMgt() {
             onResetPass={handleResetPass}
           />
           <Pagination
-            onChange={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
+            onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
             page={params.currentPage}
             totalPages={totalPages}
           />

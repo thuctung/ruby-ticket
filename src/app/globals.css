@@ -146,3 +146,13 @@ button {
     -moz-appearance: textfield;
   }
 }
+
+thead,
+tbody {
+  white-space: nowrap;
+}
+
+.table-wrapper {
+  max-width: 900px;
+  overflow-x: auto;
+}

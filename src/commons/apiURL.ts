@@ -30,8 +30,17 @@ export const UPSERT_PRICING = "/api/auth/admin/pricing/upsert";
 
 export const GET_HOME_HIGHLIGHTS = "/api/public/home/highlights";
 
-export const CLIENT_GET_QR_CODE = "/api/public/checkout";
+export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";
 
 export const GET_TICKET_SALE = "/api/auth/affiliate/stats/get-history";
 
 export const COUNT_TICKET_SALE = "/api/auth/affiliate/stats/count-ticket";
+
+export const UPDATE_PROFILE = "/api/auth/affiliate/profile/update";
+
+export const CHANGE_PASSWORD = "/api/auth/affiliate/profile/change-password";
+
+export const GET_ADMIN_REPORT = "/api/auth/admin/stats/get-report";
+
+export const COUNT_REPORT = "/api/auth/admin/stats/count-report";
+

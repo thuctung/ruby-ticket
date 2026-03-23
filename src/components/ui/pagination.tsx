@@ -3,10 +3,10 @@
 type Props = {
   page: number;
   totalPages: number;
-  onChange: (p: number) => void;
+  onChangePage: (p: number) => void;
 };
 
-export default function Pagination({ page, totalPages, onChange }: Props) {
+export default function Pagination({ page, totalPages, onChangePage }: Props) {
   const getPages = () => {
     const delta = 2;
     const range: (number | string)[] = [];
@@ -37,13 +37,11 @@ export default function Pagination({ page, totalPages, onChange }: Props) {
     return range;
   };
 
-  const pages = getPages();
-
   const handleChangePage = (newPage: number) => {
-    if (page === newPage) return;
-    onChange(page);
+    if (page !== newPage) {
+      onChangePage(newPage);
+    }
   };
-
   return (
     <div className="flex items-center gap-2 justify-center mt-6">
       <div className="flex items-center justify-between mt-8 px-2">
@@ -63,13 +61,13 @@ export default function Pagination({ page, totalPages, onChange }: Props) {
             </svg>
           </button>
 
-          {pages.map((p, i) => (
+          {getPages().map((p, i) => (
             <button
               key={i}
               disabled={p === "..."}
-              onClick={() => typeof p === "number" && handleChangePage(p)}
+              onClick={() => handleChangePage(Number(p))}
               className={`
-            w-10 h-10 rounded-xl bg-blue-600 text-white font-bold shadow-md shadow-blue-200
+            w-10 h-10 rounded-xl  font-bold shadow-md shadow-blue-200
             ${p === page ? "bg-blue-500 text-white" : ""}
             ${p === "..." ? "cursor-default border-none" : ""}
           `}

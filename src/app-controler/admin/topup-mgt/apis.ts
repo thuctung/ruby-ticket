@@ -13,7 +13,6 @@ export const getListTopupMgt = async (searchValue: SearchTableType<SearchAffiTyp
     try {
         const response = await api.post(GET_LIST_TOPUP_MGT, searchValue);
         const data = get(response, ['data']) || [];
-        
         return data
     } catch (err: any) {
         setToastMessage(err.response?.data?.error || err.message || 'Lỗi khi tải danh sách');

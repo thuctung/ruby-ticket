@@ -5,16 +5,14 @@ export interface ProfileType {
   full_name: string | null;
   phone: string | null;
   address: string | null;
-  role:string;
+  role: string;
   status: string;
   balance: number;
-  created_at?:string | null
-};
-
-
-
+  created_at?: string | null;
+  updated_at?: string | null;
+}
 
 export type ProfileUpdateStatusType = {
   user_id: string;
   status: string;
-}
+};

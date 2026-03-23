@@ -30,8 +30,8 @@ export function TopupMgtList({ history, onApproveTopup }: TopupHistoryProps) {
                 <CardTitle>Lịch sử nạp tiền</CardTitle>
             </CardHeader>
             <CardContent>
-                <div className="overflow-auto rounded-2xl border">
-                    <table className="w-full text-sm">
+                <div className=" rounded-2xl border table-wrapper">
+                    <table className="w-full text-sm ">
                         <thead className="text-left text-muted-foreground">
                             <tr>
                                 <th className="p-3">Ngày nạp</th>

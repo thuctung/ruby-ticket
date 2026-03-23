@@ -23,7 +23,7 @@ export function AffiTable({ profiles, onResetPass, onUpdateStatus }: AffiTablePr
 }
 
 
-    return (<div className="overflow-auto rounded-2xl border">
+    return (<div className=" rounded-2xl border table-wrapper">
         <table className="w-full text-sm">
             <thead className="text-left text-muted-foreground">
                 <tr>

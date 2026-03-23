@@ -75,7 +75,7 @@ export default function TransactionPageControl() {
         />
         <TractionTable transactions={listTransaction} />
         <Pagination
-          onChange={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
+          onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
           page={params.currentPage}
           totalPages={totalPages}
         />
