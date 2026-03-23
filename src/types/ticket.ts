@@ -96,6 +96,7 @@ export type TicketSubmitAgentType = {
   ticket_variant_code: string;
   quantity: number;
   price: number;
+  promo_code?:string
 };
 
 export type ParamCreateTicketAgentType = {

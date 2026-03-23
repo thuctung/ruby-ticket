@@ -82,7 +82,7 @@ export default function GetTicketPageControler() {
   };
 
   const handleFormSubmit = async (values: DataFormTicketSubmit) => {
-    const { total_amount, listTicket, date_use } = values;
+    const { total_amount, listTicket, date_use, promoCode } = values;
     if (total_amount > profile.balance) {
       setToastMessage("Số dư không đủ!!");
       return;
@@ -92,6 +92,7 @@ export default function GetTicketPageControler() {
         ticket_variant_code: item.ticket_variant_code,
         quantity: item.numerTicet,
         price: Number(item.finalprice),
+        promo_code:promoCode
       }));
       const params: ParamCreateTicketAgentType = {
         items,
