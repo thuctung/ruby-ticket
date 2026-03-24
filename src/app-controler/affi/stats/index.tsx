@@ -18,9 +18,10 @@ import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { LocationType } from "@/types/ticket";
 import { SearchTicketForm } from "./components/searchTicketForm";
-import Pagination from "@/components/ui/pagination";
-import { TicketSaleTable } from "./components/TicketSalteTable";
+
 import { Revenue } from "./components/Revenue";
+import { CustomTable } from "@/components/ui/customs/table";
+import { columnAffStats } from "./contants";
 
 const df_From = dayjs(new Date()).add(-30, "day").format(BASIC_DATE_FORMAT);
 const df_To = dayjs(new Date()).format(BASIC_DATE_FORMAT);
@@ -55,7 +56,7 @@ export default function AffiliateStatsControler() {
   const handleResetForm = () => {
     setParams({
       searchValue: intForm,
-      currentPage:1
+      currentPage: 1,
     });
   };
 
@@ -132,14 +133,15 @@ export default function AffiliateStatsControler() {
             to={params.searchValue.to}
           />
           <Separator />
-          <TicketSaleTable ticketSale={ticketSale} />
+          <CustomTable
+            columns={columnAffStats}
+            data={ticketSale}
+            onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
+            currentPage={params.currentPage}
+            totalPages={totalPages}
+          />
         </CardContent>
       </Card>
-      <Pagination
-        onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
-        page={params.currentPage}
-        totalPages={totalPages}
-      />
     </div>
   );
 }

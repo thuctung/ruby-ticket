@@ -12,6 +12,7 @@ export type TopupHistoryResponseType = {
   payment_code: string;
   status: string;
   created_at: string;
+  real_amount?: number;
 };
 
 export type QRBankResponseType = {
@@ -56,19 +57,18 @@ export type AgentType = {
   name: string;
 };
 
-
 export type AdminReportResponseType = {
-  buy_by:string;
-  date_use:string;
-  location_name:string;
-  user_email:string;
-  order_id:string;
-  phone:string;
-  price:number;
-  quantity:number;
-  total_amount:number;
-  subtotal:number;
-  ticket_name:string;
-  sale_date:string
-  promo_name:string
-}
+  buy_by: string;
+  date_use: string;
+  location_name: string;
+  user_email: string;
+  order_id: string;
+  phone: string;
+  price: number;
+  quantity: number;
+  total_amount: number;
+  subtotal: number;
+  ticket_name: string;
+  sale_date: string;
+  promo_name: string;
+};

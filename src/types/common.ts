@@ -60,6 +60,7 @@ export type SelectBoxProps = {
   value: string;
   onChange: (value: string) => void;
   firstOption?: boolean;
+  className?: string;
   children: any;
 };
 
@@ -67,5 +68,6 @@ export type InputProps = {
   value: string;
   onChange: (value: string) => void;
   type: string;
+  className?: string;
   placeholder: string;
 };

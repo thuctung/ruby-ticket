@@ -25,7 +25,9 @@ export default function SideBarManager({ menuList }: SideBarManagerProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
               </svg>
             </div>
-            <span className="font-bold text-sm tracking-tight flex-1 text-left">{item.lable}</span>
+            <span className="font-bold text-sm tracking-tight flex-1 text-left whitespace-nowrap">
+              {item.lable}
+            </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className={`h-4 w-4 opacity-30 group-hover:opacity-100 transition-all transform group-hover:translate-x-1`}

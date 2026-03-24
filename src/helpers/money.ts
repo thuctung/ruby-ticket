@@ -1,4 +1,5 @@
-export function formatVND(amount: number) {
+export function formatVND(amount?: number) {
+  if (!amount) return "";
   return new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",

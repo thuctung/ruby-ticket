@@ -7,6 +7,7 @@ type DatePickerCustomProps = {
   onChange: (value: string) => void;
   minDate?: string;
   maxDate?: string;
+  className?: string;
 };
 
 export default function DatePickerCustom({
@@ -14,6 +15,7 @@ export default function DatePickerCustom({
   maxDate,
   minDate,
   onChange,
+  className,
   ...props
 }: DatePickerCustomProps | any) {
   const handleChange = (value: Date | null) => {
@@ -24,12 +26,12 @@ export default function DatePickerCustom({
   const minDateForm = dayjs(maxDate).format(SERVER_DATE_FORMAT);
   const maxDateForm = dayjs(maxDate).format(SERVER_DATE_FORMAT);
   return (
-    <div className="relative w-full">
+    <div className="relative w-full ">
       <DatePicker
         onChange={onChange}
         dateFormat="dd/MM/yyyy"
         wrapperClassName="w-full"
-        className="w-full bg-white border border-gray-100 shadow-sm rounded-2xl p-3 px-4 outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-700 font-medium"
+        className={`w-full bg-white border border-gray-100 shadow-sm rounded-2xl p-3 px-4 outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-700 font-medium ${className}`}
         placeholderText="DD/MM/YYYY"
         popperPlacement="top-start"
         popperModifiers={[

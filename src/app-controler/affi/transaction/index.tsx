@@ -3,14 +3,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { ProfileType, SearchTableType, SearchTraction, TractionResponseType } from "@/types";
-import { TractionTable } from "./components/transactionTable";
 import { TransactionSearch } from "./components/transactionSearch";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getListTransaction } from "./apis";
-import { TYPE_LIST } from "./constants";
-import Pagination from "@/components/ui/pagination";
+import { columnTransaction, TYPE_LIST } from "./constants";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
+import { CustomTable } from "@/components/ui/customs/table";
 
 const df_From = dayjs(new Date()).add(-7, "day").format(BASIC_DATE_FORMAT);
 const df_To = dayjs(new Date()).format(BASIC_DATE_FORMAT);
@@ -73,10 +72,11 @@ export default function TransactionPageControl() {
           searchValue={params.searchValue}
           listStatus={TYPE_LIST}
         />
-        <TractionTable transactions={listTransaction} />
-        <Pagination
+        <CustomTable
+          columns={columnTransaction}
+          data={listTransaction}
           onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
-          page={params.currentPage}
+          currentPage={params.currentPage}
           totalPages={totalPages}
         />
       </CardContent>

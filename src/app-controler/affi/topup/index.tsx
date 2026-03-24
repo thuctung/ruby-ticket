@@ -2,7 +2,6 @@
 
 import { useProfileStore } from "@/stores/useProfileStore";
 import AddMoeny from "./components/addMoeny";
-import { TopupHistory } from "./components/topupHistory";
 import { CommonType, ProfileType, QRBankResponseType, TopupHistoryResponseType } from "@/types";
 import { creteNewTopup, getListTopupByAff } from "./apis";
 import { useEffect, useState } from "react";
@@ -13,7 +12,9 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { DB_TABLE_NAME, PAYMENT_STATUS } from "@/commons/constant";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
-import Pagination from "@/components/ui/pagination";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CustomTable } from "@/components/ui/customs/table";
+import { columnsTopupAffHistory } from "./contant";
 
 export default function AffiliateTopupPageControl() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -103,11 +104,13 @@ export default function AffiliateTopupPageControl() {
           mesage="Vui lòng không thay đổi nội dung chuyển khoản"
         />
       )}
-      <TopupHistory history={history} />
-      <Pagination
-        onChangePage={(page) =>  setCurentPage(page)}
-        page={curentPage}
+      <CustomTable
+        columns={columnsTopupAffHistory}
+        data={history}
+        onChangePage={(page) => setCurentPage(page)}
+        currentPage={curentPage}
         totalPages={totalPages}
+        tableTitle="Lịch sử nạp tiền"
       />
     </div>
   );

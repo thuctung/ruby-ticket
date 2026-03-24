@@ -5,12 +5,15 @@ import { useCallback, useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { SearchAffiType, SearchTableType, TopupMgtResponseType } from "@/types";
-import { get } from "lodash";
 import { AffiliateSearch } from "../affiliate-mgt/components/search-form";
-import { listTopupMgtStatus } from "./components/constants";
-import { TopupMgtList } from "./components/topupList";
+import { getStatusTopupName, listTopupMgtStatus } from "./components/constants";
 import { createTraction, getListTopupMgt, updateTopupMgtStatus } from "./apis";
-import Pagination from "@/components/ui/pagination";
+import { CustomTable, TableColumn } from "@/components/ui/customs/table";
+import { formatVND } from "@/helpers/money";
+import { Button } from "@/components/ui/button";
+import { TOPUPS_STATUS } from "@/commons/constant";
+import { dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
+import { statusClass } from "./constants";
 
 export default function TopupMgtControl() {
   const [listTopupMgt, setListTopMgt] = useState<TopupMgtResponseType[]>([]);
@@ -24,6 +27,55 @@ export default function TopupMgtControl() {
     },
     currentPage: 1,
   });
+
+  const columnAffStats: TableColumn<TopupMgtResponseType>[] = [
+    {
+      key: "created_at",
+      title: "Ngày nạp",
+      render: (row) => dayjsEx(row.created_at).format(FULL_DATE_FORMAT),
+    },
+    {
+      key: "username",
+      title: "Username",
+      align: "right",
+    },
+    {
+      key: "email",
+      title: "Email",
+    },
+    {
+      key: "amount",
+      title: "Số tiền",
+      render: (row) => formatVND(row.amount),
+    },
+    {
+      key: "payment_code",
+      title: "Mã nạp",
+    },
+    {
+      key: "status",
+      title: "Trạng thái",
+      render: (row) => (
+        <span className={`rounded-full border px-2 py-1 text-xs  ${statusClass[row.status]}`}>
+          {getStatusTopupName(row.status)}
+        </span>
+      ),
+    },
+    {
+      key: "action",
+      title: "Action",
+      align: "center",
+      render: (row) => (
+        <Button
+          size="sm"
+          onClick={() => handleUpdateStatus(row)}
+          disabled={row.status !== TOPUPS_STATUS.PENDING}
+        >
+          {TOPUPS_STATUS.PENDING ? "Chấp nhận" : "Đã duyệt"}
+        </Button>
+      ),
+    },
+  ];
 
   const handleUpdateSearch = useCallback(
     (value: SearchAffiType) => {
@@ -69,10 +121,11 @@ export default function TopupMgtControl() {
         <Card>
           <AffiliateSearch onSearch={handleUpdateSearch} listStatus={listTopupMgtStatus} />
         </Card>
-        <TopupMgtList history={listTopupMgt} onApproveTopup={handleUpdateStatus} />
-        <Pagination
+        <CustomTable
+          columns={columnAffStats}
+          data={listTopupMgt}
           onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
-          page={params.currentPage}
+          currentPage={params.currentPage}
           totalPages={totalPages}
         />
       </CardContent>

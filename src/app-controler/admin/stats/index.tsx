@@ -1,17 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { formatVND } from "@/lib/money";
-import { listSales, type AffiliateSale } from "@/lib/affiliateStore";
-import { getProduct, listProducts, type ProductKey } from "@/lib/products";
-import { t } from "@/lib/i18n/t";
-import { useLang } from "@/lib/useLang";
-import {  countReportAdmin, getTicketSaleAdmin } from "./api";
+import { countReportAdmin, getTicketSaleAdmin } from "./api";
 import {
   AdminReportResponseType,
   AdminSearchReport,
@@ -19,92 +11,14 @@ import {
   SearchTableType,
   SearchTicketSale,
 } from "@/types";
-import { BASIC_DATE_FORMAT, dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
-import dayjs from "dayjs";
-import { Calendar, DollarSign, MapPin, Search, Ticket, User } from "lucide-react";
-import Pagination from "@/components/ui/pagination";
+import { DollarSign, Ticket } from "lucide-react";
 import { SearchReport } from "./components/searchReport";
 import { LocationType } from "@/types/ticket";
 import { getLocation } from "@/app-controler/affi/getTicket/api";
-import { intForm } from "./constant";
-
-const todayISO = () => {
-  const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString().slice(0, 10);
-};
-
-const daysAgoISO = (days: number) => {
-  const d = new Date();
-  d.setDate(d.getDate() - days);
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString().slice(0, 10);
-};
-
-type SellerType = "affiliate" | "customer";
+import { columnAdminReport, intForm } from "./constant";
+import { CustomTable } from "@/components/ui/customs/table";
 
 export default function AdminStatsPageControler() {
-  const lang = useLang();
-  const products = listProducts();
-
-  const [from, setFrom] = useState(daysAgoISO(7));
-  const [to, setTo] = useState(todayISO());
-  const [productKey, setProductKey] = useState<ProductKey | "all">("all");
-  const [affiliateQuery, setAffiliateQuery] = useState("");
-
-  const [tick, setTick] = useState(0);
-  useEffect(() => {
-    const onStorage = () => setTick((x) => x + 1);
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
-  }, []);
-
-  const sales = useMemo<AffiliateSale[]>(() => {
-    // tick triggers recompute on localStorage updates
-    void tick;
-    return listSales();
-  }, [tick]);
-
-  const filtered = useMemo(() => {
-    const q = affiliateQuery.trim().toLowerCase();
-    return sales.filter((s) => {
-      const soldDay = s.createdAt.slice(0, 10);
-      if (soldDay < from || soldDay > to) return false;
-      if (productKey !== "all" && s.productKey !== productKey) return false;
-      if (q) {
-        const seller = (s.affiliateEmail ?? "").toLowerCase();
-        if (!seller.includes(q)) return false;
-      }
-      return true;
-    });
-  }, [sales, from, to, productKey, affiliateQuery]);
-
-  const totals = useMemo(() => {
-    const tickets = filtered.reduce(
-      (acc, s) => acc + s.qtyLON + s.qtyGIA + s.qtyNHO + s.qtyChung + s.qtyCHILDANDAUL,
-      0
-    );
-    const revenue = filtered.reduce((acc, s) => acc + s.total, 0);
-    return { tickets, revenue };
-  }, [filtered]);
-
-  const rows = useMemo(() => {
-    return filtered
-      .slice()
-      .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
-      .map((s) => {
-        const sellerType: SellerType = s.affiliateEmail ? "affiliate" : "customer";
-        const seller = s.affiliateEmail ?? "Customer";
-        const p = getProduct(s.productKey);
-        return {
-          ...s,
-          sellerType,
-          seller,
-          productName: t(lang, p.nameKey),
-        };
-      });
-  }, [filtered, lang]);
-
   const [totalPages, setTotalPage] = useState(0);
   const [locationList, setLocationList] = useState<LocationType[]>([]);
   const [countReport, setCountReport] = useState({ quantity: 0, total_amount: 0 });
@@ -172,10 +86,8 @@ export default function AdminStatsPageControler() {
   }, []);
 
   useEffect(() => {
-    handleCountReport()
-  },[params.searchValue.from, params.searchValue.to])
-
-
+    handleCountReport();
+  }, [params.searchValue.from, params.searchValue.to]);
 
   return (
     <div className="p-6 max-w-6xl mx-auto bg-gray-50 min-h-screen">
@@ -194,9 +106,14 @@ export default function AdminStatsPageControler() {
           </div>
           <div>
             <p className="text-sm font-medium text-gray-500 uppercase tracking-wider">
-              Tổng tiền <span className="lowercase text-xs">{params.searchValue.from} ~ {params.searchValue.to}</span>
+              Tổng tiền{" "}
+              <span className="lowercase text-xs">
+                {params.searchValue.from} ~ {params.searchValue.to}
+              </span>
             </p>
-            <p className="text-2xl font-bold text-gray-900">{formatVND(countReport.total_amount)}</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {formatVND(countReport.total_amount)}
+            </p>
           </div>
         </div>
 
@@ -211,63 +128,13 @@ export default function AdminStatsPageControler() {
         </div>
       </div>
 
-      {/* Bảng dữ liệu */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden py-4">
-        <div className="table-wrapper ">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-gray-50 border-bottom border-gray-100 text-gray-600 text-sm uppercase font-semibold">
-                <th className="p-4 border-b">Email</th>
-                <th className="p-4 border-b">Tên vé</th>
-                <th className="p-4 border-b text-center">Số vé</th>
-                <th className="p-4 border-b">Số tiền</th>
-                <th className="p-4 border-b">Tổng tiền </th>
-                <th className="p-4 border-b">Người mua</th>
-                <th className="p-4 border-b">Khuyến mãi</th>
-                <th className="p-4 border-b">Số điện thoại</th>
-                <th className="p-4 border-b">Địa điểm</th>
-                <th className="p-4 border-b">Ngày bán</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reportList.length ? (
-                reportList.map((item, index) => (
-                  <tr key={index} className="bg-gray-50 border-bottom border-gray-100 text-gray-600 text-sm  font-semibold">
-                    <td className="p-4 border-b">{item.user_email}</td>
-                    <td className="p-4 border-b">{item.ticket_name}</td>
-                    <td className="p-4 border-b text-center">{item.quantity}</td>
-                    <td className="p-4 border-b text-center">{formatVND(item.price)}</td>
-                    <td className="p-4 border-b text-center">{formatVND(item.subtotal)}</td>
-                    <td className="p-4 border-b text-center">
-                      {item.buy_by === "customer" ? "Khách lẻ" : "Đại lý"}
-                    </td>
-                    <td className="p-4 border-b">{item.promo_name || "Không"}</td>
-                    <td className="p-4 border-b">{item.phone}</td>
-                    <td className="p-4 border-b">{item.location_name}</td>
-                    <td className="p-4 border-b">
-                      {dayjsEx(item.sale_date).format(FULL_DATE_FORMAT)}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={7} className="p-12 text-center text-gray-400">
-                    <div className="flex flex-col items-center gap-2">
-                      <Search size={32} className="opacity-20" />
-                      <p>Chưa có dữ liệu</p>
-                    </div>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        <Pagination
-          onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
-          page={params.currentPage}
-          totalPages={totalPages}
-        />
-      </div>
+      <CustomTable
+        columns={columnAdminReport}
+        data={reportList}
+        onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
+        currentPage={params.currentPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 }

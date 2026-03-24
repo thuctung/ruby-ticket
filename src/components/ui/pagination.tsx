@@ -43,49 +43,40 @@ export default function Pagination({ page, totalPages, onChangePage }: Props) {
     }
   };
   return (
-    <div className="flex items-center gap-2 justify-center mt-6">
-      <div className="flex items-center justify-between mt-8 px-2">
-        <div className="flex gap-2">
-          <button
-            className="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-400"
-            onClick={() => handleChangePage(page - 1)}
-            disabled={page === 1}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
+    <nav className="flex items-center gap-2 bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
+      <button
+        className="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-400"
+        onClick={() => handleChangePage(page - 1)}
+        disabled={page === 1}
+      >
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
 
-          {getPages().map((p, i) => (
-            <button
-              key={i}
-              disabled={p === "..."}
-              onClick={() => handleChangePage(Number(p))}
-              className={`
+      {getPages().map((p, i) => (
+        <button
+          key={i}
+          disabled={p === "..."}
+          onClick={() => handleChangePage(Number(p))}
+          className={`
             w-10 h-10 rounded-xl  font-bold shadow-md shadow-blue-200
             ${p === page ? "bg-blue-500 text-white" : ""}
             ${p === "..." ? "cursor-default border-none" : ""}
           `}
-            >
-              {p}
-            </button>
-          ))}
-          <button
-            className="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-400"
-            onClick={() => handleChangePage(page + 1)}
-            disabled={page === totalPages}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
+        >
+          {p}
+        </button>
+      ))}
+      <button
+        className="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-400"
+        onClick={() => handleChangePage(page + 1)}
+        disabled={page === totalPages}
+      >
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </nav>
   );
 }
