@@ -72,7 +72,6 @@ export default function AdminStatsPageControler() {
         },
         { quantity: 0, total_amount: 0 }
       );
-      console.log(result);
       setCountReport(result);
     }
   };

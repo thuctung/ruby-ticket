@@ -24,6 +24,7 @@ import { useDebounce } from "@/helpers/useDebounce";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import { GetTicketIcon } from "@/components/ui/icons/getTicket";
+import { SelectBox } from "@/components/ui/customs/selectBox";
 
 type CheckoutFormProps = {
   location: string;
@@ -127,7 +128,7 @@ export function CheckoutForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     if (handleValidateForm(e)) {
-      const promoCode = Object.keys(isPromo).find(key => isPromo[key] === true);
+      const promoCode = Object.keys(isPromo).find((key) => isPromo[key] === true);
       const submit: DataFormTicketSubmit = {
         total_amount: totalMoney,
         formData,
@@ -233,33 +234,28 @@ export function CheckoutForm({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-600">Điểm đến</label>
-                  <select
+                  <SelectBox
                     value={location}
-                    onChange={(e) => onChangeLocation(e.target.value)}
-                    className="w-full p-2 border border-gray-200 rounded-xl bg-gray-50 text-lg font-medium focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
+                    onChange={(value) => onChangeLocation(value)}
+                    className="h-13 "
                   >
                     {locations?.map((p) => (
                       <option key={p.code} value={p.code}>
                         {p.name}
                       </option>
                     ))}
-                  </select>
+                  </SelectBox>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-600">Ngày đi</label>
-                  <div className="w-full p-2 border border-gray-200 rounded-xl bg-gray-50 text-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition">
-                    <DatePickerCustom
-                      style={{
-                        width: "100%",
-                      }}
-                      className="okok"
-                      value={formData.date_use}
-                      onChange={(val: any) => setFieldFormData("date_use", val)}
-                      minDate={toDate}
-                      name="date_use"
-                      id="date_use"
-                    />
-                  </div>
+                  <DatePickerCustom
+                    className="okok"
+                    value={formData.date_use}
+                    onChange={(val: any) => setFieldFormData("date_use", val)}
+                    minDate={toDate}
+                    name="date_use"
+                    id="date_use"
+                  />
                 </div>
               </div>
               <div className="space-y-2">
