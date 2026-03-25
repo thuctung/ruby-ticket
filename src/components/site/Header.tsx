@@ -113,7 +113,7 @@ export default function Header() {
               <Link
                 key={idx}
                 onClick={(e) => {
-                  if (item.link === "/")
+                  if (item.link === "/#experiences")
                     if (pathname === "/") {
                       e.preventDefault();
                       const el = document.getElementById("experiences");

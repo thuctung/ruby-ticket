@@ -38,7 +38,7 @@ export function HeaderMobile({ pathname }: { pathname: string }) {
               <li key={idx}>
                 <Link
                   onClick={(e) => {
-                    if (item.link === "/")
+                    if (item.link === "/#experiences")
                       if (pathname === "/") {
                         e.preventDefault();
                         const el = document.getElementById("experiences");
