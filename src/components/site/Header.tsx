@@ -144,7 +144,7 @@ export default function Header() {
                 <DropdownMenuTrigger asChild>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-2   bg-background px-2 py-1 hover:bg-muted/30"
+                    className="inline-flex items-center gap-2  px-2 py-1 hover:bg-muted/30"
                     aria-label="User menu"
                   >
                     <Avatar className="h-8 w-8">
