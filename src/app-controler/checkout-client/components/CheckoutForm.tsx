@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   DataFormTicketSubmit,
@@ -53,6 +53,11 @@ export function CheckoutForm({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
 
+  const cachePrice = useRef({
+    promo: new Map(),
+    nonPromo: new Map(),
+  });
+
   const [ticketTypes, setTicketTypes] = useState<TicketByLocationType[]>([]);
   const [ticketTypeCode, setTickeTypeCode] = useState("");
 
@@ -76,7 +81,6 @@ export function CheckoutForm({
   };
 
   const setTicKetSelected = (code: string, val: any) => {
-    console.log(code, val);
     setCountTicketSelected((p: any) => ({ ...p, [code]: val }));
   };
 
@@ -155,6 +159,13 @@ export function CheckoutForm({
     const listTicketCode = Object.keys(countTicketSelected).filter(
       (key) => countTicketSelected[key] > 0
     );
+    const cacheItem: any = promo ? cachePrice.current.promo : cachePrice.current.nonPromo;
+    const notExist = listTicketCode.filter((key) => !cacheItem.has(key));
+
+    if (!notExist?.length) {
+      calMoney(cacheItem);
+      return;
+    }
 
     if (listTicketCode.length) {
       setLodingPrice(true);
@@ -163,6 +174,11 @@ export function CheckoutForm({
         const priceMap: Map<string, number> = new Map(
           data.map((item: PriceCustomerType) => [item.ticket_variant_code, item.price])
         );
+        if (promo) {
+          cachePrice.current.promo = priceMap;
+        } else {
+          cachePrice.current.nonPromo = priceMap;
+        }
         calMoney(priceMap);
       }
       setLodingPrice(false);
@@ -219,6 +235,9 @@ export function CheckoutForm({
     setResumeSelected([]);
     setCountTicketSelected({});
     setIsPromo({});
+    const init = new Map();
+    cachePrice.current.nonPromo = init;
+    cachePrice.current.promo = init;
   }, [location, ticketTypeCode]);
 
   return (
@@ -393,23 +412,25 @@ export function CheckoutForm({
                   <span className="font-semibold text-gray-900">{formData.date_use}</span>
                 </div>
               </div>
-              {resumSelected.map((item, index) => (
-                <div key={index}>
-                  <div className="text-gray-600 pt-2 text-sm pl-4 border-l-2 border-gray-100 space-y-1">
-                    <div className="flex justify-between">
-                      <span>{item.ticketName}</span>
-                      <span> x {Number(item.numerTicet)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-xs">Giá gốc:</span>
-                      <span className="text-xs line-through ">{formatVND(item.base_price)}</span>
-                    </div>
-                    <div className="f-width text-right ">
-                      <span className="font-semibold">{formatVND(item.finalprice)}</span>
+              {resumSelected.map((item, index) =>
+                item.numerTicet > 0 ? (
+                  <div key={index}>
+                    <div className="text-gray-600 pt-2 text-sm pl-4 border-l-2 border-gray-100 space-y-1">
+                      <div className="flex justify-between">
+                        <span>{item.ticketName}</span>
+                        <span> x {Number(item.numerTicet)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-xs">Giá gốc:</span>
+                        <span className="text-xs line-through ">{formatVND(item.base_price)}</span>
+                      </div>
+                      <div className="f-width text-right ">
+                        <span className="font-semibold">{formatVND(item.finalprice)}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ) : null
+              )}
 
               <div className="space-y-6">
                 <div className="flex justify-between items-baseline pt-4 border-t-2 border-dashed border-gray-200">
