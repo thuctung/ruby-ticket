@@ -26,7 +26,7 @@ export default function ForgotPassword({
     setMessage("");
 
     const { error }: any = await supabaseClient.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/update-password`,
+      redirectTo: `https://rubytraveldanang.com/update-password`,
     });
 
     if (error) {
