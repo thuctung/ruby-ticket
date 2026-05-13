@@ -232,6 +232,8 @@ export default function RegisterPage() {
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
             <button
               type="submit"
+              disabled={submitting}
+              onClick={submit}
               className="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold rounded-xl py-3 mt-2 transition-colors duration-150 shadow-md shadow-blue-200"
             >
               {submitting ? "Đang gửi..." : "Gửi đăng ký"}
