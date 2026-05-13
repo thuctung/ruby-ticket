@@ -12,6 +12,7 @@ import { ACC_STATUS, ROLES } from "@/commons/constant";
 import { ProfileStoteType, useProfileStore } from "@/stores/useProfileStore";
 import ForgotPassword from "@/components/site/ForgotPassword";
 import { sv_Login } from "./api";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -104,12 +105,12 @@ export default function Login() {
                 {isLogin ? "Đang đăng nhập..." : "Đăng nhập"}
               </button>
 
-              <button
-                className="w-full bg-white border border-slate-200 hover:border-blue-200 text-slate-600 font-bold py-4 rounded-2xl transition-all hover:bg-blue-50/50"
-                onClick={() => router.push("/register")}
+              <Link
+                href="/register"
+                className="w-full block text-center bg-white border border-slate-200 hover:border-blue-200 text-slate-600 font-bold py-4 rounded-2xl transition-all hover:bg-blue-50/50"
               >
                 Đăng ký làm Affiliate
-              </button>
+              </Link>
             </div>
           </form>
 
