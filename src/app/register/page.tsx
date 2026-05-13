@@ -93,7 +93,6 @@ export default function RegisterPage() {
         message?: string;
       };
 
-
       if (!res.ok || !json.ok) {
         setError(json.message ?? "Đăng ký thất bại");
         return;
@@ -125,101 +124,104 @@ export default function RegisterPage() {
             <CardTitle>Đăng ký cộng tác viên (Affiliate)</CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
-            <p className="text-sm text-muted-foreground">
-              Điền thông tin bên dưới. Sau khi gửi, tài khoản sẽ ở trạng thái <b>pending</b>
-              và chờ admin duyệt.
-            </p>
+            <div className="text-center mb-7">
+              <h1 className="text-2xl font-bold text-gray-900">Đăng ký cộng tác viên</h1>
+              <p className="text-sm text-gray-400 mt-1">
+                Sau khi gửi, tài khoản sẽ ở trạng thái{" "}
+                <span className="font-semibold text-gray-600">pending</span> và chờ admin duyệt.
+              </p>
+            </div>
 
             <Separator />
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="fullName">Họ và tên</Label>
-                <Input
-                  id="fullName"
+                <input
+                  type="text"
+                  name="fullName"
                   value={values.fullName}
                   onChange={(e) => setField("fullName", e.target.value)}
                   placeholder="Nguyễn Văn A"
+                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
                 />
-                {errors.fullName && (
-                  <p className="text-sm text-destructive">{errors.fullName}</p>
-                )}
+                {errors.fullName && <p className="text-sm text-destructive">{errors.fullName}</p>}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="phone">Số điện thoại</Label>
-                <Input
+                <input
+                  type="tel"
                   id="phone"
                   value={values.phone}
                   onChange={(e) => setField("phone", e.target.value)}
                   placeholder="09xxxxxxxx"
+                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
                 />
-                {errors.phone && (
-                  <p className="text-sm text-destructive">{errors.phone}</p>
-                )}
+                {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
+                <input
+                  type="email"
+                  name="email"
                   value={values.email}
                   onChange={(e) => setField("email", e.target.value)}
                   placeholder="email@domain.com"
+                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
                 />
-                {errors.email && (
-                  <p className="text-sm text-destructive">{errors.email}</p>
-                )}
+                {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
               </div>
 
               <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="username">Username (tuỳ chọn)</Label>
-                <Input
-                  id="username"
+                <input
+                  type="text"
+                  name="username"
                   value={values.username ?? ""}
                   onChange={(e) => setField("username", e.target.value)}
                   placeholder="vd: tung.nguyen"
+                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
                 />
-                {errors.username && (
-                  <p className="text-sm text-destructive">{errors.username}</p>
-                )}
+                {errors.username && <p className="text-sm text-destructive">{errors.username}</p>}
               </div>
 
               <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="address">Địa chỉ</Label>
-                <Input
-                  id="address"
+                <input
+                  type="text"
+                  name="address"
                   value={values.address}
                   onChange={(e) => setField("address", e.target.value)}
                   placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"
+                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
                 />
-                {errors.address && (
-                  <p className="text-sm text-destructive">{errors.address}</p>
-                )}
+                {errors.address && <p className="text-sm text-destructive">{errors.address}</p>}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="password">Mật khẩu</Label>
-                <Input
+                <input
                   id="password"
                   type="password"
                   value={values.password}
                   onChange={(e) => setField("password", e.target.value)}
                   placeholder="••••••••"
+                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
                 />
-                {errors.password && (
-                  <p className="text-sm text-destructive">{errors.password}</p>
-                )}
+                {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="passwordConfirm">Nhập lại mật khẩu</Label>
-                <Input
+                <input
                   id="passwordConfirm"
                   type="password"
                   value={values.passwordConfirm}
                   onChange={(e) => setField("passwordConfirm", e.target.value)}
                   placeholder="••••••••"
+                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
                 />
                 {errors.passwordConfirm && (
                   <p className="text-sm text-destructive">{errors.passwordConfirm}</p>
@@ -228,10 +230,12 @@ export default function RegisterPage() {
             </div>
 
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
-
-            <Button className="w-full" size="lg" disabled={submitting} onClick={submit}>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold rounded-xl py-3 mt-2 transition-colors duration-150 shadow-md shadow-blue-200"
+            >
               {submitting ? "Đang gửi..." : "Gửi đăng ký"}
-            </Button>
+            </button>
 
             {errors.form && <p className="text-sm text-destructive">{errors.form}</p>}
           </CardContent>

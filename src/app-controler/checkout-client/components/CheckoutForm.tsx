@@ -223,12 +223,9 @@ export function CheckoutForm({
     }
   }, [ticketTypeCode]);
 
-  const debouncedCount = useDebounce(countTicketSelected, 1000, setLodingPrice);
-  const debouncedPromo = useDebounce(isPromo, 1000, setLodingPrice);
-
   useEffect(() => {
     getPriceTicet();
-  }, [debouncedCount, debouncedPromo]);
+  }, [countTicketSelected, isPromo]);
 
   useEffect(() => {
     setTotalMoney(0);
