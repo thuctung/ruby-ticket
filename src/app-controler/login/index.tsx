@@ -3,11 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import Footer from "@/components/site/Footer";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { ACC_STATUS, ROLES } from "@/commons/constant";
 import { ProfileStoteType, useProfileStore } from "@/stores/useProfileStore";
 import ForgotPassword from "@/components/site/ForgotPassword";
@@ -27,6 +22,8 @@ export default function Login() {
   );
 
   const handleAfterLogin = () => {
+    console.log("Profile after login:", profile);
+    debugger;
     if (profile.role === ROLES.ADMIN) {
       router.push("/admin");
     } else if (profile.status === ACC_STATUS.APPROVED) {
