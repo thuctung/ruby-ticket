@@ -1,5 +1,15 @@
 import { MenuMgtType } from "@/types";
-import { LocationType, PersonType, TicketType } from "@/types/ticket";
+import {
+  Compass,
+  Sparkles,
+  Ticket,
+  Award,
+  HelpCircle,
+  Store,
+  ChevronRight,
+  X,
+  Plane,
+} from "lucide-react";
 
 export const ACC_STATUS = {
   PENDING: "pending",
@@ -124,24 +134,46 @@ export const TYPE_TRANSFER = {
 
 export const MENUS = [
   {
+    link: "/#travel-services",
+    name: "Khám phá dịch vụ",
+    icon: Compass,
+    iconBg: "bg-blue-50",
+    iconColor: "text-blue-600",
+  },
+  {
     link: "/#experiences",
     name: "Trải nghiệm",
-    icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
+    icon: Sparkles,
+    iconBg: "bg-violet-50",
+    iconColor: "text-violet-600",
   },
   {
     link: "/checkout",
     name: "Mua vé tham quan",
-    icon: "M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z",
+    icon: Ticket,
+    iconBg: "bg-green-50",
+    iconColor: "text-green-600",
   },
   {
     link: "/thanh-tuu",
     name: "Thành tựu",
-    icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 000 4h2a2 2 0 000-4H9z",
+    icon: Award,
+    iconBg: "bg-yellow-50",
+    iconColor: "text-yellow-600",
   },
 
   {
     link: "/faq",
     name: "Hỏi đáp (FAQ)",
-    icon: "M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+    icon: HelpCircle,
+    iconBg: "bg-gray-50",
+    iconColor: "text-gray-600",
+  },
+  {
+    link: "/register",
+    name: "Đăng ký đại lý",
+    icon: Store,
+    iconBg: "bg-purple-50",
+    iconColor: "text-purple-600",
   },
 ];

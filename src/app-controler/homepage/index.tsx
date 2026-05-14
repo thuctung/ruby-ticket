@@ -1,11 +1,10 @@
-import { useLang } from "@/lib/useLang";
-
 import { HeroSection } from "./components/HeroSection";
 import { HighlightsSection } from "./components/HighlightsSection";
 import { ExperiencesSection } from "./components/ExperiencesSection";
 import { CollaboratorSection } from "./components/CollaboratorSection";
 import { FaqSection } from "./components/FaqSection";
 import { EXPERIENCES } from "./contants";
+import TravelServices from "./components/TravelServices";
 
 type LocationRow = {
   code?: string;
@@ -46,6 +45,7 @@ export default function HomePage({ locations }: { locations: LocationRow[] }) {
   return (
     <main className="min-h-screen flex flex-col bg-background text-foreground">
       <HeroSection lang={lang} topPicks={topPicks} />
+      <TravelServices />
       <ExperiencesSection
         lang={lang}
         locationCards={locationCards()}

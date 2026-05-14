@@ -44,7 +44,6 @@ export default function Header() {
   const { setGlobalLoading, setToastMessage }: CommonType | any = useCommonStore.getState();
 
   const displayName = profile ? profile.username : "User";
-
   const initials = (() => {
     const base = displayName ?? "U";
     const parts = base.trim().split(/\s+/).slice(0, 2);
@@ -86,7 +85,7 @@ export default function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
+        <div className=" flex  items-center justify-between px-4 py-3 md:px-6">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative transition-transform group-hover:scale-105">
               <Image
@@ -102,7 +101,7 @@ export default function Header() {
             <div className="leading-tight">
               <div className="font-bold text-lg text-slate-900">Ruby Travel</div>
               <div className="hidden text-[10px] font-bold text-blue-600 uppercase tracking-widest sm:block">
-                Đà Nẵng Tickets
+                Đà Nẵng
               </div>
             </div>
           </Link>

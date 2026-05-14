@@ -28,7 +28,7 @@ export default function Footer() {
               <div className="leading-tight">
                 <div className="text-lg font-extrabold text-white">{t(lang, "brand.name")}</div>
                 <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-200">
-                  Ruby Travel
+                  Đà Nẵng
                 </div>
               </div>
             </Link>
