@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Geist_Mono } from "next/font/google";
+// @ts-ignore: CSS module declarations not found in this environment
 import "./globals.css";
 import ToastMessage from "@/components/ui/toast-message";
 import { LoadingGlobal } from "@/components/ui/loading";
+// @ts-ignore: CSS module declarations not found in this environment
 import "react-datepicker/dist/react-datepicker.css";
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-sans",
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
   title: "Ruby Travel",
   description: "Vé du lịch Đà Nẵng",
   icons: {
-    icon: "/favicon.png",
+    icon: "/icon.png",
   },
 };
 

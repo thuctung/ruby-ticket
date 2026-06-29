@@ -30,11 +30,7 @@ export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankT
           <img src={dataQR.qr} className="w-64 mx-auto" />
           <div className="text-sm space-y-2">
             {BANK_INFO.bankName ? (
-              <Row
-                label="Ngân hàng"
-                value={CODE_BANK[BANK_INFO.bankName]}
-                onCopy={() => copy(BANK_INFO.bankName)}
-              />
+              <Row label="Ngân hàng" value={CODE_BANK[BANK_INFO.bankName]} />
             ) : null}
 
             <Row
@@ -42,6 +38,7 @@ export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankT
               value={BANK_INFO.bankNum}
               onCopy={() => copy(BANK_INFO.bankNum)}
             />
+            <Row label="Người nhận" value="Nguyễn Thị Hòa Trâm" />
             <Row label="Số tiền" value={formatVND(dataQR.amount)} />
             <Row label="Nội dung CK" value={dataQR.code} onCopy={() => copy(dataQR.code)} />
           </div>

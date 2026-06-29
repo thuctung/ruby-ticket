@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SearchAffiType, SearchTableType, TopupMgtResponseType } from "@/types";
 import { AffiliateSearch } from "../affiliate-mgt/components/search-form";
 import { getStatusTopupName, listTopupMgtStatus } from "./components/constants";
-import { createTraction, getListTopupMgt, updateTopupMgtStatus } from "./apis";
+import { getListTopupMgt, updateTopupMgtStatus } from "./apis";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
 import { Button } from "@/components/ui/button";
@@ -95,13 +95,8 @@ export default function TopupMgtControl() {
 
   const handleUpdateStatus = useCallback(
     async (topupItem: TopupMgtResponseType) => {
-      const response = await updateTopupMgtStatus(topupItem.topup_id);
-      if (response?.data) {
-        createTraction({
-          user_id: topupItem.user_id,
-          amount: topupItem.amount,
-          payment_code: topupItem.payment_code,
-        });
+      const result = await updateTopupMgtStatus(topupItem);
+      if (result) {
         handleGetListAff();
       }
     },

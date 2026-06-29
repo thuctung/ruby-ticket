@@ -18,8 +18,6 @@ export const CREATE_ORDER_TICKET = "/api/auth/affiliate/get-ticket/create-order"
 
 export const GET_TRANSACTION = "/api/auth/affiliate/transaction/get-transaction";
 
-export const ADD_TRANSACTION = "/api/auth/affiliate/transaction/add-new";
-
 export const GET_LIST_INVENTORY = "/api/auth/admin/inventory/get-list";
 
 export const UPSERT_INVENTORY = "/api/auth/admin/inventory/upsert";
@@ -44,3 +42,4 @@ export const GET_ADMIN_REPORT = "/api/auth/admin/stats/get-report";
 
 export const COUNT_REPORT = "/api/auth/admin/stats/count-report";
 
+export const ADMIN_UPDATE_STATUS_TOPUP = "/api/webhook/sepay";

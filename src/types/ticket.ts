@@ -58,6 +58,8 @@ export type TicketResultQRType = {
   ticket_code: string;
   ticket_name: string;
   dateUse: string;
+  price?: number;
+  order_id?: string;
 };
 
 export type PromotionType = {
@@ -89,14 +91,14 @@ export type DataFormTicketSubmit = {
   formData?: any;
   locationNameSelected: string;
   date_use: string;
-  promoCode?:string
+  promoCode?: string;
 };
 
 export type TicketSubmitAgentType = {
   ticket_variant_code: string;
   quantity: number;
   price: number;
-  promo_code?:string
+  promo_code?: string;
 };
 
 export type ParamCreateTicketAgentType = {
@@ -125,6 +127,6 @@ export type ClientOrderItem = {
   phone: string;
   description: string;
   listTicketSubmit: ClientBuyTicketType[];
-  paymentCode:string
-  promoCode?:string
+  paymentCode: string;
+  promoCode?: string;
 };

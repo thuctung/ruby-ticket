@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import "react-datepicker/dist/react-datepicker.css";
 
 import { formatVND } from "@/lib/money";
 import { useProfileStore } from "@/stores/useProfileStore";
@@ -92,7 +91,7 @@ export default function GetTicketPageControler() {
         ticket_variant_code: item.ticket_variant_code,
         quantity: item.numerTicet,
         price: Number(item.finalprice),
-        promo_code:promoCode
+        promo_code: promoCode,
       }));
       const params: ParamCreateTicketAgentType = {
         items,

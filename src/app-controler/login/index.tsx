@@ -22,8 +22,6 @@ export default function Login() {
   );
 
   const handleAfterLogin = () => {
-    console.log("Profile after login:", profile);
-    debugger;
     if (profile.role === ROLES.ADMIN) {
       router.push("/admin");
     } else if (profile.status === ACC_STATUS.APPROVED) {

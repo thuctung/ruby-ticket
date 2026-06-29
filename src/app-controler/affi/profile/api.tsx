@@ -36,7 +36,6 @@ export const updateProfile = async (params: {
 
 export const changePassword = async (password: string, oldPassword: string, email: string) => {
   try {
-    debugger;
     setGlobalLoading(true);
     const supabase = createSupabaseBrowserClient();
     const { error } = await supabase.auth.signInWithPassword({ email, password: oldPassword });
