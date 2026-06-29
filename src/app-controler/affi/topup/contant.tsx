@@ -27,7 +27,7 @@ export const columnsTopupAffHistory: TableColumn<TopupHistoryResponseType>[] = [
     key: "payment_code",
     title: "Mã nạp",
     render: (row) => row.payment_code,
-    align: "right",
+    align: "center",
   },
   {
     key: "real_amount",

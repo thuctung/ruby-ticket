@@ -11,7 +11,7 @@ import {
   SearchAffiType,
   SearchTableType,
 } from "@/types";
-import { getListAffi, updateRole, updateStatus } from "./apis";
+import { getListAffi, updateStatus } from "./apis";
 import { get } from "lodash";
 import { AffiliateSearch } from "./components/search-form";
 import { getStatusName, listAccStatus, statusClass } from "./constants";
@@ -65,10 +65,6 @@ export default function AffiliateMgt() {
     },
     [setParams]
   );
-
-  const handleResetPass = useCallback((user_id: string) => {
-    updateRole();
-  }, []);
 
   useEffect(() => {
     handleGetListAff();
@@ -135,10 +131,6 @@ export default function AffiliateMgt() {
               Mở lại
             </Button>
           ) : null}
-
-          <Button size="sm" variant="default" onClick={() => handleResetPass(row.user_id)}>
-            Reset password
-          </Button>
         </div>
       ),
     },

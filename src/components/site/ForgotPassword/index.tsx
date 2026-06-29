@@ -1,11 +1,7 @@
 "use client";
 
 import { APP_URL } from "@/commons/constant";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-import Link from "next/link";
 import { useState } from "react";
 
 export default function ForgotPassword({
@@ -80,7 +76,7 @@ export default function ForgotPassword({
               disabled={loading}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-blue-500/30 transition-all active:scale-95 cursor-pointer"
             >
-              Gửi link khôi phục
+              {loading ? "Đang gửi..." : "Gửi link khôi phục"}
             </button>
             <button
               onClick={() => setOpen(false)}

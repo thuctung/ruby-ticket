@@ -1,13 +1,7 @@
 import api from "@/axios";
 import { ADMIN_UPDATE_STATUS_TOPUP, GET_LIST_TOPUP_MGT } from "@/commons/apiURL";
 import { useCommonStore } from "@/stores/useCommonStore";
-import {
-  CommonType,
-  ProfileUpdateStatusType,
-  SearchAffiType,
-  SearchTableType,
-  TopupMgtResponseType,
-} from "@/types";
+import { CommonType, SearchAffiType, SearchTableType, TopupMgtResponseType } from "@/types";
 import { get } from "lodash";
 
 const { setGlobalLoading, setToastMessage }: CommonType | any = useCommonStore.getState();
