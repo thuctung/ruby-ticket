@@ -109,6 +109,8 @@ export const DB_TABLE_NAME = {
   AGENTS: "agents",
 };
 
+export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
 export const BANK_INFO = {
   bankName: process.env.NEXT_PUBLIC_BANK_NAME,
   bankNum: process.env.NEXT_PUBLIC_BANK_NUM,

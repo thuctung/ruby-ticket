@@ -1,5 +1,6 @@
 "use client";
 
+import { APP_URL } from "@/commons/constant";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,7 +27,7 @@ export default function ForgotPassword({
     setMessage("");
 
     const { error }: any = await supabaseClient.auth.resetPasswordForEmail(email, {
-      redirectTo: `https://rubytraveldanang.com/update-password`,
+      redirectTo: `${APP_URL}/update-password`,
     });
 
     if (error) {
