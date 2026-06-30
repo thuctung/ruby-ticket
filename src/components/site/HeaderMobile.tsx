@@ -19,7 +19,7 @@ export function HeaderMobile({ pathname }: { pathname: string }) {
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <div className="flex items-center">
             <Image
-              src="/logo1.png"
+              src="/logo.png"
               alt="Ruby Travel"
               width={48}
               height={48}
@@ -27,7 +27,7 @@ export function HeaderMobile({ pathname }: { pathname: string }) {
               sizes="(max-width: 768px) 100vw, 33vw"
               priority
             />
-            <span className="text-xl font-black text-blue-900 leading-none">Ruby Travel</span>
+            <span className="text-xl font-black text-red-500 leading-none">Ruby Travel</span>
           </div>
         </div>
 

@@ -16,9 +16,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
-              <div className="relative h-12 w-12 rounded-2xl bg-white p-2 shadow-sm">
+              <div className="relative h-15 w-15 rounded-2xl bg-white p-2 shadow-sm overflow-hidden">
                 <Image
-                  src="/logo1.png"
+                  src="/logo.png"
                   alt="Ruby Travel"
                   fill
                   className="object-contain"

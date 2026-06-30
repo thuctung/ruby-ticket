@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 import { useLang } from "@/lib/useLang";
 
@@ -10,20 +10,14 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { t } from "@/lib/i18n/t";
-import { Menu } from "lucide-react";
-
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
 
-import { MENUS, ROLES } from "@/commons/constant";
+import { MENUS } from "@/commons/constant";
 import { usePathname, useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
@@ -89,7 +83,7 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative transition-transform group-hover:scale-105">
               <Image
-                src="/logo1.png"
+                src="/logo.png"
                 alt="Ruby Travel"
                 width={48}
                 height={48}
@@ -99,7 +93,7 @@ export default function Header() {
               />
             </div>
             <div className="leading-tight">
-              <div className="font-bold text-lg text-slate-900">Ruby Travel</div>
+              <div className="font-bold text-lg  text-red-500">Ruby Travel</div>
               <div className="hidden text-[10px] font-bold text-blue-600 uppercase tracking-widest sm:block">
                 Đà Nẵng
               </div>
