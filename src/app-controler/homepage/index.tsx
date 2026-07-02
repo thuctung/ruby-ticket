@@ -1,10 +1,12 @@
-import { HeroSection } from "./components/HeroSection";
-import { HighlightsSection } from "./components/HighlightsSection";
-import { ExperiencesSection } from "./components/ExperiencesSection";
-import { CollaboratorSection } from "./components/CollaboratorSection";
-import { FaqSection } from "./components/FaqSection";
-import { EXPERIENCES } from "./contants";
+"use client";
+
+import { Banner } from "./components/banner";
 import TravelServices from "./components/TravelServices";
+import { ExperiencesSection } from "./components/ExperiencesSection";
+import { EXPERIENCES } from "./contants";
+import { CollaboratorSection } from "./components/CollaboratorSection";
+import Feedback from "./components/Feedback";
+import { FaqSection } from "./components/FaqSection";
 
 type LocationRow = {
   code?: string;
@@ -14,7 +16,6 @@ type LocationRow = {
 
 export default function HomePage({ locations }: { locations: LocationRow[] }) {
   const lang = "vi";
-  const topPicks = EXPERIENCES.slice(0, 4);
 
   const locationCards = () => {
     const list = locations
@@ -43,17 +44,19 @@ export default function HomePage({ locations }: { locations: LocationRow[] }) {
   };
 
   return (
-    <main className="min-h-screen flex flex-col bg-background text-foreground">
-      <HeroSection lang={lang} topPicks={topPicks} />
+    <div className="bg-white text-neutral-900 antialiased font-sans selection:bg-blue-500 selection:text-white">
+      <Banner />
+
       <TravelServices />
+
       <ExperiencesSection
         lang={lang}
         locationCards={locationCards()}
         fallbackExperiences={EXPERIENCES}
       />
-      <HighlightsSection lang={lang} />
+      <Feedback />
       <CollaboratorSection lang={lang} />
       <FaqSection lang={lang} />
-    </main>
+    </div>
   );
 }

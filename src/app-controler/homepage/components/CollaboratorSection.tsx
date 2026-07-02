@@ -7,15 +7,21 @@ type LangKey = "vi" | "en" | "zh" | "ko";
 
 export function CollaboratorSection({ lang }: { lang: LangKey }) {
   return (
-    <section id="collaborator" className="py-24 bg-white relative overflow-hidden">
+    <section
+      id="agent"
+      className="py-20 relative bg-cover bg-center"
+      style={{
+        backgroundImage: `linear-gradient(rgba(37, 99, 235, 0.9), rgba(29, 78, 216, 0.9)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80')`,
+      }}
+    >
       <div className="absolute top-0 right-0 w-1/3 h-full bg-slate-50 -skew-x-12 translate-x-1/2 -z-10" />
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
           <div className="lg:col-span-2 space-y-6">
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900">
+            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900 text-white">
               {t(lang, "section.affiliate.title")}
             </h2>
-            <p className="text-lg text-slate-500 leading-relaxed">
+            <p className="text-lg text-slate-500 leading-relaxed text-white">
               {t(lang, "section.affiliate.desc")}
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
@@ -76,4 +82,3 @@ export function CollaboratorSection({ lang }: { lang: LangKey }) {
     </section>
   );
 }
-

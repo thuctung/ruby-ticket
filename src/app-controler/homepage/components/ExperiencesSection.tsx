@@ -8,8 +8,6 @@ import { ExperienceCard, LocationCard } from "@/types";
 
 type LangKey = "vi" | "en" | "zh" | "ko";
 
-
-
 export function ExperiencesSection({
   lang,
   locationCards,
@@ -37,6 +35,7 @@ export function ExperiencesSection({
             {t(lang, "section.experiences.title")}
           </h2>
           <p className="text-lg text-slate-500">{t(lang, "section.experiences.desc")}</p>
+          <div className="mt-2 mx-auto w-12 h-1 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
         </div>
 
         {locationCards.length ? (
@@ -82,9 +81,12 @@ export function ExperiencesSection({
                         {displayPrice(x.pre_price)}
                       </div>
                     </div>
-                    <Button asChild className="rounded-xl bg-red-400 hover:bg-green-600 px-6 transition-colors">
+                    <Button
+                      asChild
+                      className="rounded-xl bg-red-400 hover:bg-green-600 px-6 transition-colors"
+                    >
                       <a href={`/checkout?product=${x.code}`} className="flex items-center gap-2">
-                        {t(lang, "cta.chooseDateBuy")}
+                        Mua Ngay
                         <ChevronRight className="h-4 w-4" />
                       </a>
                     </Button>
@@ -134,9 +136,12 @@ export function ExperiencesSection({
                       </div>
                       <div className="text-xl font-extrabold text-blue-600">xxx.xxxđ</div>
                     </div>
-                    <Button asChild className="rounded-xl bg-slate-900 hover:bg-blue-600 px-6 transition-colors">
+                    <Button
+                      asChild
+                      className="rounded-xl bg-slate-900 hover:bg-blue-600 px-6 transition-colors"
+                    >
                       <a href={`/checkout?product=${x.key}`} className="flex items-center gap-2">
-                        {t(lang, "cta.chooseDateBuy")}
+                        Mua Ngay
                         <ChevronRight className="h-4 w-4" />
                       </a>
                     </Button>

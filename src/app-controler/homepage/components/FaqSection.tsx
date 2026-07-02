@@ -3,48 +3,49 @@ import { t } from "@/lib/i18n/t";
 import { HelpCircle } from "lucide-react";
 import { FAQS } from "../contants";
 import Link from "next/link";
+import { useState } from "react";
 
 type LangKey = "vi" | "en" | "zh" | "ko";
 
-export function FaqSection({
-  lang,
-}: {
-  lang: LangKey;
-}) {
-  return (
-    <section id="faq" className="py-24 bg-slate-50/50 border-t border-slate-100">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="flex flex-col items-center text-center mb-16 space-y-4">
-          <div className="p-3 rounded-2xl bg-blue-100 text-blue-600">
-            <HelpCircle className="h-8 w-8" />
-          </div>
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900">
-            {t(lang, "section.faq.title")}
-          </h2>
-          <p className="text-lg text-slate-500 max-w-2xl">{t(lang, "section.faq.desc")}</p>
-        </div>
+export function FaqSection({ lang }: { lang: LangKey }) {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {FAQS.map((x,index) => (
-            <Link href='/faq' key={index}>
-              <Card
-                key={x.qKey}
-                className="rounded-3xl border-none shadow-md hover:shadow-xl transition-shadow duration-300 p-2"
-              >
-                <CardHeader>
-                  <CardTitle className="text-lg font-bold text-slate-900 flex items-start gap-3">
-                    <span className="h-6 w-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] shrink-0 mt-0.5">
-                      Q
-                    </span>
-                    {t(lang, x.qKey as any)}
-                  </CardTitle>
-                  <CardDescription className="text-slate-500 font-medium pl-9 leading-relaxed">
-                    {t(lang, x.aKey as any)}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-          ))}
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
+  return (
+    <section id="faq" className="py-20">
+      <div className="container mx-auto px-4 max-w-3xl">
+        <h2 className="text-3xl font-bold text-center mb-12 relative after:content-[''] after:block after:w-14 after:h-1 after:bg-blue-600 after:mx-auto after:mt-3 after:rounded-full">
+          Câu Hỏi Thường Gặp
+        </h2>
+        <div className="border-t border-neutral-100 divide-y divide-neutral-100">
+          {FAQS.map((faq, idx) => {
+            const isOpen = openFaq === idx;
+            return (
+              <div key={idx} className="py-4">
+                <button
+                  onClick={() => toggleFaq(idx)}
+                  className="w-full flex justify-between items-center text-left py-2 font-semibold text-base sm:text-lg text-neutral-800 hover:text-blue-600 transition-colors"
+                >
+                  <span>{faq.q}</span>
+                  <span
+                    className={`text-xl font-light text-neutral-400 transition-transform duration-300 ${isOpen ? "rotate-45 text-blue-600" : ""}`}
+                  >
+                    ＋
+                  </span>
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out text-sm text-neutral-500 leading-relaxed ${
+                    isOpen ? "max-h-40 mt-3 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  {faq.a}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -122,7 +122,7 @@
         },
         "wallet": {
           "title": "Agent wallet",
-          "desc": "Agent nạp tiền trước, hệ thống trừ ví khi xuất vé (MVP).",
+          "desc": "Agent nạp tiền trước, hệ thống trừ ví khi xuất vé .",
           "note": "Tối ưu hiệu suất bán vé."
         }
       }

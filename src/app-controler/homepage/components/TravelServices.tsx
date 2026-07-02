@@ -4,108 +4,6 @@ import { useState } from "react";
 
 const services = [
   {
-    id: "tour-trong-nuoc",
-    label: "Tour",
-    highlight: "TRONG NƯỚC",
-    href: "/",
-    color: "#0ea5e9",
-    gradient: "from-sky-500 to-cyan-400",
-    bg: "bg-sky-50",
-    border: "border-sky-200",
-    ring: "ring-sky-400",
-    text: "text-sky-600",
-    icon: (
-      <svg
-        viewBox="0 0 48 48"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full"
-      >
-        <ellipse cx="24" cy="36" rx="18" ry="4" fill="currentColor" opacity="0.12" />
-        <path
-          d="M24 6C16.268 6 10 12.268 10 20c0 10.5 14 26 14 26s14-15.5 14-26c0-7.732-6.268-14-14-14z"
-          fill="currentColor"
-          opacity="0.2"
-        />
-        <path
-          d="M24 8C17.373 8 12 13.373 12 20c0 9.5 12 24 12 24s12-14.5 12-24c0-6.627-5.373-12-12-12z"
-          stroke="currentColor"
-          strokeWidth="2"
-          fill="none"
-        />
-        <circle cx="24" cy="20" r="5" fill="currentColor" />
-        {/* Map lines suggesting roads */}
-        <path
-          d="M18 30 Q20 26 24 24 Q28 22 30 18"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeDasharray="2 2"
-          opacity="0.5"
-        />
-        {/* Flag on top */}
-        <path d="M24 7 L24 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M24 4 L29 5.5 L24 7 Z" fill="currentColor" />
-      </svg>
-    ),
-  },
-  {
-    id: "tour-nuoc-ngoai",
-    label: "Tour",
-    highlight: "NƯỚC NGOÀI",
-    href: "",
-    color: "#8b5cf6",
-    gradient: "from-violet-500 to-purple-400",
-    bg: "bg-violet-50",
-    border: "border-violet-200",
-    ring: "ring-violet-400",
-    text: "text-violet-600",
-    icon: (
-      <svg
-        viewBox="0 0 48 48"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full"
-      >
-        <circle cx="24" cy="24" r="16" stroke="currentColor" strokeWidth="2" fill="none" />
-        <ellipse
-          cx="24"
-          cy="24"
-          rx="7"
-          ry="16"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          fill="none"
-        />
-        <path
-          d="M8 24 Q16 20 24 24 Q32 28 40 24"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          fill="none"
-        />
-        <path
-          d="M10 17 Q17 15 24 17 Q31 19 38 17"
-          stroke="currentColor"
-          strokeWidth="1.2"
-          fill="none"
-          opacity="0.6"
-        />
-        <path
-          d="M10 31 Q17 29 24 31 Q31 33 38 31"
-          stroke="currentColor"
-          strokeWidth="1.2"
-          fill="none"
-          opacity="0.6"
-        />
-        {/* Plane */}
-        <g transform="translate(18,16) rotate(-30)">
-          <path d="M0 0 L8 3 L0 6 L2 3 Z" fill="currentColor" />
-          <path d="M2 1.5 L5 -2 L6 -1.5 L3 2.5 Z" fill="currentColor" opacity="0.7" />
-          <path d="M2 4.5 L5 8 L6 7.5 L3 3.5 Z" fill="currentColor" opacity="0.7" />
-        </g>
-      </svg>
-    ),
-  },
-  {
     id: "tour-khach-doan",
     label: "Tour",
     highlight: "KHÁCH ĐOÀN",
@@ -280,6 +178,122 @@ const services = [
           fill="currentColor"
           opacity="0.8"
         />
+      </svg>
+    ),
+  },
+  {
+    id: "giat-say",
+    label: "Dịch Vụ",
+    highlight: "GIẶT SẤY",
+    href: null,
+    color: "#0ea5e9",
+    gradient: "from-sky-500 to-cyan-400",
+    bg: "bg-sky-50",
+    border: "border-sky-200",
+    ring: "ring-sky-400",
+    text: "text-sky-600",
+    icon: (
+      <svg
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full"
+      >
+        {/* Washing machine body */}
+        <rect
+          x="8"
+          y="6"
+          width="32"
+          height="36"
+          rx="4"
+          stroke="currentColor"
+          strokeWidth="2"
+          fill="none"
+        />
+        {/* Control panel */}
+        <circle cx="14" cy="11" r="1.5" fill="currentColor" />
+        <circle cx="19" cy="11" r="1.5" fill="currentColor" opacity="0.6" />
+        {/* Drum */}
+        <circle cx="24" cy="27" r="11" stroke="currentColor" strokeWidth="2" fill="none" />
+        <circle
+          cx="24"
+          cy="27"
+          r="7"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          fill="none"
+          opacity="0.5"
+        />
+        {/* Water swirl / bubbles inside drum */}
+        <path
+          d="M20 25c1.5-2 5-2 6 0s-1 4-3 4"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.6"
+        />
+        <circle cx="29" cy="23" r="1" fill="currentColor" opacity="0.5" />
+        <circle cx="31" cy="27" r="0.8" fill="currentColor" opacity="0.4" />
+      </svg>
+    ),
+  },
+  {
+    id: "thue-xe-may",
+    label: "Dịch Vụ",
+    highlight: "THUÊ XE MÁY",
+    href: null,
+    color: "#ef4444",
+    gradient: "from-red-500 to-orange-400",
+    bg: "bg-red-50",
+    border: "border-red-200",
+    ring: "ring-red-400",
+    text: "text-red-600",
+    icon: (
+      <svg
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full"
+      >
+        {/* Wheels */}
+        <circle cx="12" cy="35" r="6" stroke="currentColor" strokeWidth="2" fill="none" />
+        <circle cx="36" cy="35" r="6" stroke="currentColor" strokeWidth="2" fill="none" />
+        {/* Body frame */}
+        <path
+          d="M12 35 L20 22 L28 22 L36 35"
+          stroke="currentColor"
+          strokeWidth="2"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M20 22 L24 14 L31 14"
+          stroke="currentColor"
+          strokeWidth="2"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {/* Seat */}
+        <path
+          d="M22 22 L30 22"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          opacity="0.6"
+        />
+        {/* Handlebar */}
+        <path
+          d="M31 14 L35 12 M31 14 L35 16"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          opacity="0.6"
+        />
+        {/* Headlight */}
+        <circle cx="24" cy="14" r="1.3" fill="currentColor" opacity="0.5" />
       </svg>
     ),
   },
