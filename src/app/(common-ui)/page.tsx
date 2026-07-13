@@ -8,7 +8,7 @@ export default async function Home() {
   const srrSupbase = await createSupabaseServerClient();
   const { data } = await srrSupbase
     .from(DB_TABLE_NAME.LOCATIONS)
-    .select("code,name,pre_price")
+    .select("code,name,pre_price,status")
     .limit(20);
   return <HomePage locations={data || []} />;
 }

@@ -7,31 +7,31 @@ import { EXPERIENCES } from "./contants";
 import { CollaboratorSection } from "./components/CollaboratorSection";
 import Feedback from "./components/Feedback";
 import { FaqSection } from "./components/FaqSection";
-import TopPartnersSection from "./components/TopPartners";
 
 type LocationRow = {
   code?: string;
   name?: string;
   pre_price?: number | string;
+  status?: boolean;
 };
 
 export default function HomePage({ locations }: { locations: LocationRow[] }) {
   const lang = "vi";
-  console.log("locations", locations);
 
   const locationCards = () => {
     const list = locations
-      .map((x) => {
-        const code = String(x.code);
+      .map((item) => {
+        const code = String(item.code);
         const exp = EXPERIENCES.find((e) => e.key === code);
         if (!exp) return null;
-        const price = Number(x.pre_price ?? 0) || 0;
+        const price = Number(item.pre_price ?? 0) || 0;
         return {
           id: code,
           code,
-          name: x.name || "",
+          name: item.name || "",
           pre_price: price,
           exp,
+          status: item.status,
         };
       })
       .filter(Boolean) as Array<{
@@ -40,6 +40,7 @@ export default function HomePage({ locations }: { locations: LocationRow[] }) {
       name: string;
       pre_price: number;
       exp: (typeof EXPERIENCES)[number];
+      status: boolean;
     }>;
 
     return list;

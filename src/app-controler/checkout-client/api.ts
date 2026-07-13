@@ -13,7 +13,10 @@ const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.g
 export const getLocationClient = async () => {
   try {
     setGlobalLoading(true);
-    const { data, error } = await clientSupbase.from(DB_TABLE_NAME.LOCATIONS).select("*");
+    const { data, error } = await clientSupbase
+      .from(DB_TABLE_NAME.LOCATIONS)
+      .select("*")
+      .eq("status", true);
     if (error) {
       setToastMessage(error.message);
     }
@@ -114,7 +117,6 @@ export const getPriceCustomer = async (
     setToastMessage("Có lỗi xảy ra");
   }
 };
-
 
 export const customerCreateOrderTicket = async (params: ClientOrderItem) => {
   try {

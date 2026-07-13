@@ -96,7 +96,6 @@ export const DB_TABLE_NAME = {
   TICKET_TYPES: "ticket_types",
   TICKET_TICKET_VARIANT: "ticket_variants",
   VIEW_TICET_VARIANTS_AND_CATEGORY: "ticket_variants_and_category",
-  FUNC_BY_TICKET: "buy_tickets_final",
   LOCATIONS: "locations",
   WALLET_TRANSACTION: "wallet_transactions",
   PROMOTION: "promotion",
@@ -107,6 +106,8 @@ export const DB_TABLE_NAME = {
   VIEW_TICET_SALE: "view_sale_history",
   FUNC_AFF_ADD_MONEY: "handle_topup_webhook",
   AGENTS: "agents",
+  FUNC_CREATE_ORDER_PENDING: "create_order_pending",
+  FUNC_COMPLETE_ORDER: "complete_order",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";

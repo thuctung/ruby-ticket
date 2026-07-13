@@ -86,6 +86,7 @@ export default function GetTicketPageControler() {
       setToastMessage("Số dư không đủ!!");
       return;
     }
+
     if (profile) {
       const items: TicketSubmitAgentType[] = listTicket.map((item) => ({
         ticket_variant_code: item.ticket_variant_code,
@@ -93,6 +94,7 @@ export default function GetTicketPageControler() {
         price: Number(item.finalprice),
         promo_code: promoCode,
       }));
+
       const params: ParamCreateTicketAgentType = {
         items,
         user_id: profile.user_id || "",
@@ -100,7 +102,9 @@ export default function GetTicketPageControler() {
         email: profile.email || "",
         total_amount,
       };
+
       const data = await createOrderTicket(params);
+
       if (data) {
         const currentBalance = get(data, "remaining_balance") || profile.balance - total_amount;
         setProfile({

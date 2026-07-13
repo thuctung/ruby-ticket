@@ -36,6 +36,7 @@ export type LocationCard = {
   name: string;
   pre_price: number;
   exp: ExperienceCard;
+  status: boolean;
 };
 
 export type ExperienceCard = {

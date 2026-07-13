@@ -1,10 +1,10 @@
 import api from "@/axios";
-import { CREATE_ORDER_TICKET, GET_QR_TOPUP } from "@/commons/apiURL";
+import { CREATE_ORDER_TICKET } from "@/commons/apiURL";
 import { DB_TABLE_NAME } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
-import { ItemSelectType, ParamCreateTicketAgentType } from "@/types/ticket";
+import { ParamCreateTicketAgentType } from "@/types/ticket";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 const clientSupbase = createSupabaseBrowserClient();
@@ -12,7 +12,10 @@ const clientSupbase = createSupabaseBrowserClient();
 export const getLocation = async () => {
   try {
     setGlobalLoading(true);
-    const { data, error } = await clientSupbase.from(DB_TABLE_NAME.LOCATIONS).select("*");
+    const { data, error } = await clientSupbase
+      .from(DB_TABLE_NAME.LOCATIONS)
+      .select("*")
+      .eq("status", true);
     if (error) {
       setToastMessage(error.message);
     }

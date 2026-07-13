@@ -41,20 +41,20 @@ export function ExperiencesSection({
 
         {locationCards.length ? (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {locationCards.map((x) => (
+            {locationCards.map((item) => (
               <Card
-                key={x.id}
+                key={item.id}
                 className="group overflow-hidden rounded-[2rem] border-none shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-100 transition-all duration-300 hover:-translate-y-2"
               >
                 <div className="h-56 relative overflow-hidden">
                   <div
-                    className={`absolute top-4 left-4 z-20 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-lg bg-gradient-to-r ${x.exp.color}`}
+                    className={`absolute top-4 left-4 z-20 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-lg bg-gradient-to-r ${item.exp.color}`}
                   >
-                    {x.exp.category}
+                    {item.exp.category}
                   </div>
                   <HoverImage
-                    image={`/${x.exp.image1}`}
-                    hoverImage={`/${x.exp.image2}`}
+                    image={`/${item.exp.image1}`}
+                    hoverImage={`/${item.exp.image2}`}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -62,14 +62,14 @@ export function ExperiencesSection({
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between gap-3">
                     <CardTitle className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      {x.name || t(lang, x.exp.nameKey)}
+                      {item.name || t(lang, item.exp.nameKey)}
                     </CardTitle>
                     <Badge className="bg-blue-50 text-blue-600 hover:bg-blue-100 border-none font-bold rounded-lg">
-                      {t(lang, x.exp.badgeKey)}
+                      {t(lang, item.exp.badgeKey)}
                     </Badge>
                   </div>
                   <CardDescription className="font-medium text-slate-500 italic">
-                    {t(lang, x.exp.taglineKey)}
+                    {t(lang, item.exp.taglineKey)}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 pt-0">
@@ -79,17 +79,26 @@ export function ExperiencesSection({
                         {t(lang, "section.experiences.priceFrom")}
                       </div>
                       <div className="text-xl font-extrabold text-blue-600">
-                        {displayPrice(x.pre_price)}
+                        {displayPrice(item.pre_price)}
                       </div>
                     </div>
                     <Button
                       asChild
                       className="rounded-xl bg-red-400 hover:bg-green-600 px-6 transition-colors"
                     >
-                      <a href={`/checkout?product=${x.code}`} className="flex items-center gap-2">
-                        Mua Ngay
-                        <ChevronRight className="h-4 w-4" />
-                      </a>
+                      {item.status ? (
+                        <a
+                          href={`/checkout?product=${item.code}`}
+                          className="flex items-center gap-2"
+                        >
+                          Mua Ngay
+                          <ChevronRight className="h-4 w-4" />
+                        </a>
+                      ) : (
+                        <a href="tel:0705551668" className="flex items-center gap-2">
+                          Liên hệ
+                        </a>
+                      )}
                     </Button>
                   </div>
                 </CardContent>
