@@ -7,6 +7,7 @@ import { EXPERIENCES } from "./contants";
 import { CollaboratorSection } from "./components/CollaboratorSection";
 import Feedback from "./components/Feedback";
 import { FaqSection } from "./components/FaqSection";
+import TopPartnersSection from "./components/TopPartners";
 
 type LocationRow = {
   code?: string;
@@ -16,6 +17,7 @@ type LocationRow = {
 
 export default function HomePage({ locations }: { locations: LocationRow[] }) {
   const lang = "vi";
+  console.log("locations", locations);
 
   const locationCards = () => {
     const list = locations
@@ -54,6 +56,7 @@ export default function HomePage({ locations }: { locations: LocationRow[] }) {
         locationCards={locationCards()}
         fallbackExperiences={EXPERIENCES}
       />
+      {/* <TopPartnersSection /> */}
       <Feedback />
       <CollaboratorSection lang={lang} />
       <FaqSection lang={lang} />

@@ -138,13 +138,13 @@ export const EXPERIENCES: ExperienceCard[] = [
     category: "River Cruise",
   },
   {
-    key: "MIKAZUKI",
-    nameKey: "product.cruise.name",
-    taglineKey: "product.cruise.tagline",
-    badgeKey: "product.cruise.badge",
+    key: "MIKAYUKI",
+    nameKey: "product.mikayuki.name",
+    taglineKey: "product.mikayuki.tagline",
+    badgeKey: "product.mikayuki.badge",
     image1: "mikazuki1.webp",
     image2: "mikazuki2.webp",
     color: "from-indigo-500 to-blue-600",
-    category: "Mikazuki",
+    category: "Mikayuki",
   },
 ] as const;

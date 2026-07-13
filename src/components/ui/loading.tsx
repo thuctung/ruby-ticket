@@ -38,7 +38,7 @@ export function LoadingGlobal() {
         <Image
           width={40}
           height={40}
-          src="/logo1.png"
+          src="/logo.png"
           alt="Logo"
           className="h-10 w-10  animate-bounce-vertical"
         />

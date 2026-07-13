@@ -47,7 +47,7 @@ export function Banner() {
 
       <div className="absolute inset-0 flex justify-end items-end z-20">
         <a
-          href="#locations"
+          href="/checkout"
           className="inline-block bg-[#E0115F] hover:bg-[#C00F4E] text-white font-semibold text-xs mb-10 mr-10 sm:text-sm md:text-base px-5 py-2.5 md:px-6 md:py-3 rounded-md transition-all shadow-lg shadow-[#E0115F]/30 active:scale-95"
         >
           Đặt Vé Ngay
