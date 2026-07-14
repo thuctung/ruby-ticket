@@ -20,7 +20,7 @@ const schema = z
       .trim()
       .min(8, "SĐT quá ngắn")
       .max(15, "SĐT quá dài")
-      .regex(/^[0-9+ ]+$/, "SĐT chỉ nên gồm số, dấu + và khoảng trắng"),
+      .regex(/^[0-9+ ]+$/, "SĐT chỉ nên gồm số"),
     email: z.string().trim().email("Email không hợp lệ"),
     username: z
       .string()

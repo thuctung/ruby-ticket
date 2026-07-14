@@ -9,6 +9,7 @@ import {
   ProductType,
   PromotionType,
   ResumSelectedType,
+  SideSunGroupType,
   TicketByLocationType,
 } from "@/types/ticket";
 
@@ -25,6 +26,7 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import { GetTicketIcon } from "@/components/ui/icons/getTicket";
 import { SelectBox } from "@/components/ui/customs/selectBox";
+import { getSideListSun } from "./api";
 
 type CheckoutFormProps = {
   location: string;
@@ -73,6 +75,8 @@ export function CheckoutForm({
   const [resumSelected, setResumeSelected] = useState<ResumSelectedType[]>([]);
 
   const [loadingGetPice, setLodingPrice] = useState(false);
+
+  const [listSideSunGroup, setListSideSungroup] = useState<SideSunGroupType[]>([]);
 
   const locationNameSelected = locations?.find((l) => l.code === location)?.name || "";
 
@@ -210,6 +214,13 @@ export function CheckoutForm({
     }
   };
 
+  const fetchSiteSunGroup = async () => {
+    const data = await getSideListSun();
+    if (data?.length) {
+      setListSideSungroup(data);
+    }
+  };
+
   useEffect(() => {
     if (location) {
       fetchTicketTypeByLocation();
@@ -237,25 +248,35 @@ export function CheckoutForm({
     cachePrice.current.promo = init;
   }, [location, ticketTypeCode]);
 
+  useEffect(() => {
+    if (location) {
+      switch (location) {
+        case "BANA": {
+          fetchSiteSunGroup();
+          break;
+        }
+        default:
+      }
+    }
+  }, [location]);
+
   return (
     <div className="bg-gray-50 min-h-screen p-4 md:p-8 text-gray-800">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* COLUMN 1: FORM THÔNG TIN (Chiếm 2/3 width) */}
           <div className="lg:col-span-2 space-y-8">
-            {/* BLOCK 1: HÀNH TRÌNH & LOẠI VÉ */}
             <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-              <h2 className="text-xl font-bold mb-6 text-gray-900">1. Thông tin chuyến đi</h2>
+              <h2 className="text-xl font-bold mb-6 text-gray-900">1. Chọn địa điểm</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-600">Điểm đến</label>
+                  <label className="text-sm font-medium text-gray-600">Địa điểm</label>
                   <SelectBox
                     value={location}
                     onChange={(value) => onChangeLocation(value)}
                     className="h-13 "
                   >
-                    {locations?.map((p) => (
+                    {listSideSunGroup?.map((p) => (
                       <option key={p.code} value={p.code}>
                         {p.name}
                       </option>

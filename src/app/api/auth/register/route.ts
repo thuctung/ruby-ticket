@@ -31,6 +31,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
     const { fullName, phone, email, username, address, password } = parsed.data;
 
     // Create user
@@ -41,7 +42,7 @@ export async function POST(req: Request) {
       user_metadata: {
         full_name: fullName,
       },
-       app_metadata: { role: ROLES.AFFILIATE }
+      app_metadata: { role: ROLES.AFFILIATE },
     });
 
     if (createErr) {
@@ -69,7 +70,6 @@ export async function POST(req: Request) {
       role: "affiliate",
       status: "pending",
     });
-
     if (profileErr) {
       return NextResponse.json(
         { ok: false, error: "PROFILE_INSERT_FAILED", message: profileErr.message },

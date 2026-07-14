@@ -9,7 +9,7 @@ import { FULL_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import TicketCard from "./TicketCard";
-import { GUIDES } from "./constants";
+import { GUIDES, LogoBySite } from "./constants";
 import { formatVND } from "@/helpers/money";
 
 type TicketResultQRProps = {
@@ -17,8 +17,10 @@ type TicketResultQRProps = {
   onClose: () => void;
   location: string;
 };
+
 export default function TicketResultQR({ tickets, onClose, location }: TicketResultQRProps) {
   const { showConfirm }: CommonType | any = useCommonStore.getState();
+  console.log("tickets", tickets);
 
   const downloadPDF = async () => {
     const PAGE_W = 220;
@@ -42,12 +44,13 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
       img.onerror = reject;
       img.src = "/logo.png";
     });
+    const logo = LogoBySite[tickets[0].siteCode as keyof typeof LogoBySite] ?? LogoBySite.HLS;
 
     const sunWorldLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
       const img = new Image();
       img.onload = () => resolve(img);
       img.onerror = reject;
-      img.src = "/sunworldbana.png";
+      img.src = logo;
     });
 
     // Colors dùng xuyên suốt (theo đúng mẫu thiết kế)
@@ -80,7 +83,7 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
       pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(11);
       pdf.setFont("Roboto", "bold");
-      pdf.text(t.ticket_name, PAGE_W / 2, y + 17, { align: "center" });
+      pdf.text(t.productName, PAGE_W / 2, y + 17, { align: "center" });
 
       y += 26 + 16;
 
@@ -97,7 +100,7 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
       pdf.setTextColor(255, 255, 255);
       pdf.setFont("Roboto", "bold");
       pdf.setFontSize(10);
-      pdf.text(String(t.order_id || "34324324234"), 18 + 50, y + 12, { align: "center" });
+      pdf.text(String(t.orderCode), 18 + 50, y + 12, { align: "center" });
 
       y += 30;
 
@@ -113,11 +116,10 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
       pdf.setTextColor(...TEXT_DARK);
       pdf.setFont("Roboto", "bold");
       pdf.setFontSize(11);
-      pdf.text(t.dateUse || "", 18, y);
+      pdf.text(t.date_use || "", 18, y);
 
       pdf.setTextColor(...RED_DARK);
       pdf.setFontSize(14);
-      pdf.text(formatVND(t.price || 1000000), PAGE_W - 18, y, { align: "right" });
 
       y += 18;
 
@@ -127,7 +129,7 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
       pdf.setLineWidth(1.2);
       pdf.roundedRect(18, y, PAGE_W - 36, qrBoxH, 8, 8);
 
-      const qr = await QRCodePDF.toDataURL(t.ticket_code);
+      const qr = await QRCodePDF.toDataURL(t.productCode);
       pdf.addImage(qr, "PNG", 20, y + 10, 80, 80);
 
       pdf.setTextColor(...RED_LABEL);
@@ -150,7 +152,7 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
       });
       pdf.setFont("Roboto", "bold");
       pdf.setFontSize(9);
-      pdf.text(t.ticket_code, 104 + (PAGE_W - 36 - 96) / 2, y + 68, {
+      pdf.text(t.productCode, 104 + (PAGE_W - 36 - 96) / 2, y + 68, {
         align: "center",
       });
 
@@ -214,7 +216,7 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
         {/* LIST */}
         <div className="flex-1 overflow-y-auto p-4">
           {tickets.map((t, i) => (
-            <TicketCard key={i} ticketItem={t} />
+            <TicketCard key={i} ticketItem={t} currentIndex={i} total={tickets.length} />
           ))}
         </div>
 

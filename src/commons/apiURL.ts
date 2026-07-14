@@ -16,6 +16,10 @@ export const UPDATE_STATUS_TOPUP_MGT = "/api/auth/admin/topup-mgt/update-status"
 
 export const CREATE_ORDER_TICKET = "/api/auth/affiliate/get-ticket/create-order";
 
+export const UPDATE_STATUS_ORDER = "/api/auth/affiliate/get-ticket/update-status-order";
+
+export const SUCCESS_ORDER_TICKET = "/api/auth/affiliate/get-ticket/success-order";
+
 export const GET_TRANSACTION = "/api/auth/affiliate/transaction/get-transaction";
 
 export const GET_LIST_INVENTORY = "/api/auth/admin/inventory/get-list";
@@ -43,3 +47,5 @@ export const GET_ADMIN_REPORT = "/api/auth/admin/stats/get-report";
 export const COUNT_REPORT = "/api/auth/admin/stats/count-report";
 
 export const ADMIN_UPDATE_STATUS_TOPUP = "/api/webhook/sepay";
+
+export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";

@@ -24,16 +24,5 @@ export async function POST(req: Request) {
 
   const orderId = data.order_id;
 
-  // call data BANA
-
-  const { data: completeData, error: completeError } = await supabaseAdmin.rpc(
-    DB_TABLE_NAME.FUNC_COMPLETE_ORDER,
-    {
-      p_order_id: orderId,
-      p_provider_order_code: items,
-      p_tickets: [],
-    }
-  );
-
   return NextResponse.json({ order_id: orderId }, { status: 200 });
 }

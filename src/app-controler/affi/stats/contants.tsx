@@ -22,13 +22,9 @@ export const TYPE_LIST: StatusType[] = [
 
 export const columnAffStats: TableColumn<TicketSalteResponseType>[] = [
   {
-    key: "location_name",
-    title: "Địa điểm",
-  },
-  {
-    key: "ticket_name",
+    key: "product_name",
     title: "Tên vé",
-    align: "right",
+    align: "left",
   },
   {
     key: "quantity",

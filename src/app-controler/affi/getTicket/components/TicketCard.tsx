@@ -2,18 +2,27 @@
 
 import { TicketResultQRType } from "@/types/ticket";
 import QRCode from "react-qr-code";
-import { GUIDES } from "./constants";
+import { GUIDES, LogoBySite } from "./constants";
 import Image from "next/image";
 
-export default function TicketCard({ ticketItem }: { ticketItem: TicketResultQRType }) {
+export default function TicketCard({
+  ticketItem,
+  currentIndex,
+  total,
+}: {
+  ticketItem: TicketResultQRType;
+  currentIndex: number;
+  total: number;
+}) {
+  const logo = LogoBySite[ticketItem.siteCode as keyof typeof LogoBySite] ?? LogoBySite.HLS;
   return (
-    <div className="mx-auto w-[380px] overflow-hidden rounded-2xl border border-red-100 bg-orange-50/60 shadow-2xl shadow-red-900/25">
+    <div className="mx-auto w-[380px] overflow-hidden rounded-2xl border border-red-100 bg-orange-50/60 mb-10">
       {/* Header: logos */}
-      <div className="relative flex items-center justify-between  px-4 pb-3.5 pt-4">
+      <div className="relative flex items-center justify-between  px-4 pb-3.5 pt-4 bg-white">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_-20%,rgba(255,255,255,0.18),transparent_60%)]" />
         <div className="z-10 flex h-[42px] items-center rounded-lg  px-2.5 ">
           <Image
-            src="/sunworldbana.png"
+            src={logo}
             alt="Sun World Ba Na Hills"
             width={120}
             height={36}
@@ -35,7 +44,7 @@ export default function TicketCard({ ticketItem }: { ticketItem: TicketResultQRT
       <div className="relative bg-gradient-to-b from-transparent to-black/5 px-3.5  pt-1.5 text-center text-white">
         <div className="bg-gradient-to-br bg-red-700 pb-3.5 pt-1.5 -mx-3.5 -mt-1.5 px-3.5">
           <p className="mt-2 text-lg font-extrabold uppercase tracking-wide leading-snug">
-            {ticketItem.ticket_name}
+            {ticketItem.productName}
           </p>
         </div>
       </div>
@@ -48,7 +57,7 @@ export default function TicketCard({ ticketItem }: { ticketItem: TicketResultQRT
             Mã / Order No.
           </p>
           <span className="mt-1 inline-block rounded-md bg-red-900 px-3.5 py-1.5 text-sm font-extrabold tracking-wide text-white">
-            {ticketItem.order_id || "SWBNH-260630"}
+            {ticketItem.orderCode}
           </span>
         </div>
 
@@ -58,13 +67,7 @@ export default function TicketCard({ ticketItem }: { ticketItem: TicketResultQRT
             <p className="text-[9.5px] font-bold uppercase tracking-wider text-red-700">
               Ngày sử dụng / Valid Date
             </p>
-            <p className="mt-0.5 text-[15px] font-bold text-stone-900">{ticketItem.dateUse}</p>
-          </div>
-          <div className="flex-1">
-            <p className="text-[9.5px] font-bold uppercase tracking-wider text-red-700">
-              Giá tiền / Price
-            </p>
-            <p className="mt-0.5 text-xl font-bold text-red-900">{ticketItem.price || "100,000"}</p>
+            <p className="mt-0.5 text-[15px] font-bold text-stone-900">{ticketItem.date_use}</p>
           </div>
         </div>
 
@@ -72,17 +75,17 @@ export default function TicketCard({ ticketItem }: { ticketItem: TicketResultQRT
 
         {/* QR + serial */}
         <div className="mb-4 flex items-center gap-4 rounded-xl border-2 border-red-700 bg-white p-3.5">
-          <QRCode value={ticketItem.ticket_code} size={110} />
+          <QRCode value={ticketItem.productCode} size={110} />
           <div className="flex-1">
             <p className="text-[9.5px] font-bold uppercase tracking-wider text-red-700">
               Số / Serial
             </p>
             <p className="mt-0.5 text-sm font-extrabold tracking-wide text-stone-900">
-              {1 + "/" + 1}
+              {`${currentIndex + 1} / ${total}`}
             </p>
             <div className="mt-2.5 rounded-md bg-red-700 px-2.5 py-1.5 text-center text-white">
               <p className="text-[8.5px] tracking-wider opacity-90">Mã vé/Code</p>
-              <p className="mt-0.5 text-sm font-extrabold"> {ticketItem.ticket_code}</p>
+              <p className="mt-0.5 text-sm font-extrabold"> {ticketItem.productCode}</p>
             </div>
           </div>
         </div>

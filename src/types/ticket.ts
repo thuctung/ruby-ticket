@@ -54,12 +54,21 @@ export type ResultTicketSlectedType = {
 };
 
 export type TicketResultQRType = {
-  ticket_variant_code: string;
-  ticket_code: string;
-  ticket_name: string;
-  dateUse: string;
-  price?: number;
-  order_id?: string;
+  productName: string;
+  productCode: string;
+  siteCode: string;
+  unitPrice: string;
+  productGroup: string;
+  isFaceIdRequired: string;
+
+  ticketNumber: string;
+  validDateFrom: string;
+  validDateTo: string;
+  status: string;
+  verifyCode: string;
+  orderCode: string;
+  orderId: string;
+  date_use: string;
 };
 
 export type PromotionType = {
@@ -95,10 +104,10 @@ export type DataFormTicketSubmit = {
 };
 
 export type TicketSubmitAgentType = {
-  ticket_variant_code: string;
   quantity: number;
   price: number;
-  promo_code?: string;
+  product_code: string;
+  product_name: string;
 };
 
 export type ParamCreateTicketAgentType = {
@@ -129,4 +138,83 @@ export type ClientOrderItem = {
   listTicketSubmit: ClientBuyTicketType[];
   paymentCode: string;
   promoCode?: string;
+};
+
+export type SideSunGroupType = {
+  address: string;
+  code: string;
+  description: string;
+  name: string;
+  id: number;
+};
+
+type PricePolicyType = {
+  publicPrice: number;
+  unitPrice: number;
+  usageDate: string;
+  validDateTo: string;
+  validDateFrom: string;
+};
+
+type PerformancesType = {
+  endDate: string;
+  performanceId: string;
+  startDate: string;
+};
+
+export type ProductBanaType = {
+  closeTime: string;
+  code: string;
+  id: number;
+  name: string;
+  personType: string;
+  pricePolicy: PricePolicyType;
+  restaurantName?: string;
+  publicPrice: number;
+  unitPrice: number;
+  performances: PerformancesType;
+};
+
+export type ProductSubmitType = {
+  productCode: string;
+  siteCode: string;
+  quantity: number;
+  usageDate: string;
+  usageDateTo: string;
+  performanceId: string;
+  productsName: string;
+  unitPrice: number;
+};
+
+export type SubmitSelectTicket = {
+  products: ProductSubmitType[];
+  totalMoney: number;
+  date_use: string;
+};
+
+export type TicketInItemType = {
+  status: string;
+  ticketNumber: string;
+  validDateFrom: string;
+  validDateTo: string;
+  verifyCode: string;
+};
+
+export type TicketItemReponseType = {
+  isFaceIdRequired: number;
+  productCode: string;
+  productGroup: string;
+  productName: string;
+  siteCode: string;
+  unitPrice: number;
+  tickets: TicketInItemType[];
+};
+
+export type TicketReponseType = {
+  totalTicket: number;
+  thirdPartyNumber: string;
+  referenceCode: string;
+  orderStatus: string;
+  orderCode: string;
+  items: TicketItemReponseType[];
 };

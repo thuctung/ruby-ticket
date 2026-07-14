@@ -118,6 +118,12 @@ export const BANK_INFO = {
   bankAccName: process.env.NEXT_PUBLIC_BANK_ACC_NAME,
 };
 
+export const SUN_GROUP = {
+  clientId: process.env.NEXT_PUBLIC_SUN_CLIENT_ID || "",
+  clientSecret: process.env.NEXT_PUBLIC_SUN_CLIENT_SECRET || "",
+  swgSubscriptionKey: process.env.NEXT_PUBLIC_SUN_SWG_SUBSCRIPTION_KEY || "",
+};
+
 export const PAYMENT_STATUS = {
   PENDING: "pending",
   COMPLETED: "completed",

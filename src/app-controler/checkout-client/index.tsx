@@ -64,7 +64,7 @@ export default function CheckoutControlerPage() {
   };
 
   const handleSubmitTicket = async (values: DataFormTicketSubmit) => {
-    const { formData, total_amount, listTicket ,promoCode} = values;
+    const { formData, total_amount, listTicket, promoCode } = values;
     setItemTicketOrder(values);
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
 
@@ -84,7 +84,7 @@ export default function CheckoutControlerPage() {
       description: description,
       listTicketSubmit,
       paymentCode,
-      promoCode
+      promoCode,
     };
 
     const data = await customerCreateOrderTicket(dataSubmit);
@@ -101,7 +101,7 @@ export default function CheckoutControlerPage() {
 
   const getTicketData = () => {
     try {
-      const data: TicketResultQRType[] =
+      const data: TicketResultQRType[] | any =
         itemTicketOrder?.listTicket.map((item) => ({
           ticket_variant_code: item.ticket_variant_code,
           ticket_name: item.ticketName,

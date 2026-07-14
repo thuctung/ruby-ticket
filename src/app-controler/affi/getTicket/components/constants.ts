@@ -17,3 +17,10 @@ export const NOTES = [
   "- Vui lòng tuân thủ nội quy của Khu Du Lịch. Không mang đồ ăn, thức uống hoặc flycam vào Công Viên. / Please comply with the resort regulations. Food, beverages, and drones are not permitted inside the park.",
   "- Một số khu vực có thể tạm đóng cửa do thời tiết hoặc các sự kiện đặc biệt mà không cần thông báo trước. / Certain areas may be closed due to weather conditions or special events without prior notice.",
 ];
+
+export const LogoBySite = {
+  HLS: "/sungroup/logo_catba.jpg",
+  BNC: "/sungroup/logo_bana.jpg",
+  HTI: "/sungroup/logo_honthom.jpg",
+  FSS: "/sungroup/logo_fansipan.jpg",
+};

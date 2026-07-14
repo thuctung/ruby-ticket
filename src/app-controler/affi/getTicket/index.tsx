@@ -11,12 +11,19 @@ import { CommonType, ProfileType } from "@/types";
 import {
   LocationType,
   TicketResultQRType,
-  DataFormTicketSubmit,
   TicketSubmitAgentType,
   ParamCreateTicketAgentType,
-  ResumSelectedType,
+  SubmitSelectTicket,
+  TicketReponseType,
 } from "@/types/ticket";
-import { createOrderTicket, getLocation } from "./api";
+import {
+  createOrderTicket,
+  getLocation,
+  getTicketFromSunGroup,
+  loginSunSystem,
+  updateStatusOrderFail,
+  updateSuccessOrder,
+} from "./api";
 import { useCommonStore } from "@/stores/useCommonStore";
 import TicketResultQR from "./components/TicketResultQR";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
@@ -25,6 +32,8 @@ import { CheckoutForm } from "@/app-controler/checkout-client/components/Checkou
 import { AGENT_CODE } from "@/commons/constant";
 import { get } from "lodash";
 import { LodingMessage } from "@/components/ui/loading-message";
+import { Button } from "@/components/ui/button";
+import SunGroupBooking from "./components/SunGroupBooking";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -58,41 +67,20 @@ export default function GetTicketPageControler() {
     handleGetLocation();
   }, [handleGetLocation]);
 
-  const handleChangeLocation = (locationCode: string) => {
-    setLocation(locationCode);
-  };
-
-  const handleGetTicket = (listTicket: ResumSelectedType[]) => {
-    setLoadingMessageGetTicket("Đang xử lý vé...");
-    setTimeout(() => {
-      const data: TicketResultQRType[] =
-        listTicket.flatMap((item) => {
-          return Array.from({ length: item.numerTicet }, () => ({
-            ticket_variant_code: item.ticket_variant_code,
-            ticket_name: item.ticketName,
-            ticket_code: "DSSDFSDF",
-            dateUse: item.date_use,
-          }));
-        }) || [];
-      setTicketResultQR(data);
-      setOpenQR(true);
-      setLoadingMessageGetTicket("");
-    }, 5000);
-  };
-
-  const handleFormSubmit = async (values: DataFormTicketSubmit) => {
-    const { total_amount, listTicket, date_use, promoCode } = values;
-    if (total_amount > profile.balance) {
+  const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
+    const { products, totalMoney, date_use } = values;
+    if (totalMoney > profile.balance) {
       setToastMessage("Số dư không đủ!!");
       return;
     }
 
     if (profile) {
-      const items: TicketSubmitAgentType[] = listTicket.map((item) => ({
-        ticket_variant_code: item.ticket_variant_code,
-        quantity: item.numerTicet,
-        price: Number(item.finalprice),
-        promo_code: promoCode,
+      const items: TicketSubmitAgentType[] = products.map((item) => ({
+        quantity: item.quantity,
+        price: Number(item.unitPrice),
+        product_code: item.productCode,
+        product_name: item.productsName,
+        date_use: date_use,
       }));
 
       const params: ParamCreateTicketAgentType = {
@@ -100,18 +88,50 @@ export default function GetTicketPageControler() {
         user_id: profile.user_id || "",
         date_use: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
         email: profile.email || "",
-        total_amount,
+        total_amount: totalMoney,
       };
 
-      const data = await createOrderTicket(params);
+      const order_id = await createOrderTicket(params);
 
-      if (data) {
-        const currentBalance = get(data, "remaining_balance") || profile.balance - total_amount;
-        setProfile({
-          ...profile,
-          balance: currentBalance,
-        });
-        handleGetTicket(listTicket);
+      if (order_id) {
+        const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(products);
+        if (tickets) {
+          const result: TicketResultQRType[] | any = tickets.items.flatMap((item) =>
+            item.tickets.map((ticketChild) => ({
+              productName: item.productName,
+              productCode: item.productCode,
+              siteCode: item.siteCode,
+              unitPrice: item.unitPrice,
+              productGroup: item.productGroup,
+              isFaceIdRequired: item.isFaceIdRequired,
+
+              ticketNumber: ticketChild.ticketNumber,
+              validDateFrom: ticketChild.validDateFrom,
+              validDateTo: ticketChild.validDateTo,
+              status: ticketChild.status,
+              verifyCode: ticketChild.verifyCode,
+              orderCode: tickets.orderCode,
+              orderId: order_id,
+              date_use,
+            }))
+          );
+          setTicketResultQR(result);
+          setOpenQR(true);
+
+          const currentBalance = profile.balance - totalMoney;
+          setProfile({
+            ...profile,
+            balance: currentBalance,
+          });
+          updateSuccessOrder({
+            orderCode: tickets.orderCode,
+            tickets: result,
+            referenceCode: tickets.referenceCode,
+            orderId: order_id,
+          });
+        } else {
+          updateStatusOrderFail(order_id);
+        }
       }
     }
   };
@@ -130,15 +150,18 @@ export default function GetTicketPageControler() {
             </div>
           </div>
           <Separator />
-          <CheckoutForm
+          {/* <CheckoutForm
             onSubmit={handleFormSubmit}
             onChangeLocation={handleChangeLocation}
             agentCode={AGENT_CODE.LEVEL_1}
             location={location}
             locations={locationList}
-          />
+          /> */}
+          <SunGroupBooking location="BANA" onBuyTicket={handleBuyTicketAff} />
         </CardContent>
       </Card>
+
+      <Button onClick={() => loginSunSystem()}>lOGIN</Button>
 
       {openQR && (
         <TicketResultQR tickets={resultTicketQR} onClose={onCloseQR} location={locationName} />

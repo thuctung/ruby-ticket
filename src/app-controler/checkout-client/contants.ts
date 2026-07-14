@@ -13,7 +13,7 @@ export const checkoutSchema = z.object({
     .trim()
     .min(8, "Số điện thoại không hợp lệ")
     .max(15, "Số điện thoại không hợp lệ")
-    .regex(/^[0-9+ ]+$/, "SĐT chỉ nên gồm số, dấu + và khoảng trắng"),
+    .regex(/^[0-9+ ]+$/, "SĐT chỉ nên gồm số"),
   note: z.string().max(500).optional().or(z.literal("")),
 });
 
