@@ -55,6 +55,7 @@ export type LangKey = "vi" | "en" | "zh" | "ko";
 export type ButtonProp = {
   onClick: MouseEventHandler;
   classMore?: string;
+  title?: string;
 };
 
 export type SelectBoxProps = {

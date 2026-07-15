@@ -23,6 +23,8 @@ import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
+import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
+import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 
 export default function CheckoutControlerPage() {
   const lang = useLang();
@@ -152,6 +154,10 @@ export default function CheckoutControlerPage() {
     }
   }, [qrPaymant?.code]);
 
+  const handleBuyTicket = (value: any) => {
+    console.log(value);
+  };
+
   return (
     <main className="min-h-screen flex flex-col bg-background text-foreground">
       <section className="relative bg-gradient-to-b from-blue-50/70 to-background">
@@ -227,11 +233,10 @@ export default function CheckoutControlerPage() {
 
         <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
           <div className="bg-white rounded-3xl shadow-2xl p-2 md:p-4">
-            <CheckoutForm
+            <GetTicketSunGroupForm
               location={loactionKey}
-              locations={locationList}
-              onChangeLocation={onChangeLocation}
-              onSubmit={handleSubmitTicket}
+              onBuyTicket={handleBuyTicket}
+              formType={SUN_BOOKING_FORM_TYPE.CUSTOMER}
             />
           </div>
         </div>

@@ -30,6 +30,18 @@ export const GET_LIST_PRICING = "/api/auth/admin/pricing/get-list";
 
 export const UPSERT_PRICING = "/api/auth/admin/pricing/upsert";
 
+export const GET_AGENT_LIST = "/api/auth/admin/agents/get-list";
+
+export const CREATE_EDIT_AGENT = "/api/auth/admin/agents/create";
+
+export const DELETE_AGENT = "/api/auth/admin/agents/delete";
+
+export const GET_PRICE_AGENT = "/api/auth/admin/price/get-price";
+
+export const CREATE_AGENT_PRICE = "/api/auth/admin/price/create";
+
+export const UPDATE_AGENT_PRICE = "/api/auth/admin/price/update";
+
 export const GET_HOME_HIGHLIGHTS = "/api/public/home/highlights";
 
 export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";

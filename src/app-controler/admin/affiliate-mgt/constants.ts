@@ -1,6 +1,7 @@
 import { ACC_STATUS } from "@/commons/constant";
 import { StatusType } from "@/types";
 
+export const CUSTOMER = "customer";
 export const getStatusName = (status: string) => {
   switch (status) {
     case ACC_STATUS.APPROVED:

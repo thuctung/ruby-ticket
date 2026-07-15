@@ -1,19 +1,18 @@
 import { NextResponse } from "next/server";
 
-
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { ProfileUpdateStatusType, } from "@/types";
+import { ProfileUpdateStatusType } from "@/types";
 
 export async function POST(request: Request) {
-  const {
-    user_id,
-    status
-  }: ProfileUpdateStatusType = await request.json();
+  const { user_id, status, agent_level }: ProfileUpdateStatusType = await request.json();
 
-  const { error }: any = await supabaseAdmin
+  const { error } = await supabaseAdmin
     .from("profiles")
-    .update({ status })
-    .eq("user_id", user_id)
+    .update({
+      status,
+      ...(agent_level != null && { agent_level }),
+    })
+    .eq("user_id", user_id);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

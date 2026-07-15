@@ -1,35 +1,20 @@
-import api from "@/axios";
-import { CREATE_AGENT_PRICE, GET_PRICE_AGENT, UPDATE_AGENT_PRICE } from "@/commons/apiURL";
+import { CREATE_EDIT_AGENT, DELETE_AGENT, GET_AGENT_LIST } from "@/commons/apiURL";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 
-import { AgentPriceSubmitType, AgentPriceType } from "./type";
+import api from "@/axios";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
+const clientSupbase = createSupabaseBrowserClient();
 
-export const getListPriceBySiteCode = async (siteCode: string) => {
+export const getListAgent = async (params: any) => {
   try {
     setGlobalLoading(true);
+    const { data, error }: any = await api.post(GET_AGENT_LIST, params);
 
-    const { data }: any = await api.post(GET_PRICE_AGENT, { siteCode });
-
-    return data;
-  } catch (e) {
-    setToastMessage("Có lỗi xảy ra! Thử lại sau");
-  } finally {
-    setGlobalLoading(false);
-  }
-};
-
-export const createAgentPrice = async (param: AgentPriceSubmitType) => {
-  try {
-    setGlobalLoading(true);
-
-    const { data }: any = await api.post(CREATE_AGENT_PRICE, param);
-    console.log("data", data);
-    if (data.message) {
-      setToastMessage(data.message);
+    if (error) {
+      setToastMessage(error.message);
       return;
     }
     return data;
@@ -40,17 +25,34 @@ export const createAgentPrice = async (param: AgentPriceSubmitType) => {
   }
 };
 
-export const updateAgentPrice = async (listPrice: AgentPriceType[]) => {
+export const createEditAgent = async (params: any) => {
   try {
     setGlobalLoading(true);
+    const { data }: any = await api.post(CREATE_EDIT_AGENT, params);
+    if (data.error) {
+      setToastMessage(data.error);
+      return;
+    }
+    console.log(data);
+    return data;
+  } catch (e: any) {
+    setToastMessage("Có lỗi xảy ra! Thử lại sau");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
 
-    const { data }: any = await api.post(UPDATE_AGENT_PRICE, { listPrice });
-    if (data.message) {
-      setToastMessage(data.message);
+export const deleteAgent = async (id: string) => {
+  try {
+    setGlobalLoading(true);
+    const { data }: any = await api.post(DELETE_AGENT, { id });
+    if (data.error) {
+      setToastMessage(data.error);
       return;
     }
     return data;
-  } catch (e) {
+  } catch (e: any) {
+    console.log(e);
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
   } finally {
     setGlobalLoading(false);

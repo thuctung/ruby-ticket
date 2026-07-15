@@ -30,6 +30,9 @@ import dayjs from "dayjs";
 import { LodingMessage } from "@/components/ui/loading-message";
 import SunGroupBooking from "./components/SunGroupBooking";
 import { rebuildDataTicket } from "@/helpers/ticket";
+import AffilateBookingForm from "@/components/GetTicketSunGroupForm/AffilateForm";
+import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
+import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -92,8 +95,10 @@ export default function GetTicketPageControler() {
 
       if (order_id) {
         const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(products);
+
         if (tickets) {
           const result: TicketResultQRType[] | any = rebuildDataTicket(tickets, order_id, date_use);
+
           setTicketResultQR(result);
           setOpenQR(true);
 
@@ -110,6 +115,7 @@ export default function GetTicketPageControler() {
           });
         } else {
           updateStatusOrderFail(order_id);
+          setToastMessage("Không tạo được vé!");
         }
       }
     }
@@ -129,14 +135,12 @@ export default function GetTicketPageControler() {
             </div>
           </div>
           <Separator />
-          {/* <CheckoutForm
-            onSubmit={handleFormSubmit}
-            onChangeLocation={handleChangeLocation}
-            agentCode={AGENT_CODE.LEVEL_1}
+
+          <GetTicketSunGroupForm
             location={location}
-            locations={locationList}
-          /> */}
-          <SunGroupBooking location="BANA" onBuyTicket={handleBuyTicketAff} />
+            onBuyTicket={handleBuyTicketAff}
+            formType={SUN_BOOKING_FORM_TYPE.AFFILATE}
+          />
         </CardContent>
       </Card>
 

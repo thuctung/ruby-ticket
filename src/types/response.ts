@@ -72,6 +72,7 @@ export type CountReportResponse = {
 };
 
 export type AgentType = {
+  id: string;
   code: string;
   name: string;
 };

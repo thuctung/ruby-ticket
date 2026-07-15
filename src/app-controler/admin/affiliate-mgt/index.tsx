@@ -6,19 +6,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import {
   AdminAffiResponseType,
+  AgentType,
   ProfileType,
   ProfileUpdateStatusType,
   SearchAffiType,
   SearchTableType,
 } from "@/types";
-import { getListAffi, updateStatus } from "./apis";
-import { get } from "lodash";
+import { getListAffi, updateAffProfile } from "./apis";
+import { get, isEmpty } from "lodash";
 import { AffiliateSearch } from "./components/search-form";
-import { getStatusName, listAccStatus, statusClass } from "./constants";
+import { CUSTOMER, getStatusName, listAccStatus, statusClass } from "./constants";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
 import { Button } from "@/components/ui/button";
 import { ACC_STATUS } from "@/commons/constant";
+import { getListAgent } from "../agent-mgt/api";
+import EditUserLevelDialog from "./components/edit-level";
 
 export default function AffiliateMgt() {
   const [response, setRespose] = useState<AdminAffiResponseType>();
@@ -36,6 +39,10 @@ export default function AffiliateMgt() {
     currentPage: 1,
   });
 
+  const [userEdit, setUserEdit] = useState<ProfileType | null>();
+
+  const [agentList, setAgentList] = useState<AgentType[]>([]);
+
   const handleGetListAff = useCallback(async () => {
     const data = await getListAffi(params);
     setTotalPage(get(data, "totalPages", 1));
@@ -48,7 +55,7 @@ export default function AffiliateMgt() {
         status,
         user_id,
       };
-      const response = await updateStatus(paramUpdate);
+      const response = await updateAffProfile(paramUpdate);
       if (response?.data) {
         handleGetListAff();
       }
@@ -66,9 +73,39 @@ export default function AffiliateMgt() {
     [setParams]
   );
 
+  const fetchListAgent = async () => {
+    const { data, totalPages } = await getListAgent({
+      currentPage: 1,
+    });
+    if (data?.length) {
+      const filterData = data.filter((item: AgentType) => item.code !== CUSTOMER);
+      setAgentList(filterData);
+    }
+    setTotalPage(totalPages);
+  };
+
+  const openEditLevel = (user: ProfileType) => {
+    setUserEdit(user);
+  };
+
+  const handleEditLevel = async (level: string) => {
+    if (userEdit) {
+      const paramUpdate: any = {
+        status: userEdit.status,
+        user_id: userEdit.user_id,
+        agent_level: level,
+      };
+      const { data }: any = await updateAffProfile(paramUpdate);
+      if (data) {
+        handleGetListAff();
+      }
+    }
+  };
+
   useEffect(() => {
     handleGetListAff();
-  }, [handleGetListAff]);
+    fetchListAgent();
+  }, []);
 
   const columnAffMgt: TableColumn<ProfileType>[] = [
     {
@@ -86,6 +123,15 @@ export default function AffiliateMgt() {
     {
       key: "phone",
       title: "Phone",
+    },
+    {
+      key: "agent_level",
+      title: "Agent",
+      render: (row) => (
+        <span>
+          {agentList.find((item) => item.code === row.agent_level)?.name || row.agent_level}
+        </span>
+      ),
     },
     {
       key: "status",
@@ -134,6 +180,15 @@ export default function AffiliateMgt() {
         </div>
       ),
     },
+    {
+      key: "actionss",
+      title: "",
+      render: (row) => (
+        <Button onClick={() => openEditLevel(row)} size="sm" variant="default">
+          Sửa level
+        </Button>
+      ),
+    },
   ];
 
   return (
@@ -156,6 +211,14 @@ export default function AffiliateMgt() {
           />
         </CardContent>
       </Card>
+      <EditUserLevelDialog
+        open={!isEmpty(userEdit)}
+        onClose={() => setUserEdit(null)}
+        userName={userEdit?.full_name || ""}
+        currentLevel={userEdit?.agent_level || ""}
+        levels={agentList}
+        onSubmit={(value) => handleEditLevel(value)}
+      />
     </div>
   );
 }

@@ -22,7 +22,7 @@ export const getListAffi = async (searchValue: SearchTableType<SearchAffiType>) 
   }
 };
 
-export const updateStatus = async (param: ProfileUpdateStatusType) => {
+export const updateAffProfile = async (param: ProfileUpdateStatusType) => {
   setGlobalLoading(true);
   try {
     const response = await api.post(UPDATE_AFFILIATE_STATUS, param);

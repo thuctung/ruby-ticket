@@ -40,7 +40,7 @@ export const LIMIT_TABLE = 10;
 export const SIDEBAR_ADMIN: MenuMgtType[] = [
   {
     link: "/admin/affiliates",
-    lable: "Affiliate",
+    lable: "Quản lý user",
     icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
   },
   {
@@ -59,6 +59,16 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
   //   icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 000 4h2a2 2 0 000-4H9z",
   // },
   { link: "/admin/stats", lable: "Thống kê", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
+  {
+    link: "/admin/agents",
+    lable: "Quản lí đại lý",
+    icon: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M13 7a4 4 0 1 1-8 0a4 4 0 1 1 8 0M16 11l2 2 4-4",
+  },
+  {
+    link: "/admin/stats",
+    lable: "Lịch sử rút vé",
+    icon: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M12 7v5l4 2",
+  },
 ];
 
 export const SIDEBAR_AFF: MenuMgtType[] = [

@@ -196,6 +196,7 @@ export type SubmitSelectTicket = {
   totalMoney: number;
   date_use: string;
   siteCode: string;
+  formData?: object;
 };
 
 export type TicketInItemType = {

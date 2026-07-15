@@ -7,17 +7,10 @@ import {
   UPDATE_STATUS_ORDER,
 } from "@/commons/apiURL";
 import { DB_TABLE_NAME, LOCAL_SUN_TOKEN, SUN_GROUP } from "@/commons/constant";
-import { SUN_PROXY_GET_DATA } from "@/commons/outApiURL";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
-import {
-  ParamCreateTicketAgentType,
-  ProductSubmitType,
-  SubmitSelectTicket,
-  TicketReponseType,
-} from "@/types/ticket";
-import { draftDataProduct, draftDataSide, draftDataTicket } from "./draftDataTicket";
+import { ParamCreateTicketAgentType, ProductSubmitType, TicketReponseType } from "@/types/ticket";
 import { groupTicketSunGroup } from "@/helpers/genCode";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
