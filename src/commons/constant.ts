@@ -103,6 +103,7 @@ export const DB_TABLE_NAME = {
   PROMOTION_PRICE: "promotion_price",
   PROMOTION_LOCATION: "promotion_location",
   ORDERS: "orders",
+  ORDERS_ITEMS: "order_items",
   VIEW_TICET_SALE: "view_sale_history",
   FUNC_AFF_ADD_MONEY: "handle_topup_webhook",
   AGENTS: "agents",
@@ -119,9 +120,10 @@ export const BANK_INFO = {
 };
 
 export const SUN_GROUP = {
-  clientId: process.env.NEXT_PUBLIC_SUN_CLIENT_ID || "",
-  clientSecret: process.env.NEXT_PUBLIC_SUN_CLIENT_SECRET || "",
+  clientId: process.env.SUN_CLIENT_ID || "",
+  clientSecret: process.env.SUN_CLIENT_SECRET || "",
   swgSubscriptionKey: process.env.NEXT_PUBLIC_SUN_SWG_SUBSCRIPTION_KEY || "",
+  thirdPartyNumber: process.env.NEXT_PUBLIC_SUN_THIRD_PARTY_NUMBER || "",
 };
 
 export const PAYMENT_STATUS = {
@@ -186,3 +188,15 @@ export const MENUS = [
     iconColor: "text-purple-600",
   },
 ];
+
+export const SITE_SUB_GROUP = {
+  HLS: "SUN WORLD HẠ LONG",
+  BNC: "SUN WORLD BÀ NÀ HILLS",
+  SBD: "SUN WORLD BADEN",
+  FSS: "SUN WORLD FANSIPAN",
+  SWS: "SUN WORLD SAM SON",
+  SWN: "SUN WORLD HA NAM",
+  SCB: "SUN WORLD CAT BA",
+};
+
+export const LOCAL_SUN_TOKEN = "sun_access_token";

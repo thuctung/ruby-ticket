@@ -36,6 +36,10 @@ export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";
 
 export const GET_TICKET_SALE = "/api/auth/affiliate/stats/get-history";
 
+export const GET_ORDER_HISTORY = "/api/auth/affiliate/stats/order-history";
+
+export const GET_ORDER_DETAIL = "/api/auth/affiliate/stats/order-detail";
+
 export const COUNT_TICKET_SALE = "/api/auth/affiliate/stats/count-ticket";
 
 export const UPDATE_PROFILE = "/api/auth/affiliate/profile/update";

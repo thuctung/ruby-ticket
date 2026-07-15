@@ -69,6 +69,7 @@ export type TicketResultQRType = {
   orderCode: string;
   orderId: string;
   date_use: string;
+  pnr: string;
 };
 
 export type PromotionType = {
@@ -116,6 +117,7 @@ export type ParamCreateTicketAgentType = {
   total_amount: number;
   date_use: string;
   email: string;
+  side_code: string;
 };
 
 export type TicketTypeLocation = {
@@ -162,6 +164,8 @@ type PerformancesType = {
   startDate: string;
 };
 
+export type ResultListProductType = { personType: string; ticket: ProductBanaType[] };
+
 export type ProductBanaType = {
   closeTime: string;
   code: string;
@@ -173,6 +177,7 @@ export type ProductBanaType = {
   publicPrice: number;
   unitPrice: number;
   performances: PerformancesType;
+  multiple: number;
 };
 
 export type ProductSubmitType = {
@@ -190,6 +195,7 @@ export type SubmitSelectTicket = {
   products: ProductSubmitType[];
   totalMoney: number;
   date_use: string;
+  siteCode: string;
 };
 
 export type TicketInItemType = {
@@ -217,4 +223,5 @@ export type TicketReponseType = {
   orderStatus: string;
   orderCode: string;
   items: TicketItemReponseType[];
+  pnr: string;
 };

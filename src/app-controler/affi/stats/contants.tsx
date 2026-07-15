@@ -1,8 +1,6 @@
 import { TYPE_TRANSACTION } from "@/commons/constant";
-import { TableColumn } from "@/components/ui/customs/table";
-import { dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
-import { formatVND } from "@/helpers/money";
-import { StatusType, TicketSalteResponseType } from "@/types";
+
+import { StatusType } from "@/types";
 
 export const getTypeName = (status: string) => {
   switch (status) {
@@ -20,26 +18,13 @@ export const TYPE_LIST: StatusType[] = [
   { title: getTypeName(TYPE_TRANSACTION.TICKET_BUY), value: TYPE_TRANSACTION.TICKET_BUY },
 ];
 
-export const columnAffStats: TableColumn<TicketSalteResponseType>[] = [
-  {
-    key: "product_name",
-    title: "Tên vé",
-    align: "left",
-  },
-  {
-    key: "quantity",
-    title: "Số lượng",
-    align: "center",
-  },
-  {
-    key: "total",
-    title: "Số tiền",
-    render: (row) => formatVND(row.total),
-  },
-  {
-    key: "created_at",
-    title: "Ngày bán",
-    render: (row) => dayjsEx(row.created_at).format(FULL_DATE_FORMAT),
-    align: "center",
-  },
-];
+export const StatusData = {
+  pending: "Đang xử lý",
+  error: "Thất bại",
+  success: "Thành công",
+};
+
+export const statusClass: Record<string, string> = {
+  error: "text-red-600 bg-red-100",
+  success: "text-green-600 bg-green-100 ",
+};

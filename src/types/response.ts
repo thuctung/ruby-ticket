@@ -42,6 +42,24 @@ export interface TicketSalteResponseType {
   ticket_name: string;
 }
 
+export type OrderHistoryType = {
+  created_at: string;
+  id: string;
+  order_code: number;
+  total_amount: number;
+  status: string;
+  site_code: string;
+};
+
+export type OrderDetailType = {
+  date_use: string;
+  id: string;
+  product_name: string;
+  price: number;
+  quantity: number;
+  order_code: string;
+};
+
 export type CountTicketSaleResponse = {
   quantity: number;
   total: number;

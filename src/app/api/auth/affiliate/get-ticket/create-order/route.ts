@@ -6,7 +6,7 @@ import { ParamCreateTicketAgentType } from "@/types/ticket";
 
 export async function POST(req: Request) {
   const body: ParamCreateTicketAgentType = await req.json();
-  const { user_id, items, total_amount, date_use, email } = body;
+  const { user_id, items, total_amount, date_use, email, side_code } = body;
 
   const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_CREATE_ORDER_PENDING, {
     p_user_id: user_id,
@@ -16,6 +16,7 @@ export async function POST(req: Request) {
     p_date_use: date_use,
     p_order_des: "Rút vé",
     p_payment_method: "agent",
+    p_side_code: side_code,
   });
 
   if (error) {

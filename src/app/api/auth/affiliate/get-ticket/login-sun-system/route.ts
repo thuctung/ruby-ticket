@@ -26,25 +26,23 @@ z1oLPQLxfMffv5JFngYRy0O1T5M0oVr4ArNxwBVhp6L-
 0ekOgoLck21YFFISiZM00uec0mXxPbIziwjhia0eM9LA0lyt2boJ2krV6TsxE0WyN1cLPW5D8sZmaqFi1W
 N1KQ`,
 };
-
 export async function POST(req: Request) {
-  const params = new URLSearchParams();
+  try {
+    const params = new URLSearchParams();
 
-  params.append("client_id", env.NEXT_PUBLIC_SUN_CLIENT_ID);
-  params.append("client_secret", env.NEXT_PUBLIC_SUN_CLIENT_SECRET);
-  params.append("grant_type", "client_credentials");
-  params.append("scope", SUN_SCOPE_TOKEN);
+    params.append("client_id", env.SUN_CLIENT_ID);
+    params.append("client_secret", env.SUN_CLIENT_SECRET);
+    params.append("grant_type", "client_credentials");
+    params.append("scope", SUN_SCOPE_TOKEN);
 
-  const data = await axios
-    .post(SUN_GET_TOKEN_URL, params, {
+    const { data } = await axios.post(SUN_GET_TOKEN_URL, params, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-    })
-    .catch((error) => {
-      console.error("Error fetching token:", error.response?.data || error.message);
-      return NextResponse.json({ error: "Failed to fetch token" }, { status: 500 });
     });
 
-  return NextResponse.json(draftResponseData, { status: 200 });
+    return NextResponse.json(data, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to fetch token" }, { status: 500 });
+  }
 }

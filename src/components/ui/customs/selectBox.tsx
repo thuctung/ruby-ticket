@@ -15,7 +15,7 @@ export function SelectBox({
       value={value}
       onChange={(e) => onChange && onChange(e.target.value)}
     >
-      {firstOption ? <option value="all">Tất cả</option> : null}
+      {firstOption ? <option value="all">Chọn công viên</option> : null}
       {children}
     </select>
   );

@@ -20,7 +20,6 @@ import {
   createOrderTicket,
   getLocation,
   getTicketFromSunGroup,
-  loginSunSystem,
   updateStatusOrderFail,
   updateSuccessOrder,
 } from "./api";
@@ -28,12 +27,9 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import TicketResultQR from "./components/TicketResultQR";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
-import { CheckoutForm } from "@/app-controler/checkout-client/components/CheckoutForm";
-import { AGENT_CODE } from "@/commons/constant";
-import { get } from "lodash";
 import { LodingMessage } from "@/components/ui/loading-message";
-import { Button } from "@/components/ui/button";
 import SunGroupBooking from "./components/SunGroupBooking";
+import { rebuildDataTicket } from "@/helpers/ticket";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -68,7 +64,7 @@ export default function GetTicketPageControler() {
   }, [handleGetLocation]);
 
   const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
-    const { products, totalMoney, date_use } = values;
+    const { products, totalMoney, date_use, siteCode } = values;
     if (totalMoney > profile.balance) {
       setToastMessage("Số dư không đủ!!");
       return;
@@ -89,6 +85,7 @@ export default function GetTicketPageControler() {
         date_use: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
         email: profile.email || "",
         total_amount: totalMoney,
+        side_code: siteCode,
       };
 
       const order_id = await createOrderTicket(params);
@@ -96,25 +93,7 @@ export default function GetTicketPageControler() {
       if (order_id) {
         const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(products);
         if (tickets) {
-          const result: TicketResultQRType[] | any = tickets.items.flatMap((item) =>
-            item.tickets.map((ticketChild) => ({
-              productName: item.productName,
-              productCode: item.productCode,
-              siteCode: item.siteCode,
-              unitPrice: item.unitPrice,
-              productGroup: item.productGroup,
-              isFaceIdRequired: item.isFaceIdRequired,
-
-              ticketNumber: ticketChild.ticketNumber,
-              validDateFrom: ticketChild.validDateFrom,
-              validDateTo: ticketChild.validDateTo,
-              status: ticketChild.status,
-              verifyCode: ticketChild.verifyCode,
-              orderCode: tickets.orderCode,
-              orderId: order_id,
-              date_use,
-            }))
-          );
+          const result: TicketResultQRType[] | any = rebuildDataTicket(tickets, order_id, date_use);
           setTicketResultQR(result);
           setOpenQR(true);
 
@@ -160,8 +139,6 @@ export default function GetTicketPageControler() {
           <SunGroupBooking location="BANA" onBuyTicket={handleBuyTicketAff} />
         </CardContent>
       </Card>
-
-      <Button onClick={() => loginSunSystem()}>lOGIN</Button>
 
       {openQR && (
         <TicketResultQR tickets={resultTicketQR} onClose={onCloseQR} location={locationName} />

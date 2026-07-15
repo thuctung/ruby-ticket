@@ -6,6 +6,7 @@ import { getProductBySiteSun, getSiteListSun } from "../api";
 import {
   ProductBanaType,
   ProductSubmitType,
+  ResultListProductType,
   SideSunGroupType,
   SubmitSelectTicket,
 } from "@/types/ticket";
@@ -43,9 +44,9 @@ export default function SunGroupBooking({ location, onBuyTicket }: SunGroupBooki
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
   const [listSideSunGroup, setListSideSungroup] = useState<SideSunGroupType[]>([]);
-  const [siteSunCode, setSideSunCode] = useState("BNC");
+  const [siteSunCode, setSideSunCode] = useState("");
 
-  const [listProductSun, setListProductSun] = useState<ProductBanaType[]>([]);
+  const [listProductSun, setListProductSun] = useState<ResultListProductType[]>([]);
 
   const [formData, setFormData] = useState<any>(initFormValues);
 
@@ -56,10 +57,10 @@ export default function SunGroupBooking({ location, onBuyTicket }: SunGroupBooki
     return "";
   }, [listSideSunGroup, siteSunCode]);
 
-  const selectedLines = useMemo(
-    () => listProductSun.filter((t) => (quantities[t.code] ?? 0) > 0),
-    [listProductSun, quantities]
-  );
+  const selectedLines = useMemo(() => {
+    const listProduct = listProductSun.flatMap((item) => item.ticket);
+    return listProduct.filter((t) => (quantities[t.code] ?? 0) > 0);
+  }, [listProductSun, quantities]);
 
   const totalTickets = selectedLines.reduce((sum, t) => sum + (quantities[t.code] ?? 0), 0);
 
@@ -86,6 +87,7 @@ export default function SunGroupBooking({ location, onBuyTicket }: SunGroupBooki
       dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
     );
     if (data?.length) {
+      console.log(data);
       setListProductSun(data);
     }
   };
@@ -105,6 +107,7 @@ export default function SunGroupBooking({ location, onBuyTicket }: SunGroupBooki
       products: products,
       totalMoney: total,
       date_use: formData.date_use,
+      siteCode: siteSunCode,
     });
   };
 
@@ -125,8 +128,6 @@ export default function SunGroupBooking({ location, onBuyTicket }: SunGroupBooki
       }
     }
   }, [location]);
-
-  console.log("listSideSunGroup", listSideSunGroup);
 
   return (
     <div
@@ -157,6 +158,7 @@ export default function SunGroupBooking({ location, onBuyTicket }: SunGroupBooki
                     value={siteSunCode}
                     onChange={(value) => setSideSunCode(value)}
                     className="h-13 "
+                    firstOption
                   >
                     {listSideSunGroup.map((side) => (
                       <option key={side.code} value={side.code}>
@@ -179,59 +181,70 @@ export default function SunGroupBooking({ location, onBuyTicket }: SunGroupBooki
               </div>
             </section>
 
+            {listProductSun.map((item) => (
+              <section className="rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] p-6 shadow-[0_1px_2px_rgba(31,58,47,0.05)] sm:p-8">
+                <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#1F3A2F]">
+                  Loại vé {item.personType}
+                </h2>
+                <p className="mt-1 text-sm text-[#6E7C73]">Chọn loại vé và nhập số lượng bạn cần</p>
+
+                <div className="mt-5 divide-y divide-[#E3DFCF] rounded-xl border border-[#DCD6C2] bg-white">
+                  {item.ticket.map((product) => (
+                    <div
+                      key={product.code}
+                      className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-[#1F3A2F]">{product.name}</p>
+                        <p className="text-xs text-[#8A9A8E]">{product.restaurantName}</p>
+                        {product.multiple > 1 ? (
+                          <p className="mt-0.5 text-xs font-medium ">
+                            <span className="line-through">{currency(product.publicPrice)}</span>
+                            {"/"}
+                            <span className="text-[#C89B3C]">{currency(product.unitPrice)}</span>
+                          </p>
+                        ) : (
+                          <p className="mt-0.5 text-xs font-medium text-[#C89B3C]">
+                            {currency(product.unitPrice)}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="flex shrink-0 items-center rounded-lg border border-[#DCD6C2]">
+                        <button
+                          type="button"
+                          aria-label={`Giảm số lượng ${product.name}`}
+                          onClick={() => setQty(product.code, (quantities[product.code] ?? 0) - 1)}
+                          className="flex h-9 w-9 items-center justify-center rounded-l-lg text-lg font-medium text-[#6E7C73] transition hover:bg-[#F7F4EC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C89B3C]/40"
+                        >
+                          −
+                        </button>
+                        <input
+                          type="number"
+                          min={0}
+                          max={20}
+                          inputMode="numeric"
+                          value={quantities[product.code] ?? 0}
+                          onChange={(e) => setQty(product.code, Number(e.target.value) || 0)}
+                          aria-label={`Số lượng ${product.name}`}
+                          className="h-9 w-12 border-x border-[#DCD6C2] text-center text-sm font-semibold text-[#1C2620] outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                        />
+                        <button
+                          type="button"
+                          aria-label={`Tăng số lượng ${product.name}`}
+                          onClick={() => setQty(product.code, (quantities[product.code] ?? 0) + 1)}
+                          className="flex h-9 w-9 items-center justify-center rounded-r-lg text-lg font-medium text-[#6E7C73] transition hover:bg-[#F7F4EC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C89B3C]/40"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+
             {/* Step 2 — ticket name + quantity, side by side */}
-            <section className="rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] p-6 shadow-[0_1px_2px_rgba(31,58,47,0.05)] sm:p-8">
-              <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#1F3A2F]">
-                2. Số lượng vé
-              </h2>
-              <p className="mt-1 text-sm text-[#6E7C73]">Chọn loại vé và nhập số lượng bạn cần</p>
-
-              <div className="mt-5 divide-y divide-[#E3DFCF] rounded-xl border border-[#DCD6C2] bg-white">
-                {listProductSun.map((product) => (
-                  <div
-                    key={product.code}
-                    className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between"
-                  >
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-[#1F3A2F]">{product.name}</p>
-                      <p className="text-xs text-[#8A9A8E]">{product.restaurantName}</p>
-                      <p className="mt-0.5 text-xs font-medium text-[#C89B3C]">
-                        {currency(product.unitPrice)} / vé
-                      </p>
-                    </div>
-
-                    <div className="flex shrink-0 items-center rounded-lg border border-[#DCD6C2]">
-                      <button
-                        type="button"
-                        aria-label={`Giảm số lượng ${product.name}`}
-                        onClick={() => setQty(product.code, (quantities[product.code] ?? 0) - 1)}
-                        className="flex h-9 w-9 items-center justify-center rounded-l-lg text-lg font-medium text-[#6E7C73] transition hover:bg-[#F7F4EC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C89B3C]/40"
-                      >
-                        −
-                      </button>
-                      <input
-                        type="number"
-                        min={0}
-                        max={20}
-                        inputMode="numeric"
-                        value={quantities[product.code] ?? 0}
-                        onChange={(e) => setQty(product.code, Number(e.target.value) || 0)}
-                        aria-label={`Số lượng ${product.name}`}
-                        className="h-9 w-12 border-x border-[#DCD6C2] text-center text-sm font-semibold text-[#1C2620] outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                      />
-                      <button
-                        type="button"
-                        aria-label={`Tăng số lượng ${product.name}`}
-                        onClick={() => setQty(product.code, (quantities[product.code] ?? 0) + 1)}
-                        className="flex h-9 w-9 items-center justify-center rounded-r-lg text-lg font-medium text-[#6E7C73] transition hover:bg-[#F7F4EC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C89B3C]/40"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
           </div>
 
           {/* Right: summary (ticket stub) */}

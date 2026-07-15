@@ -4,6 +4,8 @@ import { TicketResultQRType } from "@/types/ticket";
 import QRCode from "react-qr-code";
 import { GUIDES, LogoBySite } from "./constants";
 import Image from "next/image";
+import dayjs from "dayjs";
+import { BASIC_DATE_FORMAT, FULL_DATE_TIME_FORMAT } from "@/helpers/dateTime";
 
 export default function TicketCard({
   ticketItem,
@@ -52,13 +54,19 @@ export default function TicketCard({
       {/* Body */}
       <div className="px-5 pb-4 pt-5">
         {/* Order code */}
-        <div className="mb-3.5">
-          <p className="text-[9.5px] font-bold uppercase tracking-wider text-red-700">
-            Mã / Order No.
-          </p>
-          <span className="mt-1 inline-block rounded-md bg-red-900 px-3.5 py-1.5 text-sm font-extrabold tracking-wide text-white">
-            {ticketItem.orderCode}
-          </span>
+        <div className="mb-3.5 flex justify-between">
+          <div>
+            <p className="text-[9.5px] font-bold uppercase tracking-wider text-red-700">Mã đơn</p>
+            <span className="mt-1 inline-block rounded-md bg-red-900 px-3.5 py-1.5 text-sm font-extrabold tracking-wide text-white">
+              {ticketItem.orderCode}
+            </span>
+          </div>
+          <div>
+            <p className="text-[9.5px] font-bold uppercase tracking-wider text-red-700">Order</p>
+            <span className="mt-1 inline-block rounded-md bg-red-900 px-3.5 py-1.5 text-sm font-extrabold tracking-wide text-white">
+              {ticketItem.pnr}
+            </span>
+          </div>
         </div>
 
         {/* Date + Price */}
@@ -67,7 +75,10 @@ export default function TicketCard({
             <p className="text-[9.5px] font-bold uppercase tracking-wider text-red-700">
               Ngày sử dụng / Valid Date
             </p>
-            <p className="mt-0.5 text-[15px] font-bold text-stone-900">{ticketItem.date_use}</p>
+            <p className="mt-0.5 text-[15px] font-bold text-stone-900">
+              {dayjs(ticketItem.validDateFrom, FULL_DATE_TIME_FORMAT).format(BASIC_DATE_FORMAT)} /{" "}
+              {dayjs(ticketItem.validDateTo, FULL_DATE_TIME_FORMAT).format(BASIC_DATE_FORMAT)}
+            </p>
           </div>
         </div>
 
@@ -75,7 +86,7 @@ export default function TicketCard({
 
         {/* QR + serial */}
         <div className="mb-4 flex items-center gap-4 rounded-xl border-2 border-red-700 bg-white p-3.5">
-          <QRCode value={ticketItem.productCode} size={110} />
+          <QRCode value={ticketItem.ticketNumber} size={110} />
           <div className="flex-1">
             <p className="text-[9.5px] font-bold uppercase tracking-wider text-red-700">
               Số / Serial
@@ -84,8 +95,8 @@ export default function TicketCard({
               {`${currentIndex + 1} / ${total}`}
             </p>
             <div className="mt-2.5 rounded-md bg-red-700 px-2.5 py-1.5 text-center text-white">
-              <p className="text-[8.5px] tracking-wider opacity-90">Mã vé/Code</p>
-              <p className="mt-0.5 text-sm font-extrabold"> {ticketItem.productCode}</p>
+              <p className="text-[8.5px] tracking-wider opacity-90">Media Code</p>
+              <p className="mt-0.5 text-sm font-extrabold"> {ticketItem.ticketNumber}</p>
             </div>
           </div>
         </div>

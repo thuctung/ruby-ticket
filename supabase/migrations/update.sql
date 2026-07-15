@@ -2,6 +2,7 @@ ALTER TABLE order_items
 ADD COLUMN product_code TEXT,
 ADD COLUMN product_name TEXT;
 
+
 CREATE OR REPLACE FUNCTION create_order_pending(
   p_user_id uuid,
   p_list_ticket_submit jsonb,
@@ -9,7 +10,8 @@ CREATE OR REPLACE FUNCTION create_order_pending(
   p_user_email text,
   p_date_use date,
   p_order_des text,
-  p_payment_method text
+  p_payment_method text,
+  p_side_code text
 )
 RETURNS jsonb
 LANGUAGE plpgsql
@@ -53,7 +55,8 @@ BEGIN
     description,
     payment_method,
     user_email,
-    created_at
+    created_at,
+    site_code
   )
   VALUES (
     p_user_id,
@@ -62,7 +65,8 @@ BEGIN
     p_order_des,
     p_payment_method,
     p_user_email,
-    now()
+    now(),
+    p_side_code
   )
   RETURNING id
   INTO v_order_id;
@@ -96,6 +100,7 @@ EXCEPTION
     RAISE EXCEPTION '%', SQLERRM;
 END;
 $$;
+
 
 
 
@@ -234,3 +239,41 @@ EXCEPTION
     RAISE EXCEPTION '%', SQLERRM;
 END;
 $$;
+
+
+
+
+
+
+ALTER TABLE orders
+ADD COLUMN site_code TEXT;
+
+DROP VIEW IF EXISTS public.view_sale_history;
+
+CREATE OR REPLACE VIEW public.view_sale_history AS
+SELECT
+  o.id AS order_id,
+  o.user_id,
+  o.created_at,
+  o.order_code,
+  o.reference_code,
+  o.status,
+  o.site_code,
+
+  oi.product_code,
+  oi.product_name,
+  oi.quantity,
+  oi.price,
+  (oi.quantity * oi.price) AS total
+
+FROM orders o
+INNER JOIN order_items oi
+  ON oi.order_id = o.id
+
+LEFT JOIN (
+  SELECT DISTINCT
+    order_id,
+    site_code
+  FROM tickets
+) t
+  ON t.order_id = o.id
