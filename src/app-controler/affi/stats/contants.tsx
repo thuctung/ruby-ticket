@@ -18,10 +18,16 @@ export const TYPE_LIST: StatusType[] = [
   { title: getTypeName(TYPE_TRANSACTION.TICKET_BUY), value: TYPE_TRANSACTION.TICKET_BUY },
 ];
 
+export const KEY_MODIFY_DATA = {
+  ["SUCCESSS"]: "success",
+  ["PENDING"]: "pending",
+  ["ERROR"]: "error",
+};
+
 export const StatusData = {
-  pending: "Đang xử lý",
-  error: "Thất bại",
-  success: "Thành công",
+  [KEY_MODIFY_DATA.PENDING]: "Đang xử lý",
+  [KEY_MODIFY_DATA.ERROR]: "Thất bại",
+  [KEY_MODIFY_DATA.SUCCESSS]: "Thành công",
 };
 
 export const statusClass: Record<string, string> = {

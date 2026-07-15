@@ -6,6 +6,7 @@ import { OrderDetailType } from "@/types";
 import { getOrdeTicketDetail } from "../api";
 import { TicketResultQRType } from "@/types/ticket";
 import { downloadTicketPDF, rebuildDataTicket } from "@/helpers/ticket";
+import { KEY_MODIFY_DATA } from "../contants";
 
 export interface OrderTicketItem {
   id: string | number;
@@ -136,13 +137,14 @@ export default function OrderDetailDialog({ open, onClose, orderDetails }: Order
           >
             Đóng
           </button>
-
-          <button
-            onClick={handleDownloadTicket}
-            className="rounded-lg border border-gray-200 px-4 py-2 text-sm text-white    font-medium text-gray-600 transition bg-[#C81418] "
-          >
-            Tải vé
-          </button>
+          {orderDetails[0].status === KEY_MODIFY_DATA.SUCCESSS ? (
+            <button
+              onClick={handleDownloadTicket}
+              className="rounded-lg border border-gray-200 px-4 py-2 text-sm text-white    font-medium text-gray-600 transition bg-[#C81418] "
+            >
+              Tải vé
+            </button>
+          ) : null}
         </div>
       </div>
     </div>

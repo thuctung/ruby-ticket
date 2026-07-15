@@ -115,6 +115,7 @@ export default function AffiliateStatsControler() {
     const result: OrderDetailType[] = data?.map((item: any) => ({
       ...item,
       order_code: orderItem.order_code,
+      status: orderItem.status,
     }));
     setOrderDetails(result);
   };

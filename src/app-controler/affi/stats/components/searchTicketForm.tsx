@@ -46,7 +46,7 @@ export function SearchTicketForm({
   return (
     <div>
       <div className="mb-4 pl-4 flex flex-wrap items-center gap-3">
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <Label>Địa điểm</Label>
 
           <SelectBox
@@ -60,7 +60,7 @@ export function SearchTicketForm({
               </option>
             ))}
           </SelectBox>
-        </div>
+        </div> */}
         <div className="space-y-2">
           <Label>Từ ngày</Label>
           <DatePickerCustom

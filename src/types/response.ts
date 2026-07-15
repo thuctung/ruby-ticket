@@ -58,6 +58,7 @@ export type OrderDetailType = {
   price: number;
   quantity: number;
   order_code: string;
+  status: string;
 };
 
 export type CountTicketSaleResponse = {
