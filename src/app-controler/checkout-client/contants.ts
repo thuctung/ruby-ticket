@@ -16,13 +16,3 @@ export const checkoutSchema = z.object({
     .regex(/^[0-9+ ]+$/, "SĐT chỉ nên gồm số"),
   note: z.string().max(500).optional().or(z.literal("")),
 });
-
-export const PROMOTION_TYPE = {
-  PERCENT: "percent",
-  PRICE: "price",
-};
-
-export const PROMOTION_STATUS = {
-  ACTIVE: "active",
-  INACTIVE: "inactive",
-};

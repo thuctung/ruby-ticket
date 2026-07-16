@@ -18,8 +18,6 @@ const schema = z.object({
   VNPAY_IPN_URL: z.string().url(),
   SUN_CLIENT_ID: z.string().min(1),
   SUN_CLIENT_SECRET: z.string().min(1),
-  NEXT_PUBLIC_SUN_SWG_SUBSCRIPTION_KEY: z.string().min(1),
-  NEXT_PUBLIC_SUN_THIRD_PARTY_NUMBER: z.string().min(1),
 });
 
 export const env = schema.parse({
@@ -41,8 +39,6 @@ export const env = schema.parse({
 
   SUN_CLIENT_ID: process.env.SUN_CLIENT_ID,
   SUN_CLIENT_SECRET: process.env.SUN_CLIENT_SECRET,
-  NEXT_PUBLIC_SUN_SWG_SUBSCRIPTION_KEY: process.env.NEXT_PUBLIC_SUN_SWG_SUBSCRIPTION_KEY,
-  NEXT_PUBLIC_SUN_THIRD_PARTY_NUMBER: process.env.NEXT_PUBLIC_SUN_THIRD_PARTY_NUMBER,
 });
 
 export const profileSchema = z.object({

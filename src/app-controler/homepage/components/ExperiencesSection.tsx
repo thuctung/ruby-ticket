@@ -27,7 +27,6 @@ export function ExperiencesSection({
     if (abs >= 100_000) return `${firstDigit}xx.xxxđ`;
     return `${firstDigit}đ`;
   };
-  console.log("locationCards", locationCards);
   return (
     <section id="experiences" className="py-24 bg-slate-50/50">
       <div className="mx-auto max-w-6xl px-6">

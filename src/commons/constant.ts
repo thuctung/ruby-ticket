@@ -135,7 +135,6 @@ export const SUN_GROUP = {
   clientId: process.env.SUN_CLIENT_ID || "",
   clientSecret: process.env.SUN_CLIENT_SECRET || "",
   swgSubscriptionKey: process.env.NEXT_PUBLIC_SUN_SWG_SUBSCRIPTION_KEY || "",
-  thirdPartyNumber: process.env.NEXT_PUBLIC_SUN_THIRD_PARTY_NUMBER || "",
 };
 
 export const PAYMENT_STATUS = {

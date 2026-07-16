@@ -1,19 +1,12 @@
 "use client";
 
 import { useLang } from "@/lib/useLang";
-import { CheckoutForm } from "./components/CheckoutForm";
 import { useEffect, useState } from "react";
-import { getLocationClient, customerCreateOrderTicket } from "./api";
-import {
-  ClientOrderItem,
-  DataFormTicketSubmit,
-  LocationType,
-  TicketResultQRType,
-} from "@/types/ticket";
+import { customerCreateOrderTicket } from "./api";
+import { ClientOrderItem, DataFormTicketSubmit, TicketResultQRType } from "@/types/ticket";
 import { useSearchParams } from "next/navigation";
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
-import { get } from "lodash";
 import { CommonType, QRBankResponseType } from "@/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
@@ -21,21 +14,15 @@ import { DB_TABLE_NAME, PAYMENT_STATUS, TYPE_TRANSFER } from "@/commons/constant
 import TicketResultQR from "../affi/getTicket/components/TicketResultQR";
 import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
-import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
+import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
 import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 
 export default function CheckoutControlerPage() {
-  const lang = useLang();
   const clientSupbase = createSupabaseBrowserClient();
-  const searchParams = useSearchParams();
-  const product = searchParams.get("product") || "BANA";
 
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
-
-  const [locationList, setLocationList] = useState<LocationType[]>([]);
-  const [loactionKey, setLocationKey] = useState(product);
 
   const [loadingMessage, setLoadingMessage] = useState("");
 
@@ -51,15 +38,6 @@ export default function CheckoutControlerPage() {
     code: "",
     amount: 0,
   });
-
-  const fetchLoction = async () => {
-    const data: any = await getLocationClient();
-    setLocationList(data);
-  };
-
-  const onChangeLocation = (value: string) => {
-    setLocationKey(value);
-  };
 
   const handleDoneQR = () => {
     setOpenQR(false);
@@ -121,10 +99,6 @@ export default function CheckoutControlerPage() {
   };
 
   useEffect(() => {
-    fetchLoction();
-  }, []);
-
-  useEffect(() => {
     if (qrPaymant?.code) {
       const channel = clientSupbase
         .channel("check-payment")
@@ -155,7 +129,7 @@ export default function CheckoutControlerPage() {
   }, [qrPaymant?.code]);
 
   const handleBuyTicket = (value: any) => {
-    console.log(value);
+    // console.log(value);
   };
 
   return (
@@ -234,7 +208,7 @@ export default function CheckoutControlerPage() {
         <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
           <div className="bg-white rounded-3xl shadow-2xl p-2 md:p-4">
             <GetTicketSunGroupForm
-              location={loactionKey}
+              location="BANA"
               onBuyTicket={handleBuyTicket}
               formType={SUN_BOOKING_FORM_TYPE.CUSTOMER}
             />
