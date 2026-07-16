@@ -85,7 +85,7 @@ export default function AdminHistoryPageControler() {
       key: "total_amount",
       title: "Tổng tiền",
       className: "font-semibold",
-      render: (row) => formatVND(row.total_amount),
+      render: (row) => formatVND(row.total),
     },
     {
       key: "payment_method",

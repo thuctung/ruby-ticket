@@ -10,7 +10,7 @@ export type AdminReportResponseType = {
   price: number;
   quantity: number;
   total_amount: number;
-  total: string;
+  total: number;
   user_id: string;
   third_party_number: number;
   status: string;

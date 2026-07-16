@@ -14,6 +14,6 @@ export const intForm: AdminSearchReport = {
 };
 
 export const BuyMethod = [
-  { name: "Đại lý", code: CUSTOMER },
-  { name: "Khách lẻ", code: AGENT },
+  { name: "Đại lý", code: AGENT },
+  { name: "Khách lẻ", code: CUSTOMER },
 ];

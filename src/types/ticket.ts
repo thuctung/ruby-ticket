@@ -99,9 +99,7 @@ export type DataFormTicketSubmit = {
   total_amount: number;
   listTicket: ResumSelectedType[];
   formData?: any;
-  locationNameSelected: string;
   date_use: string;
-  promoCode?: string;
 };
 
 export type TicketSubmitAgentType = {
@@ -124,23 +122,6 @@ export type ParamCreateTicketAgentType = {
 export type TicketTypeLocation = {
   location_code: string;
   ticket_variants: ProductType[];
-};
-
-export type ClientBuyTicketType = {
-  ticket_variant_code: string;
-  quantity: number;
-  price: number;
-  date_use: string;
-};
-
-export type ClientOrderItem = {
-  user_email: string;
-  total_amount: number;
-  phone: string;
-  description: string;
-  listTicketSubmit: ClientBuyTicketType[];
-  paymentCode: string;
-  promoCode?: string;
 };
 
 export type SideSunGroupType = {

@@ -1,16 +1,9 @@
 import api from "@/axios";
-import {
-  CHANGE_PASSWORD,
-  COUNT_TICKET_SALE,
-  GET_TICKET_SALE,
-  UPDATE_PROFILE,
-} from "@/commons/apiURL";
-import { DB_TABLE_NAME } from "@/commons/constant";
-import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
+import { UPDATE_PROFILE } from "@/commons/apiURL";
+
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { CommonType, ProfileType, SearchTableType, SearchTicketSale } from "@/types";
-import dayjs from "dayjs";
+import { CommonType } from "@/types";
 import { get } from "lodash";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();

@@ -1,5 +1,11 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME, END_DATE_GMT7, LIMIT_TABLE, START_DATE_GMT7 } from "@/commons/constant";
+import {
+  AGENT,
+  DB_TABLE_NAME,
+  END_DATE_GMT7,
+  LIMIT_TABLE,
+  START_DATE_GMT7,
+} from "@/commons/constant";
 
 export async function POST(req: Request) {
   const body: any = await req.json();
@@ -13,6 +19,8 @@ export async function POST(req: Request) {
     .select("*", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(fromIdx, toIdx);
+
+  query = query.eq("payment_method", AGENT);
 
   if (user_id) {
     query = query.eq("user_id", user_id);

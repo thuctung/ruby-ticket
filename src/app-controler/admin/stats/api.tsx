@@ -1,12 +1,6 @@
 import api from "@/axios";
 import sunApi from "@/axios/apiSun";
-import {
-  ADMIN_GET_SALE_SUMARY,
-  COUNT_REPORT,
-  COUNT_TICKET_SALE,
-  GET_ADMIN_REPORT,
-  GET_TICKET_SALE,
-} from "@/commons/apiURL";
+import { ADMIN_GET_SALE_SUMARY, COUNT_REPORT, GET_ADMIN_REPORT } from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { AdminSearchReport, CommonType, SearchTableType } from "@/types";

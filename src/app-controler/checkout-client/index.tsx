@@ -2,8 +2,8 @@
 
 import { useLang } from "@/lib/useLang";
 import { useEffect, useState } from "react";
-import { customerCreateOrderTicket } from "./api";
-import { ClientOrderItem, DataFormTicketSubmit, TicketResultQRType } from "@/types/ticket";
+import { customerCreateOrder, customerCreateOrderTicket } from "./api";
+import { DataFormTicketSubmit, SubmitSelectTicket, TicketResultQRType } from "@/types/ticket";
 import { useSearchParams } from "next/navigation";
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
@@ -18,6 +18,8 @@ import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
 import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
+import { ClientOrderItem, CustomerOrderType } from "./type";
+import { get } from "lodash";
 
 export default function CheckoutControlerPage() {
   const clientSupbase = createSupabaseBrowserClient();
@@ -43,37 +45,44 @@ export default function CheckoutControlerPage() {
     setOpenQR(false);
   };
 
-  const handleSubmitTicket = async (values: DataFormTicketSubmit) => {
-    const { formData, total_amount, listTicket, promoCode } = values;
-    setItemTicketOrder(values);
+  const handleBuyTicket = async (values: SubmitSelectTicket) => {
+    const { formData, totalMoney, siteCode, products, date_use } = values;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
 
-    const { email, phone, description }: any = formData;
-
-    const listTicketSubmit = listTicket.map((item) => ({
-      ticket_variant_code: item.ticket_variant_code,
-      price: item.finalprice,
-      quantity: item.numerTicet,
-      date_use: dayjs(item.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
-    }));
+    const { email, phone, fullname }: any = formData;
 
     const dataSubmit: ClientOrderItem = {
-      user_email: email,
-      total_amount,
-      phone: phone,
-      description: description,
-      listTicketSubmit,
+      userEmail: email,
+      totalAmount: totalMoney,
+      dateUse: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
+      phone,
+      fullname: fullname,
+      thirdPartyNum: "TEST1_SBD_20251016_0002",
+      listTicketSubmit: products,
+      siteCode,
       paymentCode,
-      promoCode,
     };
 
-    const data = await customerCreateOrderTicket(dataSubmit);
-    if (data) {
-      const qrLink = getBankInfo(total_amount, paymentCode);
+    const { data } = await customerCreateOrderTicket(dataSubmit);
+    console.log(data);
+    const orderID = get(data, "order_id");
+    console.log(orderID);
+
+    if (orderID) {
+      const paramCreateOrder: CustomerOrderType = {
+        email,
+        phone,
+        fullname,
+        products,
+        ThirdPartyNumber: "TEST1_SBD_20251016_0002",
+      };
+
+      const dataOrderSunWorld = await customerCreateOrder(paramCreateOrder);
+      const qrLink = getBankInfo(totalMoney, paymentCode);
       setQRPayment({
         qr: qrLink,
         code: paymentCode,
-        amount: total_amount,
+        amount: totalMoney,
       });
       setOpenQR(true);
     }
@@ -127,10 +136,6 @@ export default function CheckoutControlerPage() {
       };
     }
   }, [qrPaymant?.code]);
-
-  const handleBuyTicket = (value: any) => {
-    // console.log(value);
-  };
 
   return (
     <main className="min-h-screen flex flex-col bg-background text-foreground">
@@ -227,7 +232,7 @@ export default function CheckoutControlerPage() {
       {openDownloadTicke && (
         <TicketResultQR
           tickets={ticketResult}
-          location={itemTicketOrder?.locationNameSelected || ""}
+          location={""}
           onClose={() => setOpenDownloadTicket(false)}
         />
       )}

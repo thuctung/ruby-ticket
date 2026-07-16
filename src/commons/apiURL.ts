@@ -22,13 +22,7 @@ export const SUCCESS_ORDER_TICKET = "/api/auth/affiliate/get-ticket/success-orde
 
 export const GET_TRANSACTION = "/api/auth/affiliate/transaction/get-transaction";
 
-export const GET_LIST_INVENTORY = "/api/auth/admin/inventory/get-list";
-
-export const UPSERT_INVENTORY = "/api/auth/admin/inventory/upsert";
-
 export const GET_LIST_PRICING = "/api/auth/admin/pricing/get-list";
-
-export const UPSERT_PRICING = "/api/auth/admin/pricing/upsert";
 
 export const GET_AGENT_LIST = "/api/auth/admin/agents/get-list";
 
@@ -45,8 +39,6 @@ export const UPDATE_AGENT_PRICE = "/api/auth/admin/price/update";
 export const GET_HOME_HIGHLIGHTS = "/api/public/home/highlights";
 
 export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";
-
-export const GET_TICKET_SALE = "/api/auth/affiliate/stats/get-history";
 
 export const GET_ORDER_HISTORY = "/api/auth/affiliate/stats/order-history";
 

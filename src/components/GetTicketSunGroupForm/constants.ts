@@ -25,6 +25,7 @@ export type BookingFormProps = {
 
 export const CustomerInfoSchema = z.object({
   email: z.string().trim().email("Email không hợp lệ"),
+  fullname: z.string().trim(),
   phone: z
     .string()
     .trim()

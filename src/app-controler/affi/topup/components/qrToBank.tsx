@@ -8,6 +8,7 @@ import { formatVND } from "@/helpers/money";
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { CODE_BANK } from "@/commons/code-bank";
+import Countdown from "./countdown";
 
 type BankTransferQRProps = {
   dataQR: QRBankResponseType;
@@ -44,7 +45,8 @@ export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankT
           </div>
         </div>
         <span className="text-sm text-center text-red-500">{mesage}</span>
-        <div className="w-full flex justify-center mt-6">
+        <Countdown totalSecounds={5 * 60} />
+        <div className="w-full flex justify-center ">
           {onDone && <Button onClick={onDone}>Đã chuyển khoản</Button>}
         </div>
       </DialogContent>

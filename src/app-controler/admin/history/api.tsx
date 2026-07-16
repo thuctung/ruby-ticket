@@ -1,10 +1,5 @@
 import api from "@/axios";
-import {
-  COUNT_REPORT,
-  COUNT_TICKET_SALE,
-  GET_ADMIN_REPORT,
-  GET_TICKET_SALE,
-} from "@/commons/apiURL";
+import { GET_ADMIN_REPORT } from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { AdminSearchReport, CommonType, SearchTableType } from "@/types";

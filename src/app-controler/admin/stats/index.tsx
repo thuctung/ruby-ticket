@@ -81,7 +81,7 @@ export default function AdminStatsPageControler() {
       <ShowAllData dataSale={allSale} />
 
       <CustomTable
-        tableTitle="Tra cứu đại lý"
+        tableTitle="Danh sách đại lý"
         currentPage={params.currentPage}
         columns={columnAdminReport}
         data={saleSumaryList}

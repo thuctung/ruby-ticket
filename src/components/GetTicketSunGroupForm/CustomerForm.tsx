@@ -144,6 +144,17 @@ export default function CustomerBookingForm({
                 </div>
 
                 <div className="sm:col-span-2">
+                  <label className="mb-1.5 block text-xs font-medium text-gray-500">Họ tên</label>
+                  <input
+                    type="fullname"
+                    value={formData.fullname}
+                    onChange={(e) => setFieldFormData("fullname", e.target.value)}
+                    placeholder="Nguyễn Văn A"
+                    className="w-full rounded-xl border border-gray-200 bg-white py-2.5 px-3 text-sm font-medium text-[#2A1414] outline-none transition placeholder:font-normal placeholder:text-gray-400 focus:border-[#C81418] focus:ring-2 focus:ring-red-100"
+                  />
+                </div>
+
+                <div className="sm:col-span-2">
                   <label className="mb-1.5 block text-xs font-medium text-gray-500">
                     Số điện thoại
                   </label>

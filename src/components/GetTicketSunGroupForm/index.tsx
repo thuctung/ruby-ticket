@@ -66,8 +66,13 @@ export default function GetTicketSunGroupForm({
   const totalTickets = selectedLines.reduce((sum, t) => sum + (quantities[t.code] ?? 0), 0);
 
   const total = selectedLines.reduce((sum, t) => {
-    let price = formType === SUN_BOOKING_FORM_TYPE.CUSTOMER ? t.publicPrice : t.unitPrice;
-    price += agentPrice; // add agent price
+    let price = 0;
+    if (formType === SUN_BOOKING_FORM_TYPE.CUSTOMER) {
+      price = t.publicPrice;
+    } else {
+      price = t.unitPrice + agentPrice;
+    }
+
     return sum + price * (quantities[t.code] ?? 0);
   }, 0);
 
@@ -109,16 +114,22 @@ export default function GetTicketSunGroupForm({
   };
 
   const handleBuyTicket = () => {
-    const products: ProductSubmitType[] = selectedLines.map((item) => ({
-      productCode: item.code,
-      siteCode: siteSunCode,
-      quantity: quantities[item.code],
-      usageDate: item.pricePolicy.usageDate,
-      usageDateTo: item.pricePolicy.validDateTo,
-      performanceId: item.performances.performanceId,
-      productsName: item.name,
-      unitPrice: item.unitPrice + agentPrice,
-    }));
+    const products: ProductSubmitType[] = selectedLines.map((item) => {
+      const priceSell =
+        formType === SUN_BOOKING_FORM_TYPE.AFFILATE
+          ? item.unitPrice + agentPrice
+          : item.publicPrice;
+      return {
+        productCode: item.code,
+        siteCode: siteSunCode,
+        quantity: quantities[item.code],
+        usageDate: item.pricePolicy.usageDate,
+        usageDateTo: item.pricePolicy.validDateTo,
+        performanceId: item.performances.performanceId,
+        productsName: item.name,
+        unitPrice: priceSell,
+      };
+    });
     onBuyTicket({
       products: products,
       totalMoney: total,

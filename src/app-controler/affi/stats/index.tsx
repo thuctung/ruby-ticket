@@ -1,17 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-import {
-  countTicketSale,
-  getAffHistory,
-  getLocation,
-  getOrderDetail,
-  getOrderHistory,
-} from "./api";
+import { countTicketSale, getOrderDetail, getOrderHistory } from "./api";
 import {
   CountTicketSaleResponse,
   OrderDetailType,
@@ -19,19 +13,17 @@ import {
   ProfileType,
   SearchTableType,
   SearchTicketSale,
-  TicketSalteResponseType,
 } from "@/types";
 import { useProfileStore } from "@/stores/useProfileStore";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
-import { LocationType } from "@/types/ticket";
 import { SearchTicketForm } from "./components/searchTicketForm";
 
 import { Revenue } from "./components/Revenue";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
 import { SITE_SUB_GROUP } from "@/commons/constant";
-import { get, isEmpty } from "lodash";
+import { get } from "lodash";
 import { statusClass, StatusData } from "./contants";
 import { Button } from "@/components/ui/button";
 import OrderDetailDialog from "./components/OrderDetail";
@@ -48,7 +40,6 @@ const intForm: SearchTicketSale = {
 export default function AffiliateStatsControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const [totalPages, setTotalPage] = useState(0);
-  const [locationList, setLocationList] = useState<LocationType[]>([]);
 
   const [orderList, setOrderList] = useState<OrderHistoryType[]>([]);
 
@@ -82,13 +73,6 @@ export default function AffiliateStatsControler() {
     }
     setTotalPage(totalPages);
   };
-
-  const handleGetLocation = useCallback(async () => {
-    const resLocation = await getLocation();
-    if (resLocation) {
-      setLocationList(resLocation);
-    }
-  }, []);
 
   const handleCountTicketSale = async () => {
     const { data } = await countTicketSale(
@@ -165,10 +149,6 @@ export default function AffiliateStatsControler() {
   ];
 
   useEffect(() => {
-    handleGetLocation();
-  }, []);
-
-  useEffect(() => {
     if (profile.user_id) {
       fetchTicketSale();
     }
@@ -189,7 +169,7 @@ export default function AffiliateStatsControler() {
         <CardContent className="space-y-6">
           <Separator />
           <SearchTicketForm
-            locations={locationList}
+            locations={[]}
             onChangeForm={handleChangeForm}
             onReset={handleResetForm}
             searchValue={params.searchValue}
