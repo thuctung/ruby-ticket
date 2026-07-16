@@ -1,8 +1,7 @@
 import api from "@/axios";
 import sunApi from "@/axios/apiSun";
 import { CREATE_ORDER_TICKET, SUCCESS_ORDER_TICKET, UPDATE_STATUS_ORDER } from "@/commons/apiURL";
-import { DB_TABLE_NAME, SUN_GROUP } from "@/commons/constant";
-import { generateThirdPartyCode } from "@/helpers/ticket";
+import { DB_TABLE_NAME } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
