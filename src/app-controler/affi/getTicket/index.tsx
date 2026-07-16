@@ -28,9 +28,7 @@ import TicketResultQR from "./components/TicketResultQR";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import { LodingMessage } from "@/components/ui/loading-message";
-import SunGroupBooking from "./components/SunGroupBooking";
-import { rebuildDataTicket } from "@/helpers/ticket";
-import AffilateBookingForm from "@/components/GetTicketSunGroupForm/AffilateForm";
+import { generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
 import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 
@@ -82,6 +80,7 @@ export default function GetTicketPageControler() {
         date_use: date_use,
       }));
 
+      const thirdPartyNum = "TEST1_SBD_20251016_0002";
       const params: ParamCreateTicketAgentType = {
         items,
         user_id: profile.user_id || "",
@@ -89,12 +88,16 @@ export default function GetTicketPageControler() {
         email: profile.email || "",
         total_amount: totalMoney,
         side_code: siteCode,
+        thirdPartyNum: "TEST1_SBD_20251016_0002",
       };
 
       const order_id = await createOrderTicket(params);
 
       if (order_id) {
-        const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(products);
+        const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(
+          products,
+          thirdPartyNum
+        );
 
         if (tickets) {
           const result: TicketResultQRType[] | any = rebuildDataTicket(tickets, order_id, date_use);

@@ -1,5 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME, LIMIT_TABLE } from "@/commons/constant";
+import { DB_TABLE_NAME, END_DATE_GMT7, LIMIT_TABLE, START_DATE_GMT7 } from "@/commons/constant";
 
 export async function POST(req: Request) {
   const body: any = await req.json();
@@ -23,11 +23,11 @@ export async function POST(req: Request) {
 
   // filter date
   if (from) {
-    query = query.gte("created_at", `${from}T00:00:00`);
+    query = query.gte("created_at", `${from}${START_DATE_GMT7}`);
   }
 
   if (to) {
-    query = query.lte("created_at", `${to}T23:59:59`);
+    query = query.lte("created_at", `${to}${END_DATE_GMT7}`);
   }
 
   // pagination

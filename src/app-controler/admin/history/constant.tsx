@@ -1,3 +1,4 @@
+import { AGENT, CUSTOMER } from "@/commons/constant";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { AdminSearchReport } from "@/types";
 import dayjs from "dayjs";
@@ -9,4 +10,10 @@ export const intForm: AdminSearchReport = {
   from: df_From,
   to: df_To,
   email: "",
+  location: "all",
 };
+
+export const BuyMethod = [
+  { name: "Đại lý", code: CUSTOMER },
+  { name: "Khách lẻ", code: AGENT },
+];

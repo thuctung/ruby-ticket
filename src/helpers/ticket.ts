@@ -257,3 +257,12 @@ export const rebuildDataTicket = (
 
   return result;
 };
+
+export const generateThirdPartyCode = (length = 12): string => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const randomValues = crypto.getRandomValues(new Uint32Array(length));
+
+  return Array.from(randomValues, (value) => {
+    return chars[value % chars.length];
+  }).join("");
+};

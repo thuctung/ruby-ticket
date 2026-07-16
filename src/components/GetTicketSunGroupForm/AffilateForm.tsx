@@ -37,6 +37,7 @@ export default function AffilateBookingForm({
   total,
   sideName,
   selectedLines,
+  agentPrice,
   handleBuyTicket,
 }: BookingFormProps) {
   return (
@@ -49,7 +50,7 @@ export default function AffilateBookingForm({
             Đặt vé tham quan
           </p>
           <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-[#1F3A2F] sm:text-4xl">
-            Sun Group
+            Sun World
           </h1>
         </header>
 
@@ -114,11 +115,13 @@ export default function AffilateBookingForm({
                           <p className="mt-0.5 text-xs font-medium ">
                             <span className="line-through">{currency(product.publicPrice)}</span>
                             {"/"}
-                            <span className="text-[#C89B3C]">{currency(product.unitPrice)}</span>
+                            <span className="text-[#C89B3C]">
+                              {currency(product.unitPrice + agentPrice)}
+                            </span>
                           </p>
                         ) : (
                           <p className="mt-0.5 text-xs font-medium text-[#C89B3C]">
-                            {currency(product.unitPrice)}
+                            {currency(product.unitPrice + agentPrice)}
                           </p>
                         )}
                       </div>
@@ -181,7 +184,7 @@ export default function AffilateBookingForm({
                           {t.name} × {quantities[t.code]}
                         </span>
                         <span className="shrink-0 font-medium text-[#1C2620]">
-                          {currency(t.unitPrice * (quantities[t.code] ?? 0))}
+                          {currency((t.unitPrice + agentPrice) * (quantities[t.code] ?? 0))}
                         </span>
                       </div>
                     ))}

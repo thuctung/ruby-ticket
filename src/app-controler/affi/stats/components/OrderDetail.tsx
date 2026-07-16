@@ -101,6 +101,7 @@ export default function OrderDetailDialog({ open, onClose, orderDetails }: Order
               <tr className="text-left text-[11px] uppercase tracking-wide text-red-700/70">
                 <th className="pb-3 font-semibold">Tên vé</th>
                 <th className="pb-3 pl-6 text-center font-semibold">SL</th>
+                <th className="pb-3 pl-6 text-center font-semibold">Ngày dùng</th>
                 <th className="pb-3 pl-6 text-right font-semibold">Giá tiền</th>
                 <th className="pb-3 pl-6 text-right font-semibold">Thành tiền</th>
               </tr>
@@ -110,6 +111,7 @@ export default function OrderDetailDialog({ open, onClose, orderDetails }: Order
                 <tr key={item.id} className="text-gray-700">
                   <td className="py-3 pr-4 font-medium text-gray-800">{item.product_name}</td>
                   <td className="py-3 pl-6 text-center">{item.quantity}</td>
+                  <td className="py-3 pl-6 text-center">{item.date_use}</td>
                   <td className="py-3 pl-6 text-right tabular-nums whitespace-nowrap">
                     {formatCurrency(item.price)}
                   </td>

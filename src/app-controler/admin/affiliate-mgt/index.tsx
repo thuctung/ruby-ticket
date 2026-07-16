@@ -126,7 +126,7 @@ export default function AffiliateMgt() {
     },
     {
       key: "agent_level",
-      title: "Agent",
+      title: "Đại lý",
       render: (row) => (
         <span>
           {agentList.find((item) => item.code === row.agent_level)?.name || row.agent_level}

@@ -138,6 +138,10 @@ export default function AffiliateStatsControler() {
       render: (row) => formatVND(row.total_amount),
     },
     {
+      key: "third_party_number",
+      title: "Mã tạo vé",
+    },
+    {
       key: "status",
       title: "Trạng thái",
       align: "center",

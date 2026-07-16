@@ -26,5 +26,6 @@ export interface AdminSearchReport {
   location?: string;
   from: string;
   to: string;
-  email?:string
+  email?: string;
+  payment_method?: string;
 }

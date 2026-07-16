@@ -31,7 +31,7 @@ export default function DatePickerCustom({
         onChange={onChange}
         dateFormat="dd/MM/yyyy"
         wrapperClassName="w-full"
-        className={`w-full bg-white border border-gray-100 shadow-sm rounded-2xl p-3 px-4 outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-700 font-medium ${className}`}
+        className={`w-full bg-white border h-[52px] border-gray-100 shadow-sm rounded-2xl p-3 px-4 outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-700 font-medium ${className}`}
         placeholderText="DD/MM/YYYY"
         popperPlacement="top-start"
         popperModifiers={[

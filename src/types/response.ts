@@ -78,17 +78,20 @@ export type AgentType = {
 };
 
 export type AdminReportResponseType = {
-  buy_by: string;
+  created_at: string;
   date_use: string;
-  location_name: string;
+  payment_method: string;
   user_email: string;
   order_id: string;
+  order_item_id: string;
   phone: string;
+  product_name: string;
   price: number;
   quantity: number;
   total_amount: number;
-  subtotal: number;
-  ticket_name: string;
-  sale_date: string;
-  promo_name: string;
+  total: string;
+  user_id: string;
+  third_party_number: number;
+  status: string;
+  site_codeL: string;
 };

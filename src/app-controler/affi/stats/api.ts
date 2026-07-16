@@ -126,7 +126,6 @@ export const getOrderDetail = async (order_id?: string) => {
 
 export const getOrdeTicketDetail = async (orderCode: string) => {
   try {
-    console.log("orderCode", orderCode);
     setGlobalLoading(true);
     const { data }: any = await sunApi.get(`/ota/order/get`, {
       params: {
@@ -134,7 +133,6 @@ export const getOrdeTicketDetail = async (orderCode: string) => {
         orderCode,
       },
     });
-    console.log("asdasd", data);
     if (data.errors?.[0]?.messsage) {
       setToastMessage(data.error[0]?.messsage);
       return [];

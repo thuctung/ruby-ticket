@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Fraunces, Be_Vietnam_Pro } from "next/font/google";
-import { getProductBySiteSun, getSiteListSun } from "./api";
+import { getPriceBuyAgentLevel, getProductBySiteSun, getSiteListSun } from "./api";
 import {
   ProductSubmitType,
   ResultListProductType,
@@ -15,6 +15,9 @@ import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { SUN_BOOKING_FORM_TYPE } from "./constants";
 import AffilateBookingForm from "./AffilateForm";
 import CustomerBookingForm from "./CustomerForm";
+import { useProfileStore } from "@/stores/useProfileStore";
+import { ProfileType } from "@/types";
+import { get } from "lodash";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
@@ -37,10 +40,14 @@ export default function GetTicketSunGroupForm({
 }: GetTicketSunGroupFormprops) {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
+  const profile: ProfileType = useProfileStore((state: any) => state.profile);
+
   const [listSideSunGroup, setListSideSungroup] = useState<SideSunGroupType[]>([]);
   const [siteSunCode, setSideSunCode] = useState("");
 
   const [listProductSun, setListProductSun] = useState<ResultListProductType[]>([]);
+
+  const [agentPrice, setAgentPrice] = useState(0);
 
   const [formData, setFormData] = useState<any>(initFormValues);
 
@@ -59,7 +66,8 @@ export default function GetTicketSunGroupForm({
   const totalTickets = selectedLines.reduce((sum, t) => sum + (quantities[t.code] ?? 0), 0);
 
   const total = selectedLines.reduce((sum, t) => {
-    const price = formType === SUN_BOOKING_FORM_TYPE.CUSTOMER ? t.publicPrice : t.unitPrice;
+    let price = formType === SUN_BOOKING_FORM_TYPE.CUSTOMER ? t.publicPrice : t.unitPrice;
+    price += agentPrice; // add agent price
     return sum + price * (quantities[t.code] ?? 0);
   }, 0);
 
@@ -71,11 +79,23 @@ export default function GetTicketSunGroupForm({
     setFormData((p: any) => ({ ...p, [key]: val }));
   };
 
+  const fetchPriceAgentLevel = async (sideCode: string, level: string) => {
+    const data = await getPriceBuyAgentLevel(sideCode, level);
+    const price = get(data, "price", 0) || 0;
+    setAgentPrice(price);
+  };
+
   const fetchSiteSunGroup = async () => {
     const data = await getSiteListSun();
     if (data?.length) {
       setListSideSungroup(data);
     }
+  };
+
+  const handleChangeSite = (siteCode: string) => {
+    setSideSunCode(siteCode);
+    setQuantities({});
+    setListProductSun([]);
   };
 
   const fetchProductBySite = async (siteSunCode: string) => {
@@ -84,7 +104,6 @@ export default function GetTicketSunGroupForm({
       dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
     );
     if (data?.length) {
-      console.log(data);
       setListProductSun(data);
     }
   };
@@ -98,7 +117,7 @@ export default function GetTicketSunGroupForm({
       usageDateTo: item.pricePolicy.validDateTo,
       performanceId: item.performances.performanceId,
       productsName: item.name,
-      unitPrice: item.unitPrice,
+      unitPrice: item.unitPrice + agentPrice,
     }));
     onBuyTicket({
       products: products,
@@ -108,6 +127,12 @@ export default function GetTicketSunGroupForm({
       formData: formData,
     });
   };
+
+  useEffect(() => {
+    if (siteSunCode && profile.agent_level) {
+      fetchPriceAgentLevel(siteSunCode, profile.agent_level);
+    }
+  }, [siteSunCode, profile.agent_level]);
 
   useEffect(() => {
     if (siteSunCode) {
@@ -130,7 +155,7 @@ export default function GetTicketSunGroupForm({
   return formType === SUN_BOOKING_FORM_TYPE.AFFILATE ? (
     <AffilateBookingForm
       siteSunCode={siteSunCode}
-      setSideSunCode={setSideSunCode}
+      setSideSunCode={handleChangeSite}
       listSideSunGroup={listSideSunGroup}
       setFieldFormData={setFieldFormData}
       formData={formData}
@@ -142,6 +167,7 @@ export default function GetTicketSunGroupForm({
       sideName={sideName}
       selectedLines={selectedLines}
       handleBuyTicket={handleBuyTicket}
+      agentPrice={agentPrice}
     />
   ) : (
     <CustomerBookingForm
@@ -158,6 +184,7 @@ export default function GetTicketSunGroupForm({
       sideName={sideName}
       selectedLines={selectedLines}
       handleBuyTicket={handleBuyTicket}
+      agentPrice={agentPrice}
     />
   );
 }

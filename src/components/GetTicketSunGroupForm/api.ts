@@ -75,3 +75,36 @@ export const getProductBySiteSun = async (siteCodes: string, date: string) => {
     setGlobalLoading(false);
   }
 };
+
+export const updateSuccessOrder = async (payload: any) => {
+  try {
+    const { data, error }: any = await api.post(SUCCESS_ORDER_TICKET, payload);
+    if (error) {
+      setToastMessage(error.message);
+      return;
+    }
+  } catch (e) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+  }
+};
+
+export const getPriceBuyAgentLevel = async (site_code: string, agent_code: string) => {
+  try {
+    setGlobalLoading(true);
+    const { data, error } = await clientSupbase
+      .from(DB_TABLE_NAME.AGENT_PRICE)
+      .select("price")
+      .eq("agent_code", agent_code)
+      .eq("site_code", site_code)
+      .maybeSingle();
+    if (error) {
+      setToastMessage(error.message);
+    }
+    return data;
+  } catch {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};

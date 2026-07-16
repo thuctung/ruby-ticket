@@ -1,18 +1,18 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME } from "@/commons/constant";
+import { DB_TABLE_NAME, END_DATE_GMT7, START_DATE_GMT7 } from "@/commons/constant";
 
 export async function POST(req: Request) {
   const body: any = await req.json();
   const { user_id, from, to } = body;
 
-  let query = supabaseAdmin.from(DB_TABLE_NAME.VIEW_ADMIN_REPORT).select("quantity, total_amount");
- 
+  let query = supabaseAdmin.from(DB_TABLE_NAME.VIEW_TICET_SALE).select("quantity, total_amount");
+
   if (from) {
-    query = query.gte("sale_date", `${from}T00:00:00`);
+    query = query.gte("sale_date", `${from}${START_DATE_GMT7}`);
   }
 
   if (to) {
-    query = query.lte("sale_date", `${to}T23:59:59`);
+    query = query.lte("sale_date", `${to}${END_DATE_GMT7}`);
   }
 
   const { data, error } = await query;

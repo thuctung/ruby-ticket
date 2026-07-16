@@ -2,7 +2,7 @@ import axios from "axios";
 import { SUN_GROUP } from "@/commons/constant";
 import { SUN_PROXY_GET_DATA } from "@/commons/outApiURL";
 import { LOCAL_SUN_TOKEN } from "@/commons/constant"; // key localStorage, đảm bảo trùng với "sun_access_token"
-import { loginSunSystem } from "@/app-controler/affi/getTicket/api";
+import { loginSunSystem } from "@/components/GetTicketSunGroupForm/api";
 
 const sunApi = axios.create({
   baseURL: SUN_PROXY_GET_DATA,

@@ -58,9 +58,11 @@ export const UPDATE_PROFILE = "/api/auth/affiliate/profile/update";
 
 export const CHANGE_PASSWORD = "/api/auth/affiliate/profile/change-password";
 
-export const GET_ADMIN_REPORT = "/api/auth/admin/stats/get-report";
+export const GET_ADMIN_REPORT = "/api/auth/admin/history/get-report";
 
-export const COUNT_REPORT = "/api/auth/admin/stats/count-report";
+export const COUNT_REPORT = "/api/auth/admin/history/count-report";
+
+export const ADMIN_GET_SALE_SUMARY = "/api/auth/admin/stats/sumary-email";
 
 export const ADMIN_UPDATE_STATUS_TOPUP = "/api/webhook/sepay";
 

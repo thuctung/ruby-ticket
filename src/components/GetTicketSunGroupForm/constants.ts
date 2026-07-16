@@ -19,6 +19,7 @@ export type BookingFormProps = {
   total: number;
   sideName: string;
   selectedLines: any[];
+  agentPrice: number;
   handleBuyTicket: () => void;
 };
 

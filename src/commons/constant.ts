@@ -65,7 +65,7 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
     icon: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M13 7a4 4 0 1 1-8 0a4 4 0 1 1 8 0M16 11l2 2 4-4",
   },
   {
-    link: "/admin/stats",
+    link: "/admin/history",
     lable: "Lịch sử rút vé",
     icon: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M12 7v5l4 2",
   },
@@ -119,6 +119,8 @@ export const DB_TABLE_NAME = {
   AGENTS: "agents",
   FUNC_CREATE_ORDER_PENDING: "create_order_pending",
   FUNC_COMPLETE_ORDER: "complete_order",
+  FUNC_GET_AGENT_SALE_SUMARY: "get_agent_sale_summary",
+  FUNC_GET_ALL_SALE_SUMARY: "get_all_sale_summary",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -210,3 +212,14 @@ export const SITE_SUB_GROUP = {
 };
 
 export const LOCAL_SUN_TOKEN = "sun_access_token";
+
+export const CUSTOMER = "customer";
+export const AGENT = "agent";
+
+export const PersonType = {
+  [CUSTOMER]: "Khách lẻ",
+  [AGENT]: "Đại lý",
+};
+
+export const END_DATE_GMT7 = "T23:59:59+07:00";
+export const START_DATE_GMT7 = "T00:00:00+07:00";

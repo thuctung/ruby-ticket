@@ -9,11 +9,12 @@ import { AdminSearchReport, SearchTicketSale } from "@/types";
 import { LocationType } from "@/types/ticket";
 import { Calendar, MapPin, User } from "lucide-react";
 import { useState } from "react";
-import { intForm } from "../constant";
+import { BuyMethod, intForm } from "../constant";
 
 type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
   onReset: () => void;
+  locations: LocationType[];
   searchValue: SearchTicketSale;
 };
 
@@ -39,7 +40,29 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
   return (
     <div>
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-6">
+        <h1 className="text-xl font-bold text-gray-800 mb-6">Lịch sử rút vé</h1>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Địa điểm */}
+          {/* <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+              <MapPin size={14} /> Địa điểm
+            </label>
+
+            <SelectBox
+              value={filter.location || "all"}
+              onChange={(value) => handleChangeFilter("location", value)}
+              className=" h-12"
+            >
+              <option value="all">Tất cả</option>
+              {locations.map((item: LocationType) => (
+                <option key={item.code} value={item.code}>
+                  {item.name}
+                </option>
+              ))}
+            </SelectBox>
+          </div> */}
+
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
               <Calendar size={14} /> Từ ngày (ngày bán)
@@ -64,6 +87,25 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
               value={filter.to}
               onChange={(date: string) => handleChangeFilter("to", date)}
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+              Người mua
+            </label>
+
+            <SelectBox
+              value={filter.payment_method || "all"}
+              onChange={(value) => handleChangeFilter("payment_method", value)}
+              className=" h-12"
+            >
+              <option value="all">Tất cả</option>
+              {BuyMethod.map((item) => (
+                <option key={item.code} value={item.code}>
+                  {item.name}
+                </option>
+              ))}
+            </SelectBox>
           </div>
 
           {/* Tên/Email aff */}

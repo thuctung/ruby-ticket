@@ -62,6 +62,7 @@ export default function CustomerBookingForm({
   total,
   sideName,
   selectedLines,
+  agentPrice,
   handleBuyTicket,
 }: BookingFormProps) {
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
