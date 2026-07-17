@@ -158,7 +158,7 @@ export type ProductBanaType = {
   restaurantName?: string;
   publicPrice: number;
   unitPrice: number;
-  performances: PerformancesType;
+  performances: PerformancesType[];
   multiple: number;
 };
 

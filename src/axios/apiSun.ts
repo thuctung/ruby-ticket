@@ -20,7 +20,6 @@ sunApi.interceptors.request.use((config) => {
     .trim();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
-    config.headers.Cookie = `JSESSIONID=4498CB558AFD7BBD752A12EB6616DB01`;
   }
   return config;
 });

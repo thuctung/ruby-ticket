@@ -27,7 +27,6 @@ export const createAgentPrice = async (param: AgentPriceSubmitType) => {
     setGlobalLoading(true);
 
     const { data }: any = await api.post(CREATE_AGENT_PRICE, param);
-    console.log("data", data);
     if (data.message) {
       setToastMessage(data.message);
       return;

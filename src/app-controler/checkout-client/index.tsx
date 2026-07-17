@@ -1,16 +1,20 @@
 "use client";
 
-import { useLang } from "@/lib/useLang";
-import { useEffect, useState } from "react";
-import { customerCreateOrder, customerCreateOrderTicket } from "./api";
-import { DataFormTicketSubmit, SubmitSelectTicket, TicketResultQRType } from "@/types/ticket";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import {
+  customerCreateOrder,
+  customerCreateOrderTicket,
+  getTicketSunWorld,
+  updatePaymentSuccess,
+  updateStatusGetTicketFinal,
+  updateStatusOrder,
+} from "./api";
+import { SubmitSelectTicket, TicketReponseType, TicketResultQRType } from "@/types/ticket";
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
-import { CommonType, QRBankResponseType } from "@/types";
+import { QRBankResponseType } from "@/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-import { useCommonStore } from "@/stores/useCommonStore";
-import { DB_TABLE_NAME, PAYMENT_STATUS, TYPE_TRANSFER } from "@/commons/constant";
+import { DB_TABLE_NAME, ERROR_MESSAGE, TYPE_TRANSFER } from "@/commons/constant";
 import TicketResultQR from "../affi/getTicket/components/TicketResultQR";
 import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
@@ -18,20 +22,32 @@ import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
 import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
-import { ClientOrderItem, CustomerOrderType } from "./type";
-import { get } from "lodash";
+import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType } from "./type";
+import { generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
+import { toast } from "react-toastify";
+import { KEY_MODIFY_DATA } from "../affi/stats/contants";
+
+let timeout: any = null;
+
+let timeCancelOrder: any = null;
+
+const initOrderData = {
+  dateUse: "",
+  orderCode: "",
+  orderId: "",
+};
 
 export default function CheckoutControlerPage() {
   const clientSupbase = createSupabaseBrowserClient();
-
-  const { setToastMessage }: CommonType | any = useCommonStore.getState();
 
   const [loadingMessage, setLoadingMessage] = useState("");
 
   const [openQR, setOpenQR] = useState(false);
   const [openDownloadTicke, setOpenDownloadTicket] = useState(false);
 
-  const [itemTicketOrder, setItemTicketOrder] = useState<DataFormTicketSubmit | null>(null);
+  const chanenSupbase = useRef<any>(null);
+
+  const [currentOrderData, setCurrentOrderData] = useState(initOrderData);
 
   const [ticketResult, setTicketResult] = useState<TicketResultQRType[]>([]);
 
@@ -45,72 +61,114 @@ export default function CheckoutControlerPage() {
     setOpenQR(false);
   };
 
+  const cancleOrderTimeout = async (orderId: string) => {
+    await updateStatusOrder({
+      orderId: orderId,
+      status: KEY_MODIFY_DATA.CANCEL,
+      description: ERROR_MESSAGE.PAYMENT_TIMEOUT,
+      status_payment: KEY_MODIFY_DATA.ERROR,
+    });
+    setCurrentOrderData(initOrderData);
+    clearTimeout(timeCancelOrder);
+    handleDoneQR();
+    toast.error("Đơn hàng đã hủy do hết thời gian thanh toán");
+  };
+
+  const demoPaymentSuccess = (paymentCode: string) => {
+    if (timeout) clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      updatePaymentSuccess(paymentCode);
+    }, 5000);
+  };
+
   const handleBuyTicket = async (values: SubmitSelectTicket) => {
     const { formData, totalMoney, siteCode, products, date_use } = values;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
-
+    const thirdPartyNum = generateThirdPartyCode();
     const { email, phone, fullname }: any = formData;
 
-    const dataSubmit: ClientOrderItem = {
-      userEmail: email,
-      totalAmount: totalMoney,
-      dateUse: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
+    const paramCreateOrder: CustomerOrderType = {
+      email,
       phone,
-      fullname: fullname,
-      thirdPartyNum: "TEST1_SBD_20251016_0002",
-      listTicketSubmit: products,
-      siteCode,
-      paymentCode,
+      fullname,
+      products,
+      thirdPartyNumber: thirdPartyNum,
     };
+    // STEP 1: CREATE ORDER WITH SUN WORLD
+    const dataOrderSunWorld: TicketReponseType = await customerCreateOrder(paramCreateOrder);
 
-    const { data } = await customerCreateOrderTicket(dataSubmit);
-    console.log(data);
-    const orderID = get(data, "order_id");
-    console.log(orderID);
-
-    if (orderID) {
-      const paramCreateOrder: CustomerOrderType = {
-        email,
+    // SUCCESS OF SUN WORLD
+    if (dataOrderSunWorld) {
+      // STEP 2: SAVE ORDER IN DATABASE WITH STATUS "pending" (WAIT PAYMENT)
+      const dataSubmit: ClientOrderItem = {
+        userEmail: email,
+        totalAmount: totalMoney,
+        dateUse: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
         phone,
-        fullname,
-        products,
-        ThirdPartyNumber: "TEST1_SBD_20251016_0002",
+        fullname: fullname,
+        thirdPartyNum,
+        listTicketSubmit: products,
+        siteCode,
+        paymentCode,
       };
 
-      const dataOrderSunWorld = await customerCreateOrder(paramCreateOrder);
-      const qrLink = getBankInfo(totalMoney, paymentCode);
-      setQRPayment({
-        qr: qrLink,
-        code: paymentCode,
-        amount: totalMoney,
-      });
-      setOpenQR(true);
+      const orderID = await customerCreateOrderTicket(dataSubmit);
+
+      // CREATE ORDER SUCCESS: SHOW QR PAYMENT AND LISTEN PAYMENT CHANNEL (chanenSupbase.current)
+      if (orderID) {
+        const qrLink = getBankInfo(totalMoney, paymentCode);
+        setQRPayment({
+          qr: qrLink,
+          code: paymentCode,
+          amount: totalMoney,
+        });
+        setOpenQR(true);
+
+        setCurrentOrderData({
+          orderCode: dataOrderSunWorld.orderCode,
+          orderId: orderID,
+          dateUse: date_use,
+        });
+
+        //demo
+        demoPaymentSuccess(paymentCode);
+
+        // CANCLE ORDER TIMEOUT :
+        timeCancelOrder = setTimeout(() => cancleOrderTimeout(orderID), 10000);
+      }
     }
   };
 
-  const getTicketData = () => {
-    try {
-      const data: TicketResultQRType[] | any =
-        itemTicketOrder?.listTicket.map((item) => ({
-          ticket_variant_code: item.ticket_variant_code,
-          ticket_name: item.ticketName,
-          ticket_code: "DSSDFSDF",
-          dateUse: item.date_use,
-        })) || [];
-      setTicketResult(data);
-      setOpenDownloadTicket(true);
-      handleDoneQR();
-      setLoadingMessage("");
-    } catch (e) {
-      setLoadingMessage("");
-      setToastMessage("Có lỗi xảy ra! Vui lòng liên hệ bộ phận hỗ trợ");
+  const getTicketSuccess = async () => {
+    handleDoneQR();
+    clearTimeout(timeout);
+    clearTimeout(timeCancelOrder);
+
+    const { orderCode, orderId, dateUse } = currentOrderData;
+    const ticketSuccess: TicketReponseType = await getTicketSunWorld(orderCode);
+
+    const payloadFinal: CustomerBuyFilnalType = {
+      isError: true,
+      orderCode: orderCode,
+      orderId: orderId,
+    };
+    if (ticketSuccess) {
+      // succes step: update status order and show ticket PDF
+      const result: TicketResultQRType[] | any = rebuildDataTicket(ticketSuccess, orderId, dateUse);
+      payloadFinal.tickets = result;
+      payloadFinal.isError = false;
+      payloadFinal.referenceCode = ticketSuccess.referenceCode;
+    } else {
+      payloadFinal.description = ERROR_MESSAGE.SUN_WORLD_TICKET;
     }
+    await updateStatusGetTicketFinal(payloadFinal);
   };
 
   useEffect(() => {
     if (qrPaymant?.code) {
-      const channel = clientSupbase
-        .channel("check-payment")
+      chanenSupbase.current = clientSupbase
+        .channel(`check-payment-${qrPaymant.code}`)
         .on(
           "postgres_changes",
           {
@@ -120,19 +178,23 @@ export default function CheckoutControlerPage() {
             filter: `payment_code=eq.${qrPaymant.code}`,
           },
           (payload) => {
-            if (payload.new.status === PAYMENT_STATUS.COMPLETED) {
-              setLoadingMessage("Thanh toán thành công!, đang xử lý vé...");
-              getTicketData();
-            } else if (payload.new.status === PAYMENT_STATUS.FAILED) {
-              setToastMessage("Thanh toán thất bại! Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ");
+            if (payload.new.status_payment === KEY_MODIFY_DATA.SUCCESSS) {
+              toast.success("Thanh toán thành công!");
+              clientSupbase.removeChannel(chanenSupbase.current);
+              getTicketSuccess();
+            } else if (payload.new.status_payment === KEY_MODIFY_DATA.ERROR) {
+              toast.error("Thanh toán thất bại! Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ");
               handleDoneQR();
             }
           }
         )
-        .subscribe();
+        .subscribe((status, err) => {
+          // Kỳ vọng: "SUBSCRIBED"
+          // Nếu là "CHANNEL_ERROR", "TIMED_OUT" -> có vấn đề (thường do RLS hoặc realtime chưa bật)
+        });
 
       return () => {
-        clientSupbase.removeChannel(channel);
+        clientSupbase.removeChannel(chanenSupbase.current);
       };
     }
   }, [qrPaymant?.code]);
@@ -158,7 +220,7 @@ export default function CheckoutControlerPage() {
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">
-                    Đặt vé tham quan
+                    Đặt vé Sun World
                   </h1>
                   <span className="bg-yellow-400 text-blue-900 text-xs font-bold px-2 py-1 rounded-md uppercase">
                     Best Seller
@@ -225,7 +287,7 @@ export default function CheckoutControlerPage() {
           dataQR={qrPaymant}
           isOpen={openQR}
           onDone={handleDoneQR}
-          mesage="Vui lòng đợi khi thanh toán và không tắt cửa sổ này"
+          mesage="Vui lòng đợi khi thanh toán và không tắt trình duyệt"
         />
       )}
 

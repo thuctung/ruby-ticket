@@ -15,6 +15,5 @@ export async function POST(req: Request) {
     p_reference_code: referenceCode,
   });
 
-  console.log("completeData", data);
   return NextResponse.json(data, { status: 200 });
 }

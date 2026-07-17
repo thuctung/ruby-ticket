@@ -220,3 +220,8 @@ export const PersonType = {
 
 export const END_DATE_GMT7 = "T23:59:59+07:00";
 export const START_DATE_GMT7 = "T00:00:00+07:00";
+
+export const ERROR_MESSAGE = {
+  SUN_WORLD_TICKET: "Lỗi xuất vé từ Sun world",
+  PAYMENT_TIMEOUT: "Hết thời gian thanh toán",
+};

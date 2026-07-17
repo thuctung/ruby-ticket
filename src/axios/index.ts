@@ -26,7 +26,6 @@ api.interceptors.response.use(
     // Ví dụ: nếu 401 → redirect login
     if (error.response?.status === 401) {
     }
-    console.log("error", error);
     return Promise.reject(error);
   }
 );

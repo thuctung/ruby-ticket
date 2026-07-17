@@ -15,4 +15,7 @@ export type AdminReportResponseType = {
   third_party_number: number;
   status: string;
   site_codeL: string;
+  payment_code: string;
+  status_payment: string;
+  order_code: string;
 };

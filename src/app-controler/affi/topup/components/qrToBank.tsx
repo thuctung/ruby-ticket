@@ -45,7 +45,7 @@ export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankT
           </div>
         </div>
         <span className="text-sm text-center text-red-500">{mesage}</span>
-        <Countdown totalSecounds={5 * 60} />
+        <Countdown totalSecounds={10 * 60} />
         <div className="w-full flex justify-center ">
           {onDone && <Button onClick={onDone}>Đã chuyển khoản</Button>}
         </div>

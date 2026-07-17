@@ -101,9 +101,11 @@ export default function ThanhTuuPage() {
               </h1>
 
               <p className="text-base leading-relaxed text-slate-600 md:text-lg">
-                Ruby Travel tự hào nằm trong <span className="font-bold text-slate-900">Top 20 doanh số Bà Nà toàn quốc</span>{" "}
-                và là <span className="font-bold text-slate-900">đại lý uy tín của Vinpearl</span>. Chúng tôi tối ưu quy trình để
-                khách hàng đặt vé nhanh, nhận QR tức thì; cộng tác viên bán dễ, quản lý gọn.
+                Ruby Travel tự hào nằm trong{" "}
+                <span className="font-bold text-slate-900">Top 20 doanh số Bà Nà toàn quốc</span> và
+                là <span className="font-bold text-slate-900">đại lý uy tín của Vinpearl</span>.
+                Chúng tôi tối ưu quy trình để khách hàng đặt vé nhanh, nhận QR tức thì; cộng tác
+                viên bán dễ, quản lý gọn.
               </p>
 
               <div className="flex flex-col gap-3 sm:flex-row">
@@ -135,7 +137,7 @@ export default function ThanhTuuPage() {
               <div className="rounded-[2.5rem] border border-slate-200 bg-white/80 p-6 shadow-2xl shadow-slate-200">
                 <div className="flex items-center gap-3">
                   <div className="relative h-12 w-12 rounded-2xl bg-white p-2 shadow-sm">
-                    <Image src="/logo1.png" alt="Ruby Travel" fill className="object-contain" />
+                    <Image src="/logo.png" alt="Ruby Travel" fill className="object-contain" />
                   </div>
                   <div>
                     <div className="text-sm font-extrabold text-slate-900">Ruby Travel</div>
@@ -147,8 +149,13 @@ export default function ThanhTuuPage() {
 
                 <div className="mt-6 grid grid-cols-2 gap-4">
                   {achievements.slice(0, 4).map((x) => (
-                    <div key={x.title} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                      <div className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl ${x.bg} ${x.color}`}>
+                    <div
+                      key={x.title}
+                      className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+                    >
+                      <div
+                        className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl ${x.bg} ${x.color}`}
+                      >
                         <x.icon className="h-6 w-6" />
                       </div>
                       <div className="text-sm font-extrabold text-slate-900">{x.title}</div>
@@ -166,14 +173,19 @@ export default function ThanhTuuPage() {
         <div className="mx-auto max-w-6xl px-6 py-14">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
             {reasons.map((x) => (
-              <Card key={x.title} className="rounded-3xl border-slate-200 bg-white shadow-md hover:shadow-xl transition-shadow">
+              <Card
+                key={x.title}
+                className="rounded-3xl border-slate-200 bg-white shadow-md hover:shadow-xl transition-shadow"
+              >
                 <CardHeader>
                   <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
                     <x.icon className="h-6 w-6" />
                   </div>
                   <CardTitle className="text-base font-extrabold">{x.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="text-sm text-slate-600 leading-relaxed">{x.desc}</CardContent>
+                <CardContent className="text-sm text-slate-600 leading-relaxed">
+                  {x.desc}
+                </CardContent>
               </Card>
             ))}
           </div>
@@ -187,7 +199,8 @@ export default function ThanhTuuPage() {
                   đặt vé
                 </div>
                 <div className="text-sm text-slate-600">
-                  Chọn điểm đến, chọn ngày và nhận QR tức thì. Hoặc đăng ký làm cộng tác viên để bắt đầu kiếm thêm thu nhập.
+                  Chọn điểm đến, chọn ngày và nhận QR tức thì. Hoặc đăng ký làm cộng tác viên để bắt
+                  đầu kiếm thêm thu nhập.
                 </div>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
@@ -220,4 +233,3 @@ export default function ThanhTuuPage() {
     </main>
   );
 }
-

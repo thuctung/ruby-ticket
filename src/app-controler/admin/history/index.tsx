@@ -67,6 +67,10 @@ export default function AdminHistoryPageControler() {
       title: "Tên vé",
     },
     {
+      key: "order_code",
+      title: "Mã order",
+    },
+    {
       key: "product_name",
       title: "Ngày rút",
       render: (row) => dayjsEx(row.created_at).format(FULL_DATE_FORMAT),
@@ -105,8 +109,34 @@ export default function AdminHistoryPageControler() {
       ),
     },
     {
+      key: "description",
+      title: "Mô tả",
+    },
+    {
       key: "phone",
       title: "Số điện thoại",
+    },
+    {
+      key: "payment_code",
+      title: "Mã thanh toán(Khách lẻ)",
+    },
+    {
+      key: "third_party_number",
+      title: "Third party code",
+    },
+    {
+      key: "reference_code",
+      title: "Mã tham chiếu",
+    },
+    {
+      key: "status_payment",
+      align: "center",
+      title: "Trạng thái thanh toán",
+      render: (row) => (
+        <span className={statusClass[row.status_payment]}>
+          {get(StatusData, row.status_payment)}
+        </span>
+      ),
     },
     {
       key: "quantity",

@@ -6,7 +6,8 @@ import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
-import { BookingFormProps } from "./constants";
+import { BookingFormProps, getPriceAgentAndMultiple } from "./constants";
+import { formatVND } from "@/helpers/money";
 
 const display = Fraunces({
   subsets: ["latin", "vietnamese"],
@@ -38,6 +39,7 @@ export default function AffilateBookingForm({
   sideName,
   selectedLines,
   agentPrice,
+  formType,
   handleBuyTicket,
 }: BookingFormProps) {
   return (
@@ -111,19 +113,10 @@ export default function AffilateBookingForm({
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-[#1F3A2F]">{product.name}</p>
                         <p className="text-xs text-[#8A9A8E]">{product.restaurantName}</p>
+                        {formatVND(getPriceAgentAndMultiple(product, formType, agentPrice))}
                         {product.multiple > 1 ? (
-                          <p className="mt-0.5 text-xs font-medium ">
-                            <span className="line-through">{currency(product.publicPrice)}</span>
-                            {"/"}
-                            <span className="text-[#C89B3C]">
-                              {currency(product.unitPrice + agentPrice)}
-                            </span>
-                          </p>
-                        ) : (
-                          <p className="mt-0.5 text-xs font-medium text-[#C89B3C]">
-                            {currency(product.unitPrice + agentPrice)}
-                          </p>
-                        )}
+                          <p className="text-sm text-[red] leading-snug">{`Số vé phải là bội của: ${product.multiple}`}</p>
+                        ) : null}
                       </div>
 
                       <div className="flex shrink-0 items-center rounded-lg border border-[#DCD6C2]">
@@ -184,7 +177,10 @@ export default function AffilateBookingForm({
                           {t.name} × {quantities[t.code]}
                         </span>
                         <span className="shrink-0 font-medium text-[#1C2620]">
-                          {currency((t.unitPrice + agentPrice) * (quantities[t.code] ?? 0))}
+                          {currency(
+                            getPriceAgentAndMultiple(t, formType, agentPrice) *
+                              (quantities[t.code] ?? 0)
+                          )}
                         </span>
                       </div>
                     ))}

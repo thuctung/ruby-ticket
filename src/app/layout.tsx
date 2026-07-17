@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
 import { Be_Vietnam_Pro, Geist_Mono } from "next/font/google";
 // @ts-ignore: CSS module declarations not found in this environment
 import "./globals.css";
@@ -32,9 +33,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className={`${beVietnamPro.variable} ${geistMono.variable}`}>
-      <body className="antialiased">{children}</body>
-      <ToastMessage />
-      <LoadingGlobal />
+      <body className="antialiased">
+        {children} <ToastMessage />
+        <LoadingGlobal />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </body>
     </html>
   );
 }

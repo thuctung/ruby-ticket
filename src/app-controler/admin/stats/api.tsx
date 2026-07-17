@@ -95,5 +95,3 @@ export const getSaleSumary = async (payload: SearchSalteSumamryType) => {
     setGlobalLoading(false);
   }
 };
-
-console.log("sdfsd");

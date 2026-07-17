@@ -43,8 +43,6 @@ export function Banner() {
         })}
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/90 z-10" />
-
       <div className="absolute inset-0 flex justify-end items-end z-20">
         <a
           href="/checkout"

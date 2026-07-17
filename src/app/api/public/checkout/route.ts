@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { DB_TABLE_NAME } from "@/commons/constant";
+import { ClientOrderItem } from "@/app-controler/checkout-client/type";
 
 export async function POST(request: Request) {
   const {
@@ -13,10 +14,7 @@ export async function POST(request: Request) {
     listTicketSubmit,
     siteCode,
     paymentCode,
-  } = await request.json();
-
-  console.log("listTi", listTicketSubmit);
-  console.log("totalAmount", totalAmount);
+  }: ClientOrderItem = await request.json();
 
   const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUC_CUSTOMER_BUY_TICKET, {
     c_total_amount: totalAmount,
@@ -29,8 +27,6 @@ export async function POST(request: Request) {
     c_date_use: dateUse,
     list_ticket_submit: listTicketSubmit,
   });
-
-  console.log("data", data);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 

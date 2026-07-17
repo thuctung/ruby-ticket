@@ -33,7 +33,6 @@ export const createEditAgent = async (params: any) => {
       setToastMessage(data.error);
       return;
     }
-    console.log(data);
     return data;
   } catch (e: any) {
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
@@ -52,7 +51,6 @@ export const deleteAgent = async (id: string) => {
     }
     return data;
   } catch (e: any) {
-    console.log(e);
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
   } finally {
     setGlobalLoading(false);

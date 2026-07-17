@@ -2,13 +2,14 @@
 
 import { useMemo, useState } from "react";
 import { Calendar, ChevronDown, Minus, Plus, Ticket } from "lucide-react";
-import { BookingFormProps, CustomerInfoSchema } from "./constants";
+import { BookingFormProps, CustomerInfoSchema, getPriceAgentAndMultiple } from "./constants";
 import { SelectBox } from "../ui/customs/selectBox";
 import DatePickerCustom from "../ui/date-picker";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { CommonType } from "@/types";
 import { useCommonStore } from "@/stores/useCommonStore";
+import { formatVND } from "@/helpers/money";
 
 interface TicketOption {
   id: string;
@@ -63,6 +64,7 @@ export default function CustomerBookingForm({
   sideName,
   selectedLines,
   agentPrice,
+  formType,
   handleBuyTicket,
 }: BookingFormProps) {
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
@@ -106,7 +108,6 @@ export default function CustomerBookingForm({
                         </option>
                       ))}
                     </SelectBox>
-                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                   </div>
                 </div>
 
@@ -190,19 +191,21 @@ export default function CustomerBookingForm({
                             <Ticket className="h-4 w-4" />
                           </span>
                           <div>
-                            <p className="text-sm font-semibold leading-snug text-[#2A1414]">
+                            <p className="text-xm font-semibold leading-snug text-[#2A1414]">
                               {item.name}
                             </p>
                             <p className="mt-0.5 text-sm font-medium text-[#C81418]">
-                              {formatCurrency(item.publicPrice)}
+                              {formatVND(getPriceAgentAndMultiple(item, formType, agentPrice))}
                             </p>
+                            {item.multiple > 1 ? (
+                              <p className="text-sm text-[red] leading-snug">{`Số vé phải là bội của: ${item.multiple}`}</p>
+                            ) : null}
                           </div>
                         </div>
 
                         <div className="flex shrink-0 items-center gap-1 rounded-full border border-gray-200 bg-white p-1">
                           <button
                             onClick={() => {
-                              console.log("123");
                               setQty(item.code, (quantities[item.code] ?? 0) - 1);
                             }}
                             className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 disabled:opacity-30 disabled:hover:bg-transparent"
@@ -261,7 +264,10 @@ export default function CustomerBookingForm({
                       {t.name} × {quantities[t.code]}
                     </span>
                     <span className="shrink-0 font-medium text-[#1C2620]">
-                      {currency(t.publicPrice * (quantities[t.code] ?? 0))}
+                      {currency(
+                        getPriceAgentAndMultiple(t, formType, agentPrice) *
+                          (quantities[t.code] ?? 0)
+                      )}
                     </span>
                   </div>
                 ))}

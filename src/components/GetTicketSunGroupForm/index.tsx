@@ -12,7 +12,7 @@ import {
 
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
-import { SUN_BOOKING_FORM_TYPE } from "./constants";
+import { getPriceAgentAndMultiple, SUN_BOOKING_FORM_TYPE } from "./constants";
 import AffilateBookingForm from "./AffilateForm";
 import CustomerBookingForm from "./CustomerForm";
 import { useProfileStore } from "@/stores/useProfileStore";
@@ -21,8 +21,9 @@ import { get } from "lodash";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
-  email: "",
-  phone: "",
+  email: "tunghihi@gmail.com",
+  phone: "0987654323",
+  fullname: "Nguyen Van B",
   date_use: toDate,
   description: "",
 };
@@ -66,12 +67,7 @@ export default function GetTicketSunGroupForm({
   const totalTickets = selectedLines.reduce((sum, t) => sum + (quantities[t.code] ?? 0), 0);
 
   const total = selectedLines.reduce((sum, t) => {
-    let price = 0;
-    if (formType === SUN_BOOKING_FORM_TYPE.CUSTOMER) {
-      price = t.publicPrice;
-    } else {
-      price = t.unitPrice + agentPrice;
-    }
+    let price = getPriceAgentAndMultiple(t, formType, agentPrice);
 
     return sum + price * (quantities[t.code] ?? 0);
   }, 0);
@@ -115,17 +111,15 @@ export default function GetTicketSunGroupForm({
 
   const handleBuyTicket = () => {
     const products: ProductSubmitType[] = selectedLines.map((item) => {
-      const priceSell =
-        formType === SUN_BOOKING_FORM_TYPE.AFFILATE
-          ? item.unitPrice + agentPrice
-          : item.publicPrice;
+      const priceSell = getPriceAgentAndMultiple(item, formType, agentPrice);
+
       return {
         productCode: item.code,
         siteCode: siteSunCode,
         quantity: quantities[item.code],
         usageDate: item.pricePolicy.usageDate,
         usageDateTo: item.pricePolicy.validDateTo,
-        performanceId: item.performances.performanceId,
+        performanceId: item.performances[0].performanceId,
         productsName: item.name,
         unitPrice: priceSell,
       };
@@ -179,6 +173,7 @@ export default function GetTicketSunGroupForm({
       selectedLines={selectedLines}
       handleBuyTicket={handleBuyTicket}
       agentPrice={agentPrice}
+      formType={formType}
     />
   ) : (
     <CustomerBookingForm
@@ -196,6 +191,7 @@ export default function GetTicketSunGroupForm({
       selectedLines={selectedLines}
       handleBuyTicket={handleBuyTicket}
       agentPrice={agentPrice}
+      formType={formType}
     />
   );
 }
