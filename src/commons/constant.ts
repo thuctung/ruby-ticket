@@ -40,7 +40,7 @@ export const LIMIT_TABLE = 10;
 export const SIDEBAR_ADMIN: MenuMgtType[] = [
   {
     link: "/admin/affiliates",
-    lable: "Quản lý user",
+    lable: "Quản lý đại lý",
     icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
   },
   {
@@ -61,8 +61,18 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
   { link: "/admin/stats", lable: "Thống kê", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
   {
     link: "/admin/agents",
-    lable: "Quản lí đại lý",
+    lable: "Quản lí cấp bậc",
+    icon: "M12 3a2 2 0 1 0 0 4a2 2 0 1 0 0 -4M12 7v3M6 10h12M6 10v3M18 10v3M6 16a2 2 0 1 0 0 4a2 2 0 1 0 0 -4M18 16a2 2 0 1 0 0 4a2 2 0 1 0 0 -4",
+  },
+  {
+    link: "/admin/user-mgt",
+    lable: "Quản lí user",
     icon: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M13 7a4 4 0 1 1-8 0a4 4 0 1 1 8 0M16 11l2 2 4-4",
+  },
+  {
+    link: "/admin/ticket-status",
+    lable: "Thông tin vé",
+    icon: "M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
   },
   {
     link: "/admin/history",
@@ -87,6 +97,11 @@ export const SIDEBAR_AFF: MenuMgtType[] = [
     link: "/affiliate/transaction",
     lable: "Lịch sử giao dịch",
     icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    link: "/affiliate/ticket-status",
+    lable: "Tra cứu vé",
+    icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 000 4h2a2 2 0 000-4H9z",
   },
   {
     link: "/affiliate/profile",
