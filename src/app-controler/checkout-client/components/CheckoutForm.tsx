@@ -76,10 +76,6 @@ export function CheckoutForm({
 
   const locationNameSelected = locations?.find((l) => l.code === location)?.name || "";
 
-  const setIsPromoSelected = (code: string, val: boolean) => {
-    setIsPromo((p: any) => ({ [code]: val })); // chỉ đc áp dụng 1 ctrinh khuyến mãi
-  };
-
   const setTicKetSelected = (code: string, val: any, item: ProductType) => {
     setCountTicketSelected((p: any) => ({
       ...p,
@@ -140,14 +136,13 @@ export function CheckoutForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     if (handleValidateForm(e)) {
-      const promoCode = Object.keys(isPromo).find((key) => isPromo[key] === true);
       const submit: DataFormTicketSubmit = {
         total_amount: totalMoney,
         formData,
         listTicket: resumSelected,
         locationNameSelected,
         date_use: formData.date_use,
-        promoCode,
+        promoCode: "",
       };
       onSubmit(submit);
       setErrors({});
@@ -197,7 +192,7 @@ export function CheckoutForm({
     setTotalMoney(0);
     setResumeSelected([]);
     setCountTicketSelected({});
-    setIsPromo({});
+    setIsPromo(false);
     const init = new Map();
     cachePrice.current.nonPromo = init;
     cachePrice.current.promo = init;
