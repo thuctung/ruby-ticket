@@ -65,7 +65,7 @@ export function CheckoutForm({
   const [countTicketSelected, setCountTicketSelected] = useState<any>({});
 
   const [promotionList, setPromotionList] = useState<PromotionType[]>([]);
-  const [isPromo, setIsPromo] = useState<any>({});
+  const [isPromo, setIsPromo] = useState(false);
 
   const [formData, setFormData] = useState<any>(initFormValues);
 
