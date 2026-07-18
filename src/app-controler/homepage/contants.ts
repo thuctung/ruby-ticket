@@ -41,21 +41,13 @@ export const TESTIMONIALS = [
     location: "Cần Thơ",
     avatar: "/avatar_04.png",
     content:
-      "Lần đầu đưa cả gia đình đi Vinpearl mà đặt vé online tiện thế này thì quá yên tâm. Giá tốt hơn hẳn so với mua tại quầy.",
+      "Lần đầu đưa cả gia đình đi Bà Nà mà đặt vé online tiện thế này thì quá yên tâm. Giá tốt hơn hẳn so với mua tại quầy.",
   },
   {
     name: "Đỗ Thị Ngọc Anh",
     location: "Hải Phòng",
     avatar: "/avatar_05.png",
-    content:
-      "Thanh toán xong là có vé ngay trong email, không cần in ra cũng vào cổng được. Rất phù hợp cho người hay đi công tác kết hợp du lịch.",
-  },
-  {
-    name: "Vũ Quang Huy",
-    location: "Nha Trang",
-    avatar: "/avatar_06.png",
-    content:
-      "Mình đặt vé Núi Thần Tài cho nhóm bạn 8 người, hệ thống xử lý số lượng lớn vẫn mượt, không bị lỗi hay chậm trễ gì cả.",
+    content: "Rất phù hợp cho người hay đi công tác kết hợp du lịch.",
   },
   {
     name: "Bùi Thị Thanh Trúc",
