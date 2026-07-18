@@ -286,30 +286,27 @@ export function CheckoutForm({
                 ))}
               </div>
 
-              {promotionList.length ? (
-                <div className=" rounded-xl border bg-muted/20 p-4">
-                  {promotionList.map((p) => (
-                    <div key={p.code} className="flex items-start justify-between mb-2">
-                      <div>
-                        <p className="text-lg font-bold text-orange-950 cursor-pointer">
-                          {p.promo_name}
-                        </p>
-                        <span className="text-sm text-orange-800">
-                          Chú ý:Giá vé áp dụng cho {p.promo_name}, vui lòng xuất căn cước khi vào
-                          cổng.
-                        </span>
-                      </div>
-                      <input
-                        id="central_resident"
-                        type="checkbox"
-                        checked={isPromo}
-                        onChange={(e) => setIsPromo(e.target.checked)}
-                        className="w-6 h-6 rounded-md border-gray-300 text-orange-600 focus:ring-orange-200 transition"
-                      />
+              <div className=" rounded-xl border bg-muted/20 p-4">
+                {promotionList.map((p) => (
+                  <div key={p.code} className="flex items-start justify-between mb-2">
+                    <div>
+                      <p className="text-lg font-bold text-orange-950 cursor-pointer">
+                        Người Đà Nẵng
+                      </p>
+                      <span className="text-sm text-orange-800">
+                        Chú ý:Giá vé áp dụng cho Người Đà Nẵng, vui lòng xuất căn cước khi vào cổng.
+                      </span>
                     </div>
-                  ))}
-                </div>
-              ) : null}
+                    <input
+                      id="central_resident"
+                      type="checkbox"
+                      checked={isPromo}
+                      onChange={(e) => setIsPromo(e.target.checked)}
+                      className="w-6 h-6 rounded-md border-gray-300 text-orange-600 focus:ring-orange-200 transition"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
             {agentCode === AGENT_CODE.CUSTOMER ? (
               <div className="bg-white p-4 md:p-8 rounded-2xl shadow-sm border border-gray-100">
@@ -317,9 +314,7 @@ export function CheckoutForm({
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-600">
-                      Email nhận vé (QR Code)
-                    </label>
+                    <label className="text-sm font-medium text-gray-600">Email</label>
                     <input
                       type="email"
                       id="email"

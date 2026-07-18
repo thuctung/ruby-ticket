@@ -1,5 +1,3 @@
-import { DrafDATA } from "@/app-controler/admin/topup-mgt/components/constants";
-import api from "@/axios";
 import { DB_TABLE_NAME, LIMIT_TABLE } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
@@ -32,23 +30,22 @@ export const creteNewTopup = async (
   }
 };
 
-export const getListTopupByAff = async (user_id: string, currentPage:number) => {
+export const getListTopupByAff = async (user_id: string, currentPage: number) => {
   try {
     setGlobalLoading(true);
-     const offset = (currentPage - 1) * LIMIT_TABLE;
+    const offset = (currentPage - 1) * LIMIT_TABLE;
 
-    const { data, error ,count}: any = await supabaseClient
-      .from(DB_TABLE_NAME.TOPUPS) 
+    const { data, error, count }: any = await supabaseClient
+      .from(DB_TABLE_NAME.TOPUPS)
       .select("*", { count: "exact" })
       .eq("user_id", user_id)
       .order("created_at", { ascending: false })
       .range(offset, offset + LIMIT_TABLE - 1);
-      ;
     if (error) {
       setToastMessage(error.message);
       return;
     }
-    return {data, totalPages: count ? Math.ceil(count / LIMIT_TABLE) : 0,};
+    return { data, totalPages: count ? Math.ceil(count / LIMIT_TABLE) : 0 };
   } catch (e) {
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
   } finally {
