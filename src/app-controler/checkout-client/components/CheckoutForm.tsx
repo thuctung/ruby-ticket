@@ -80,36 +80,44 @@ export function CheckoutForm({
     setIsPromo((p: any) => ({ [code]: val })); // chỉ đc áp dụng 1 ctrinh khuyến mãi
   };
 
-  const setTicKetSelected = (code: string, val: any) => {
-    setCountTicketSelected((p: any) => ({ ...p, [code]: val }));
+  const setTicKetSelected = (code: string, val: any, item: ProductType) => {
+    setCountTicketSelected((p: any) => ({
+      ...p,
+      [code]: {
+        quality: val,
+        product: item,
+      },
+    }));
   };
 
   const setFieldFormData = (key: string, val: any, needCalPrice = false) => {
     setFormData((p: any) => ({ ...p, [key]: val }));
   };
 
-  const calMoney = (mapPriceSelect: Map<string, number>) => {
+  const calMoney = () => {
     const res: any = [];
     let totalMoney = 0;
-    if (!isEmpty(mapPriceSelect)) {
-      mapPriceSelect.keys().forEach((key: string) => {
-        const numerTicet = countTicketSelected[key] ?? 0;
-        const priceTicket = mapPriceSelect.get(key) ?? 0;
-        const totalPriceTicket = numerTicet * priceTicket;
-        const ticketVariant = ticketVariants.find((t) => t.code === key);
-        totalMoney += totalPriceTicket;
-        const result: ResumSelectedType = {
-          base_price: ticketVariant?.price || 0,
-          finalprice: priceTicket,
-          totalPriceTicket,
-          ticketName: ticketVariant?.ticket_name || "",
-          numerTicet,
-          ticket_variant_code: key,
-          date_use: formData.date_use,
-        };
-        res.push(result);
-      });
-    }
+
+    Object.keys(countTicketSelected).forEach((keyProduct) => {
+      const numerTicet = countTicketSelected[keyProduct]?.quality ?? 0;
+      const product = countTicketSelected[keyProduct]?.product;
+      const priceTicket = isPromo
+        ? product?.promo_price - product?.promo_price * 0.03
+        : product?.sale_price;
+      const totalPriceTicket = numerTicet * priceTicket;
+      totalMoney += totalPriceTicket;
+      const result: ResumSelectedType = {
+        base_price: product?.price || 0,
+        finalprice: priceTicket || 0,
+        totalPriceTicket,
+        ticketName: product?.ticket_name || "",
+        numerTicet,
+        ticket_variant_code: keyProduct,
+        date_use: formData.date_use,
+      };
+      res.push(result);
+    });
+
     setResumeSelected(res);
     setTotalMoney(totalMoney);
   };
@@ -143,48 +151,6 @@ export function CheckoutForm({
       };
       onSubmit(submit);
       setErrors({});
-    }
-  };
-
-  // fetch data
-  const getPriceTicet = async () => {
-    let promo = "";
-    if (!isEmpty(isPromo)) {
-      Object.keys(isPromo).forEach((key) => {
-        if (isPromo[key]) {
-          promo = key;
-        }
-      });
-    }
-    const listTicketCode = Object.keys(countTicketSelected).filter(
-      (key) => countTicketSelected[key] > 0
-    );
-    const cacheItem: any = promo ? cachePrice.current.promo : cachePrice.current.nonPromo;
-    const notExist = listTicketCode.filter((key) => !cacheItem.has(key));
-
-    if (!notExist?.length) {
-      calMoney(cacheItem);
-      return;
-    }
-
-    if (listTicketCode.length) {
-      setLodingPrice(true);
-      const data = await getPriceCustomer(listTicketCode, promo, agentCode);
-      if (data) {
-        const priceMap: Map<string, number> = new Map(
-          data.map((item: PriceCustomerType) => [item.ticket_variant_code, item.price])
-        );
-        if (promo) {
-          cachePrice.current.promo = priceMap;
-        } else {
-          cachePrice.current.nonPromo = priceMap;
-        }
-        calMoney(priceMap);
-      }
-      setLodingPrice(false);
-    } else {
-      setResumeSelected([]);
-      setTotalMoney(0);
     }
   };
 
@@ -224,7 +190,7 @@ export function CheckoutForm({
   }, [ticketTypeCode]);
 
   useEffect(() => {
-    getPriceTicet();
+    calMoney();
   }, [countTicketSelected, isPromo]);
 
   useEffect(() => {
@@ -304,7 +270,7 @@ export function CheckoutForm({
                     key={item.code}
                   >
                     <label className="block text-gray-900 font-medium mb-3 text-medium">
-                      {item.category_name}
+                      {item.ticket_name}
                     </label>
                     <input
                       id={item.code}
@@ -312,8 +278,8 @@ export function CheckoutForm({
                       type="number"
                       min={0}
                       max={99}
-                      value={countTicketSelected[item.code] ?? 0}
-                      onChange={(e) => setTicKetSelected(item.code, e.target.value)}
+                      value={countTicketSelected[item.code]?.quality ?? 0}
+                      onChange={(e) => setTicKetSelected(item.code, e.target.value, item)}
                       className="w-24 text-center p-1 text-xl font-black text-blue-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition"
                     />
                   </div>
@@ -336,8 +302,8 @@ export function CheckoutForm({
                       <input
                         id="central_resident"
                         type="checkbox"
-                        checked={isPromo[p.code] || false}
-                        onChange={(e) => setIsPromoSelected(p.code, e.target.checked)}
+                        checked={isPromo}
+                        onChange={(e) => setIsPromo(e.target.checked)}
                         className="w-6 h-6 rounded-md border-gray-300 text-orange-600 focus:ring-orange-200 transition"
                       />
                     </div>

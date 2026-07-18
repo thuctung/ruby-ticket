@@ -50,7 +50,7 @@ export const getTicketVariant = async (ticketTypeCode: string) => {
   try {
     setGlobalLoading(true);
     const { data, error } = await clientSupbase
-      .from(DB_TABLE_NAME.VIEW_TICET_VARIANTS_AND_CATEGORY)
+      .from(DB_TABLE_NAME.TICKET_TICKET_VARIANT)
       .select("*")
       .eq("ticket_type_code", ticketTypeCode);
     if (error) {
