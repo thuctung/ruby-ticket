@@ -157,41 +157,27 @@ export default function GetTicketSunGroupForm({
     }
   }, [location]);
 
+  const commonProps = {
+    agentPrice,
+    formType,
+    siteSunCode,
+    listSideSunGroup,
+    formData,
+    listProductSun,
+    quantities,
+    totalTickets,
+    total,
+    sideName,
+    selectedLines,
+    handleBuyTicket,
+    setFieldFormData,
+    setQty,
+    setSideSunCode,
+  };
+
   return formType === SUN_BOOKING_FORM_TYPE.AFFILATE ? (
-    <AffilateBookingForm
-      siteSunCode={siteSunCode}
-      setSideSunCode={handleChangeSite}
-      listSideSunGroup={listSideSunGroup}
-      setFieldFormData={setFieldFormData}
-      formData={formData}
-      listProductSun={listProductSun}
-      setQty={setQty}
-      quantities={quantities}
-      totalTickets={totalTickets}
-      total={total}
-      sideName={sideName}
-      selectedLines={selectedLines}
-      handleBuyTicket={handleBuyTicket}
-      agentPrice={agentPrice}
-      formType={formType}
-    />
+    <AffilateBookingForm {...commonProps} />
   ) : (
-    <CustomerBookingForm
-      siteSunCode={siteSunCode}
-      setSideSunCode={setSideSunCode}
-      listSideSunGroup={listSideSunGroup}
-      setFieldFormData={setFieldFormData}
-      formData={formData}
-      listProductSun={listProductSun}
-      setQty={setQty}
-      quantities={quantities}
-      totalTickets={totalTickets}
-      total={total}
-      sideName={sideName}
-      selectedLines={selectedLines}
-      handleBuyTicket={handleBuyTicket}
-      agentPrice={agentPrice}
-      formType={formType}
-    />
+    <CustomerBookingForm {...commonProps} />
   );
 }

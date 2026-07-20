@@ -240,7 +240,7 @@ export default function CustomerBookingForm({
           </div>
 
           {/* Right column: tóm tắt đơn hàng */}
-          <aside className="h-fit rounded-2xl border border-red-100 bg-white p-6 shadow-sm shadow-red-900/5 lg:sticky lg:top-10">
+          <aside className="h-fit rounded-2xl border border-red-100 bg-white p-6 shadow-sm shadow-red-900/5 lg:sticky lg:top-18">
             <h2 className="text-base font-bold text-[#2A1414]">Tóm tắt đơn hàng</h2>
 
             <div className="mt-4 space-y-2.5 text-sm">
