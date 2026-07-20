@@ -57,7 +57,7 @@ export type TicketResultQRType = {
   productName: string;
   productCode: string;
   siteCode: string;
-  unitPrice: string;
+  unitPrice: number;
   productGroup: string;
   isFaceIdRequired: string;
 
@@ -70,6 +70,7 @@ export type TicketResultQRType = {
   orderId: string;
   date_use: string;
   pnr: string;
+  publicPrice: number;
 };
 
 export type PromotionType = {
@@ -171,6 +172,7 @@ export type ProductSubmitType = {
   performanceId: string;
   productsName: string;
   unitPrice: number;
+  publicPrice: number;
 };
 
 export type SubmitSelectTicket = {
@@ -179,6 +181,7 @@ export type SubmitSelectTicket = {
   date_use: string;
   siteCode: string;
   formData?: object;
+  verifyCode?: string;
 };
 
 export type TicketInItemType = {

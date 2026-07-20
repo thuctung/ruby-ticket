@@ -9,7 +9,7 @@ import {
 
 export async function POST(req: Request) {
   const body: any = await req.json();
-  const { currentPage, user_id, from, to, location } = body;
+  const { currentPage, user_id, from, to, location, status } = body;
 
   const fromIdx = (currentPage - 1) * LIMIT_TABLE;
   const toIdx = fromIdx + LIMIT_TABLE - 1;
@@ -29,6 +29,9 @@ export async function POST(req: Request) {
     query = query.eq("location_code", location);
   }
 
+  if (status) {
+    query = query.eq("status", status);
+  }
   if (from) {
     query = query.gte("created_at", `${from}${START_DATE_GMT7}`);
   }

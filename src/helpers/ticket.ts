@@ -10,7 +10,13 @@ import QRCodePDF from "qrcode";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, FULL_DATE_FORMAT, FULL_DATE_TIME_FORMAT } from "@/helpers/dateTime";
 import { CommonType } from "@/types";
-import { GUIDES, LogoBySite } from "@/app-controler/affi/getTicket/components/constants";
+import {
+  FOC_GUIDES,
+  FOC_NOTES,
+  GUIDES,
+  LogoBySite,
+  NOTES,
+} from "@/app-controler/affi/getTicket/components/constants";
 
 let cachedFontBase64: string | null = null;
 
@@ -33,14 +39,18 @@ export async function getFontBase64() {
   return cachedFontBase64;
 }
 
-export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
+export const downloadTicketPDF = async (
+  tickets: TicketResultQRType[],
+  focTicket: TicketResultQRType[]
+) => {
   const PAGE_W = 220;
-  const PAGE_H = 420;
-
+  const PAGE_H = 500;
   const pdf = new jsPDF({
     unit: "px",
     format: [PAGE_W, PAGE_H],
   });
+
+  const finalList = [...tickets, ...focTicket];
 
   const fontBase64 = await getFontBase64();
   pdf.addFileToVFS("Roboto.ttf", fontBase64);
@@ -55,7 +65,7 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
     img.onerror = reject;
     img.src = "/logo.png";
   });
-  const logo = LogoBySite[tickets[0].siteCode as keyof typeof LogoBySite] ?? LogoBySite.HLS;
+  const logo = LogoBySite[finalList[0].siteCode as keyof typeof LogoBySite] ?? LogoBySite.HLS;
 
   const sunWorldLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image();
@@ -71,10 +81,16 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
   const TEXT_DARK = [40, 30, 30] as const;
   const TEXT_GUIDE = [70, 55, 55] as const;
 
-  for (let i = 0; i < tickets.length; i++) {
+  let indexTicket = 0;
+  let indexFOCTicket = 0;
+
+  for (let i = 0; i < finalList.length; i++) {
     if (i > 0) pdf.addPage();
 
-    const t = tickets[i];
+    const t = finalList[i];
+
+    t.verifyCode ? indexFOCTicket++ : indexTicket++;
+
     let y = 14;
 
     // Khung viền ngoài bo góc
@@ -91,7 +107,10 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
     // ===== TITLE BAR (đỏ) — hỗ trợ xuống dòng =====
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(11);
-    const titleLines = pdf.splitTextToSize(t.productName, PAGE_W - 40);
+    const titleLines = pdf.splitTextToSize(
+      t.verifyCode ? "VÉ DÀNH CHO HƯỚNG DẪN VIÊN(TOUR GUIDE)" : t.productName,
+      PAGE_W - 40
+    );
     const lineHeight = 13;
     const titleBarPadding = 8;
     const titleBarH = titleLines.length * lineHeight + titleBarPadding * 2 - 4;
@@ -115,7 +134,7 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(7);
     pdf.text("MÃ ĐƠN", leftX, y);
-    pdf.text("ORDER", rightX - 50, y, { align: "right" });
+    pdf.text("Mã Booking", rightX - 40, y, { align: "right" });
 
     y += 6;
 
@@ -136,13 +155,16 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
 
     y += 30;
 
-    // ===== NGÀY SỬ DỤNG / VALID DATE
+    // ===== NGÀY SỬ DỤNG / Giá
     pdf.setTextColor(...RED_LABEL);
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(7);
     pdf.text("Ngày sử dụng/ Use date", leftX, y);
 
-    y += 13;
+    pdf.setFontSize(7);
+    pdf.text("Giá", rightX - 67, y);
+
+    y += 10;
 
     pdf.setTextColor(...TEXT_DARK);
     pdf.setFont("Roboto", "bold");
@@ -154,7 +176,12 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
       y
     );
 
-    y += 18;
+    pdf.setTextColor(...TEXT_DARK);
+    pdf.setFont("Roboto", "bold");
+    pdf.setFontSize(11);
+    pdf.text(t.verifyCode ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
+
+    y += 10;
 
     // ===== QR BOX =====
     const qrBoxH = 96;
@@ -162,7 +189,7 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
     pdf.setLineWidth(1.2);
     pdf.roundedRect(18, y, PAGE_W - 36, qrBoxH, 8, 8);
 
-    const qr = await QRCodePDF.toDataURL(t.ticketNumber || t.productCode);
+    const qr = await QRCodePDF.toDataURL(t.verifyCode ? t.verifyCode : t.ticketNumber);
     pdf.addImage(qr, "PNG", 20, y + 10, 80, 80);
 
     pdf.setTextColor(...RED_LABEL);
@@ -173,19 +200,24 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
     pdf.setTextColor(...TEXT_DARK);
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(11);
-    pdf.text(`${i + 1}/${tickets.length}`, 104, y + 34);
+
+    if (t.verifyCode) {
+      pdf.text(`${indexFOCTicket}/${focTicket.length}`, 104, y + 34);
+    } else {
+      pdf.text(`${indexTicket}/${tickets.length}`, 104, y + 34);
+    }
 
     pdf.setFillColor(...RED_BRIGHT);
     pdf.roundedRect(104, y + 46, PAGE_W - 36 - 96, 28, 5, 5, "F");
     pdf.setTextColor(255, 255, 255);
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(6);
-    pdf.text("MÃ VÉ / CODE", 104 + (PAGE_W - 36 - 96) / 2, y + 57, {
+    pdf.text("Media Code", 104 + (PAGE_W - 36 - 96) / 2, y + 57, {
       align: "center",
     });
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(9);
-    pdf.text(t.ticketNumber, 104 + (PAGE_W - 36 - 96) / 2, y + 68, {
+    pdf.text(t.verifyCode ? t.verifyCode : t.ticketNumber, 104 + (PAGE_W - 36 - 96) / 2, y + 68, {
       align: "center",
     });
 
@@ -195,7 +227,7 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
     pdf.setTextColor(...RED_LABEL);
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(8);
-    pdf.text("HƯỚNG DẪN / INSTRUCTIONS", 18, y);
+    pdf.text("HƯỚNG DẪN SỬ DỤNG/USER GUIDE:", 18, y);
 
     y += 10;
 
@@ -203,11 +235,47 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(4.6);
 
-    GUIDES.forEach((g) => {
-      const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
-      pdf.text(lines, 18, y);
-      y += lines.length * 5.2 + 3;
-    });
+    if (t.verifyCode) {
+      FOC_GUIDES.forEach((g) => {
+        const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
+        pdf.text(lines, 18, y);
+        y += lines.length * 5.2 + 3;
+      });
+    } else {
+      GUIDES.forEach((g) => {
+        const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
+        pdf.text(lines, 18, y);
+        y += lines.length * 5.2 + 3;
+      });
+    }
+
+    y += 10;
+
+    // ===== NOTE =====
+    pdf.setTextColor(...RED_LABEL);
+    pdf.setFont("Roboto", "bold");
+    pdf.setFontSize(8);
+    pdf.text("LƯU Ý/NOTE:", 18, y);
+
+    y += 10;
+
+    pdf.setTextColor(...TEXT_GUIDE);
+    pdf.setFont("Roboto", "normal");
+    pdf.setFontSize(4.6);
+
+    if (t.verifyCode) {
+      FOC_NOTES.forEach((g) => {
+        const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
+        pdf.text(lines, 18, y);
+        y += lines.length * 5.2 + 3;
+      });
+    } else {
+      NOTES.forEach((g) => {
+        const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
+        pdf.text(lines, 18, y);
+        y += lines.length * 5.2 + 3;
+      });
+    }
 
     // ===== FOOTER =====
     const r = 10;
@@ -220,7 +288,7 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
     pdf.text("RUBY TRAVEL", PAGE_W / 2 - 28, PAGE_H - 18, { align: "center" });
 
     pdf.setFont("Roboto", "normal");
-    pdf.setFontSize(6);
+    pdf.setFontSize(9);
     pdf.text("·  Hotline: 0705 551 668", PAGE_W / 2 + 36, PAGE_H - 18, {
       align: "center",
     });
@@ -230,11 +298,11 @@ export const downloadTicketPDF = async (tickets: TicketResultQRType[]) => {
 };
 
 export const rebuildDataTicket = (
-  tickets: TicketReponseType,
+  finalList: TicketReponseType,
   orderId: string,
   date_use: string
 ) => {
-  const result: TicketResultQRType[] | any = tickets.items.flatMap((item) =>
+  const result: TicketResultQRType[] | any = finalList.items.flatMap((item) =>
     item.tickets.map((ticketChild) => ({
       productName: item.productName,
       productCode: item.productCode,
@@ -248,10 +316,10 @@ export const rebuildDataTicket = (
       validDateTo: ticketChild.validDateTo,
       status: ticketChild.status,
       verifyCode: ticketChild.verifyCode,
-      orderCode: tickets.orderCode,
+      orderCode: finalList.orderCode,
       orderId,
       date_use,
-      pnr: tickets.pnr,
+      pnr: finalList.pnr,
     }))
   );
 

@@ -35,6 +35,7 @@ const intForm: SearchTicketSale = {
   location: "",
   from: df_From,
   to: df_To,
+  status: "",
 };
 
 export default function AffiliateStatsControler() {

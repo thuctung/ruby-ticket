@@ -5,6 +5,7 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import TicketCard from "./TicketCard";
 import { downloadTicketPDF } from "@/helpers/ticket";
+import FOCTicketCard from "./FOCTicket";
 
 type TicketResultQRProps = {
   tickets: TicketResultQRType[];
@@ -24,6 +25,10 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
     });
   };
 
+  const focTicket = tickets?.filter((item) => item.verifyCode) || [];
+
+  const finNalTicket = tickets?.filter((item) => !item.verifyCode) || [];
+
   if (!tickets?.length) return null;
 
   return (
@@ -34,15 +39,19 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
 
         {/* LIST */}
         <div className="flex-1 overflow-y-auto p-4">
-          {tickets.map((t, i) => (
-            <TicketCard key={i} ticketItem={t} currentIndex={i} total={tickets.length} />
+          {finNalTicket.map((t, i) => (
+            <TicketCard key={i} ticketItem={t} currentIndex={i} total={finNalTicket.length} />
+          ))}
+
+          {focTicket.map((t, i) => (
+            <FOCTicketCard key={i} ticketItem={t} currentIndex={i} total={finNalTicket.length} />
           ))}
         </div>
 
         {/* FOOTER */}
         <div className="p-4 border-t flex gap-2">
           <button
-            onClick={() => downloadTicketPDF(tickets)}
+            onClick={() => downloadTicketPDF(finNalTicket, focTicket)}
             className="flex-1 bg-blue-500 text-white py-2 rounded"
           >
             Tải vé (PDF)

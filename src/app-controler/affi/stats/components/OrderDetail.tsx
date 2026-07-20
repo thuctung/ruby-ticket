@@ -65,7 +65,9 @@ export default function OrderDetailDialog({ open, onClose, orderDetails }: Order
       "",
       orderDetails[0].date_use
     );
-    downloadTicketPDF(result);
+    const focTicket = result?.filter((item: TicketResultQRType) => item.verifyCode) || [];
+    const finNalTicket = result?.filter((item: TicketResultQRType) => !item.verifyCode) || [];
+    downloadTicketPDF(finNalTicket, focTicket);
   };
 
   return (

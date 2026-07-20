@@ -21,9 +21,9 @@ import { get } from "lodash";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
-  email: "tunghihi@gmail.com",
-  phone: "0987654323",
-  fullname: "Nguyen Van B",
+  email: "m",
+  phone: "",
+  fullname: "",
   date_use: toDate,
   description: "",
 };
@@ -112,7 +112,6 @@ export default function GetTicketSunGroupForm({
   const handleBuyTicket = () => {
     const products: ProductSubmitType[] = selectedLines.map((item) => {
       const priceSell = getPriceAgentAndMultiple(item, formType, agentPrice);
-
       return {
         productCode: item.code,
         siteCode: siteSunCode,
@@ -121,9 +120,11 @@ export default function GetTicketSunGroupForm({
         usageDateTo: item.pricePolicy.validDateTo,
         performanceId: item.performances[0].performanceId,
         productsName: item.name,
+        publicPrice: item.publicPrice,
         unitPrice: priceSell,
       };
     });
+
     onBuyTicket({
       products: products,
       totalMoney: total,

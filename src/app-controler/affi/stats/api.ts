@@ -36,13 +36,14 @@ export const getOrderHistory = async (
   try {
     setGlobalLoading(true);
     const { currentPage, searchValue } = params;
-    const { from, to } = searchValue;
+    const { from, to, status } = searchValue;
     const dateForm = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
     const body: any = {
       user_id,
       currentPage,
+      status,
       from: dayjs(dateForm).format(SERVER_DATE_FORMAT),
       to: dayjs(dateTo).format(SERVER_DATE_FORMAT),
     };

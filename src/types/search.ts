@@ -2,6 +2,7 @@ export interface SearchTableType<T = object> {
   currentPage: number;
   searchValue: T;
   user_id?: string;
+  status?: string;
 }
 
 export interface SearchAffiType {
@@ -20,6 +21,7 @@ export interface SearchTicketSale {
   location?: string;
   from: string;
   to: string;
+  status?: string;
 }
 
 export interface AdminSearchReport {
@@ -27,5 +29,6 @@ export interface AdminSearchReport {
   from: string;
   to: string;
   email?: string;
+  status?: string;
   payment_method?: string;
 }

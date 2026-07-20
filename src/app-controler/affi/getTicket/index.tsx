@@ -15,6 +15,7 @@ import {
   ParamCreateTicketAgentType,
   SubmitSelectTicket,
   TicketReponseType,
+  ProductSubmitType,
 } from "@/types/ticket";
 import {
   createOrderTicket,
@@ -41,6 +42,8 @@ export default function GetTicketPageControler() {
   const [location, setLocation] = useState("BANA");
   const [openQR, setOpenQR] = useState(false);
   const [resultTicketQR, setTicketResultQR] = useState<TicketResultQRType[]>([]);
+
+  const [listProductSelected, setListProductSelected] = useState<ProductSubmitType[]>([]);
 
   const [loadingMessageGetTicket, setLoadingMessageGetTicket] = useState("");
 
@@ -72,6 +75,7 @@ export default function GetTicketPageControler() {
     }
 
     if (profile) {
+      setListProductSelected(products);
       const items: TicketSubmitAgentType[] = products.map((item) => ({
         quantity: item.quantity,
         price: Number(item.unitPrice),
@@ -102,7 +106,17 @@ export default function GetTicketPageControler() {
         if (tickets) {
           const result: TicketResultQRType[] | any = rebuildDataTicket(tickets, order_id, date_use);
 
-          setTicketResultQR(result);
+          const addPublicPrice = result.map((item: TicketResultQRType) => {
+            const publicPrice =
+              listProductSelected.find((proSelect) => item.productCode)?.publicPrice || 0;
+
+            return {
+              ...item,
+              publicPrice,
+            };
+          });
+
+          setTicketResultQR(addPublicPrice);
           setOpenQR(true);
 
           const currentBalance = profile.balance - totalMoney;
@@ -128,7 +142,7 @@ export default function GetTicketPageControler() {
     <div className="space-y-4">
       <Card className="rounded-2xl">
         <CardHeader>
-          <CardTitle>Rút vé / Xuất vé (trừ tiền ví)</CardTitle>
+          <CardTitle>Rút vé (trừ tiền ví)</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center justify-end">

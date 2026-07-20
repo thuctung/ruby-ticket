@@ -10,6 +10,7 @@ import { LocationType } from "@/types/ticket";
 import { Calendar, MapPin, User } from "lucide-react";
 import { useState } from "react";
 import { BuyMethod, intForm } from "../constant";
+import { StatusData } from "@/app-controler/affi/stats/contants";
 
 type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
@@ -87,6 +88,25 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
               value={filter.to}
               onChange={(date: string) => handleChangeFilter("to", date)}
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+              Trạng thái
+            </label>
+
+            <SelectBox
+              value={filter.status || ""}
+              onChange={(value) => handleChangeFilter("status", value)}
+              className=" h-12"
+            >
+              <option value="">Tất cả</option>
+              {Object.keys(StatusData).map((key: string) => (
+                <option key={key} value={key}>
+                  {StatusData[key]}
+                </option>
+              ))}
+            </SelectBox>
           </div>
 
           <div>

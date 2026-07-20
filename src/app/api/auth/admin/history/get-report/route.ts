@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
   const offset = (currentPage - 1) * LIMIT_TABLE;
 
-  const { from, to, email, payment_method }: AdminSearchReport = searchValue;
+  const { from, to, email, payment_method, status }: AdminSearchReport = searchValue;
 
   let query = supabaseAdmin
     .from(DB_TABLE_NAME.VIEW_TICET_SALE)
@@ -25,6 +25,10 @@ export async function POST(request: Request) {
 
   if (payment_method) {
     query = query.eq("payment_method", payment_method);
+  }
+
+  if (status) {
+    query = query.eq("status", status);
   }
 
   if (from) {

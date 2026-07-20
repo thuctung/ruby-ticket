@@ -17,6 +17,7 @@ import { formatVND } from "@/helpers/money";
 import { SearchTicketSale } from "@/types";
 import { LocationType } from "@/types/ticket";
 import { useState } from "react";
+import { StatusData } from "../contants";
 
 type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
@@ -25,12 +26,7 @@ type SearchTicketFormProps = {
   searchValue: SearchTicketSale;
 };
 
-export function SearchTicketForm({
-  searchValue,
-  locations,
-  onReset,
-  onChangeForm,
-}: SearchTicketFormProps) {
+export function SearchTicketForm({ searchValue, onReset, onChangeForm }: SearchTicketFormProps) {
   const [filter, setFilter] = useState<SearchTicketSale>({
     ...searchValue,
   });
@@ -75,6 +71,24 @@ export function SearchTicketForm({
             value={filter.to}
             onChange={(date: string) => handleChangeFilter("to", date)}
           />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+            Trạng thái
+          </label>
+
+          <SelectBox
+            value={filter.status || ""}
+            onChange={(value) => handleChangeFilter("status", value)}
+            className=" h-12"
+          >
+            <option value="">Tất cả</option>
+            {Object.keys(StatusData).map((key: string) => (
+              <option key={key} value={key}>
+                {StatusData[key]}
+              </option>
+            ))}
+          </SelectBox>
         </div>
       </div>
       <div className=" flex flex-wrap justify-end  pr-3">
