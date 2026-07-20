@@ -2,7 +2,7 @@ import { DB_TABLE_NAME, PAYMENT_STATUS, TYPE_TRANSFER } from "@/commons/constant
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: Request, res: any) {
   try {
     const body = await req.json();
     const payment_content = body.content || "";
@@ -40,6 +40,8 @@ export async function POST(req: Request) {
               paid_at: new Date().toISOString(),
             })
             .eq("payment_code", payment_code);
+        } else {
+          return NextResponse.json({ error: "Failed" }, { status: 500 });
         }
       }
     }

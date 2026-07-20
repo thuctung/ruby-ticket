@@ -119,6 +119,7 @@ export type ClientBuyTicketType = {
   quantity: number;
   price: number;
   date_use: string;
+  ticketName: string;
 };
 
 export type ClientOrderItem = {
@@ -129,4 +130,11 @@ export type ClientOrderItem = {
   listTicketSubmit: ClientBuyTicketType[];
   paymentCode: string;
   promoCode?: string;
+};
+
+export type SenBookingToAdminType = {
+  phoneUser: string;
+  tickets: ClientBuyTicketType[];
+  paymentCode: string;
+  totalAmount: number;
 };

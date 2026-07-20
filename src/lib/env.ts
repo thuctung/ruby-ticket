@@ -1,22 +1,24 @@
 import { z } from "zod";
 
 const schema = z.object({
-  NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
+  NEXT_PUBLIC_SUPABASE_URL: z.string(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
 
   RESEND_API_KEY: z.string().min(1),
   RESEND_FROM_EMAIL: z.string().email(),
 
-  APP_URL: z.string().url(),
+  APP_URL: z.string(),
   TICKET_QR_SECRET: z.string().min(16),
 
   VNPAY_TMN_CODE: z.string().min(1),
   VNPAY_HASH_SECRET: z.string().min(1),
-  VNPAY_URL: z.string().url(),
-  VNPAY_RETURN_URL: z.string().url(),
-  VNPAY_IPN_URL: z.string().url(),
+  VNPAY_URL: z.string(),
+  VNPAY_RETURN_URL: z.string(),
+  VNPAY_IPN_URL: z.string(),
 
+  SEA_PAY_SECRET_KEY: z.string(),
+  SEND_MAIL_KEY: z.string(),
 });
 
 export const env = schema.parse({
@@ -35,8 +37,10 @@ export const env = schema.parse({
   VNPAY_URL: process.env.VNPAY_URL,
   VNPAY_RETURN_URL: process.env.VNPAY_RETURN_URL,
   VNPAY_IPN_URL: process.env.VNPAY_IPN_URL,
-});
 
+  SEA_PAY_SECRET_KEY: process.env.SEA_PAY_SECRET_KEY,
+  SEND_MAIL_KEY: process.env.SEND_MAIL_KEY,
+});
 
 export const profileSchema = z.object({
   fullName: z.string().trim().min(2),

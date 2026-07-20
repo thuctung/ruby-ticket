@@ -96,22 +96,24 @@ export function CheckoutForm({
 
     Object.keys(countTicketSelected).forEach((keyProduct) => {
       const numerTicet = countTicketSelected[keyProduct]?.quality ?? 0;
-      const product = countTicketSelected[keyProduct]?.product;
-      const priceTicket = isPromo
-        ? product?.promo_price - product?.promo_price * 0.03
-        : product?.sale_price;
-      const totalPriceTicket = numerTicet * priceTicket;
-      totalMoney += totalPriceTicket;
-      const result: ResumSelectedType = {
-        base_price: product?.price || 0,
-        finalprice: priceTicket || 0,
-        totalPriceTicket,
-        ticketName: product?.ticket_name || "",
-        numerTicet,
-        ticket_variant_code: keyProduct,
-        date_use: formData.date_use,
-      };
-      res.push(result);
+      if (numerTicet) {
+        const product = countTicketSelected[keyProduct]?.product;
+        const priceTicket = isPromo
+          ? product?.promo_price - product?.promo_price * 0.03
+          : product?.sale_price;
+        const totalPriceTicket = numerTicet * priceTicket;
+        totalMoney += totalPriceTicket;
+        const result: ResumSelectedType = {
+          base_price: product?.price || 0,
+          finalprice: priceTicket || 0,
+          totalPriceTicket,
+          ticketName: product?.ticket_name || "",
+          numerTicet,
+          ticket_variant_code: keyProduct,
+          date_use: formData.date_use,
+        };
+        res.push(result);
+      }
     });
 
     setResumeSelected(res);

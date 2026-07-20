@@ -30,6 +30,8 @@ export const GET_HOME_HIGHLIGHTS = "/api/public/home/highlights";
 
 export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";
 
+export const SEND_MAIL = "/api/send-mail-order-to-admin";
+
 export const GET_TICKET_SALE = "/api/auth/affiliate/stats/get-history";
 
 export const COUNT_TICKET_SALE = "/api/auth/affiliate/stats/count-ticket";

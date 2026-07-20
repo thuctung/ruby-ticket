@@ -4,8 +4,8 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import { PROMOTION_STATUS } from "./contants";
-import { CLIENT_CREATE_ORDER_TICKET } from "@/commons/apiURL";
-import { ClientOrderItem } from "@/types/ticket";
+import { CLIENT_CREATE_ORDER_TICKET, SEND_MAIL } from "@/commons/apiURL";
+import { ClientOrderItem, SenBookingToAdminType } from "@/types/ticket";
 
 const clientSupbase = createSupabaseBrowserClient();
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
@@ -122,6 +122,18 @@ export const customerCreateOrderTicket = async (params: ClientOrderItem) => {
   try {
     setGlobalLoading(true);
     const data: any = await api.post(CLIENT_CREATE_ORDER_TICKET, params);
+    return data;
+  } catch {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const sendBookingToAdmin = async (params: SenBookingToAdminType) => {
+  try {
+    setGlobalLoading(true);
+    const data: any = await api.post(SEND_MAIL, params);
     return data;
   } catch {
     setToastMessage("Có lỗi xảy ra");

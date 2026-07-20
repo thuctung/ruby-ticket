@@ -3,17 +3,18 @@
 import { useLang } from "@/lib/useLang";
 import { CheckoutForm } from "./components/CheckoutForm";
 import { useEffect, useState } from "react";
-import { getLocationClient, customerCreateOrderTicket } from "./api";
+import { getLocationClient, customerCreateOrderTicket, sendBookingToAdmin } from "./api";
 import {
   ClientOrderItem,
   DataFormTicketSubmit,
   LocationType,
+  SenBookingToAdminType,
   TicketResultQRType,
 } from "@/types/ticket";
 import { useSearchParams } from "next/navigation";
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
-import { get } from "lodash";
+import { get, isElement, isEmpty } from "lodash";
 import { CommonType, QRBankResponseType } from "@/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
@@ -44,6 +45,8 @@ export default function CheckoutControlerPage() {
 
   const [ticketResult, setTicketResult] = useState<TicketResultQRType[]>([]);
 
+  const [dataSendMail, setDataSendMail] = useState<SenBookingToAdminType>();
+
   const [qrPaymant, setQRPayment] = useState<QRBankResponseType>({
     qr: "",
     code: "",
@@ -64,17 +67,17 @@ export default function CheckoutControlerPage() {
   };
 
   const handleSubmitTicket = async (values: DataFormTicketSubmit) => {
-    const { formData, total_amount, listTicket ,promoCode} = values;
+    const { formData, total_amount, listTicket, promoCode } = values;
     setItemTicketOrder(values);
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
 
     const { email, phone, description }: any = formData;
-
     const listTicketSubmit = listTicket.map((item) => ({
       ticket_variant_code: item.ticket_variant_code,
       price: item.finalprice,
       quantity: item.numerTicet,
       date_use: dayjs(item.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
+      ticketName: item.ticketName,
     }));
 
     const dataSubmit: ClientOrderItem = {
@@ -84,10 +87,11 @@ export default function CheckoutControlerPage() {
       description: description,
       listTicketSubmit,
       paymentCode,
-      promoCode
+      promoCode,
     };
 
     const data = await customerCreateOrderTicket(dataSubmit);
+
     if (data) {
       const qrLink = getBankInfo(total_amount, paymentCode);
       setQRPayment({
@@ -96,11 +100,19 @@ export default function CheckoutControlerPage() {
         amount: total_amount,
       });
       setOpenQR(true);
+
+      setDataSendMail({
+        phoneUser: formData.phone,
+        tickets: listTicketSubmit,
+        paymentCode: paymentCode,
+        totalAmount: total_amount,
+      });
     }
   };
 
   const getTicketData = () => {
     try {
+      handleDoneQR();
       const data: TicketResultQRType[] =
         itemTicketOrder?.listTicket.map((item) => ({
           ticket_variant_code: item.ticket_variant_code,
@@ -108,10 +120,13 @@ export default function CheckoutControlerPage() {
           ticket_code: "DSSDFSDF",
           dateUse: item.date_use,
         })) || [];
-      setTicketResult(data);
-      setOpenDownloadTicket(true);
-      handleDoneQR();
+      // setTicketResult(data);
+      // setOpenDownloadTicket(true);
+      if (itemTicketOrder && !isEmpty(dataSendMail)) {
+        sendBookingToAdmin(dataSendMail);
+      }
       setLoadingMessage("");
+      setToastMessage("Vé sẽ được gửi qua zalo, vui lòng kiểm tra và liên hệ nếu chưa nhận được.");
     } catch (e) {
       setLoadingMessage("");
       setToastMessage("Có lỗi xảy ra! Vui lòng liên hệ bộ phận hỗ trợ");
