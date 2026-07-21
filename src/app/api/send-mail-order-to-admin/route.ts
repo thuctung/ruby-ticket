@@ -12,9 +12,8 @@ export async function POST(req: Request) {
     const body = await req.json();
 
     const { phoneUser, tickets, paymentCode, totalAmount } = body;
-
     await resend.emails.send({
-      from: "Ruby Travel System<rubytraveldanang.com>",
+      from: "Ruby Travel System<noreply@rubytraveldanang.com>",
       to: "rubytraveldanang@gmail.com",
       subject: `Vé điện tử ${paymentCode}`,
       html: `
@@ -35,6 +34,7 @@ export async function POST(req: Request) {
             >
                 <thead>
                 <tr>
+                    <th>STT</th>
                     <th>Tên vé</th>
                     <th>Số lượng</th>
                 </tr>
