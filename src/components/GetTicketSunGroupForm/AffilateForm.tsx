@@ -83,7 +83,6 @@ export default function AffilateBookingForm({
 
                 <Field label="Ngày đi">
                   <DatePickerCustom
-                    className="okok"
                     value={formData.date_use}
                     onChange={(val: any) => setFieldFormData("date_use", val)}
                     minDate={toDate}

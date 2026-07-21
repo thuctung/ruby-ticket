@@ -4,7 +4,6 @@ import { CommonType } from "@/types";
 import {
   CLIENT_BUY_TICKET_FINAL,
   CLIENT_CREATE_ORDER_TICKET,
-  CLIENT_PAYMENT_SUCCESS,
   CLIENT_UPDATE_STATUS_ORDER,
 } from "@/commons/apiURL";
 import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType, UpdateOrderType } from "./type";
@@ -45,23 +44,14 @@ export const customerCreateOrder = async (params: CustomerOrderType) => {
   }
 };
 
-export const updatePaymentSuccess = async (paymentCode: string) => {
-  try {
-    setGlobalLoading(true);
-    const { data }: any = await api.post(CLIENT_PAYMENT_SUCCESS, { paymentCode });
-    return data;
-  } catch {
-    setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");
-  } finally {
-    setGlobalLoading(false);
-  }
-};
-
 export const getTicketSunWorld = async (orderCode: string) => {
   try {
     setGlobalLoading(true);
     const { data }: any = await sunApi.post("/ota/booking/confirm", { orderCode });
-    return data;
+    if (data.errors[0]) {
+      setToastMessage(data.messages[0]);
+    }
+    return data.result;
   } catch {
     setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");
   } finally {
@@ -71,14 +61,9 @@ export const getTicketSunWorld = async (orderCode: string) => {
 
 export const updateStatusGetTicketFinal = async (payload: CustomerBuyFilnalType) => {
   try {
-    setGlobalLoading(true);
     const { data }: any = await api.post(CLIENT_BUY_TICKET_FINAL, payload);
     return data;
-  } catch {
-    setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");
-  } finally {
-    setGlobalLoading(false);
-  }
+  } catch {}
 };
 
 export const updateStatusOrder = async (payload: UpdateOrderType) => {

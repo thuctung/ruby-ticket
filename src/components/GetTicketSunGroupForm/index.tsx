@@ -21,7 +21,7 @@ import { get } from "lodash";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
-  email: "m",
+  email: "",
   phone: "",
   fullname: "",
   date_use: toDate,

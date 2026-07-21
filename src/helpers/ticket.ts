@@ -89,7 +89,9 @@ export const downloadTicketPDF = async (
 
     const t = finalList[i];
 
-    t.verifyCode ? indexFOCTicket++ : indexTicket++;
+    const isFOCTicket = t.unitPrice === 0;
+
+    isFOCTicket ? indexFOCTicket++ : indexTicket++;
 
     let y = 14;
 
@@ -108,7 +110,7 @@ export const downloadTicketPDF = async (
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(11);
     const titleLines = pdf.splitTextToSize(
-      t.verifyCode ? "VÉ DÀNH CHO HƯỚNG DẪN VIÊN(TOUR GUIDE)" : t.productName,
+      isFOCTicket ? "VÉ DÀNH CHO HƯỚNG DẪN VIÊN(TOUR GUIDE)" : t.productName,
       PAGE_W - 40
     );
     const lineHeight = 13;
@@ -179,7 +181,7 @@ export const downloadTicketPDF = async (
     pdf.setTextColor(...TEXT_DARK);
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(11);
-    pdf.text(t.verifyCode ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
+    pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
 
     y += 10;
 
@@ -189,7 +191,7 @@ export const downloadTicketPDF = async (
     pdf.setLineWidth(1.2);
     pdf.roundedRect(18, y, PAGE_W - 36, qrBoxH, 8, 8);
 
-    const qr = await QRCodePDF.toDataURL(t.verifyCode ? t.verifyCode : t.ticketNumber);
+    const qr = await QRCodePDF.toDataURL(isFOCTicket ? t.verifyCode : t.ticketNumber);
     pdf.addImage(qr, "PNG", 20, y + 10, 80, 80);
 
     pdf.setTextColor(...RED_LABEL);
@@ -201,7 +203,7 @@ export const downloadTicketPDF = async (
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(11);
 
-    if (t.verifyCode) {
+    if (isFOCTicket) {
       pdf.text(`${indexFOCTicket}/${focTicket.length}`, 104, y + 34);
     } else {
       pdf.text(`${indexTicket}/${tickets.length}`, 104, y + 34);
@@ -217,7 +219,7 @@ export const downloadTicketPDF = async (
     });
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(9);
-    pdf.text(t.verifyCode ? t.verifyCode : t.ticketNumber, 104 + (PAGE_W - 36 - 96) / 2, y + 68, {
+    pdf.text(isFOCTicket ? t.verifyCode : t.ticketNumber, 104 + (PAGE_W - 36 - 96) / 2, y + 68, {
       align: "center",
     });
 
@@ -235,7 +237,7 @@ export const downloadTicketPDF = async (
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(4.6);
 
-    if (t.verifyCode) {
+    if (isFOCTicket) {
       FOC_GUIDES.forEach((g) => {
         const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
         pdf.text(lines, 18, y);
@@ -263,7 +265,7 @@ export const downloadTicketPDF = async (
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(4.6);
 
-    if (t.verifyCode) {
+    if (isFOCTicket) {
       FOC_NOTES.forEach((g) => {
         const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
         pdf.text(lines, 18, y);

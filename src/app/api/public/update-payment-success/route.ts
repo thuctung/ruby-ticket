@@ -14,16 +14,19 @@ export async function POST(req: Request) {
         .eq("payment_code", paymentCode)
         .single();
       if (order && order.status_payment === KEY_MODIFY_DATA.PENDING) {
-        await supabaseAdmin
+        const { data } = await supabaseAdmin
           .from(DB_TABLE_NAME.ORDERS)
           .update({
-            status_payment: KEY_MODIFY_DATA.SUCCESSS,
+            status_payment: KEY_MODIFY_DATA.SUCCESS,
             paid_at: new Date().toISOString(),
           })
-          .eq("payment_code", paymentCode);
+          .eq("payment_code", paymentCode)
+          .single();
+        return NextResponse.json({ success: true }, { status: 200 });
       }
+      return NextResponse.json({ error: false }, { status: 200 });
     }
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ error: false }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ error: "Failed" }, { status: 500 });
   }

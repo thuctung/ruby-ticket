@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   let query = supabaseAdmin
     .from(DB_TABLE_NAME.VIEW_TICET_SALE)
     .select("quantity, total")
-    .eq("status", KEY_MODIFY_DATA.SUCCESSS)
+    .eq("status", KEY_MODIFY_DATA.SUCCESS)
     .eq("payment_method", AGENT);
 
   if (user_id) {

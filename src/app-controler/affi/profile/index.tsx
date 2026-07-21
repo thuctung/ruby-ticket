@@ -109,7 +109,7 @@ export default function AffProfilePageController() {
             </div>
             <h2 className="font-semibold text-lg">{formForfile.full_name}</h2>
             <p className="text-sm text-gray-500 text-center">
-              Thành viên từ: {dayjsEx(profile.created_at).format(BASIC_DATE_FORMAT)}
+              Cấp bậc đại lý: {profile.agent_level}
             </p>
           </div>
         </div>

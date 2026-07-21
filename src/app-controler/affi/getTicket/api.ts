@@ -46,13 +46,15 @@ export const createOrderTicket = async (params: ParamCreateTicketAgentType) => {
 
 export const getTicketFromSunGroup = async (
   params: ProductSubmitType[],
-  thirdPartyNumber: string
+  thirdPartyNumber: string,
+  userBooking: any
 ) => {
   try {
     setGlobalLoading(true);
     const { data, error }: any = await sunApi.post("/v2/order/create", {
       thirdPartyNumber,
       products: params,
+      ...userBooking,
     });
     if (data.errors?.length) {
       setToastMessage(data.messages?.[0] || "");

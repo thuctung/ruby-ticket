@@ -1,4 +1,5 @@
-import { DB_TABLE_NAME, PAYMENT_STATUS, TYPE_TRANSFER } from "@/commons/constant";
+import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
+import { DB_TABLE_NAME, TYPE_TRANSFER } from "@/commons/constant";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
@@ -10,6 +11,7 @@ export async function POST(req: Request) {
     const parts = payment_content.trim().split(/\s+/);
 
     const payment_code = parts[0];
+    let resMessage = "";
 
     if (payment_code) {
       const typeTransfer = payment_code.slice(0, 3);
@@ -28,20 +30,31 @@ export async function POST(req: Request) {
           .eq("payment_code", payment_code)
           .single();
 
-        if (order && order.status === PAYMENT_STATUS.PENDING) {
-          let status = PAYMENT_STATUS.COMPLETED;
+        if (order && order.status === KEY_MODIFY_DATA.PENDING) {
+          let status_payment = KEY_MODIFY_DATA.SUCCESS;
+          let description = "";
           if (transferAmount < order.total_amount) {
-            status = PAYMENT_STATUS.FAILED;
+            status_payment = KEY_MODIFY_DATA.ERROR;
+            description = "Số tiền thanh toán không đúng";
+            resMessage = "Số tiền thanh toán không đúng";
           }
           await supabaseAdmin
             .from(DB_TABLE_NAME.ORDERS)
             .update({
-              status,
+              status_payment,
               paid_at: new Date().toISOString(),
+              description,
             })
             .eq("payment_code", payment_code);
+        } else {
+          resMessage = "Không tìm thấy order phù hợp";
         }
       }
+    } else {
+      resMessage = "Không tìm thấy mã thanh toán phù hợp";
+    }
+    if (resMessage) {
+      return NextResponse.json({ error: resMessage }, { status: 200 });
     }
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {

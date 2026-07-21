@@ -5,11 +5,15 @@ import {
   customerCreateOrder,
   customerCreateOrderTicket,
   getTicketSunWorld,
-  updatePaymentSuccess,
   updateStatusGetTicketFinal,
   updateStatusOrder,
 } from "./api";
-import { SubmitSelectTicket, TicketReponseType, TicketResultQRType } from "@/types/ticket";
+import {
+  ProductSubmitType,
+  SubmitSelectTicket,
+  TicketReponseType,
+  TicketResultQRType,
+} from "@/types/ticket";
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
 import { QRBankResponseType } from "@/types";
@@ -23,11 +27,9 @@ import dayjs from "dayjs";
 import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
 import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType } from "./type";
-import { generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
+import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import { toast } from "react-toastify";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
-
-let timeout: any = null;
 
 let timeCancelOrder: any = null;
 
@@ -43,13 +45,12 @@ export default function CheckoutControlerPage() {
   const [loadingMessage, setLoadingMessage] = useState("");
 
   const [openQR, setOpenQR] = useState(false);
-  const [openDownloadTicke, setOpenDownloadTicket] = useState(false);
 
   const chanenSupbase = useRef<any>(null);
 
   const [currentOrderData, setCurrentOrderData] = useState(initOrderData);
 
-  const [ticketResult, setTicketResult] = useState<TicketResultQRType[]>([]);
+  const [productSelected, setProductSelected] = useState<ProductSubmitType[]>([]);
 
   const [qrPaymant, setQRPayment] = useState<QRBankResponseType>({
     qr: "",
@@ -71,15 +72,8 @@ export default function CheckoutControlerPage() {
     setCurrentOrderData(initOrderData);
     clearTimeout(timeCancelOrder);
     handleDoneQR();
+    setLoadingMessage("");
     toast.error("Đơn hàng đã hủy do hết thời gian thanh toán");
-  };
-
-  const demoPaymentSuccess = (paymentCode: string) => {
-    if (timeout) clearTimeout(timeout);
-
-    timeout = setTimeout(() => {
-      updatePaymentSuccess(paymentCode);
-    }, 5000);
   };
 
   const handleBuyTicket = async (values: SubmitSelectTicket) => {
@@ -87,7 +81,7 @@ export default function CheckoutControlerPage() {
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
     const thirdPartyNum = generateThirdPartyCode();
     const { email, phone, fullname }: any = formData;
-
+    setProductSelected(products);
     const paramCreateOrder: CustomerOrderType = {
       email,
       phone,
@@ -131,18 +125,15 @@ export default function CheckoutControlerPage() {
           dateUse: date_use,
         });
 
-        //demo
-        demoPaymentSuccess(paymentCode);
-
         // CANCLE ORDER TIMEOUT :
-        timeCancelOrder = setTimeout(() => cancleOrderTimeout(orderID), 10000);
+        timeCancelOrder = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
       }
     }
   };
 
   const getTicketSuccess = async () => {
     handleDoneQR();
-    clearTimeout(timeout);
+    console.log("timeCancelOrder", timeCancelOrder);
     clearTimeout(timeCancelOrder);
 
     const { orderCode, orderId, dateUse } = currentOrderData;
@@ -153,14 +144,33 @@ export default function CheckoutControlerPage() {
       orderCode: orderCode,
       orderId: orderId,
     };
+
     if (ticketSuccess) {
       // succes step: update status order and show ticket PDF
       const result: TicketResultQRType[] | any = rebuildDataTicket(ticketSuccess, orderId, dateUse);
       payloadFinal.tickets = result;
       payloadFinal.isError = false;
       payloadFinal.referenceCode = ticketSuccess.referenceCode;
+
+      const focTicket: TicketResultQRType[] = [];
+      const customerTicket: TicketResultQRType[] = [];
+
+      result.forEach((item: TicketResultQRType) => {
+        const publicPrice =
+          productSelected.find((item) => item.productCode === item.productCode)?.publicPrice || 0;
+        if (item.unitPrice) {
+          customerTicket.push({ ...item, publicPrice });
+        } else {
+          focTicket.push({ ...item, publicPrice });
+        }
+      });
+      await downloadTicketPDF(customerTicket, focTicket);
+      toast.success("Tải vé về thành công");
+      setProductSelected([]);
+      setCurrentOrderData(initOrderData);
     } else {
       payloadFinal.description = ERROR_MESSAGE.SUN_WORLD_TICKET;
+      toast.error("Có lỗi xảy ra, vui lòng liên hệ để được hỗ trợ");
     }
     await updateStatusGetTicketFinal(payloadFinal);
   };
@@ -175,10 +185,9 @@ export default function CheckoutControlerPage() {
             event: "UPDATE",
             schema: "public",
             table: DB_TABLE_NAME.ORDERS,
-            filter: `payment_code=eq.${qrPaymant.code}`,
           },
           (payload) => {
-            if (payload.new.status_payment === KEY_MODIFY_DATA.SUCCESSS) {
+            if (payload.new.status_payment === KEY_MODIFY_DATA.SUCCESS) {
               toast.success("Thanh toán thành công!");
               clientSupbase.removeChannel(chanenSupbase.current);
               getTicketSuccess();
@@ -189,8 +198,7 @@ export default function CheckoutControlerPage() {
           }
         )
         .subscribe((status, err) => {
-          // Kỳ vọng: "SUBSCRIBED"
-          // Nếu là "CHANNEL_ERROR", "TIMED_OUT" -> có vấn đề (thường do RLS hoặc realtime chưa bật)
+          console.log(status);
         });
 
       return () => {
@@ -291,13 +299,6 @@ export default function CheckoutControlerPage() {
         />
       )}
 
-      {openDownloadTicke && (
-        <TicketResultQR
-          tickets={ticketResult}
-          location={""}
-          onClose={() => setOpenDownloadTicket(false)}
-        />
-      )}
       <LodingMessage loading={Boolean(loadingMessage)} messsage={loadingMessage} />
     </main>
   );

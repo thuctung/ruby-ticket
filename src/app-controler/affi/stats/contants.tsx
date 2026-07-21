@@ -19,7 +19,7 @@ export const TYPE_LIST: StatusType[] = [
 ];
 
 export const KEY_MODIFY_DATA = {
-  ["SUCCESSS"]: "success",
+  ["SUCCESS"]: "success",
   ["PENDING"]: "pending",
   ["ERROR"]: "error",
   ["CANCEL"]: "cancel",
@@ -29,14 +29,14 @@ export const KEY_MODIFY_DATA = {
 export const StatusData = {
   [KEY_MODIFY_DATA.PENDING]: "Đang xử lý",
   [KEY_MODIFY_DATA.ERROR]: "Thất bại",
-  [KEY_MODIFY_DATA.SUCCESSS]: "Thành công",
+  [KEY_MODIFY_DATA.SUCCESS]: "Thành công",
   [KEY_MODIFY_DATA.CANCEL]: "Đã hủy",
   [KEY_MODIFY_DATA.ONHOLD]: "Đợi thanh toán",
 };
 
 export const statusClass: Record<string, string> = {
   [KEY_MODIFY_DATA.ERROR]: "text-red-600 bg-red-100",
-  [KEY_MODIFY_DATA.SUCCESSS]: "text-green-600 bg-green-100 ",
+  [KEY_MODIFY_DATA.SUCCESS]: "text-green-600 bg-green-100 ",
   [KEY_MODIFY_DATA.CANCEL]: "text-red-600 bg-red-100 ",
   [KEY_MODIFY_DATA.ONHOLD]: "text-blue-600 bg-blue-100 ",
   [KEY_MODIFY_DATA.PENDING]: "text-yellow-600 bg-yellow-100 ",

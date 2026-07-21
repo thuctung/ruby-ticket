@@ -25,9 +25,9 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
     });
   };
 
-  const focTicket = tickets?.filter((item) => item.verifyCode) || [];
+  const focTicket = tickets?.filter((item) => item.unitPrice === 0) || [];
 
-  const finNalTicket = tickets?.filter((item) => !item.verifyCode) || [];
+  const finNalTicket = tickets?.filter((item) => item.unitPrice) || [];
 
   if (!tickets?.length) return null;
 
@@ -44,7 +44,7 @@ export default function TicketResultQR({ tickets, onClose, location }: TicketRes
           ))}
 
           {focTicket.map((t, i) => (
-            <FOCTicketCard key={i} ticketItem={t} currentIndex={i} total={finNalTicket.length} />
+            <FOCTicketCard key={i} ticketItem={t} currentIndex={i} total={focTicket.length} />
           ))}
         </div>
 

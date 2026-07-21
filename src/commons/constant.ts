@@ -136,6 +136,7 @@ export const DB_TABLE_NAME = {
   FUNC_COMPLETE_ORDER: "complete_order",
   FUNC_GET_AGENT_SALE_SUMARY: "get_agent_sale_summary",
   FUNC_GET_ALL_SALE_SUMARY: "get_all_sale_summary",
+  FUNC_COMPLETE_ORDER_CUSTOMER: "complete_order_customer",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";

@@ -40,8 +40,6 @@ export const GET_HOME_HIGHLIGHTS = "/api/public/home/highlights";
 
 export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";
 
-export const CLIENT_PAYMENT_SUCCESS = "/api/public/update-payment-success";
-
 export const CLIENT_BUY_TICKET_FINAL = "/api/public/buy-ticket-final";
 
 export const CLIENT_UPDATE_STATUS_ORDER = "/api/public/update-status-order";

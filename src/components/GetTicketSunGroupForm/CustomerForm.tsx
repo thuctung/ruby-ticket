@@ -173,7 +173,7 @@ export default function CustomerBookingForm({
             {listProductSun.map((group, index: number) => (
               <section
                 key={index}
-                className="rounded-2xl border border-red-100 bg-white p-6 shadow-sm shadow-red-900/5"
+                className="rounded-2xl border border-red-100 bg-white p-4 shadow-sm shadow-red-900/5 sm:p-6"
               >
                 <h2 className="text-base font-bold text-[#2A1414]">{group.personType}</h2>
                 {/* <p className="mt-0.5 text-xs text-gray-500">{group.hint}</p> */}
@@ -184,14 +184,14 @@ export default function CustomerBookingForm({
                     return (
                       <div
                         key={item.id}
-                        className="flex items-center justify-between gap-4 rounded-xl border border-gray-100 bg-[#FFFAFA] px-4 py-3.5"
+                        className="flex flex-col gap-3 rounded-xl border border-gray-100 bg-[#FFFAFA] px-3 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-4"
                       >
-                        <div className="flex items-start gap-3">
+                        <div className="flex min-w-0 items-start gap-3">
                           <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-50 text-[#C81418]">
                             <Ticket className="h-4 w-4" />
                           </span>
-                          <div>
-                            <p className="text-xm font-semibold leading-snug text-[#2A1414]">
+                          <div className="min-w-0">
+                            <p className="text-xm font-semibold leading-snug text-[#2A1414] break-words">
                               {item.name}
                             </p>
                             <p className="mt-0.5 text-sm font-medium text-[#C81418]">
@@ -203,7 +203,7 @@ export default function CustomerBookingForm({
                           </div>
                         </div>
 
-                        <div className="flex shrink-0 items-center gap-1 rounded-full border border-gray-200 bg-white p-1">
+                        <div className="flex shrink-0 items-center gap-1 self-end rounded-full border border-gray-200 bg-white p-1 sm:self-auto">
                           <button
                             onClick={() => {
                               setQty(item.code, (quantities[item.code] ?? 0) - 1);

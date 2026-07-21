@@ -73,7 +73,7 @@ export default function GetTicketPageControler() {
       setToastMessage("Số dư không đủ!!");
       return;
     }
-
+    console.log("products", products);
     if (profile) {
       setListProductSelected(products);
       const items: TicketSubmitAgentType[] = products.map((item) => ({
@@ -84,7 +84,7 @@ export default function GetTicketPageControler() {
         date_use: date_use,
       }));
 
-      const thirdPartyNum = "TEST1_SBD_20251016_0002";
+      const thirdPartyNumber = generateThirdPartyCode();
       const params: ParamCreateTicketAgentType = {
         items,
         user_id: profile.user_id || "",
@@ -92,7 +92,7 @@ export default function GetTicketPageControler() {
         email: profile.email || "",
         total_amount: totalMoney,
         side_code: siteCode,
-        thirdPartyNum: "TEST1_SBD_20251016_0002",
+        thirdPartyNumber,
       };
 
       const order_id = await createOrderTicket(params);
@@ -100,7 +100,12 @@ export default function GetTicketPageControler() {
       if (order_id) {
         const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(
           products,
-          thirdPartyNum
+          thirdPartyNumber,
+          {
+            email: "test@gmail.com",
+            fullname: "Nguyen B",
+            phone: "0987654321",
+          }
         );
 
         if (tickets) {
@@ -108,7 +113,8 @@ export default function GetTicketPageControler() {
 
           const addPublicPrice = result.map((item: TicketResultQRType) => {
             const publicPrice =
-              listProductSelected.find((proSelect) => item.productCode)?.publicPrice || 0;
+              listProductSelected.find((proSelect) => item.productCode === proSelect.productCode)
+                ?.publicPrice || 0;
 
             return {
               ...item,

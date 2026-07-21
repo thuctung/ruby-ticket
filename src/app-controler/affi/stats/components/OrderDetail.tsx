@@ -65,8 +65,8 @@ export default function OrderDetailDialog({ open, onClose, orderDetails }: Order
       "",
       orderDetails[0].date_use
     );
-    const focTicket = result?.filter((item: TicketResultQRType) => item.verifyCode) || [];
-    const finNalTicket = result?.filter((item: TicketResultQRType) => !item.verifyCode) || [];
+    const focTicket = result?.filter((item: TicketResultQRType) => item.unitPrice === 0) || [];
+    const finNalTicket = result?.filter((item: TicketResultQRType) => item.unitPrice) || [];
     downloadTicketPDF(finNalTicket, focTicket);
   };
 
@@ -141,7 +141,7 @@ export default function OrderDetailDialog({ open, onClose, orderDetails }: Order
           >
             Đóng
           </button>
-          {orderDetails[0].status === KEY_MODIFY_DATA.SUCCESSS ? (
+          {orderDetails[0].status === KEY_MODIFY_DATA.SUCCESS ? (
             <button
               onClick={handleDownloadTicket}
               className="rounded-lg border border-gray-200 px-4 py-2 text-sm text-white    font-medium text-gray-600 transition bg-[#C81418] "

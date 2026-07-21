@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     if (error) return NextResponse.json(error, { status: 500 });
     return NextResponse.json(data, { status: 200 });
   } else {
-    const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_COMPLETE_ORDER, {
+    const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_COMPLETE_ORDER_CUSTOMER, {
       p_order_id: orderId,
       p_provider_order_code: orderCode,
       p_tickets: tickets,

@@ -117,7 +117,7 @@ export type ParamCreateTicketAgentType = {
   date_use: string;
   email: string;
   side_code: string;
-  thirdPartyNum: string;
+  thirdPartyNumber: string;
 };
 
 export type TicketTypeLocation = {

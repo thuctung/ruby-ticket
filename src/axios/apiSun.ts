@@ -6,7 +6,7 @@ import { loginSunSystem } from "@/components/GetTicketSunGroupForm/api";
 
 const sunApi = axios.create({
   baseURL: SUN_PROXY_GET_DATA,
-  timeout: 10000,
+  timeout: 50000,
   headers: {
     "swg-subscription-key": SUN_GROUP.swgSubscriptionKey,
     "Content-Type": "application/json",
