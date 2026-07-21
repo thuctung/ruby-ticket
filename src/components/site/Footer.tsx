@@ -64,7 +64,7 @@ export default function Footer() {
             <p className="leading-relaxed">
               Hotline: <span className="text-white">0705 551 668</span>
               <br />
-              Email: <span className="text-white">rubytravel@gmail.com</span>
+              Email: <span className="text-white">rubytraveldanang@gmail.com</span>
             </p>
           </div>
         </div>
