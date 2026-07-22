@@ -121,7 +121,7 @@ export const DB_TABLE_NAME = {
   TICKET_TYPES: "ticket_types",
   TICKET_TICKET_VARIANT: "ticket_variants",
   VIEW_TICET_VARIANTS_AND_CATEGORY: "ticket_variants_and_category",
-  LOCATIONS: "locations",
+  SITES: "sites",
   WALLET_TRANSACTION: "wallet_transactions",
   PROMOTION: "promotion",
   AGENT_PRICE: "agent_prices",

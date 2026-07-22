@@ -19,7 +19,6 @@ import { getBankInfo } from "@/helpers/getQRBank";
 import { QRBankResponseType } from "@/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { DB_TABLE_NAME, ERROR_MESSAGE, TYPE_TRANSFER } from "@/commons/constant";
-import TicketResultQR from "../affi/getTicket/components/TicketResultQR";
 import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
@@ -31,8 +30,6 @@ import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/
 import { toast } from "react-toastify";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
 
-let timeCancelOrder: any = null;
-
 const initOrderData = {
   dateUse: "",
   orderCode: "",
@@ -41,7 +38,7 @@ const initOrderData = {
 
 export default function CheckoutControlerPage() {
   const clientSupbase = createSupabaseBrowserClient();
-
+  const timeCancelOrderRef = useRef<NodeJS.Timeout | null>(null);
   const [loadingMessage, setLoadingMessage] = useState("");
 
   const [openQR, setOpenQR] = useState(false);
@@ -69,8 +66,12 @@ export default function CheckoutControlerPage() {
       description: ERROR_MESSAGE.PAYMENT_TIMEOUT,
       status_payment: KEY_MODIFY_DATA.ERROR,
     });
+    if (timeCancelOrderRef.current) {
+      clearTimeout(timeCancelOrderRef.current);
+      timeCancelOrderRef.current = null;
+    }
     setCurrentOrderData(initOrderData);
-    clearTimeout(timeCancelOrder);
+
     handleDoneQR();
     setLoadingMessage("");
     toast.error("Đơn hàng đã hủy do hết thời gian thanh toán");
@@ -126,15 +127,17 @@ export default function CheckoutControlerPage() {
         });
 
         // CANCLE ORDER TIMEOUT :
-        timeCancelOrder = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
+        timeCancelOrderRef.current = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
       }
     }
   };
 
   const getTicketSuccess = async () => {
     handleDoneQR();
-    console.log("timeCancelOrder", timeCancelOrder);
-    clearTimeout(timeCancelOrder);
+    if (timeCancelOrderRef.current) {
+      clearTimeout(timeCancelOrderRef.current);
+      timeCancelOrderRef.current = null;
+    }
 
     const { orderCode, orderId, dateUse } = currentOrderData;
     const ticketSuccess: TicketReponseType = await getTicketSunWorld(orderCode);
@@ -185,6 +188,7 @@ export default function CheckoutControlerPage() {
             event: "UPDATE",
             schema: "public",
             table: DB_TABLE_NAME.ORDERS,
+            filter: `payment_code=eq.${qrPaymant.code}`,
           },
           (payload) => {
             if (payload.new.status_payment === KEY_MODIFY_DATA.SUCCESS) {
@@ -197,9 +201,7 @@ export default function CheckoutControlerPage() {
             }
           }
         )
-        .subscribe((status, err) => {
-          console.log(status);
-        });
+        .subscribe((status, err) => {});
 
       return () => {
         clientSupbase.removeChannel(chanenSupbase.current);
@@ -228,7 +230,7 @@ export default function CheckoutControlerPage() {
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">
-                    Đặt vé Sun World
+                    Bà Nà Hills
                   </h1>
                   <span className="bg-yellow-400 text-blue-900 text-xs font-bold px-2 py-1 rounded-md uppercase">
                     Best Seller

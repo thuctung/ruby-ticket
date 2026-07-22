@@ -14,7 +14,7 @@ export const getLocation = async () => {
   try {
     setGlobalLoading(true);
     const { data, error } = await clientSupbase
-      .from(DB_TABLE_NAME.LOCATIONS)
+      .from(DB_TABLE_NAME.SITES)
       .select("*")
       .eq("status", true);
     if (error) {

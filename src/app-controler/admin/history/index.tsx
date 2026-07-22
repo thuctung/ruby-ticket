@@ -6,7 +6,7 @@ import { formatVND } from "@/lib/money";
 import { getTicketSaleAdmin } from "./api";
 import { AdminSearchReport, SearchTableType, SearchTicketSale } from "@/types";
 import { SearchReport } from "./components/searchReport";
-import { LocationType } from "@/types/ticket";
+import { SiteType } from "@/types/ticket";
 import { getLocation } from "@/app-controler/affi/getTicket/api";
 import { intForm } from "./constant";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
@@ -18,7 +18,7 @@ import { CUSTOMER } from "@/commons/constant";
 
 export default function AdminHistoryPageControler() {
   const [totalPages, setTotalPage] = useState(0);
-  const [locationList, setLocationList] = useState<LocationType[]>([]);
+  const [locationList, setLocationList] = useState<SiteType[]>([]);
 
   const [reportList, setReportList] = useState<AdminReportResponseType[]>([]);
 
@@ -157,7 +157,6 @@ export default function AdminHistoryPageControler() {
     <div className="space-y-6">
       <SearchReport
         onChangeForm={handleChangeForm}
-        locations={locationList}
         onReset={handleResetForm}
         searchValue={params.searchValue}
       />

@@ -1,15 +1,9 @@
 import { CommonType } from "@/types";
-import { LocationType } from "@/types/ticket";
+import { SiteType } from "@/types/ticket";
 import { create } from "zustand";
 
-
 export const useClienttore = create((set) => ({
+  sites: [] as SiteType[],
 
-   locations: [] as LocationType [],
-
-  setLocationClient: (value: string) => set((state: CommonType) => ({ ...state, locations: value })),
-
+  setLocationClient: (value: string) => set((state: CommonType) => ({ ...state, sites: value })),
 }));
-
-
-

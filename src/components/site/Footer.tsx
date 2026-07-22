@@ -28,7 +28,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#locations" className="hover:text-white transition-colors">
+                <a href="#sites" className="hover:text-white transition-colors">
                   Khu du lịch
                 </a>
               </li>

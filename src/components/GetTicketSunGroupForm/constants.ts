@@ -40,7 +40,10 @@ export const getPriceAgentAndMultiple = (
   agentCode: string,
   agentPrice: number
 ) => {
-  let price = agentCode === SUN_BOOKING_FORM_TYPE.AFFILATE ? ticket.unitPrice : ticket.publicPrice;
+  let price =
+    agentCode === SUN_BOOKING_FORM_TYPE.AFFILATE
+      ? ticket.unitPrice
+      : ticket.publicPrice - ticket.publicPrice * (agentPrice / 100);
 
   price = ticket.multiple > 1 ? price / ticket.multiple : price;
 

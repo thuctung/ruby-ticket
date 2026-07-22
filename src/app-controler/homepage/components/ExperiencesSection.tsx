@@ -4,17 +4,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import HoverImage from "@/components/ui/hover-image";
 import { t } from "@/lib/i18n/t";
 import { ChevronRight } from "lucide-react";
-import { ExperienceCard, LocationCard } from "@/types";
+import { ExperienceCard, SideCard } from "@/types";
 
 type LangKey = "vi" | "en" | "zh" | "ko";
 
 export function ExperiencesSection({
   lang,
-  locationCards,
+  sidseCard,
   fallbackExperiences,
 }: {
   lang: LangKey;
-  locationCards: LocationCard[];
+  sidseCard: SideCard[];
   fallbackExperiences: ExperienceCard[];
 }) {
   const displayPrice = (price: number) => {
@@ -38,9 +38,9 @@ export function ExperiencesSection({
           <div className="mt-2 mx-auto w-12 h-1 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
         </div>
 
-        {locationCards.length ? (
+        {sidseCard.length ? (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {locationCards.map((item) => (
+            {sidseCard.map((item) => (
               <Card
                 key={item.id}
                 className="group overflow-hidden rounded-[2rem] border-none shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-100 transition-all duration-300 hover:-translate-y-2"

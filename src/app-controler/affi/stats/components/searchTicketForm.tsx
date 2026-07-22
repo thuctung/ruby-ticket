@@ -15,14 +15,13 @@ import {
 import { checkDateRange } from "@/helpers/dateTime";
 import { formatVND } from "@/helpers/money";
 import { SearchTicketSale } from "@/types";
-import { LocationType } from "@/types/ticket";
+import { SiteType } from "@/types/ticket";
 import { useState } from "react";
 import { StatusData } from "../contants";
 
 type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
   onReset: () => void;
-  locations: LocationType[];
   searchValue: SearchTicketSale;
 };
 
@@ -50,7 +49,7 @@ export function SearchTicketForm({ searchValue, onReset, onChangeForm }: SearchT
             onChange={(value) => handleChangeFilter("location", value)}
           >
             <option value="all">Tất cả</option>
-            {locations.map((item: LocationType) => (
+            {SITES.map((item: SiteType) => (
               <option key={item.code} value={item.code}>
                 {item.name}
               </option>

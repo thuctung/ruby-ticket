@@ -1,7 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Calendar, ChevronDown, Minus, Plus, Ticket } from "lucide-react";
+import { Minus, Plus, Ticket } from "lucide-react";
 import { BookingFormProps, CustomerInfoSchema, getPriceAgentAndMultiple } from "./constants";
 import { SelectBox } from "../ui/customs/selectBox";
 import DatePickerCustom from "../ui/date-picker";
@@ -24,30 +23,8 @@ interface TicketGroup {
   items: TicketOption[];
 }
 
-const LOCATIONS = [
-  "Sun World Sầm Sơn",
-  "Sun World Bà Nà Hills",
-  "Sun World Hạ Long",
-  "Sun World Fansipan Legend",
-];
 const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
 
-const TICKET_GROUPS: TicketGroup[] = [
-  {
-    id: "child",
-    label: "Loại vé CHILD",
-    hint: "Chọn loại vé và nhập số lượng bạn cần",
-    items: [{ id: "child-tt", name: "TE THANH HÓA - VÉ CÔNG VIÊN NƯỚC SẦM SƠN", price: 180000 }],
-  },
-  {
-    id: "adult",
-    label: "Loại vé ADULT",
-    hint: "Chọn loại vé và nhập số lượng bạn cần",
-    items: [{ id: "adult-tt", name: "NL THANH HÓA - VÉ CÔNG VIÊN NƯỚC SẦM SƠN", price: 225000 }],
-  },
-];
-
-const formatCurrency = (value: number) => new Intl.NumberFormat("vi-VN").format(value) + " đ";
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
 export default function CustomerBookingForm({
@@ -194,6 +171,9 @@ export default function CustomerBookingForm({
                             <p className="text-xm font-semibold leading-snug text-[#2A1414] break-words">
                               {item.name}
                             </p>
+                            <span className="mt-0.5 text-xs font-medium text-[#8e8e8e] line-through">
+                              Giá công bố: {formatVND(item.publicPrice)}
+                            </span>
                             <p className="mt-0.5 text-sm font-medium text-[#C81418]">
                               {formatVND(getPriceAgentAndMultiple(item, formType, agentPrice))}
                             </p>

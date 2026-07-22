@@ -13,13 +13,14 @@ type LocationRow = {
   name?: string;
   pre_price?: number | string;
   status?: boolean;
+  in_system?: boolean;
 };
 
-export default function HomePage({ locations }: { locations: LocationRow[] }) {
+export default function HomePage({ sites }: { sites: LocationRow[] }) {
   const lang = "vi";
 
-  const locationCards = () => {
-    const list = locations
+  const sideCard = () => {
+    const list = sites
       .map((item) => {
         const code = String(item.code);
         const exp = EXPERIENCES.find((e) => e.key === code);
@@ -52,11 +53,7 @@ export default function HomePage({ locations }: { locations: LocationRow[] }) {
 
       <TravelServices />
 
-      <ExperiencesSection
-        lang={lang}
-        locationCards={locationCards()}
-        fallbackExperiences={EXPERIENCES}
-      />
+      <ExperiencesSection lang={lang} sidseCard={sideCard()} fallbackExperiences={EXPERIENCES} />
       {/* <TopPartnersSection /> */}
       <Feedback />
       <CollaboratorSection lang={lang} />

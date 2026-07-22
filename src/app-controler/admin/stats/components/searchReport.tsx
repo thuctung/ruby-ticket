@@ -6,7 +6,7 @@ import DatePickerCustom from "@/components/ui/date-picker";
 
 import { checkDateRange } from "@/helpers/dateTime";
 import { AdminSearchReport, SearchTicketSale } from "@/types";
-import { LocationType } from "@/types/ticket";
+import { SiteType } from "@/types/ticket";
 import { Calendar, MapPin, User } from "lucide-react";
 import { useState } from "react";
 import { intForm } from "../constant";

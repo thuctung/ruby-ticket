@@ -7,8 +7,8 @@ export const revalidate = 3600;
 export default async function Home() {
   const srrSupbase = await createSupabaseServerClient();
   const { data } = await srrSupbase
-    .from(DB_TABLE_NAME.LOCATIONS)
+    .from(DB_TABLE_NAME.SITES)
     .select("code,name,pre_price,status")
     .limit(20);
-  return <HomePage locations={data || []} />;
+  return <HomePage sites={data || []} />;
 }

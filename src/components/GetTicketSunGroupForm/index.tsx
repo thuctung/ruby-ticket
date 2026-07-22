@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Fraunces, Be_Vietnam_Pro } from "next/font/google";
-import { getPriceBuyAgentLevel, getProductBySiteSun, getSiteListSun } from "./api";
+import { getAllSite, getPriceBuyAgentLevel, getProductBySiteSun, getSiteListSun } from "./api";
 import {
   ProductSubmitType,
   ResultListProductType,
@@ -18,6 +18,7 @@ import CustomerBookingForm from "./CustomerForm";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { ProfileType } from "@/types";
 import { get } from "lodash";
+import { CUSTOMER } from "@/commons/constant";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
@@ -135,16 +136,27 @@ export default function GetTicketSunGroupForm({
   };
 
   useEffect(() => {
-    if (siteSunCode && profile.agent_level) {
-      fetchPriceAgentLevel(siteSunCode, profile.agent_level);
+    if (siteSunCode) {
+      let level = "";
+      if (SUN_BOOKING_FORM_TYPE.AFFILATE === formData && profile?.agent_level) {
+        level = CUSTOMER;
+      } else if (SUN_BOOKING_FORM_TYPE.CUSTOMER) {
+        level = CUSTOMER;
+      }
+
+      if (level) fetchPriceAgentLevel(siteSunCode, level);
     }
-  }, [siteSunCode, profile.agent_level]);
+  }, [siteSunCode, profile.agent_level, formType]);
 
   useEffect(() => {
     if (siteSunCode) {
       fetchProductBySite(siteSunCode);
     }
   }, [siteSunCode]);
+
+  useEffect(() => {
+    getAllSite();
+  }, []);
 
   useEffect(() => {
     if (location) {

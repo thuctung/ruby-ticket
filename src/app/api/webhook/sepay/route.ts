@@ -1,11 +1,30 @@
 import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
 import { DB_TABLE_NAME, TYPE_TRANSFER } from "@/commons/constant";
+import { env } from "@/lib/env";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { get } from "lodash";
 import { NextResponse } from "next/server";
+const crypto = require("crypto");
 
-export async function POST(req: Request) {
+const secret = env.SEA_PAY_SECRET_KEY;
+
+export async function POST(req: any) {
   try {
+    const signature = req.headers.get("x-sepay-signature") || "";
+    const timestamp = req.headers.get("x-sepay-timestamp") || "";
     const body = await req.json();
+    const payload = JSON.stringify(body);
+    const expected =
+      "sha256=" +
+      crypto
+        .createHmac("sha256", secret)
+        .update(timestamp + "." + payload)
+        .digest("hex");
+
+    if (signature !== expected) {
+      return NextResponse.json({ error: "Failed" }, { status: 500 });
+    }
+
     const payment_content = body.content || "";
     const transferAmount = Number(body.transferAmount);
     const parts = payment_content.trim().split(/\s+/);

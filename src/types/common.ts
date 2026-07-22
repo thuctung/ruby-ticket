@@ -30,7 +30,7 @@ export type StatusType = {
   value: string;
 };
 
-export type LocationCard = {
+export type SideCard = {
   id: string;
   code: string;
   name: string;

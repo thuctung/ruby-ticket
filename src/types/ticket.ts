@@ -1,6 +1,6 @@
 import { number } from "zod";
 
-export interface LocationType {
+export interface SiteType {
   name: string;
   code: string;
 }
@@ -37,7 +37,7 @@ export type ProductType = {
   agent_prices?: AgentPriceType[];
 };
 
-export interface PersonType extends LocationType {}
+export interface PersonType extends SiteType {}
 
 export type ItemSelectType = {
   name: string;

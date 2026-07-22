@@ -170,7 +170,6 @@ export default function AffiliateStatsControler() {
         <CardContent className="space-y-6">
           <Separator />
           <SearchTicketForm
-            locations={[]}
             onChangeForm={handleChangeForm}
             onReset={handleResetForm}
             searchValue={params.searchValue}

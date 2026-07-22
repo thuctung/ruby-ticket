@@ -26,22 +26,6 @@ export const loginSunSystem = async () => {
   }
 };
 
-export const getSiteListSun = async () => {
-  try {
-    setGlobalLoading(true);
-    const { data }: any = await sunApi.get(`/ota/site/listing`, {
-      params: {
-        lang: "vi",
-      },
-    });
-    return data.result;
-  } catch (e) {
-    setToastMessage("Có lỗi xảy ra! Thử lại sau");
-  } finally {
-    setGlobalLoading(false);
-  }
-};
-
 export const getProductBySiteSun = async (siteCodes: string, date: string) => {
   try {
     setGlobalLoading(true);
@@ -93,6 +77,56 @@ export const getPriceBuyAgentLevel = async (site_code: string, agent_code: strin
     return data;
   } catch {
     setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getSiteListSun = async () => {
+  try {
+    setGlobalLoading(true);
+    const { data }: any = await sunApi.get(`/ota/site/listing`, {
+      params: {
+        lang: "vi",
+      },
+    });
+    return data.result;
+  } catch (e) {
+    setToastMessage("Có lỗi xảy ra! Thử lại sau");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getSiteListSunWorld = async () => {
+  const { data }: any = await sunApi.get("/ota/site/listing", {
+    params: {
+      lang: "vi",
+    },
+  });
+
+  if (data.error[0]) {
+    throw data.message[0];
+  }
+
+  return data.result;
+};
+
+export const getSiteInSystem = async () => {
+  const { data, error } = await clientSupbase.from(DB_TABLE_NAME.SITES).select("*");
+
+  if (error) throw error;
+
+  return data;
+};
+
+export const getAllSite = async () => {
+  try {
+    setGlobalLoading(true);
+
+    const [sunSites, systemSites] = await Promise.all([getSiteListSun(), getSiteInSystem()]);
+  } catch (error: any) {
+    setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {
     setGlobalLoading(false);
   }

@@ -11,6 +11,7 @@ import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 import CreatePriceForm from "./components/create-price";
 import { getListAgent } from "../agent-mgt/api";
 import { AgentPriceSubmitType, AgentPriceType } from "./type";
+import { CUSTOMER } from "@/commons/constant";
 
 export default function PricingPageControler() {
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
@@ -169,8 +170,15 @@ export default function PricingPageControler() {
                         placeholder="0"
                         onChange={(e) => handleChangePrice(e.target.value, index)}
                       />
-                      <span className="text-xs text-slate-400">đ</span>
+                      <span className="text-xs text-slate-400">
+                        {price.agent_code === CUSTOMER ? "%" : "đ"}
+                      </span>
                     </div>
+                    {price.agent_code === CUSTOMER ? (
+                      <div>
+                        <span className="text-[red] text-xs">Phần trăm giảm trên giá công bố</span>
+                      </div>
+                    ) : null}
                   </td>
                 </tr>
               ))}

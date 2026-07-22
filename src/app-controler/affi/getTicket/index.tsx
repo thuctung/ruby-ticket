@@ -9,7 +9,7 @@ import { formatVND } from "@/lib/money";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
 import {
-  LocationType,
+  SiteType,
   TicketResultQRType,
   TicketSubmitAgentType,
   ParamCreateTicketAgentType,
@@ -38,7 +38,7 @@ export default function GetTicketPageControler() {
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
   const { setProfile }: CommonType | any = useProfileStore.getState();
 
-  const [locationList, setLocationList] = useState<LocationType[]>([]);
+  const [locationList, setLocationList] = useState<SiteType[]>([]);
   const [location, setLocation] = useState("BANA");
   const [openQR, setOpenQR] = useState(false);
   const [resultTicketQR, setTicketResultQR] = useState<TicketResultQRType[]>([]);
@@ -73,7 +73,6 @@ export default function GetTicketPageControler() {
       setToastMessage("Số dư không đủ!!");
       return;
     }
-    console.log("products", products);
     if (profile) {
       setListProductSelected(products);
       const items: TicketSubmitAgentType[] = products.map((item) => ({

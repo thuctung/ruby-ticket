@@ -6,7 +6,7 @@ import DatePickerCustom from "@/components/ui/date-picker";
 
 import { checkDateRange } from "@/helpers/dateTime";
 import { AdminSearchReport, SearchTicketSale } from "@/types";
-import { LocationType } from "@/types/ticket";
+import { SiteType } from "@/types/ticket";
 import { Calendar, MapPin, User } from "lucide-react";
 import { useState } from "react";
 import { BuyMethod, intForm } from "../constant";
@@ -15,7 +15,6 @@ import { StatusData } from "@/app-controler/affi/stats/contants";
 type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
   onReset: () => void;
-  locations: LocationType[];
   searchValue: SearchTicketSale;
 };
 
@@ -56,7 +55,7 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
               className=" h-12"
             >
               <option value="all">Tất cả</option>
-              {locations.map((item: LocationType) => (
+              {SITES.map((item: SiteType) => (
                 <option key={item.code} value={item.code}>
                   {item.name}
                 </option>
