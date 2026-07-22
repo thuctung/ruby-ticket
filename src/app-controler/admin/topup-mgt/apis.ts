@@ -1,5 +1,9 @@
 import api from "@/axios";
-import { ADMIN_UPDATE_STATUS_TOPUP, GET_LIST_TOPUP_MGT } from "@/commons/apiURL";
+import {
+  ADMIN_UPDATE_STATUS_TOPUP,
+  GET_LIST_TOPUP_MGT,
+  UPDATE_STATUS_TOPUP_MGT,
+} from "@/commons/apiURL";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType, SearchAffiType, SearchTableType, TopupMgtResponseType } from "@/types";
 import { get } from "lodash";
@@ -22,9 +26,8 @@ export const getListTopupMgt = async (searchValue: SearchTableType<SearchAffiTyp
 export const updateTopupMgtStatus = async (topupItems: TopupMgtResponseType) => {
   setGlobalLoading(true);
   try {
-    const response = await api.post(ADMIN_UPDATE_STATUS_TOPUP, {
-      content: topupItems.payment_code,
-      transferAmount: topupItems.amount,
+    const response = await api.post(UPDATE_STATUS_TOPUP_MGT, {
+      topup_id: topupItems.topup_id,
     });
     return response;
   } catch (err: any) {
