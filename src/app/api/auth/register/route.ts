@@ -77,23 +77,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Insert affiliate application
-    const { error: appErr } = await supabaseAdmin.from(DB_TABLE_NAME.AFF_APPLICATION).insert({
-      user_id: user.id,
-      full_name: fullName,
-      phone,
-      email,
-      address,
-      status: "pending",
-    });
-
-    if (appErr) {
-      return NextResponse.json(
-        { ok: false, error: "APPLICATION_INSERT_FAILED", message: appErr.message },
-        { status: 500 }
-      );
-    }
-
     // Optionally auto-sign-in client after server-side registration
     // We'll just return ok and let client sign in.
     return NextResponse.json({ ok: true, userId: user.id });
