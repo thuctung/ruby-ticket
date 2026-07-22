@@ -117,7 +117,6 @@ export const DB_TABLE_NAME = {
   VIEW_ADMIN_REPORT: "admin_order_report",
   FUC_UPADTE_STAUS_BALANCE: "approve_topup",
   FUC_CUSTOMER_BUY_TICKET: "customer_buy_ticket",
-  AFF_APPLICATION: "affiliate_applications",
   TICKET_TYPES: "ticket_types",
   TICKET_TICKET_VARIANT: "ticket_variants",
   VIEW_TICET_VARIANTS_AND_CATEGORY: "ticket_variants_and_category",
