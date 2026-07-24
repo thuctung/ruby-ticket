@@ -49,3 +49,8 @@ export const getPriceAgentAndMultiple = (
 
   return agentCode === SUN_BOOKING_FORM_TYPE.AFFILATE ? price + agentPrice : price;
 };
+
+export const PRODUCT_TYPE = {
+  ["ADULT"]: "Người lớn",
+  ["CHILD"]: "Trẻ em",
+};

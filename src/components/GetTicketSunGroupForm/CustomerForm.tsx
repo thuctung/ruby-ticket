@@ -1,7 +1,12 @@
 "use client";
 
 import { Minus, Plus, Ticket } from "lucide-react";
-import { BookingFormProps, CustomerInfoSchema, getPriceAgentAndMultiple } from "./constants";
+import {
+  BookingFormProps,
+  CustomerInfoSchema,
+  getPriceAgentAndMultiple,
+  PRODUCT_TYPE,
+} from "./constants";
 import { SelectBox } from "../ui/customs/selectBox";
 import DatePickerCustom from "../ui/date-picker";
 import dayjs from "dayjs";
@@ -152,7 +157,9 @@ export default function CustomerBookingForm({
                 key={index}
                 className="rounded-2xl border border-red-100 bg-white p-4 shadow-sm shadow-red-900/5 sm:p-6"
               >
-                <h2 className="text-base font-bold text-[#2A1414]">{group.personType}</h2>
+                <h2 className="text-base font-bold text-[#2A1414]">
+                  {PRODUCT_TYPE[group.personType as keyof typeof PRODUCT_TYPE] || group.personType}
+                </h2>
                 {/* <p className="mt-0.5 text-xs text-gray-500">{group.hint}</p> */}
 
                 <div className="mt-4 space-y-3">

@@ -6,7 +6,7 @@ import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
-import { BookingFormProps, getPriceAgentAndMultiple } from "./constants";
+import { BookingFormProps, getPriceAgentAndMultiple, PRODUCT_TYPE } from "./constants";
 import { formatVND } from "@/helpers/money";
 
 const display = Fraunces({
@@ -99,7 +99,8 @@ export default function AffilateBookingForm({
                 className="rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] p-6 shadow-[0_1px_2px_rgba(31,58,47,0.05)] sm:p-8"
               >
                 <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#1F3A2F]">
-                  Loại vé {item.personType}
+                  Loại vé{" "}
+                  {PRODUCT_TYPE[item.personType as keyof typeof PRODUCT_TYPE] || item.personType}
                 </h2>
                 <p className="mt-1 text-sm text-[#6E7C73]">Chọn loại vé và nhập số lượng bạn cần</p>
 

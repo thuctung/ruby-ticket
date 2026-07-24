@@ -152,7 +152,7 @@ export default function GetTicketSunGroupForm({
     if (siteSunCode) {
       fetchProductBySite(siteSunCode);
     }
-  }, [siteSunCode]);
+  }, [siteSunCode, formData.date_use]);
 
   useEffect(() => {
     getAllSite();
