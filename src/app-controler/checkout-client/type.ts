@@ -35,3 +35,10 @@ export type UpdateOrderType = {
   description: string;
   status_payment?: string;
 };
+
+export type SendTicketMailType = {
+  orderCode: string;
+  email: string;
+  customerTickets: TicketResultQRType[];
+  focTickets: TicketResultQRType[];
+};

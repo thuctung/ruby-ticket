@@ -4,11 +4,20 @@ import { CommonType } from "@/types";
 import {
   CLIENT_BUY_TICKET_FINAL,
   CLIENT_CREATE_ORDER_TICKET,
+  CLIENT_SEND_TICET_TO_MAIL,
   CLIENT_UPDATE_STATUS_ORDER,
 } from "@/commons/apiURL";
-import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType, UpdateOrderType } from "./type";
+import {
+  ClientOrderItem,
+  CustomerBuyFilnalType,
+  CustomerOrderType,
+  SendTicketMailType,
+  UpdateOrderType,
+} from "./type";
 import sunApi from "@/axios/apiSun";
 import { get } from "lodash";
+import dayjs from "dayjs";
+import { FULL_DATE_FORMAT } from "@/helpers/dateTime";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 export const customerCreateOrderTicket = async (params: ClientOrderItem) => {
@@ -72,6 +81,28 @@ export const updateStatusOrder = async (payload: UpdateOrderType) => {
     const { data }: any = await api.post(CLIENT_UPDATE_STATUS_ORDER, payload);
     return data;
   } catch {
+    setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const senTicketToMail = async (payload: SendTicketMailType) => {
+  try {
+    setGlobalLoading(true);
+    const response: any = await api.post(CLIENT_SEND_TICET_TO_MAIL, payload, {
+      responseType: "blob",
+    });
+
+    const url = URL.createObjectURL(response.data);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${dayjs(new Date()).format(FULL_DATE_FORMAT)}-${payload.orderCode}.pdf`;
+    a.click();
+
+    URL.revokeObjectURL(url);
+  } catch (e) {
+    console.log(e);
     setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");
   } finally {
     setGlobalLoading(false);

@@ -40,8 +40,14 @@ export const FOC_NOTES = [
 ];
 
 export const LogoBySite = {
-  HLS: "/sungroup/logo_catba.jpg",
+  HLS: "/sungroup/logo_halong.jpg",
   BNC: "/sungroup/logo_bana.jpg",
-  HTI: "/sungroup/logo_honthom.jpg",
+  SBD: "/sungroup/logo_baden.jpg",
   FSS: "/sungroup/logo_fansipan.jpg",
+  SWS: "/sungroup/logo_samson.jpg",
+  SWN: "/sungroup/logohanam.jpg",
+  SCB: "/sungroup/logo_catba.jpg",
+  HTI: "/sungroup/logo_honthom.jpg",
+  SWH: "/sungroup/logo.png",
+  SWV: "/sungroup/logo_vungtau.jpg",
 };

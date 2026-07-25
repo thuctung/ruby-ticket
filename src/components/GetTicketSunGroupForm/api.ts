@@ -7,6 +7,8 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 
 import { groupTicketSunGroup } from "@/helpers/genCode";
+import dayjs from "dayjs";
+import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 const clientSupbase = createSupabaseBrowserClient();
@@ -38,11 +40,18 @@ export const getProductBySiteSun = async (siteCodes: string, date: string) => {
         per_page: 50,
       },
     });
-    if (data.result?.length) {
-      return groupTicketSunGroup(data.result);
+    if (data.errors[0]) {
+      setToastMessage(data.messages[0]);
+      return [];
     }
-    return [];
+    if (data.result.length === 0) {
+      setToastMessage(
+        `SAP không cấu hình mở bán cho sản phẩm vào ngày ${dayjs(date, SERVER_DATE_FORMAT).format(BASIC_DATE_FORMAT)}`
+      );
+    }
+    return groupTicketSunGroup(data.result);
   } catch (e) {
+    console.log(e);
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
   } finally {
     setGlobalLoading(false);
@@ -64,7 +73,6 @@ export const updateSuccessOrder = async (payload: any) => {
 
 export const getPriceBuyAgentLevel = async (site_code: string, agent_code: string) => {
   try {
-    setGlobalLoading(true);
     const { data, error } = await clientSupbase
       .from(DB_TABLE_NAME.AGENT_PRICE)
       .select("price")
@@ -77,8 +85,6 @@ export const getPriceBuyAgentLevel = async (site_code: string, agent_code: strin
     return data;
   } catch {
     setToastMessage("Có lỗi xảy ra");
-  } finally {
-    setGlobalLoading(false);
   }
 };
 

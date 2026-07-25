@@ -22,6 +22,8 @@ export type BookingFormProps = {
   agentPrice: number;
   formType: string;
   handleBuyTicket: () => void;
+  exportGuideTicket?: boolean;
+  setExportGuideTicket?: (value: boolean) => void;
 };
 
 export const CustomerInfoSchema = z.object({

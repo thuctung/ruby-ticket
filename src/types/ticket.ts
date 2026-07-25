@@ -182,6 +182,7 @@ export type SubmitSelectTicket = {
   siteCode: string;
   formData?: object;
   verifyCode?: string;
+  haveFOC: boolean;
 };
 
 export type TicketInItemType = {

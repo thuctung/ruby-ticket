@@ -214,13 +214,16 @@ export const MENUS = [
 ];
 
 export const SITE_SUB_GROUP = {
-  HLS: "SUN WORLD HẠ LONG",
-  BNC: "SUN WORLD BÀ NÀ HILLS",
-  SBD: "SUN WORLD BADEN",
-  FSS: "SUN WORLD FANSIPAN",
-  SWS: "SUN WORLD SAM SON",
-  SWN: "SUN WORLD HA NAM",
-  SCB: "SUN WORLD CAT BA",
+  HLS: "Sun World Hạ Long",
+  BNC: "Sun World Bà Nà Hills",
+  SBD: "Sun World Bà Đen Mountain",
+  FSS: "Sun World Fansipan Legend",
+  SWS: "Sun World Sầm Sơn",
+  SWN: "Sun World Hà Nam",
+  SCB: "Sun world Cát Bà",
+  HTI: "Sun World Hòn Thơm",
+  SWH: "SunWorld Holding",
+  SWV: "Sun World Vũng Tàu",
 };
 
 export const LOCAL_SUN_TOKEN = "sun_access_token";

@@ -18,7 +18,7 @@ export default function AffiliateLayout({ children }: { children: React.ReactNod
           <SideBarManager menuList={SIDEBAR_AFF} />
         </aside>
 
-        <section className="flex-1 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/40 border border-white p-8 min-h-[100vh]">
+        <section className="flex-1 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/40 border border-white min-h-[100vh]  p-0 md:p-8">
           {children}
         </section>
       </div>

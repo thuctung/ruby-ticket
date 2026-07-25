@@ -19,19 +19,19 @@ import {
 } from "@/types/ticket";
 import {
   createOrderTicket,
-  getLocation,
   getTicketFromSunGroup,
   updateStatusOrderFail,
   updateSuccessOrder,
 } from "./api";
 import { useCommonStore } from "@/stores/useCommonStore";
-import TicketResultQR from "./components/TicketResultQR";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
-import { LodingMessage } from "@/components/ui/loading-message";
 import { generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
 import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
+import { toast } from "react-toastify";
+import { senTicketToMail } from "@/app-controler/checkout-client/api";
+import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -40,35 +40,11 @@ export default function GetTicketPageControler() {
 
   const [locationList, setLocationList] = useState<SiteType[]>([]);
   const [location, setLocation] = useState("BANA");
-  const [openQR, setOpenQR] = useState(false);
-  const [resultTicketQR, setTicketResultQR] = useState<TicketResultQRType[]>([]);
 
   const [listProductSelected, setListProductSelected] = useState<ProductSubmitType[]>([]);
 
-  const [loadingMessageGetTicket, setLoadingMessageGetTicket] = useState("");
-
-  const locationName = useMemo(
-    () => locationList.find((item) => item.code === location)?.name || "",
-    [location, locationList]
-  );
-
-  const onCloseQR = () => {
-    setOpenQR(false);
-  };
-
-  const handleGetLocation = useCallback(async () => {
-    const resLocation = await getLocation();
-    if (resLocation) {
-      setLocationList(resLocation);
-    }
-  }, []);
-
-  useEffect(() => {
-    handleGetLocation();
-  }, [handleGetLocation]);
-
   const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
-    const { products, totalMoney, date_use, siteCode } = values;
+    const { products, totalMoney, date_use, siteCode, haveFOC } = values;
     if (totalMoney > profile.balance) {
       setToastMessage("Số dư không đủ!!");
       return;
@@ -121,8 +97,16 @@ export default function GetTicketPageControler() {
             };
           });
 
-          setTicketResultQR(addPublicPrice);
-          setOpenQR(true);
+          const { focTickets, customerTickets } = getTicketFOCAndCutomer(addPublicPrice, products);
+
+          // SEND TICKET TO MAIL AND DOWN FILE PDF
+          await senTicketToMail({
+            email: profile.email || "",
+            customerTickets,
+            focTickets: haveFOC ? focTickets : [],
+            orderCode: tickets.orderCode,
+          });
+          toast.success(`Rút vé thành công`);
 
           const currentBalance = profile.balance - totalMoney;
           setProfile({
@@ -165,14 +149,6 @@ export default function GetTicketPageControler() {
           />
         </CardContent>
       </Card>
-
-      {openQR && (
-        <TicketResultQR tickets={resultTicketQR} onClose={onCloseQR} location={locationName} />
-      )}
-      <LodingMessage
-        loading={Boolean(loadingMessageGetTicket)}
-        messsage={loadingMessageGetTicket}
-      />
     </div>
   );
 }

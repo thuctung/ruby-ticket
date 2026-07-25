@@ -9,7 +9,7 @@ type SideBarManagerProps = {
 };
 export default function SideBarManager({ menuList }: SideBarManagerProps) {
   return (
-    <div className="bg-white p-2 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 max-w-xs space-y-3">
+    <div className="bg-white p-2 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100  space-y-3">
       {menuList.map((item, idx) => (
         <Link href={item.link} key={idx}>
           <button className="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-all duration-200 group border border-transparent hover:border-gray-100">

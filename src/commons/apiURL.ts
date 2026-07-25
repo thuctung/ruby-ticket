@@ -44,6 +44,8 @@ export const CLIENT_BUY_TICKET_FINAL = "/api/public/buy-ticket-final";
 
 export const CLIENT_UPDATE_STATUS_ORDER = "/api/public/update-status-order";
 
+export const CLIENT_SEND_TICET_TO_MAIL = "/api/public/send-ticket-mail";
+
 export const GET_ORDER_HISTORY = "/api/auth/affiliate/stats/order-history";
 
 export const GET_ORDER_DETAIL = "/api/auth/affiliate/stats/order-detail";

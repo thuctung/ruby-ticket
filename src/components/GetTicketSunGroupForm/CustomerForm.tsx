@@ -116,7 +116,9 @@ export default function CustomerBookingForm({
 
               <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="sm:col-span-2">
-                  <label className="mb-1.5 block text-xs font-medium text-gray-500">Email</label>
+                  <label className="mb-1.5 block text-xs font-medium text-gray-500">
+                    Email<span className="text-[red]">*</span>
+                  </label>
                   <input
                     type="email"
                     value={formData.email}
@@ -139,7 +141,7 @@ export default function CustomerBookingForm({
 
                 <div className="sm:col-span-2">
                   <label className="mb-1.5 block text-xs font-medium text-gray-500">
-                    Số điện thoại
+                    Số điện thoại <span className="text-[red]">*</span>
                   </label>
                   <input
                     type="tel"

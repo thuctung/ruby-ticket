@@ -1,15 +1,12 @@
-import { TYPE_TRANSACTION } from "@/commons/constant";
-import { TableColumn } from "@/components/ui/customs/table";
-import { dayjsEx } from "@/helpers/dateTime";
 import { formatVND } from "@/helpers/money";
-import { StatusType, TicketSalteResponseType } from "@/types";
 import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
+import fs from "fs";
+import path from "path";
 
 import { jsPDF } from "jspdf";
 import QRCodePDF from "qrcode";
 import dayjs from "dayjs";
-import { BASIC_DATE_FORMAT, FULL_DATE_FORMAT, FULL_DATE_TIME_FORMAT } from "@/helpers/dateTime";
-import { CommonType } from "@/types";
+import { BASIC_DATE_FORMAT, FULL_DATE_TIME_FORMAT } from "@/helpers/dateTime";
 import {
   FOC_GUIDES,
   FOC_NOTES,
@@ -20,26 +17,27 @@ import {
 
 let cachedFontBase64: string | null = null;
 
-export async function getFontBase64() {
-  if (cachedFontBase64) return cachedFontBase64;
-
-  const res = await fetch("/font/Roboto-Regular.ttf");
-  const buffer = await res.arrayBuffer();
-
-  // convert 1 lần duy nhất
-  let binary = "";
-  const bytes = new Uint8Array(buffer);
-
-  for (let i = 0; i < bytes.length; i++) {
-    binary += String.fromCharCode(bytes[i]);
+export const getFontBase64 = () => {
+  if (cachedFontBase64) {
+    return cachedFontBase64;
   }
 
-  cachedFontBase64 = btoa(binary);
+  const fontPath = path.join(process.cwd(), "public", "font", "Roboto-Regular.ttf");
+
+  const fontBuffer = fs.readFileSync(fontPath);
+
+  cachedFontBase64 = fontBuffer.toString("base64");
 
   return cachedFontBase64;
+};
+
+export function getImageBase64(fileName: string) {
+  const filePath = path.join(process.cwd(), "public", fileName);
+
+  return fs.readFileSync(filePath).toString("base64");
 }
 
-export const downloadTicketPDF = async (
+export const downloadTicketPDFServer = async (
   tickets: TicketResultQRType[],
   focTicket: TicketResultQRType[]
 ) => {
@@ -59,20 +57,11 @@ export const downloadTicketPDF = async (
   pdf.setFont("Roboto");
 
   // Load logos
-  const rubyLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = "/logo.png";
-  });
+  const rubyLogo = getImageBase64("/logo.png");
+
   const logo = LogoBySite[finalList[0].siteCode as keyof typeof LogoBySite] ?? LogoBySite.HLS;
 
-  const sunWorldLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = logo;
-  });
+  const sunWorldLogo = getImageBase64(logo);
 
   // Colors dùng xuyên suốt (theo đúng mẫu thiết kế)
   const RED_BRIGHT = [200, 20, 24] as const; // dải tiêu đề / nút "Mã vé" / footer
@@ -101,8 +90,8 @@ export const downloadTicketPDF = async (
     pdf.roundedRect(8, 8, PAGE_W - 16, PAGE_H - 16, 10, 10);
 
     // ===== HEADER: 2 logo =====
-    pdf.addImage(sunWorldLogo, "PNG", 18, y, 70, 22);
-    pdf.addImage(rubyLogo, "PNG", PAGE_W - 50, y, 32, 24);
+    pdf.addImage(`data:image/png;base64,${sunWorldLogo}`, "PNG", 18, y, 70, 22);
+    pdf.addImage(`data:image/png;base64,${rubyLogo}`, "PNG", PAGE_W - 50, y, 32, 24);
 
     y += 34;
 
@@ -296,7 +285,7 @@ export const downloadTicketPDF = async (
     });
   }
 
-  pdf.save(`ve-banahills-${dayjs(new Date()).format(FULL_DATE_FORMAT)}.pdf`);
+  return Buffer.from(pdf.output("arraybuffer"));
 };
 
 export const rebuildDataTicket = (

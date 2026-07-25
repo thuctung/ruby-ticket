@@ -1,3 +1,4 @@
+import { ProductSubmitType, TicketResultQRType } from "@/types/ticket";
 import z from "zod";
 
 export const todayISO = () => {
@@ -16,3 +17,25 @@ export const checkoutSchema = z.object({
     .regex(/^[0-9+ ]+$/, "SĐT chỉ nên gồm số"),
   note: z.string().max(500).optional().or(z.literal("")),
 });
+
+export const getTicketFOCAndCutomer = (
+  tickets: TicketResultQRType[],
+  productSelected: ProductSubmitType[]
+) => {
+  const focTickets: TicketResultQRType[] = [];
+  const customerTickets: TicketResultQRType[] = [];
+  tickets.forEach((item: TicketResultQRType) => {
+    const publicPrice =
+      productSelected.find((item) => item.productCode === item.productCode)?.publicPrice || 0;
+    if (item.unitPrice) {
+      customerTickets.push({ ...item, publicPrice });
+    } else {
+      focTickets.push({ ...item, publicPrice });
+    }
+  });
+
+  return {
+    focTickets,
+    customerTickets,
+  };
+};

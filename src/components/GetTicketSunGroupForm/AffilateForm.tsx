@@ -35,9 +35,11 @@ export default function AffilateBookingForm({
   setQty,
   quantities,
   totalTickets,
+  selectedLines,
   total,
   sideName,
-  selectedLines,
+  exportGuideTicket,
+  setExportGuideTicket,
   agentPrice,
   formType,
   handleBuyTicket,
@@ -99,17 +101,14 @@ export default function AffilateBookingForm({
                 className="rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] p-6 shadow-[0_1px_2px_rgba(31,58,47,0.05)] sm:p-8"
               >
                 <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#1F3A2F]">
-                  Loại vé{" "}
+                  Loại vé
                   {PRODUCT_TYPE[item.personType as keyof typeof PRODUCT_TYPE] || item.personType}
                 </h2>
                 <p className="mt-1 text-sm text-[#6E7C73]">Chọn loại vé và nhập số lượng bạn cần</p>
 
                 <div className="mt-5 divide-y divide-[#E3DFCF] rounded-xl border border-[#DCD6C2] bg-white">
                   {item.ticket.map((product) => (
-                    <div
-                      key={product.code}
-                      className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between"
-                    >
+                    <div key={product.code} className="p-4">
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-[#1F3A2F]">{product.name}</p>
                         <p className="text-xs text-[#8A9A8E]">{product.restaurantName}</p>
@@ -118,34 +117,39 @@ export default function AffilateBookingForm({
                           <p className="text-sm text-[red] leading-snug">{`Số vé phải là bội của: ${product.multiple}`}</p>
                         ) : null}
                       </div>
-
-                      <div className="flex shrink-0 items-center rounded-lg border border-[#DCD6C2]">
-                        <button
-                          type="button"
-                          aria-label={`Giảm số lượng ${product.name}`}
-                          onClick={() => setQty(product.code, (quantities[product.code] ?? 0) - 1)}
-                          className="flex h-9 w-9 items-center justify-center rounded-l-lg text-lg font-medium text-[#6E7C73] transition hover:bg-[#F7F4EC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C89B3C]/40"
-                        >
-                          −
-                        </button>
-                        <input
-                          type="number"
-                          min={0}
-                          max={20}
-                          inputMode="numeric"
-                          value={quantities[product.code] ?? 0}
-                          onChange={(e) => setQty(product.code, Number(e.target.value) || 0)}
-                          aria-label={`Số lượng ${product.name}`}
-                          className="h-9 w-12 border-x border-[#DCD6C2] text-center text-sm font-semibold text-[#1C2620] outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                        />
-                        <button
-                          type="button"
-                          aria-label={`Tăng số lượng ${product.name}`}
-                          onClick={() => setQty(product.code, (quantities[product.code] ?? 0) + 1)}
-                          className="flex h-9 w-9 items-center justify-center rounded-r-lg text-lg font-medium text-[#6E7C73] transition hover:bg-[#F7F4EC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C89B3C]/40"
-                        >
-                          +
-                        </button>
+                      <div className="flex  justify-end">
+                        <div className="flex shrink-0 items-center rounded-lg border border-[#DCD6C2] w-fit">
+                          <button
+                            type="button"
+                            aria-label={`Giảm số lượng ${product.name}`}
+                            onClick={() =>
+                              setQty(product.code, (quantities[product.code] ?? 0) - 1)
+                            }
+                            className="flex h-9 w-9 items-center justify-center rounded-l-lg text-lg font-medium text-[#6E7C73] transition hover:bg-[#F7F4EC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C89B3C]/40"
+                          >
+                            −
+                          </button>
+                          <input
+                            type="number"
+                            min={0}
+                            max={20}
+                            inputMode="numeric"
+                            value={quantities[product.code] ?? 0}
+                            onChange={(e) => setQty(product.code, Number(e.target.value) || 0)}
+                            aria-label={`Số lượng ${product.name}`}
+                            className="h-9 w-12 border-x border-[#DCD6C2] text-center text-sm font-semibold text-[#1C2620] outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                          />
+                          <button
+                            type="button"
+                            aria-label={`Tăng số lượng ${product.name}`}
+                            onClick={() =>
+                              setQty(product.code, (quantities[product.code] ?? 0) + 1)
+                            }
+                            className="flex h-9 w-9 items-center justify-center rounded-r-lg text-lg font-medium text-[#6E7C73] transition hover:bg-[#F7F4EC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C89B3C]/40"
+                          >
+                            +
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -157,18 +161,17 @@ export default function AffilateBookingForm({
           </div>
 
           {/* Right: summary (ticket stub) */}
-          <div className="lg:sticky lg:top-6">
+
+          <div>
             <div className="relative overflow-hidden rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] shadow-[0_1px_2px_rgba(31,58,47,0.05)]">
               <div className="p-6 sm:p-7">
                 <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#1F3A2F]">
                   Tóm tắt đơn hàng
                 </h2>
-
                 <dl className="mt-5 space-y-3 text-sm">
                   <Row label="Điểm đến" value={sideName} />
                   <Row label="Ngày đi" value={formData.date_use} strong />
                 </dl>
-
                 {selectedLines.length > 0 && (
                   <div className="mt-4 space-y-2 border-t border-dashed border-[#DCD6C2] pt-4 text-sm">
                     {selectedLines.map((t) => (
@@ -186,21 +189,18 @@ export default function AffilateBookingForm({
                     ))}
                   </div>
                 )}
-
                 {selectedLines.length === 0 && (
                   <p className="mt-4 border-t border-dashed border-[#DCD6C2] pt-4 text-sm text-[#8A9A8E]">
                     Chưa chọn vé nào
                   </p>
                 )}
               </div>
-
               {/* Ticket-stub perforation */}
               <div className="relative">
                 <div className="border-t border-dashed border-[#DCD6C2]" />
                 <div className="absolute -left-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-[#EEF1EC]" />
                 <div className="absolute -right-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-[#EEF1EC]" />
               </div>
-
               <div className="p-6 sm:p-7">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-[#6E7C73]">Tổng cộng</span>
@@ -208,6 +208,17 @@ export default function AffilateBookingForm({
                     {currency(total)}
                   </span>
                 </div>
+                {selectedLines.length ? (
+                  <label className="mt-4 flex cursor-pointer items-center gap-2 text-sm text-[#1F3A2F]">
+                    <input
+                      type="checkbox"
+                      checked={exportGuideTicket}
+                      onChange={(e) => setExportGuideTicket?.(e.target.checked)}
+                      className="h-4 w-4 rounded border-[#DCD6C2] text-[#1F3A2F] focus:ring-[#1F3A2F]"
+                    />
+                    <span>Xuất vé cho hướng dẫn viên</span>
+                  </label>
+                ) : null}
 
                 <button
                   type="button"
@@ -215,8 +226,7 @@ export default function AffilateBookingForm({
                   className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#1F3A2F] py-3.5 text-sm font-semibold text-white transition hover:bg-[#183024] disabled:cursor-not-allowed disabled:bg-[#B7C2BB]"
                   onClick={handleBuyTicket}
                 >
-                  <TicketIcon />
-                  Xuất vé
+                  <TicketIcon /> Xuất vé
                 </button>
               </div>
             </div>

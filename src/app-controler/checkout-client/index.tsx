@@ -5,6 +5,7 @@ import {
   customerCreateOrder,
   customerCreateOrderTicket,
   getTicketSunWorld,
+  senTicketToMail,
   updateStatusGetTicketFinal,
   updateStatusOrder,
 } from "./api";
@@ -16,7 +17,7 @@ import {
 } from "@/types/ticket";
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
-import { QRBankResponseType } from "@/types";
+import { CommonType, QRBankResponseType } from "@/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { DB_TABLE_NAME, ERROR_MESSAGE, TYPE_TRANSFER } from "@/commons/constant";
 import { LodingMessage } from "@/components/ui/loading-message";
@@ -26,9 +27,11 @@ import dayjs from "dayjs";
 import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
 import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType } from "./type";
-import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
+import { generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import { toast } from "react-toastify";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
+import { useCommonStore } from "@/stores/useCommonStore";
+import { getTicketFOCAndCutomer } from "./contants";
 
 const initOrderData = {
   dateUse: "",
@@ -40,12 +43,15 @@ export default function CheckoutControlerPage() {
   const clientSupbase = createSupabaseBrowserClient();
   const timeCancelOrderRef = useRef<NodeJS.Timeout | null>(null);
   const [loadingMessage, setLoadingMessage] = useState("");
+  const { setToastMessage, showConfirm }: CommonType | any = useCommonStore.getState();
 
   const [openQR, setOpenQR] = useState(false);
 
   const chanenSupbase = useRef<any>(null);
 
   const [currentOrderData, setCurrentOrderData] = useState(initOrderData);
+
+  const [customerEmail, setCustomerEmail] = useState("");
 
   const [productSelected, setProductSelected] = useState<ProductSubmitType[]>([]);
 
@@ -77,12 +83,21 @@ export default function CheckoutControlerPage() {
     toast.error("Đơn hàng đã hủy do hết thời gian thanh toán");
   };
 
+  const confirmBuyTicket = (values: SubmitSelectTicket) => {
+    showConfirm({
+      message: "Bạn có chắc muốn mua vé?",
+      okFunc: async () => handleBuyTicket(values),
+    });
+  };
+
   const handleBuyTicket = async (values: SubmitSelectTicket) => {
     const { formData, totalMoney, siteCode, products, date_use } = values;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
     const thirdPartyNum = generateThirdPartyCode();
     const { email, phone, fullname }: any = formData;
     setProductSelected(products);
+    setCustomerEmail(email);
+
     const paramCreateOrder: CustomerOrderType = {
       email,
       phone,
@@ -149,27 +164,24 @@ export default function CheckoutControlerPage() {
     };
 
     if (ticketSuccess) {
-      // succes step: update status order and show ticket PDF
+      // succes step: update status order
       const result: TicketResultQRType[] | any = rebuildDataTicket(ticketSuccess, orderId, dateUse);
       payloadFinal.tickets = result;
       payloadFinal.isError = false;
       payloadFinal.referenceCode = ticketSuccess.referenceCode;
 
-      const focTicket: TicketResultQRType[] = [];
-      const customerTicket: TicketResultQRType[] = [];
-
-      result.forEach((item: TicketResultQRType) => {
-        const publicPrice =
-          productSelected.find((item) => item.productCode === item.productCode)?.publicPrice || 0;
-        if (item.unitPrice) {
-          customerTicket.push({ ...item, publicPrice });
-        } else {
-          focTicket.push({ ...item, publicPrice });
-        }
+      const { customerTickets } = getTicketFOCAndCutomer(result, productSelected);
+      // SEND TICKET TO MAIL AND DOWN FILE PDF
+      await senTicketToMail({
+        email: customerEmail,
+        customerTickets,
+        focTickets: [],
+        orderCode,
       });
-      await downloadTicketPDF(customerTicket, focTicket);
-      toast.success("Tải vé về thành công");
+      toast.success(`Vé đã được gửi qua email: ${customerEmail}`);
+      // reset data
       setProductSelected([]);
+      setCustomerEmail("");
       setCurrentOrderData(initOrderData);
     } else {
       payloadFinal.description = ERROR_MESSAGE.SUN_WORLD_TICKET;
@@ -286,7 +298,7 @@ export default function CheckoutControlerPage() {
           <div className="bg-white rounded-3xl shadow-2xl p-2 md:p-4">
             <GetTicketSunGroupForm
               location="BANA"
-              onBuyTicket={handleBuyTicket}
+              onBuyTicket={confirmBuyTicket}
               formType={SUN_BOOKING_FORM_TYPE.CUSTOMER}
             />
           </div>

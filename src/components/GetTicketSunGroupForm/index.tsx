@@ -46,6 +46,7 @@ export default function GetTicketSunGroupForm({
 
   const [listSideSunGroup, setListSideSungroup] = useState<SideSunGroupType[]>([]);
   const [siteSunCode, setSideSunCode] = useState("");
+  const [exportGuideTicket, setExportGuideTicket] = useState(false);
 
   const [listProductSun, setListProductSun] = useState<ResultListProductType[]>([]);
 
@@ -94,18 +95,12 @@ export default function GetTicketSunGroupForm({
     }
   };
 
-  const handleChangeSite = (siteCode: string) => {
-    setSideSunCode(siteCode);
-    setQuantities({});
-    setListProductSun([]);
-  };
-
   const fetchProductBySite = async (siteSunCode: string) => {
     const data: any = await getProductBySiteSun(
       siteSunCode,
       dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
     );
-    if (data?.length) {
+    if (data) {
       setListProductSun(data);
     }
   };
@@ -132,27 +127,23 @@ export default function GetTicketSunGroupForm({
       date_use: formData.date_use,
       siteCode: siteSunCode,
       formData: formData,
+      haveFOC: exportGuideTicket,
     });
   };
 
   useEffect(() => {
     if (siteSunCode) {
       let level = "";
-      if (SUN_BOOKING_FORM_TYPE.AFFILATE === formData && profile?.agent_level) {
-        level = CUSTOMER;
+      if (SUN_BOOKING_FORM_TYPE.AFFILATE === formType && profile?.agent_level) {
+        level = profile?.agent_level;
       } else if (SUN_BOOKING_FORM_TYPE.CUSTOMER) {
         level = CUSTOMER;
       }
-
       if (level) fetchPriceAgentLevel(siteSunCode, level);
-    }
-  }, [siteSunCode, profile.agent_level, formType]);
-
-  useEffect(() => {
-    if (siteSunCode) {
       fetchProductBySite(siteSunCode);
+      setQuantities({});
     }
-  }, [siteSunCode, formData.date_use]);
+  }, [siteSunCode, profile.agent_level, formType, formData.date_use]);
 
   useEffect(() => {
     getAllSite();
@@ -182,6 +173,8 @@ export default function GetTicketSunGroupForm({
     total,
     sideName,
     selectedLines,
+    exportGuideTicket,
+    setExportGuideTicket,
     handleBuyTicket,
     setFieldFormData,
     setQty,
