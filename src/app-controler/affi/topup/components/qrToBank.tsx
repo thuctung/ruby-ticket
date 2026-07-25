@@ -23,12 +23,33 @@ export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankT
       navigator.clipboard.writeText(text);
     }
   };
+  const downloadQR = async () => {
+    const response = await fetch(dataQR.qr);
+    const blob = await response.blob();
+
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `qr-${dataQR.code}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    window.URL.revokeObjectURL(url);
+  };
   return (
     <Dialog open={isOpen}>
       <DialogTitle>BankTransferQR</DialogTitle>
       <DialogContent className="[&>button]:hidden">
         <div className="space-y-4">
           <img src={dataQR.qr} className="w-64 mx-auto" />
+          <div className="flex justify-center gap-2">
+            <Button onClick={downloadQR} variant="secondary">
+              Tải mã QR
+            </Button>
+          </div>
+
           <div className="text-sm space-y-2">
             {BANK_INFO.bankName ? (
               <Row label="Ngân hàng" value={CODE_BANK[BANK_INFO.bankName]} />
@@ -39,7 +60,7 @@ export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankT
               value={BANK_INFO.bankNum}
               onCopy={() => copy(BANK_INFO.bankNum)}
             />
-            <Row label="Người nhận" value="Nguyễn Thị Hòa Trâm" />
+            <Row label="Người nhận" value="CONG TY TNHH DVTM DU LICH RUBY" />
             <Row label="Số tiền" value={formatVND(dataQR.amount)} />
             <Row label="Nội dung CK" value={dataQR.code} onCopy={() => copy(dataQR.code)} />
           </div>

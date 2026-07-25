@@ -16,6 +16,7 @@ export type CommonType = {
 export type ConfirmType = {
   message: string | null;
   okFunc: Function | null;
+  textOk: string | null;
 };
 
 export type MenuMgtType = {

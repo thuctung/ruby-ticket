@@ -2,7 +2,6 @@ import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
 import { DB_TABLE_NAME, TYPE_TRANSFER } from "@/commons/constant";
 import { env } from "@/lib/env";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { get } from "lodash";
 import { NextResponse } from "next/server";
 const crypto = require("crypto");
 

@@ -85,8 +85,9 @@ export default function CheckoutControlerPage() {
 
   const confirmBuyTicket = (values: SubmitSelectTicket) => {
     showConfirm({
-      message: "Bạn có chắc muốn mua vé?",
+      message: "Thông tin mua vé đã đúng, xác nhận mua vé?",
       okFunc: async () => handleBuyTicket(values),
+      textOk: "Mua",
     });
   };
 
