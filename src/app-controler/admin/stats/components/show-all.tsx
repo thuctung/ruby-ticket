@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { Building2, Users, Ticket, Wallet } from "lucide-react";
+import { useMemo } from "react";
 import { formatVND } from "@/helpers/money";
 import { AllSaleType } from "../type";
 import { AGENT, CUSTOMER } from "@/commons/constant";
@@ -32,8 +31,8 @@ export default function ShowAllData({ dataSale }: { dataSale: AllSaleType[] }) {
   }, [dataSale]);
 
   return (
-    <div className=" bg-slate-50 ">
-      <div className="mx-auto max-w-4xl space-y-6">
+    <div>
+      <div className=" space-y-6">
         {/* ============ Bảng tổng hợp so sánh ============ */}
         <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="border-b border-slate-100 px-6 py-4 text-sm font-semibold text-slate-900">

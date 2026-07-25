@@ -29,7 +29,7 @@ export function CustomTable<T>({
   tableTitle,
 }: TableConfig<T>) {
   return (
-    <div className="max-w-5xl mx-auto p-4 space-y-4 bg-gray-50 ">
+    <>
       {tableTitle ? (
         <div>
           <h2 className="text-xl font-bold text-gray-800">{tableTitle}</h2>
@@ -95,6 +95,6 @@ export function CustomTable<T>({
           />
         </div>
       ) : null}
-    </div>
+    </>
   );
 }

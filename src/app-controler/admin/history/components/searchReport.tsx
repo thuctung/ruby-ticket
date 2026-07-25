@@ -43,33 +43,12 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
         <h1 className="text-xl font-bold text-gray-800 mb-6">Lịch sử rút vé</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Địa điểm */}
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
-              <MapPin size={14} /> Địa điểm
-            </label>
-
-            <SelectBox
-              value={filter.location || "all"}
-              onChange={(value) => handleChangeFilter("location", value)}
-              className=" h-12"
-            >
-              <option value="all">Tất cả</option>
-              {SITES.map((item: SiteType) => (
-                <option key={item.code} value={item.code}>
-                  {item.name}
-                </option>
-              ))}
-            </SelectBox>
-          </div> */}
-
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
               <Calendar size={14} /> Từ ngày (ngày bán)
             </label>
             <div>
               <DatePickerCustom
-                className="h-12"
                 value={filter.from}
                 onChange={(date: string) => handleChangeFilter("from", date)}
                 maxDate={filter.to}
@@ -78,15 +57,16 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
           </div>
 
           {/* Đến ngày */}
-          <div className="h-10">
+          <div>
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
               <Calendar size={14} /> Đến ngày (ngày bán)
             </label>
-            <DatePickerCustom
-              className="h-12"
-              value={filter.to}
-              onChange={(date: string) => handleChangeFilter("to", date)}
-            />
+            <div>
+              <DatePickerCustom
+                value={filter.to}
+                onChange={(date: string) => handleChangeFilter("to", date)}
+              />
+            </div>
           </div>
 
           <div>

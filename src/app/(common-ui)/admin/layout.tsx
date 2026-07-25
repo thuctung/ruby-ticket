@@ -1,27 +1,37 @@
 "use client";
 
 import SideBarManager from "@/components/site/Manager/SideBar";
+import { useState } from "react";
+import { ChevronRight } from "lucide-react";
 import { SIDEBAR_ADMIN } from "@/commons/constant";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex-1 p-6 min-h-screen bg-[#F8FAFC] lg:p-8">
-      <div className="mx-auto flex flex-col gap-4 md:flex-row md:items-start max-w-7xl">
-        <aside
-          className="
-      md:sticky md:top-18 
-      h-fit 
-      w-full md:w-64 
-      font-sans text-slate-900
-    "
-        >
-          <SideBarManager menuList={SIDEBAR_ADMIN} />
-        </aside>
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-        <section className="flex-1 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/40 border border-white p-8 min-h-[100vh]">
-          {children}
-        </section>
-      </div>
+  return (
+    <div className="flex min-h-screen">
+      <SideBarManager
+        collapsed={collapsed}
+        onToggleCollapse={() => setCollapsed((c) => !c)}
+        mobileOpen={mobileOpen}
+        onCloseMobile={() => setMobileOpen(false)}
+        menuList={SIDEBAR_ADMIN}
+      />
+      <main className="min-w-0 flex-1 px-4 py-5 pb-16 md:px-7 md:py-6">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="flex h-9 w-9 items-center justify-center rounded-[10px] border border-line bg-paper md:hidden"
+              aria-label="Mở menu"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        </div>
+        {children}
+      </main>
     </div>
   );
 }
