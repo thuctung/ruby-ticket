@@ -97,7 +97,7 @@ export const downloadTicketPDFServer = async (
 
     // ===== TITLE BAR (đỏ) — hỗ trợ xuống dòng =====
     pdf.setFont("Roboto", "bold");
-    pdf.setFontSize(11);
+    pdf.setFontSize(13);
     const titleLines = pdf.splitTextToSize(
       isFOCTicket ? "VÉ DÀNH CHO HƯỚNG DẪN VIÊN(TOUR GUIDE)" : t.productName,
       PAGE_W - 40

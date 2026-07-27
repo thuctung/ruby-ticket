@@ -14,6 +14,7 @@ export async function POST(request: Request) {
     listTicketSubmit,
     siteCode,
     paymentCode,
+    orderCode,
   }: ClientOrderItem = await request.json();
 
   const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUC_CUSTOMER_BUY_TICKET, {
@@ -25,6 +26,7 @@ export async function POST(request: Request) {
     c_site_code: siteCode,
     c_third_party_num: thirdPartyNum,
     c_date_use: dateUse,
+    c_order_code: orderCode,
     list_ticket_submit: listTicketSubmit,
   });
 

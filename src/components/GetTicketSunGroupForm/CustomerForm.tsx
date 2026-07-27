@@ -205,10 +205,13 @@ export default function CustomerBookingForm({
                           <input
                             type="number"
                             min={0}
-                            max={20}
+                            max={1000}
                             inputMode="numeric"
                             value={quantities[item.code] ?? 0}
-                            onChange={(e) => setQty(item.code, Number(e.target.value) || 0)}
+                            onChange={(e) => {
+                              setQty(item.code, Number(e.target.value) || 0);
+                              console.log(e.target.value);
+                            }}
                             aria-label={`Số lượng ${item.name}`}
                             className="h-9 w-12 border-x border-[#DCD6C2] text-center text-sm font-semibold text-[#1C2620] outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                           />

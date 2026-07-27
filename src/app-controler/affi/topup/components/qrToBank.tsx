@@ -13,11 +13,18 @@ import Countdown from "./countdown";
 type BankTransferQRProps = {
   dataQR: QRBankResponseType;
   onDone?: () => void;
+  onCancle?: () => void;
   isOpen: boolean;
   mesage?: string;
 };
 
-export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankTransferQRProps) {
+export default function BankTransferQR({
+  dataQR,
+  isOpen,
+  mesage,
+  onDone,
+  onCancle,
+}: BankTransferQRProps) {
   const copy = (text?: string) => {
     if (text) {
       navigator.clipboard.writeText(text);
@@ -67,8 +74,17 @@ export default function BankTransferQR({ dataQR, isOpen, mesage, onDone }: BankT
         </div>
         <span className="text-sm text-center text-red-500">{mesage}</span>
         <Countdown totalSecounds={10 * 60} />
-        <div className="w-full flex justify-center ">
-          {onDone && <Button onClick={onDone}>Đã chuyển khoản</Button>}
+        <div className="flex">
+          <div className="w-full flex justify-center ">
+            {onDone && <Button onClick={onDone}>Đã chuyển khoản</Button>}
+          </div>
+          <div className="w-full flex justify-center ">
+            {onCancle && (
+              <Button variant="destructive" onClick={onCancle}>
+                Hủy giao dịch
+              </Button>
+            )}
+          </div>
         </div>
       </DialogContent>
     </Dialog>

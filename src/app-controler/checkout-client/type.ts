@@ -10,6 +10,7 @@ export type ClientOrderItem = {
   listTicketSubmit: ProductSubmitType[];
   siteCode: string;
   paymentCode: string;
+  orderCode: string;
 };
 
 export type CustomerOrderType = {

@@ -132,7 +132,6 @@ export default function AffilateBookingForm({
                           <input
                             type="number"
                             min={0}
-                            max={20}
                             inputMode="numeric"
                             value={quantities[product.code] ?? 0}
                             onChange={(e) => setQty(product.code, Number(e.target.value) || 0)}

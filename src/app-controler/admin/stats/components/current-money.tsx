@@ -37,7 +37,7 @@ export function CurrentMoney() {
 
   useEffect(() => {
     if (siteCode && listPrice.length) {
-      const findITem = listPrice.find((item) => item.siteCode === siteCode)?.availableCredit || 0;
+      const findITem = listPrice.find((item) => item.siteCode === siteCode)?.activity || 0;
       setCurrentPrice(findITem);
     }
   }, [siteCode, listPrice]);

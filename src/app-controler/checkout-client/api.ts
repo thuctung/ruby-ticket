@@ -108,3 +108,18 @@ export const senTicketToMail = async (payload: SendTicketMailType) => {
     setGlobalLoading(false);
   }
 };
+
+export const cancleBooking = async (orderCode: string) => {
+  try {
+    setGlobalLoading(true);
+    const { data }: any = await sunApi.post("/ota/booking/cancel", { orderCode });
+    if (data.errors[0]) {
+      setToastMessage(data.messages[0]);
+    }
+    return data.result;
+  } catch {
+    setToastMessage("");
+  } finally {
+    setGlobalLoading(false);
+  }
+};

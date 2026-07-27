@@ -75,7 +75,7 @@ export default function GetTicketSunGroupForm({
   }, 0);
 
   const setQty = (key: string, next: number) => {
-    setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, next)) }));
+    setQuantities((q) => ({ ...q, [key]: next }));
   };
 
   const setFieldFormData = (key: string, val: any, needCalPrice = false) => {

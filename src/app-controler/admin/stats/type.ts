@@ -5,7 +5,7 @@ export type SaleSumaryType = {
 };
 
 export type PriceSunWorldType = {
-  availableCredit: number;
+  activity: number;
   siteCode: string;
 };
 

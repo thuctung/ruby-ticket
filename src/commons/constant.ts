@@ -71,7 +71,12 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
   },
   {
     link: "/admin/ticket-status",
-    lable: "Thông tin vé",
+    lable: "Trạng thái vé",
+    icon: "M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
+  },
+  {
+    link: "/admin/booking-status",
+    lable: "Tra cứu booking",
     icon: "M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
   },
   {
@@ -100,7 +105,7 @@ export const SIDEBAR_AFF: MenuMgtType[] = [
   },
   {
     link: "/affiliate/ticket-status",
-    lable: "Tra cứu vé",
+    lable: "Trạng thái vé",
     icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 000 4h2a2 2 0 000-4H9z",
   },
   {
@@ -242,4 +247,5 @@ export const START_DATE_GMT7 = "T00:00:00+07:00";
 export const ERROR_MESSAGE = {
   SUN_WORLD_TICKET: "Lỗi xuất vé từ Sun world",
   PAYMENT_TIMEOUT: "Hết thời gian thanh toán",
+  USER_CANCLE: "Người dùng hủy đơn",
 };

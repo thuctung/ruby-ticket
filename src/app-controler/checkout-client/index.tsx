@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
+  cancleBooking,
   customerCreateOrder,
   customerCreateOrderTicket,
   getTicketSunWorld,
@@ -43,7 +44,7 @@ export default function CheckoutControlerPage() {
   const clientSupbase = createSupabaseBrowserClient();
   const timeCancelOrderRef = useRef<NodeJS.Timeout | null>(null);
   const [loadingMessage, setLoadingMessage] = useState("");
-  const { setToastMessage, showConfirm }: CommonType | any = useCommonStore.getState();
+  const { showConfirm }: CommonType | any = useCommonStore.getState();
 
   const [openQR, setOpenQR] = useState(false);
 
@@ -65,11 +66,15 @@ export default function CheckoutControlerPage() {
     setOpenQR(false);
   };
 
-  const cancleOrderTimeout = async (orderId: string) => {
+  const cancleOrderTimeout = async (
+    orderId: string,
+    desc = ERROR_MESSAGE.PAYMENT_TIMEOUT,
+    showMesage = true
+  ) => {
     await updateStatusOrder({
       orderId: orderId,
       status: KEY_MODIFY_DATA.CANCEL,
-      description: ERROR_MESSAGE.PAYMENT_TIMEOUT,
+      description: desc,
       status_payment: KEY_MODIFY_DATA.ERROR,
     });
     if (timeCancelOrderRef.current) {
@@ -78,9 +83,11 @@ export default function CheckoutControlerPage() {
     }
     setCurrentOrderData(initOrderData);
 
+    if (showMesage) {
+      setLoadingMessage("");
+      toast.error("Đơn hàng đã hủy do hết thời gian thanh toán");
+    }
     handleDoneQR();
-    setLoadingMessage("");
-    toast.error("Đơn hàng đã hủy do hết thời gian thanh toán");
   };
 
   const confirmBuyTicket = (values: SubmitSelectTicket) => {
@@ -122,6 +129,7 @@ export default function CheckoutControlerPage() {
         listTicketSubmit: products,
         siteCode,
         paymentCode,
+        orderCode: dataOrderSunWorld.orderCode,
       };
 
       const orderID = await customerCreateOrderTicket(dataSubmit);
@@ -171,12 +179,12 @@ export default function CheckoutControlerPage() {
       payloadFinal.isError = false;
       payloadFinal.referenceCode = ticketSuccess.referenceCode;
 
-      const { customerTickets } = getTicketFOCAndCutomer(result, productSelected);
+      const { customerTickets, focTickets } = getTicketFOCAndCutomer(result, productSelected);
       // SEND TICKET TO MAIL AND DOWN FILE PDF
       await senTicketToMail({
         email: customerEmail,
         customerTickets,
-        focTickets: [],
+        focTickets: focTickets,
         orderCode,
       });
       toast.success(`Vé đã được gửi qua email: ${customerEmail}`);
@@ -189,6 +197,11 @@ export default function CheckoutControlerPage() {
       toast.error("Có lỗi xảy ra, vui lòng liên hệ để được hỗ trợ");
     }
     await updateStatusGetTicketFinal(payloadFinal);
+  };
+  const handleCancleBooking = async () => {
+    await cancleBooking(currentOrderData.orderCode);
+    cancleOrderTimeout(currentOrderData.orderId, ERROR_MESSAGE.USER_CANCLE, false);
+    handleDoneQR();
   };
 
   useEffect(() => {
@@ -310,6 +323,7 @@ export default function CheckoutControlerPage() {
           dataQR={qrPaymant}
           isOpen={openQR}
           onDone={handleDoneQR}
+          onCancle={handleCancleBooking}
           mesage="Vui lòng đợi khi thanh toán và không tắt trình duyệt"
         />
       )}
