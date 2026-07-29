@@ -220,8 +220,8 @@ export const MENUS = [
 
 export const SITE_SUB_GROUP = {
   HLS: "Sun World Hạ Long",
-  BNC: "Sun World Bà Nà Hills",
-  SBD: "Sun World Bà Đen Mountain",
+  BNC: "Bà Nà Hills",
+  SBD: "Sun World Bà Đen",
   FSS: "Sun World Fansipan Legend",
   SWS: "Sun World Sầm Sơn",
   SWN: "Sun World Hà Nam",

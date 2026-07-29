@@ -55,4 +55,18 @@ export const getPriceAgentAndMultiple = (
 export const PRODUCT_TYPE = {
   ["ADULT"]: "Người lớn",
   ["CHILD"]: "Trẻ em",
+  ["ALL"]: "Chung",
+};
+
+export const getPerSonTypeName = (typeCode: string) => {
+  switch (typeCode) {
+    case "ADULT":
+      return "Người lớn/Adult";
+    case "CHILD":
+      return "Trẻ em/Child";
+    case "ALL":
+      return "Chung/All";
+    default:
+      return typeCode || "";
+  }
 };

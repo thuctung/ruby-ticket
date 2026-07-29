@@ -87,20 +87,21 @@ export const updateStatusOrder = async (payload: UpdateOrderType) => {
   }
 };
 
-export const senTicketToMail = async (payload: SendTicketMailType) => {
+export const senTicketToMail = async (payload: SendTicketMailType, isDownload = false) => {
   try {
     setGlobalLoading(true);
     const response: any = await api.post(CLIENT_SEND_TICET_TO_MAIL, payload, {
       responseType: "blob",
     });
+    if (isDownload) {
+      const url = URL.createObjectURL(response.data);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${dayjs(new Date()).format(FULL_DATE_FORMAT)}-${payload.orderCode}.pdf`;
+      a.click();
 
-    const url = URL.createObjectURL(response.data);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${dayjs(new Date()).format(FULL_DATE_FORMAT)}-${payload.orderCode}.pdf`;
-    a.click();
-
-    URL.revokeObjectURL(url);
+      URL.revokeObjectURL(url);
+    }
   } catch (e) {
     console.log(e);
     setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");

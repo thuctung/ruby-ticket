@@ -8,12 +8,15 @@ import QRCodePDF from "qrcode";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, FULL_DATE_TIME_FORMAT } from "@/helpers/dateTime";
 import {
+  BNC_NOTES,
   FOC_GUIDES,
   FOC_NOTES,
+  getGuideByProductCode,
   GUIDES,
   LogoBySite,
   NOTES,
 } from "@/app-controler/affi/getTicket/components/constants";
+import { getPerSonTypeName } from "@/components/GetTicketSunGroupForm/constants";
 
 let cachedFontBase64: string | null = null;
 
@@ -93,15 +96,12 @@ export const downloadTicketPDFServer = async (
     pdf.addImage(`data:image/png;base64,${sunWorldLogo}`, "PNG", 18, y, 70, 22);
     pdf.addImage(`data:image/png;base64,${rubyLogo}`, "PNG", PAGE_W - 50, y, 32, 24);
 
-    y += 34;
+    y += 24;
 
     // ===== TITLE BAR (đỏ) — hỗ trợ xuống dòng =====
     pdf.setFont("Roboto", "bold");
     pdf.setFontSize(13);
-    const titleLines = pdf.splitTextToSize(
-      isFOCTicket ? "VÉ DÀNH CHO HƯỚNG DẪN VIÊN(TOUR GUIDE)" : t.productName,
-      PAGE_W - 40
-    );
+    const titleLines = pdf.splitTextToSize(t.productName, PAGE_W - 40);
     const lineHeight = 13;
     const titleBarPadding = 8;
     const titleBarH = titleLines.length * lineHeight + titleBarPadding * 2 - 4;
@@ -116,10 +116,44 @@ export const downloadTicketPDFServer = async (
     });
 
     y += titleBarH + 16;
-
-    // ===== MÃ ĐƠN (trái) / ORDER (phải) =====
     const leftX = 18;
     const rightX = PAGE_W - 18;
+
+    // ===== Site Name / đối tượng / Nhà Hàng  =====
+    pdf.setFontSize(10);
+    pdf.setTextColor(...RED_LABEL);
+    pdf.setFont("Roboto", "bold");
+    pdf.text("Site:", leftX, y);
+    pdf.setTextColor(...TEXT_DARK);
+    pdf.text(t.siteName, leftX + 18, y);
+
+    if (!isFOCTicket) {
+      y += 12;
+      pdf.setTextColor(...RED_LABEL);
+      pdf.setFont("Roboto", "bold");
+      pdf.text("Đối tượng/Type:", leftX, y);
+      pdf.setTextColor(...TEXT_DARK);
+      pdf.text(getPerSonTypeName(t.personType), leftX + 57, y);
+    }
+
+    if (t.restaurantName) {
+      y += 12;
+      pdf.setTextColor(...RED_LABEL);
+      pdf.text("Khu vực/Restaurant:", leftX, y);
+
+      pdf.setTextColor(...TEXT_DARK);
+      pdf.text(t.restaurantName, leftX + 71, y, { align: "left" });
+      // y += 12;
+      // pdf.setTextColor(...RED_LABEL);
+      // pdf.text("Giờ/Time:", leftX, y);
+
+      // pdf.setTextColor(...TEXT_DARK);
+      // pdf.text(t.time, leftX + 36, y, { align: "left" });
+    }
+
+    y += 16;
+
+    // ===== MÃ ĐƠN (trái) / ORDER (phải) =====
 
     pdf.setTextColor(...RED_LABEL);
     pdf.setFont("Roboto", "bold");
@@ -224,19 +258,20 @@ export const downloadTicketPDFServer = async (
 
     pdf.setTextColor(...TEXT_GUIDE);
     pdf.setFont("Roboto", "normal");
-    pdf.setFontSize(4.6);
+    pdf.setFontSize(6);
 
     if (isFOCTicket) {
       FOC_GUIDES.forEach((g) => {
-        const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
+        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
         pdf.text(lines, 18, y);
-        y += lines.length * 5.2 + 3;
+        y += lines.length * 5.2 + 4;
       });
     } else {
-      GUIDES.forEach((g) => {
-        const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
+      const guides = getGuideByProductCode(t.siteCode, t.productCode);
+      guides.forEach((g) => {
+        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
         pdf.text(lines, 18, y);
-        y += lines.length * 5.2 + 3;
+        y += lines.length * 5.2 + 4;
       });
     }
 
@@ -252,19 +287,25 @@ export const downloadTicketPDFServer = async (
 
     pdf.setTextColor(...TEXT_GUIDE);
     pdf.setFont("Roboto", "normal");
-    pdf.setFontSize(4.6);
+    pdf.setFontSize(6);
 
     if (isFOCTicket) {
       FOC_NOTES.forEach((g) => {
-        const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
+        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
         pdf.text(lines, 18, y);
-        y += lines.length * 5.2 + 3;
+        y += lines.length * 5.2 + 4;
+      });
+    } else if (t.siteCode === "BNC") {
+      BNC_NOTES.forEach((g) => {
+        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
+        pdf.text(lines, 18, y);
+        y += lines.length * 5.2 + 4;
       });
     } else {
       NOTES.forEach((g) => {
-        const lines = pdf.splitTextToSize(`•  ${g}`, PAGE_W - 36);
+        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
         pdf.text(lines, 18, y);
-        y += lines.length * 5.2 + 3;
+        y += lines.length * 5.2 + 4;
       });
     }
 

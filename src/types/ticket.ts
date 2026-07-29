@@ -71,6 +71,10 @@ export type TicketResultQRType = {
   date_use: string;
   pnr: string;
   publicPrice: number;
+  restaurantName: string;
+  siteName: string;
+  personType: string;
+  time: string;
 };
 
 export type PromotionType = {
@@ -161,6 +165,8 @@ export type ProductBanaType = {
   unitPrice: number;
   performances: PerformancesType[];
   multiple: number;
+  site: SiteType;
+  openTime: string;
 };
 
 export type ProductSubmitType = {
@@ -173,6 +179,10 @@ export type ProductSubmitType = {
   productsName: string;
   unitPrice: number;
   publicPrice: number;
+  siteName: string;
+  personType: string;
+  restaurantName?: string;
+  time: string;
 };
 
 export type SubmitSelectTicket = {

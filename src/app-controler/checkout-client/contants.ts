@@ -18,19 +18,14 @@ export const checkoutSchema = z.object({
   note: z.string().max(500).optional().or(z.literal("")),
 });
 
-export const getTicketFOCAndCutomer = (
-  tickets: TicketResultQRType[],
-  productSelected: ProductSubmitType[]
-) => {
+export const getTicketFOCAndCutomer = (tickets: TicketResultQRType[]) => {
   const focTickets: TicketResultQRType[] = [];
   const customerTickets: TicketResultQRType[] = [];
   tickets.forEach((item: TicketResultQRType) => {
-    const publicPrice =
-      productSelected.find((item) => item.productCode === item.productCode)?.publicPrice || 0;
     if (item.unitPrice) {
-      customerTickets.push({ ...item, publicPrice });
+      customerTickets.push(item);
     } else {
-      focTickets.push({ ...item, publicPrice });
+      focTickets.push(item);
     }
   });
 

@@ -26,22 +26,20 @@ import {
 import { useCommonStore } from "@/stores/useCommonStore";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
-import { generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
+import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
 import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 import { toast } from "react-toastify";
 import { senTicketToMail } from "@/app-controler/checkout-client/api";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
+import { SITE_SUB_GROUP } from "@/commons/constant";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
   const { setProfile }: CommonType | any = useProfileStore.getState();
 
-  const [locationList, setLocationList] = useState<SiteType[]>([]);
   const [location, setLocation] = useState("BANA");
-
-  const [listProductSelected, setListProductSelected] = useState<ProductSubmitType[]>([]);
 
   const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
     const { products, totalMoney, date_use, siteCode, haveFOC } = values;
@@ -49,8 +47,8 @@ export default function GetTicketPageControler() {
       setToastMessage("Số dư không đủ!!");
       return;
     }
-    if (profile) {
-      setListProductSelected(products);
+    if (profile && products.length) {
+      console.log(products);
       const items: TicketSubmitAgentType[] = products.map((item) => ({
         quantity: item.quantity,
         price: Number(item.unitPrice),
@@ -77,9 +75,9 @@ export default function GetTicketPageControler() {
           products,
           thirdPartyNumber,
           {
-            email: "test@gmail.com",
-            fullname: "Nguyen B",
-            phone: "0987654321",
+            email: profile.email,
+            fullname: profile.full_name,
+            phone: profile.phone,
           }
         );
 
@@ -87,26 +85,23 @@ export default function GetTicketPageControler() {
           const result: TicketResultQRType[] | any = rebuildDataTicket(tickets, order_id, date_use);
 
           const addPublicPrice = result.map((item: TicketResultQRType) => {
-            const publicPrice =
-              listProductSelected.find((proSelect) => item.productCode === proSelect.productCode)
-                ?.publicPrice || 0;
+            const ticketItemSelect = products.find(
+              (proSelect) => item.productCode === proSelect.productCode
+            );
 
             return {
               ...item,
-              publicPrice,
+              publicPrice: ticketItemSelect?.publicPrice || 0,
+              siteName: SITE_SUB_GROUP[item.siteCode as keyof typeof SITE_SUB_GROUP] || "",
+              restaurantName: ticketItemSelect?.restaurantName,
+              personType: ticketItemSelect?.personType,
+              time: ticketItemSelect?.time,
             };
           });
 
-          const { focTickets, customerTickets } = getTicketFOCAndCutomer(addPublicPrice, products);
+          const { focTickets, customerTickets } = getTicketFOCAndCutomer(addPublicPrice);
 
-          // SEND TICKET TO MAIL AND DOWN FILE PDF
-          await senTicketToMail({
-            email: profile.email || "",
-            customerTickets,
-            focTickets: haveFOC ? focTickets : [],
-            orderCode: tickets.orderCode,
-          });
-          toast.success(`Rút vé thành công`);
+          await downloadTicketPDF(customerTickets, haveFOC ? focTickets : []);
 
           const currentBalance = profile.balance - totalMoney;
           setProfile({
@@ -118,6 +113,14 @@ export default function GetTicketPageControler() {
             tickets: result,
             referenceCode: tickets.referenceCode,
             orderId: order_id,
+          });
+          toast.success(`Rút vé thành công`);
+
+          await senTicketToMail({
+            email: profile.email || "",
+            customerTickets,
+            focTickets: haveFOC ? focTickets : [],
+            orderCode: tickets.orderCode,
           });
         } else {
           updateStatusOrderFail(order_id);

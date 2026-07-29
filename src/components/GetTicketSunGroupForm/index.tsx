@@ -108,6 +108,7 @@ export default function GetTicketSunGroupForm({
   const handleBuyTicket = () => {
     const products: ProductSubmitType[] = selectedLines.map((item) => {
       const priceSell = getPriceAgentAndMultiple(item, formType, agentPrice);
+
       return {
         productCode: item.code,
         siteCode: siteSunCode,
@@ -118,6 +119,10 @@ export default function GetTicketSunGroupForm({
         productsName: item.name,
         publicPrice: item.publicPrice,
         unitPrice: priceSell,
+        restaurantName: item.restaurantName,
+        siteName: item.site.name,
+        personType: item.personType,
+        time: `${item.openTime}-${item.closeTime}`,
       };
     });
 

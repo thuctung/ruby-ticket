@@ -20,7 +20,7 @@ import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
 import { CommonType, QRBankResponseType } from "@/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-import { DB_TABLE_NAME, ERROR_MESSAGE, TYPE_TRANSFER } from "@/commons/constant";
+import { DB_TABLE_NAME, ERROR_MESSAGE, SITE_SUB_GROUP, TYPE_TRANSFER } from "@/commons/constant";
 import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
@@ -175,18 +175,36 @@ export default function CheckoutControlerPage() {
     if (ticketSuccess) {
       // succes step: update status order
       const result: TicketResultQRType[] | any = rebuildDataTicket(ticketSuccess, orderId, dateUse);
+
+      const formatTickets = result.map((item: TicketResultQRType) => {
+        const ticketItemSelect = productSelected.find(
+          (proSelect) => item.productCode === proSelect.productCode
+        );
+        return {
+          ...item,
+          publicPrice: ticketItemSelect?.publicPrice || 0,
+          siteName: ticketItemSelect?.siteName || "",
+          restaurantName: ticketItemSelect?.restaurantName,
+          personType: ticketItemSelect?.personType,
+          time: ticketItemSelect?.time,
+        };
+      });
+
       payloadFinal.tickets = result;
       payloadFinal.isError = false;
       payloadFinal.referenceCode = ticketSuccess.referenceCode;
 
-      const { customerTickets, focTickets } = getTicketFOCAndCutomer(result, productSelected);
+      const { customerTickets } = getTicketFOCAndCutomer(formatTickets);
       // SEND TICKET TO MAIL AND DOWN FILE PDF
-      await senTicketToMail({
-        email: customerEmail,
-        customerTickets,
-        focTickets: focTickets,
-        orderCode,
-      });
+      await senTicketToMail(
+        {
+          email: customerEmail,
+          customerTickets,
+          focTickets: [],
+          orderCode,
+        },
+        true
+      );
       toast.success(`Vé đã được gửi qua email: ${customerEmail}`);
       // reset data
       setProductSelected([]);

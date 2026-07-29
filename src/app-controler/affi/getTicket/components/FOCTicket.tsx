@@ -47,7 +47,7 @@ export default function FOCTicketCard({
       <div className="relative bg-gradient-to-b from-transparent to-black/5 px-3.5  pt-1.5 text-center text-white">
         <div className="bg-gradient-to-br bg-red-700 pb-3.5 pt-1.5 -mx-3.5 -mt-1.5 px-3.5">
           <p className="mt-2 text-lg font-extrabold uppercase tracking-wide leading-snug">
-            VÉ DÀNH CHO HƯỚNG DẪN VIÊN(TOUR GUIDE)
+            {ticketItem.productName}
           </p>
         </div>
       </div>
