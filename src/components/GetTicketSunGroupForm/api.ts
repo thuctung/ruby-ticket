@@ -51,7 +51,6 @@ export const getProductBySiteSun = async (siteCodes: string, date: string) => {
     }
     return groupTicketSunGroup(data.result);
   } catch (e) {
-    console.log(e);
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
   } finally {
     setGlobalLoading(false);

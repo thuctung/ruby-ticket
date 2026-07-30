@@ -1,4 +1,5 @@
 "use client";
+import { Metadata } from "next";
 
 import { useState } from "react";
 import { z } from "zod";
@@ -11,6 +12,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { REGISTER_AFFILIATE } from "@/commons/apiURL";
+
+export const metadata: Metadata = {
+  title: "Ruby Travel Đà Nẵng",
+  description: "Đặt vé du lịch Đà Nẵng giá tốt",
+  keywords: ["du lịch Đàng Nẵng", "vé Bà Nà Hills", "vé Hội An"],
+};
 
 const schema = z
   .object({

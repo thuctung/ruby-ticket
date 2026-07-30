@@ -17,6 +17,8 @@ import {
   NOTES,
 } from "@/app-controler/affi/getTicket/components/constants";
 import { getPerSonTypeName } from "@/components/GetTicketSunGroupForm/constants";
+import { get } from "lodash";
+import { SITE_SUB_GROUP } from "@/commons/constant";
 
 let cachedFontBase64: string | null = null;
 
@@ -125,7 +127,7 @@ export const downloadTicketPDFServer = async (
     pdf.setFont("Roboto", "bold");
     pdf.text("Site:", leftX, y);
     pdf.setTextColor(...TEXT_DARK);
-    pdf.text(t.siteName, leftX + 18, y);
+    pdf.text(get(SITE_SUB_GROUP, t.siteCode), leftX + 18, y);
 
     if (!isFOCTicket) {
       y += 12;

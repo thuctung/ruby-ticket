@@ -1,4 +1,4 @@
-import { TYPE_TRANSACTION } from "@/commons/constant";
+import { SITE_SUB_GROUP, TYPE_TRANSACTION } from "@/commons/constant";
 import { TableColumn } from "@/components/ui/customs/table";
 import { dayjsEx } from "@/helpers/dateTime";
 import { formatVND } from "@/helpers/money";
@@ -20,6 +20,7 @@ import {
   NOTES,
 } from "@/app-controler/affi/getTicket/components/constants";
 import { getPerSonTypeName } from "@/components/GetTicketSunGroupForm/constants";
+import { get } from "lodash";
 
 let cachedFontBase64: string | null = null;
 
@@ -136,7 +137,7 @@ export const downloadTicketPDF = async (
     pdf.setFont("Roboto", "bold");
     pdf.text("Site:", leftX, y);
     pdf.setTextColor(...TEXT_DARK);
-    pdf.text(t.siteName, leftX + 18, y);
+    pdf.text(get(SITE_SUB_GROUP, t.siteCode), leftX + 18, y);
 
     if (!isFOCTicket) {
       y += 12;
