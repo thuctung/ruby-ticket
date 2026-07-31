@@ -6,7 +6,7 @@ export const UPDATE_AFFILIATE_STATUS = "/api/auth/admin/affi/update-status";
 
 export const UPDATE_AFFILIATE_ROLE = "/api/auth/admin/affi/update-role";
 
-export const FORGOR_PASSWORD = "/api/auth/forgot-password";
+export const FORGOT_PASSWORD = "/api/auth/forgot-password";
 
 export const GET_QR_TOPUP = "/api/auth/topup";
 

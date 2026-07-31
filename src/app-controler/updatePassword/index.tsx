@@ -4,15 +4,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Footer from "@/components/site/Footer";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import Header from "@/components/site/Header";
 
 export default function UpdatePassword() {
-  const router = useRouter();
-
   const [confirmPass, setConfirmPass] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -22,86 +17,104 @@ export default function UpdatePassword() {
   const handleSubmit = async () => {
     if (password !== confirmPass) {
       setErrorMsg("Passwords do not match");
-      return;
-    }
-    setLoading(true);
-
-    const { error } = await supabaseClient.auth.updateUser({
-      password,
-    });
-
-    setLoading(false);
-
-    if (error) {
-      setErrorMsg(error.message);
     } else {
-      alert("Password updated successfully");
-      window.location.href = "/login";
+      setLoading(true);
+
+      const { error } = await supabaseClient.auth.updateUser({
+        password,
+      });
+
+      setLoading(false);
+
+      if (error) {
+        setErrorMsg(error.message);
+      } else {
+        alert("Password updated successfully");
+        window.location.href = "/login";
+      }
     }
   };
 
   useEffect(() => {
-    const exchangeCode = async () => {
-      const code = new URLSearchParams(window.location.search).get("code");
-      if (code) {
-        const { error } = await supabaseClient.auth.exchangeCodeForSession(code);
-        if (error) {
-          setErrorMsg("Link đã hết hạn hoặc không hợp lệ. Vui lòng yêu cầu reset lại.");
-        }
-      }
+    const initSession = async () => {
+      const hash = window.location.hash;
+
+      if (!hash) return;
+
+      const params = new URLSearchParams(hash.substring(1));
+
+      const access_token = params.get("access_token");
+      const refresh_token = params.get("refresh_token");
+
+      if (!access_token || !refresh_token) return;
+
+      await supabaseClient.auth.setSession({
+        access_token,
+        refresh_token,
+      });
     };
-    exchangeCode();
+
+    initSession();
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col bg-background text-foreground">
-      <div className="mx-auto w-full max-w-md flex-1 p-6 content-center">
-        <Card className="rounded-2xl">
-          <CardHeader>
-            <CardTitle>Cập nhật mật khẩu</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSubmit();
-              }}
-            >
-              <div className="space-y-2">
-                <Label htmlFor="password">Mật khẩu mới</Label>
-                <Input
-                  type="password"
+    <main className="min-h-screen flex flex-col bg-white text-foreground">
+      <Header />
+      <main className="flex flex-1 items-start justify-center px-4 pt-32">
+        <div className="w-full max-w-md">
+          <div className="rounded-2xl border border-gray-200 p-8 shadow-sm">
+            <h1 className="mb-6 text-xl font-bold text-gray-900">Cập nhật mật khẩu</h1>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label
+                  htmlFor="password"
+                  className="mb-2 block text-sm font-semibold text-gray-900"
+                >
+                  Mật khẩu mới
+                </label>
+                <input
                   id="password"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  autoComplete="new-password"
                   required
                 />
               </div>
-              <div className="space-y-2 mt-6">
-                <Label htmlFor="confirmPass">Nhập lại mật khẩu</Label>
-                <Input
-                  id="confirmPass"
+
+              <div>
+                <label
+                  htmlFor="confirmPassword"
+                  className="mb-2 block text-sm font-semibold text-gray-900"
+                >
+                  Nhập lại mật khẩu
+                </label>
+                <input
+                  id="confirmPassword"
                   type="password"
                   value={confirmPass}
                   onChange={(e) => setConfirmPass(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  autoComplete="new-password"
                   required
                 />
               </div>
 
-              {errorMsg ? <p className="text-sm text-destructive  mt-4">{errorMsg}</p> : null}
+              {errorMsg && <p className="text-sm font-medium text-red-600">{errorMsg}</p>}
 
-              <Button type="submit" className="w-full mt-6" disabled={loading}>
-                {loading ? "Cập nhật..." : "Submit"}
-              </Button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loading ? "Đang xử lý..." : "Đổi mật khẩu"}
+              </button>
             </form>
-          </CardContent>
-        </Card>
-        <div className="mx-auto w-full max-w-md flex-1  content-center flex justify-between">
-          <Button className="" variant="link" onClick={() => router.push("/")}>
-            Trang chủ
-          </Button>
+          </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </main>
   );
