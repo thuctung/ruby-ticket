@@ -20,6 +20,8 @@ const schema = z.object({
   SUN_CLIENT_SECRET: z.string().min(1),
   SEA_PAY_SECRET_KEY: z.string().min(1),
   SEND_MAIL_KEY: z.string().min(1),
+  SUN_AUTHEN_URL: z.string().min(1),
+  SUN_SCOPE: z.string().min(1),
 });
 
 export const env = schema.parse({
@@ -40,8 +42,12 @@ export const env = schema.parse({
   VNPAY_IPN_URL: process.env.VNPAY_IPN_URL,
 
   SUN_CLIENT_ID: process.env.SUN_CLIENT_ID,
-  SEA_PAY_SECRET_KEY: process.env.SEA_PAY_SECRET_KEY,
   SUN_CLIENT_SECRET: process.env.SUN_CLIENT_SECRET,
+  SUN_AUTHEN_URL: process.env.SUN_AUTHEN_URL,
+  SUN_SCOPE: process.env.SUN_SCOPE,
+
+  SEA_PAY_SECRET_KEY: process.env.SEA_PAY_SECRET_KEY,
+
   SEND_MAIL_KEY: process.env.SEND_MAIL_KEY,
 });
 
