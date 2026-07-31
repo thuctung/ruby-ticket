@@ -3,6 +3,7 @@
 import { APP_URL } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useState } from "react";
+import { sendEmailResetPassword } from "./api";
 
 export default function ForgotPassword({
   openForgotPass,
@@ -15,22 +16,12 @@ export default function ForgotPassword({
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const supabaseClient = createSupabaseBrowserClient();
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
 
-    const { error }: any = await supabaseClient.auth.resetPasswordForEmail(email, {
-      redirectTo: `${APP_URL}/update-password`,
-    });
+    await sendEmailResetPassword(email);
 
-    if (error) {
-      setMessage(error.message);
-    } else {
-      setMessage("Check your email to reset password.");
-    }
     setLoading(false);
   };
 

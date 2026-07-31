@@ -1,0 +1,16 @@
+B1: Tạo file  npx supabase migration new add_order_note
+
+
+B2: Link sang UAT :npx supabase link --project-ref ylnvexiygssvnegkylha
+
+
+B3: npx supabase db push
+
+
+B4: Commit code lên UAT -> test ok -> merge code sang production
+
+B5: Link sang Production npx supabase link --project-ref zojnswiwkxjyxmtvadph
+
+B6 :npx supabase db push
+
+rubyadmin11@

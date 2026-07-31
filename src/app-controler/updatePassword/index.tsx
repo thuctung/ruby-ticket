@@ -41,16 +41,25 @@ export default function UpdatePassword() {
   };
 
   useEffect(() => {
-    const exchangeCode = async () => {
-      const code = new URLSearchParams(window.location.search).get("code");
-      if (code) {
-        const { error } = await supabaseClient.auth.exchangeCodeForSession(code);
-        if (error) {
-          setErrorMsg("Link đã hết hạn hoặc không hợp lệ. Vui lòng yêu cầu reset lại.");
-        }
-      }
+    const initSession = async () => {
+      const hash = window.location.hash;
+
+      if (!hash) return;
+
+      const params = new URLSearchParams(hash.substring(1));
+
+      const access_token = params.get("access_token");
+      const refresh_token = params.get("refresh_token");
+
+      if (!access_token || !refresh_token) return;
+
+      await supabaseClient.auth.setSession({
+        access_token,
+        refresh_token,
+      });
     };
-    exchangeCode();
+
+    initSession();
   }, []);
 
   return (
