@@ -8,8 +8,6 @@ export async function POST(request: Request) {
   const { data, error }: any = await supabaseAdmin.auth.resetPasswordForEmail(email, {
     redirectTo: `${APP_URL}/update-password`,
   });
-  console.log("data", data);
-  console.log("error", error);
   if (error) {
     return NextResponse.json(data, { status: 500 });
   }
