@@ -1,6 +1,10 @@
 import api from "@/axios";
-import sunApi from "@/axios/apiSun";
-import { COUNT_TICKET_SALE, GET_ORDER_DETAIL, GET_ORDER_HISTORY } from "@/commons/apiURL";
+import {
+  COUNT_TICKET_SALE,
+  GET_ORDER_DETAIL,
+  GET_ORDER_HISTORY,
+  SUN_GET_ORDER,
+} from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType, SearchTableType, SearchTicketSale } from "@/types";
@@ -76,12 +80,7 @@ export const getOrderDetail = async (order_id?: string) => {
 export const getOrdeTicketDetail = async (orderCode: string) => {
   try {
     setGlobalLoading(true);
-    const { data }: any = await sunApi.get(`/ota/order/get`, {
-      params: {
-        lang: "vi",
-        orderCode,
-      },
-    });
+    const { data }: any = await api.post(SUN_GET_ORDER, { orderCode });
     if (data.errors?.[0]?.messsage) {
       setToastMessage(data.error[0]?.messsage);
       return [];

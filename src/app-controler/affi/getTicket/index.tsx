@@ -48,7 +48,6 @@ export default function GetTicketPageControler() {
       return;
     }
     if (profile && products.length) {
-      console.log(products);
       const items: TicketSubmitAgentType[] = products.map((item) => ({
         quantity: item.quantity,
         price: Number(item.unitPrice),

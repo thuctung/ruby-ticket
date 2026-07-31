@@ -9,13 +9,7 @@ const schema = z.object({
   RESEND_FROM_EMAIL: z.string().email(),
 
   APP_URL: z.string().url(),
-  TICKET_QR_SECRET: z.string().min(16),
 
-  VNPAY_TMN_CODE: z.string().min(1),
-  VNPAY_HASH_SECRET: z.string().min(1),
-  VNPAY_URL: z.string().url(),
-  VNPAY_RETURN_URL: z.string().url(),
-  VNPAY_IPN_URL: z.string().url(),
   SUN_CLIENT_ID: z.string().min(1),
   SUN_CLIENT_SECRET: z.string().min(1),
   SEA_PAY_SECRET_KEY: z.string().min(1),
@@ -33,13 +27,6 @@ export const env = schema.parse({
   RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL,
 
   APP_URL: process.env.APP_URL,
-  TICKET_QR_SECRET: process.env.TICKET_QR_SECRET,
-
-  VNPAY_TMN_CODE: process.env.VNPAY_TMN_CODE,
-  VNPAY_HASH_SECRET: process.env.VNPAY_HASH_SECRET,
-  VNPAY_URL: process.env.VNPAY_URL,
-  VNPAY_RETURN_URL: process.env.VNPAY_RETURN_URL,
-  VNPAY_IPN_URL: process.env.VNPAY_IPN_URL,
 
   SUN_CLIENT_ID: process.env.SUN_CLIENT_ID,
   SUN_CLIENT_SECRET: process.env.SUN_CLIENT_SECRET,

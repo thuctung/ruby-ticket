@@ -1,6 +1,10 @@
 import api from "@/axios";
-import sunApi from "@/axios/apiSun";
-import { CREATE_ORDER_TICKET, SUCCESS_ORDER_TICKET, UPDATE_STATUS_ORDER } from "@/commons/apiURL";
+import {
+  CREATE_ORDER_TICKET,
+  SUCCESS_ORDER_TICKET,
+  SUN_V2_CREATE_ORDER,
+  UPDATE_STATUS_ORDER,
+} from "@/commons/apiURL";
 import { DB_TABLE_NAME } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
@@ -51,7 +55,7 @@ export const getTicketFromSunGroup = async (
 ) => {
   try {
     setGlobalLoading(true);
-    const { data, error }: any = await sunApi.post("/v2/order/create", {
+    const { data, error }: any = await api.post(SUN_V2_CREATE_ORDER, {
       thirdPartyNumber,
       products: params,
       ...userBooking,

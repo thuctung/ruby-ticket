@@ -65,3 +65,21 @@ export const ADMIN_GET_SALE_SUMARY = "/api/auth/admin/stats/sumary-email";
 export const ADMIN_UPDATE_STATUS_TOPUP = "/api/webhook/sepay";
 
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";
+
+export const SUN_GET_SITE_LIST = "/api/sun-api/get-site";
+
+export const SUN_GET_PRODOCT_LIST = "/api/sun-api/get-products";
+
+export const SUN_GET_BALANCE = "/api/sun-api/get-balance";
+
+export const SUN_GET_ORDER = "/api/sun-api/get-order";
+
+export const SUN_V2_CREATE_ORDER = "/api/sun-api/v2-create-order";
+
+export const SUN_TICKET_LISTING = "/api/sun-api/ticket-listing";
+
+export const SUN_BOOKING_CREATE = "/api/sun-api/booking-create";
+
+export const SUN_BOOKING_CONFIRM = "/api/sun-api/booking-confirm";
+
+export const SUN_BOOKING_CANCLE = "/api/sun-api/booking-cancel";

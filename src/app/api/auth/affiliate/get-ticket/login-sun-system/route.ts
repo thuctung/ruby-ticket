@@ -1,4 +1,5 @@
 import { env } from "@/lib/env";
+import { supabaseAdmin } from "@/lib/supabase/server";
 import axios from "axios";
 import { NextResponse } from "next/server";
 
@@ -17,7 +18,13 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json(data, { status: 200 });
+    await supabaseAdmin.from("system_settings").upsert({
+      key: "sunworld_token",
+      value: data.access_token,
+      expires_at: data.expires_on,
+    });
+
+    return NextResponse.json({ token: data.access_token }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: "Failed to fetch token" }, { status: 500 });
   }

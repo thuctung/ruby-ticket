@@ -74,17 +74,17 @@ export default function BankTransferQR({
         </div>
         <span className="text-sm text-center text-red-500">{mesage}</span>
         <Countdown totalSecounds={10 * 60} />
-        <div className="flex">
+        <div className="flex ">
           <div className="w-full flex justify-center ">
             {onDone && <Button onClick={onDone}>Đã chuyển khoản</Button>}
           </div>
-          <div className="w-full flex justify-center ">
-            {onCancle && (
+          {onCancle && (
+            <div className="w-full flex justify-center ">
               <Button variant="destructive" onClick={onCancle}>
                 Hủy giao dịch
               </Button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
