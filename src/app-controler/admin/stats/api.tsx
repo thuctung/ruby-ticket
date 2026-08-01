@@ -1,6 +1,10 @@
 import api from "@/axios";
-import sunApi from "@/axios/apiSun";
-import { ADMIN_GET_SALE_SUMARY, COUNT_REPORT, GET_ADMIN_REPORT } from "@/commons/apiURL";
+import {
+  ADMIN_GET_SALE_SUMARY,
+  COUNT_REPORT,
+  GET_ADMIN_REPORT,
+  SUN_GET_BALANCE,
+} from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { AdminSearchReport, CommonType, SearchTableType } from "@/types";
@@ -61,7 +65,7 @@ export const countReportAdmin = async (from: string, to: string) => {
 
 export const getCurrentMoeny = async () => {
   try {
-    const { data } = await sunApi.get("/ota/account/balance");
+    const { data } = await api.get(SUN_GET_BALANCE);
 
     if (data.errors?.[0]) {
       setToastMessage(data.errors?.[0]);

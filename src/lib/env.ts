@@ -9,7 +9,6 @@ const schema = z.object({
   RESEND_FROM_EMAIL: z.string().email(),
 
   APP_URL: z.string().url(),
-  TICKET_QR_SECRET: z.string().min(16),
 
   SUN_CLIENT_ID: z.string().min(1),
   SUN_CLIENT_SECRET: z.string().min(1),
@@ -28,7 +27,6 @@ export const env = schema.parse({
   RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL,
 
   APP_URL: process.env.APP_URL,
-  TICKET_QR_SECRET: process.env.TICKET_QR_SECRET,
 
   SUN_CLIENT_ID: process.env.SUN_CLIENT_ID,
   SUN_CLIENT_SECRET: process.env.SUN_CLIENT_SECRET,

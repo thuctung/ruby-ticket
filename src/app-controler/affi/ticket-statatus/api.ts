@@ -1,14 +1,15 @@
-import sunApi from "@/axios/apiSun";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import { ParamStatusTicketType } from "./type";
+import { SUN_TICKET_LISTING } from "@/commons/apiURL";
+import api from "@/axios";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 
 export const getStatusTicket = async (prams: ParamStatusTicketType) => {
   try {
     setGlobalLoading(true);
-    const { data, error }: any = await sunApi.post("/ota/ticket/listing", prams);
+    const { data, error }: any = await api.post(SUN_TICKET_LISTING, prams);
     if (data.errors?.length) {
       setToastMessage(data.messages?.[0] || "");
       return;

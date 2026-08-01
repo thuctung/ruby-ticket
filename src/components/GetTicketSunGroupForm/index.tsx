@@ -90,6 +90,7 @@ export default function GetTicketSunGroupForm({
 
   const fetchSiteSunGroup = async () => {
     const data = await getSiteListSun();
+
     if (data?.length) {
       setListSideSungroup(data);
     }
@@ -155,16 +156,8 @@ export default function GetTicketSunGroupForm({
   }, []);
 
   useEffect(() => {
-    if (location) {
-      switch (location) {
-        case "BANA": {
-          fetchSiteSunGroup();
-          break;
-        }
-        default:
-      }
-    }
-  }, [location]);
+    fetchSiteSunGroup();
+  }, []);
 
   const commonProps = {
     agentPrice,

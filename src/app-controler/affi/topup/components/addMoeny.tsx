@@ -28,6 +28,7 @@ export default function AddMoeny({ curentBalance, onSubmitTopup }: AddMoenyProps
     showConfirm({
       message: `Xác nhận nạp ${formatVND(amount)}`,
       okFunc: () => onSubmitTopup(amount),
+      textOk: "Xác nhận",
     });
   };
 

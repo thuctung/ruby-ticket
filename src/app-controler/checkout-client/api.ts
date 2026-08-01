@@ -6,6 +6,9 @@ import {
   CLIENT_CREATE_ORDER_TICKET,
   CLIENT_SEND_TICET_TO_MAIL,
   CLIENT_UPDATE_STATUS_ORDER,
+  SUN_BOOKING_CANCLE,
+  SUN_BOOKING_CONFIRM,
+  SUN_BOOKING_CREATE,
 } from "@/commons/apiURL";
 import {
   ClientOrderItem,
@@ -14,7 +17,6 @@ import {
   SendTicketMailType,
   UpdateOrderType,
 } from "./type";
-import sunApi from "@/axios/apiSun";
 import { get } from "lodash";
 import dayjs from "dayjs";
 import { FULL_DATE_FORMAT } from "@/helpers/dateTime";
@@ -40,7 +42,7 @@ export const customerCreateOrderTicket = async (params: ClientOrderItem) => {
 export const customerCreateOrder = async (params: CustomerOrderType) => {
   try {
     setGlobalLoading(true);
-    const { data }: any = await sunApi.post("/ota/booking/create", params);
+    const { data }: any = await api.post(SUN_BOOKING_CREATE, params);
     if (data?.success) {
       return data.result;
     }
@@ -56,7 +58,7 @@ export const customerCreateOrder = async (params: CustomerOrderType) => {
 export const getTicketSunWorld = async (orderCode: string) => {
   try {
     setGlobalLoading(true);
-    const { data }: any = await sunApi.post("/ota/booking/confirm", { orderCode });
+    const { data }: any = await api.post(SUN_BOOKING_CONFIRM, { orderCode });
     if (data.errors[0]) {
       setToastMessage(data.messages[0]);
     }
@@ -103,7 +105,6 @@ export const senTicketToMail = async (payload: SendTicketMailType, isDownload = 
       URL.revokeObjectURL(url);
     }
   } catch (e) {
-    console.log(e);
     setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");
   } finally {
     setGlobalLoading(false);
@@ -113,7 +114,7 @@ export const senTicketToMail = async (payload: SendTicketMailType, isDownload = 
 export const cancleBooking = async (orderCode: string) => {
   try {
     setGlobalLoading(true);
-    const { data }: any = await sunApi.post("/ota/booking/cancel", { orderCode });
+    const { data }: any = await api.post(SUN_BOOKING_CANCLE, { orderCode });
     if (data.errors[0]) {
       setToastMessage(data.messages[0]);
     }
