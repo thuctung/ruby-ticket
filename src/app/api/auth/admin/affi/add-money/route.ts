@@ -5,15 +5,19 @@ import { ProfileUpdateStatusType } from "@/types";
 import { DB_TABLE_NAME } from "@/commons/constant";
 
 export async function POST(request: Request) {
-  const { user_id, status, agent_level }: ProfileUpdateStatusType = await request.json();
+  const { user_id, amount, payment_code } = await request.json();
 
-  const { error } = await supabaseAdmin
-    .from(DB_TABLE_NAME.PROFILES)
-    .update({
-      status,
-      ...(agent_level != null && { agent_level }),
-    })
-    .eq("user_id", user_id);
+  const { error } = await supabaseAdmin.from(DB_TABLE_NAME.TOPUPS).insert({
+    user_id,
+    amount,
+    payment_code,
+    real_amount: amount,
+  });
+
+  await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_AFF_ADD_MONEY, {
+    amount_to_add: amount,
+    payment_code_transf: payment_code,
+  });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

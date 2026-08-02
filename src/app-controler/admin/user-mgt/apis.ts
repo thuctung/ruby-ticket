@@ -33,3 +33,15 @@ export const updateAffProfile = async (param: ProfileUpdateStatusType) => {
     setGlobalLoading(false);
   }
 };
+
+export const getListLevel = async (param: ProfileUpdateStatusType) => {
+  setGlobalLoading(true);
+  try {
+    const response = await api.post(UPDATE_AFFILIATE_STATUS, param);
+    return response;
+  } catch (err: any) {
+    setToastMessage(err.response?.data?.error || err.message || "Lỗi khi tải danh sách");
+  } finally {
+    setGlobalLoading(false);
+  }
+};

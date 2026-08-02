@@ -4,12 +4,13 @@ import { SearchButton } from "@/components/ui/customs/searchButton";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
 
-import { checkDateRange } from "@/helpers/dateTime";
+import { BASIC_DATE_FORMAT, checkDateRange } from "@/helpers/dateTime";
 import { AdminSearchReport, SearchTicketSale } from "@/types";
 import { SiteType } from "@/types/ticket";
 import { Calendar, MapPin, User } from "lucide-react";
 import { useState } from "react";
 import { intForm } from "../constant";
+import dayjs from "dayjs";
 
 type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
@@ -62,6 +63,7 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
             <DatePickerCustom
               className="h-12"
               value={filter.to}
+              maxDate={dayjs(new Date()).format(BASIC_DATE_FORMAT)}
               onChange={(date: string) => handleChangeFilter("to", date)}
             />
           </div>

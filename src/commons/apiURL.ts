@@ -2,6 +2,8 @@ export const REGISTER_AFFILIATE = "/api/auth/register";
 
 export const GET_LIST_AFFILIATE = "/api/auth/admin/affi/getlist";
 
+export const ADD_MONEY_FOR_STAFF = "/api/auth/admin/affi/add-money";
+
 export const UPDATE_AFFILIATE_STATUS = "/api/auth/admin/affi/update-status";
 
 export const UPDATE_AFFILIATE_ROLE = "/api/auth/admin/affi/update-role";
@@ -54,6 +56,8 @@ export const COUNT_TICKET_SALE = "/api/auth/affiliate/stats/count-ticket";
 
 export const UPDATE_PROFILE = "/api/auth/affiliate/profile/update";
 
+export const AFF_GET_STATUS = "/api/auth/affiliate/profile/get-status";
+
 export const CHANGE_PASSWORD = "/api/auth/affiliate/profile/change-password";
 
 export const GET_ADMIN_REPORT = "/api/auth/admin/history/get-report";
@@ -64,6 +68,9 @@ export const ADMIN_GET_SALE_SUMARY = "/api/auth/admin/stats/sumary-email";
 
 export const ADMIN_UPDATE_STATUS_TOPUP = "/api/webhook/sepay";
 
+export const SUN_BOOKING_CANCLE = "/api/sun-api/booking-cancel";
+
+// Sun API
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";
 
 export const SUN_GET_SITE_LIST = "/api/sun-api/get-site";
@@ -81,5 +88,3 @@ export const SUN_TICKET_LISTING = "/api/sun-api/ticket-listing";
 export const SUN_BOOKING_CREATE = "/api/sun-api/booking-create";
 
 export const SUN_BOOKING_CONFIRM = "/api/sun-api/booking-confirm";
-
-export const SUN_BOOKING_CANCLE = "/api/sun-api/booking-cancel";

@@ -15,13 +15,12 @@ import {
 import { getListAffi, updateAffProfile } from "./apis";
 import { get, isEmpty } from "lodash";
 import { AffiliateSearch } from "./components/search-form";
-import { CUSTOMER, getStatusName, listAccStatus, statusClass } from "./constants";
+import { getStatusName, listAccStatus, statusClass } from "./constants";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
 import { Button } from "@/components/ui/button";
-import { ACC_STATUS } from "@/commons/constant";
-import { getListAgent } from "../agent-mgt/api";
 import EditUserLevelDialog from "./components/edit-level";
+import { getListAgent } from "../agent-mgt/api";
 
 export default function UserMgt() {
   const [response, setRespose] = useState<AdminAffiResponseType>();
@@ -40,6 +39,12 @@ export default function UserMgt() {
   });
 
   const [userEdit, setUserEdit] = useState<ProfileType | null>();
+  const [agentList, setAgentList] = useState<AgentType[]>([]);
+
+  const getAgentName = (agentCode: string | any) => {
+    const agent = agentList.find((item) => item.code === agentCode);
+    return agent?.name || agentCode;
+  };
 
   const handleGetListAff = useCallback(async () => {
     const data = await getListAffi(params);
@@ -89,8 +94,22 @@ export default function UserMgt() {
     }
   };
 
+  const fetchListAgent = async () => {
+    const { data, totalPages } = await getListAgent({
+      currentPage: 1,
+      searchValue: {},
+    });
+    if (data?.length) {
+      setAgentList(data);
+    }
+    setTotalPage(totalPages);
+  };
+
+  useEffect(() => {}, []);
+
   useEffect(() => {
     handleGetListAff();
+    fetchListAgent();
   }, []);
 
   const columnAffMgt: TableColumn<ProfileType>[] = [
@@ -107,6 +126,11 @@ export default function UserMgt() {
       title: "Email",
     },
     {
+      key: "agent_level",
+      title: "Cấp bậc",
+      render: (row) => <span>{getAgentName(row.agent_level)}</span>,
+    },
+    {
       key: "phone",
       title: "Phone",
     },
@@ -120,6 +144,7 @@ export default function UserMgt() {
         </span>
       ),
     },
+
     {
       key: "balance",
       title: "Số dư",
@@ -136,6 +161,8 @@ export default function UserMgt() {
       ),
     },
   ];
+
+  console.log("profiles", profiles);
 
   return (
     <div className="space-y-4">
@@ -162,7 +189,7 @@ export default function UserMgt() {
         onClose={() => setUserEdit(null)}
         userName={userEdit?.full_name || ""}
         currentLevel={userEdit?.agent_level || ""}
-        levels={[]}
+        levels={agentList}
         onSubmit={(value) => handleEditLevel(value)}
       />
     </div>

@@ -23,8 +23,8 @@ export default function DatePickerCustom({
       onChange(dayjs(value).format(BASIC_DATE_FORMAT));
     }
   };
-  const minDateForm = dayjs(maxDate).format(SERVER_DATE_FORMAT);
-  const maxDateForm = dayjs(maxDate).format(SERVER_DATE_FORMAT);
+  const minDateForm = dayjs(minDate).format(BASIC_DATE_FORMAT);
+  const maxDateForm = dayjs(maxDate).format(BASIC_DATE_FORMAT);
   return (
     <div className="relative w-full ">
       <DatePicker

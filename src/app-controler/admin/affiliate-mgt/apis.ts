@@ -1,5 +1,6 @@
 import api from "@/axios";
 import {
+  ADD_MONEY_FOR_STAFF,
   GET_LIST_AFFILIATE,
   UPDATE_AFFILIATE_ROLE,
   UPDATE_AFFILIATE_STATUS,
@@ -26,6 +27,23 @@ export const updateAffProfile = async (param: ProfileUpdateStatusType) => {
   setGlobalLoading(true);
   try {
     const response = await api.post(UPDATE_AFFILIATE_STATUS, param);
+    return response;
+  } catch (err: any) {
+    setToastMessage(err.response?.data?.error || err.message || "Lỗi khi tải danh sách");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const addMoneyForStaff = async (
+  amount: number,
+  user_id: string,
+  payment_code: string,
+  callback?: Function
+) => {
+  setGlobalLoading(true);
+  try {
+    const response = await api.post(ADD_MONEY_FOR_STAFF, { amount, user_id, payment_code });
     return response;
   } catch (err: any) {
     setToastMessage(err.response?.data?.error || err.message || "Lỗi khi tải danh sách");

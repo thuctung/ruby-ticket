@@ -12,16 +12,19 @@ import {
   SearchAffiType,
   SearchTableType,
 } from "@/types";
-import { getListAffi, updateAffProfile } from "./apis";
+import { addMoneyForStaff, getListAffi, updateAffProfile } from "./apis";
 import { get, isEmpty } from "lodash";
 import { AffiliateSearch } from "./components/search-form";
 import { CUSTOMER, getStatusName, listAccStatus, statusClass } from "./constants";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
 import { Button } from "@/components/ui/button";
-import { ACC_STATUS } from "@/commons/constant";
+import { ACC_STATUS, AGENT_CODE, TYPE_TRANSFER } from "@/commons/constant";
 import { getListAgent } from "../agent-mgt/api";
 import EditUserLevelDialog from "./components/edit-level";
+import AddMoneyDialog from "./components/add-moeny";
+import { getCodeTopup } from "@/helpers/genCode";
+import { toast } from "react-toastify";
 
 export default function AffiliateMgt() {
   const [response, setRespose] = useState<AdminAffiResponseType>();
@@ -40,6 +43,7 @@ export default function AffiliateMgt() {
   });
 
   const [userEdit, setUserEdit] = useState<ProfileType | null>();
+  const [userAddMoney, setUserAddMoney] = useState<ProfileType | null>();
 
   const [agentList, setAgentList] = useState<AgentType[]>([]);
 
@@ -65,6 +69,7 @@ export default function AffiliateMgt() {
 
   const handleUpdateSearch = useCallback(
     (value: SearchAffiType) => {
+      console.log("value", value);
       setParams({
         searchValue: value,
         currentPage: 1,
@@ -102,10 +107,25 @@ export default function AffiliateMgt() {
     }
   };
 
-  useEffect(() => {
+  const openAddMoney = (user: ProfileType) => {
+    setUserAddMoney(user);
+  };
+
+  const handleAddMoneyStaff = async (amount: number) => {
+    if (!userAddMoney) return;
+    const codeAddMoney = getCodeTopup(TYPE_TRANSFER.STAFF);
+    await addMoneyForStaff(amount, userAddMoney.user_id, codeAddMoney);
+    toast.success("Nạp tiền thành công");
     handleGetListAff();
+  };
+
+  useEffect(() => {
     fetchListAgent();
   }, []);
+
+  useEffect(() => {
+    handleGetListAff();
+  }, [params]);
 
   const columnAffMgt: TableColumn<ProfileType>[] = [
     {
@@ -189,6 +209,17 @@ export default function AffiliateMgt() {
         </Button>
       ),
     },
+    {
+      key: "action",
+      title: "",
+      align: "center",
+      render: (row) =>
+        row.agent_level === AGENT_CODE.STAFF ? (
+          <Button size="sm" variant="destructive" onClick={() => openAddMoney(row)}>
+            Nạp tiền
+          </Button>
+        ) : null,
+    },
   ];
 
   return (
@@ -219,6 +250,14 @@ export default function AffiliateMgt() {
         levels={agentList}
         onSubmit={(value) => handleEditLevel(value)}
       />
+      {userAddMoney && (
+        <AddMoneyDialog
+          open={!isEmpty(userAddMoney)}
+          curentUser={userAddMoney}
+          onClose={() => setUserAddMoney(null)}
+          onSubmit={(amount) => handleAddMoneyStaff(amount)}
+        />
+      )}
     </div>
   );
 }

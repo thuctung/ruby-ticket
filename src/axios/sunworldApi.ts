@@ -1,6 +1,5 @@
 import axios from "axios";
 import { SUN_GROUP } from "@/commons/constant";
-import { LOCAL_SUN_TOKEN } from "@/commons/constant"; // key localStorage, đảm bảo trùng với "sun_access_token"
 import { getValidSunworldToken } from "@/helpers/getTokenSun";
 
 const sunWorldApi = axios.create({
