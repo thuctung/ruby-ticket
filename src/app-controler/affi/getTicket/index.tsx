@@ -40,7 +40,7 @@ export default function GetTicketPageControler() {
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
   const { setProfile }: CommonType | any = useProfileStore.getState();
 
-  const [location, setLocation] = useState("BANA");
+  const [location, setLocation] = useState("BNC");
 
   const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
     const { products, totalMoney, date_use, siteCode, haveFOC } = values;

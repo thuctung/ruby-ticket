@@ -90,8 +90,10 @@ export const getSiteInSystem = async () => {
 export const getAllSite = async () => {
   try {
     setGlobalLoading(true);
-
     const [sunSites, systemSites] = await Promise.all([getSiteListSun(), getSiteInSystem()]);
+
+    const getBana = sunSites?.find((site: any) => site.code === "BNC") || {};
+    return sunSites;
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {

@@ -88,8 +88,8 @@ export default function GetTicketSunGroupForm({
     setAgentPrice(price);
   };
 
-  const fetchSiteSunGroup = async () => {
-    const data = await getSiteListSun();
+  const getAllLocations = async () => {
+    const data = await getAllSite();
 
     if (data?.length) {
       setListSideSungroup(data);
@@ -151,12 +151,12 @@ export default function GetTicketSunGroupForm({
     }
   }, [siteSunCode, profile.agent_level, formType, formData.date_use]);
 
-  useEffect(() => {
-    getAllSite();
-  }, []);
+  // useEffect(() => {
+  //   getAllSite();
+  // }, []);
 
   useEffect(() => {
-    fetchSiteSunGroup();
+    getAllLocations();
   }, []);
 
   const commonProps = {

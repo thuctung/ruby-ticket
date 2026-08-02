@@ -2,10 +2,9 @@
 import { useEffect, useState } from "react";
 import { Save, Users } from "lucide-react";
 import { createAgentPrice, getListPriceBySiteCode, updateAgentPrice } from "./api";
-import { AgentType, CommonType } from "@/types";
+import { AgentType } from "@/types";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import { SideSunGroupType } from "@/types/ticket";
-import { useCommonStore } from "@/stores/useCommonStore";
 import { getSiteListSun } from "@/components/GetTicketSunGroupForm/api";
 import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 import CreatePriceForm from "./components/create-price";

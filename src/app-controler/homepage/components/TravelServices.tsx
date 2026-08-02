@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 const services = [
@@ -530,7 +531,8 @@ export default function TravelServices() {
             : {};
 
           return (
-            <Tag
+            <Link
+              href="tel:0705551668"
               key={s.id}
               {...(extraProps as any)}
               onMouseEnter={() => setHovered(s.id)}
@@ -612,7 +614,7 @@ export default function TravelServices() {
                   </svg>
                 </span>
               )}
-            </Tag>
+            </Link>
           );
         })}
       </div>

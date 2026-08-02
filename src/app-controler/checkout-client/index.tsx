@@ -327,7 +327,7 @@ export default function CheckoutControlerPage() {
         <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
           <div className="bg-white rounded-3xl shadow-2xl p-2 md:p-4">
             <GetTicketSunGroupForm
-              location="BANA"
+              location="BNC"
               onBuyTicket={confirmBuyTicket}
               formType={SUN_BOOKING_FORM_TYPE.CUSTOMER}
             />

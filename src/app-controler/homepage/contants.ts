@@ -88,7 +88,7 @@ export const TESTIMONIALS = [
 ];
 export const EXPERIENCES: ExperienceCard[] = [
   {
-    key: "BANA",
+    key: "BNC",
     nameKey: "product.bana.name",
     taglineKey: "product.bana.tagline",
     badgeKey: "product.bana.badge",
