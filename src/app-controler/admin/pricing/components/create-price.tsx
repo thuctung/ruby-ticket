@@ -6,6 +6,7 @@ import { AgentType } from "@/types";
 import { SideSunGroupType } from "@/types/ticket";
 import { formatVND } from "@/helpers/money";
 import { AgentPriceSubmitType } from "../type";
+import { toast } from "react-toastify";
 
 export interface EditUserLevelDialogProps {
   open: boolean;
@@ -65,6 +66,10 @@ export default function CreatePriceForm({
     e.preventDefault();
     setLoading(true);
     try {
+      if (!formData.site_code || !formData.agent_code) {
+        toast.warning("Vui lòng nhập đầy đủ thông tin");
+        return;
+      }
       await onSubmit(formData);
       onClose();
     } finally {
@@ -109,6 +114,7 @@ export default function CreatePriceForm({
               disabled={loading}
               className="w-full appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-9 text-sm font-medium text-[#2A1414] outline-none transition focus:border-[#C81418] focus:ring-2 focus:ring-red-100 disabled:opacity-60"
             >
+              <option value="">Chọn khu vực</option>
               {listSide.map((lv) => (
                 <option key={lv.code} value={lv.code}>
                   {lv.name}
@@ -126,6 +132,7 @@ export default function CreatePriceForm({
               disabled={loading}
               className="w-full appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-9 text-sm font-medium text-[#2A1414] outline-none transition focus:border-[#C81418] focus:ring-2 focus:ring-red-100 disabled:opacity-60"
             >
+              <option value="">Chọn level</option>
               {agentList.map((lv) => (
                 <option key={lv.code} value={lv.code}>
                   {lv.name}

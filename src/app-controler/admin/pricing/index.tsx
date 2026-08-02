@@ -14,8 +14,6 @@ import { AgentPriceSubmitType, AgentPriceType } from "./type";
 import { CUSTOMER } from "@/commons/constant";
 
 export default function PricingPageControler() {
-  const { setToastMessage }: CommonType | any = useCommonStore.getState();
-
   const [listPrice, setListPrice] = useState<AgentPriceType[]>([]);
 
   const [siteSunGroup, setSiteSunGroup] = useState<SideSunGroupType[]>([]);
