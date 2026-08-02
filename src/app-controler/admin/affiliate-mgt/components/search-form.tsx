@@ -7,13 +7,14 @@ import { SearchButton } from "@/components/ui/customs/searchButton";
 import { ResetButton } from "@/components/ui/customs/ressetButton";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import { Input } from "@/components/ui/customs/input";
+import { Button } from "@/components/ui/button";
 
 type AffiliateSearch = {
   onSearch: (value: SearchAffiType) => void;
   listStatus: StatusType[];
 };
 
-export function AffiliateSearch({ listStatus, onSearch ,}: any) {
+export function AffiliateSearch({ listStatus, onSearch }: any) {
   const [filters, setFilters] = useState({
     username: "",
     email: "",

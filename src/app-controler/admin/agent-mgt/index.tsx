@@ -48,20 +48,6 @@ export default function AgentMamagement() {
       key: "code",
       title: "Mã đại lí",
     },
-    {
-      key: "action",
-      title: "Action",
-      render: (row, index) => (
-        <div>
-          <Button className="p-4" onClick={() => onSelectAgentEdit(row)}>
-            Sửa
-          </Button>
-          <Button className="ml-5 p-4 bg-[red]" onClick={() => onDeleteAgent(row)}>
-            Xóa
-          </Button>
-        </div>
-      ),
-    },
   ];
 
   const onChangeAgent = (key: string, value: string) => {

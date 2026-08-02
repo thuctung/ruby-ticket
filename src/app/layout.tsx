@@ -7,6 +7,7 @@ import ToastMessage from "@/components/ui/toast-message";
 import { LoadingGlobal } from "@/components/ui/loading";
 // @ts-ignore: CSS module declarations not found in this environment
 import "react-datepicker/dist/react-datepicker.css";
+import { Suspense } from "react";
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-sans",
   subsets: ["latin", "vietnamese"],
@@ -34,7 +35,9 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`${beVietnamPro.variable} ${geistMono.variable}`}>
       <body className="antialiased">
-        {children} <ToastMessage />
+        <Suspense fallback={<LoadingGlobal />}>{children}</Suspense>
+        <div id="modal-root"></div>
+        <ToastMessage />
         <LoadingGlobal />
         <ToastContainer
           position="top-right"

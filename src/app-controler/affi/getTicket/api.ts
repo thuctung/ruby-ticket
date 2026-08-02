@@ -1,5 +1,6 @@
 import api from "@/axios";
 import {
+  AFF_GET_STATUS,
   CREATE_ORDER_TICKET,
   SUCCESS_ORDER_TICKET,
   SUN_V2_CREATE_ORDER,
@@ -10,6 +11,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import { ParamCreateTicketAgentType, ProductSubmitType, TicketReponseType } from "@/types/ticket";
+import { get } from "lodash";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 const clientSupbase = createSupabaseBrowserClient();
@@ -94,6 +96,21 @@ export const updateSuccessOrder = async (payload: any) => {
       setToastMessage(error.message);
       return;
     }
+  } catch (e) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+  }
+};
+
+export const getStatusProfile = async (user_id: string) => {
+  try {
+    const { data, error }: any = await api.post(AFF_GET_STATUS, { user_id });
+    if (error) {
+      setToastMessage(error.message);
+      return;
+    }
+    const status = get(data, ["data", "status"]);
+    return status;
   } catch (e) {
     setToastMessage("Có lỗi xảy ra");
   } finally {

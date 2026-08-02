@@ -28,7 +28,7 @@ import dayjs from "dayjs";
 import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
 import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType } from "./type";
-import { generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
+import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import { toast } from "react-toastify";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
 import { useCommonStore } from "@/stores/useCommonStore";
@@ -196,15 +196,13 @@ export default function CheckoutControlerPage() {
 
       const { customerTickets } = getTicketFOCAndCutomer(formatTickets);
       // SEND TICKET TO MAIL AND DOWN FILE PDF
-      await senTicketToMail(
-        {
-          email: customerEmail,
-          customerTickets,
-          focTickets: [],
-          orderCode,
-        },
-        true
-      );
+      await senTicketToMail({
+        email: customerEmail,
+        customerTickets,
+        focTickets: [],
+        orderCode,
+      });
+      downloadTicketPDF(customerTickets, []);
       toast.success(`Vé đã được gửi qua email: ${customerEmail}`);
       // reset data
       setProductSelected([]);

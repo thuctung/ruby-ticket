@@ -6,7 +6,6 @@ import { CommonType } from "@/types";
 import api from "@/axios";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
-const clientSupbase = createSupabaseBrowserClient();
 
 export const getListAgent = async (params: any) => {
   try {

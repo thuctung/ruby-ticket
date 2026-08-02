@@ -26,10 +26,5 @@ export async function POST(req: Request) {
     ],
   });
 
-  return new Response(pdfBuffer, {
-    headers: {
-      "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename=${orderCode}.pdf`,
-    },
-  });
+  return new Response("ok", { status: 200 });
 }
