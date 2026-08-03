@@ -49,6 +49,7 @@ export type ExperienceCard = {
   image2: string;
   color: string;
   category: string;
+  alt: string;
 };
 
 export type LangKey = "vi" | "en" | "zh" | "ko";

@@ -2,12 +2,23 @@
 
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-
 const BANNER_IMAGES = [
-  "/bannber_bana.png",
-  "/banner_nuithantai.png",
-  "/banner_mikayiki.png",
-  "/banner_vinpearl.png",
+  {
+    src: "/bannber_bana.png",
+    alt: "Banner Bà Nà Hills",
+  },
+  {
+    src: "/banner_nuithantai.png",
+    alt: "Banner Núi Thần Tài",
+  },
+  {
+    src: "/banner_mikayiki.png",
+    alt: "Banner Mikaziki",
+  },
+  {
+    src: "/banner_vinpearl.png",
+    alt: "Banner Vinpearl",
+  },
 ];
 
 export function Banner() {
@@ -28,12 +39,12 @@ export function Banner() {
           const isActive = index === currentImageIndex;
           return (
             <Image
-              key={imgUrl}
-              src={imgUrl}
+              key={imgUrl.src}
+              src={imgUrl.src}
               fill
               priority={index === 0}
               sizes="100vw"
-              alt={`Banner điểm du lịch ${index + 1}`}
+              alt={imgUrl.alt}
               className={`absolute inset-0 object-cover will-change-[opacity] transition-opacity ease-in-out ${
                 isActive ? "opacity-100" : "opacity-0"
               }`}
