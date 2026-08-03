@@ -48,7 +48,10 @@ export default function BankTransferQR({
   return (
     <Dialog open={isOpen}>
       <DialogTitle>BankTransferQR</DialogTitle>
-      <DialogContent className="[&>button]:hidden">
+      <DialogContent
+        className="[&>button]:hidden"
+        style={{ maxHeight: "95vh", overflowY: "auto", zIndex: 9999 }}
+      >
         <div className="space-y-4">
           <img src={dataQR.qr} className="w-64 mx-auto" />
           <div className="flex justify-center gap-2">

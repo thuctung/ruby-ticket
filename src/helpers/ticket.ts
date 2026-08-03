@@ -1,15 +1,11 @@
 import { SITE_SUB_GROUP, TYPE_TRANSACTION } from "@/commons/constant";
-import { TableColumn } from "@/components/ui/customs/table";
-import { dayjsEx } from "@/helpers/dateTime";
 import { formatVND } from "@/helpers/money";
-import { StatusType, TicketSalteResponseType } from "@/types";
 import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
 
 import { jsPDF } from "jspdf";
 import QRCodePDF from "qrcode";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, FULL_DATE_FORMAT, FULL_DATE_TIME_FORMAT } from "@/helpers/dateTime";
-import { CommonType } from "@/types";
 import {
   BNC_NOTES,
   FOC_GUIDES,
@@ -337,7 +333,7 @@ export const downloadTicketPDF = async (
     });
   }
 
-  pdf.save(`ve-banahills-${dayjs(new Date()).format(FULL_DATE_FORMAT)}.pdf`);
+  pdf.save(`${dayjs(new Date()).format(FULL_DATE_FORMAT)}.pdf`);
 };
 
 export const rebuildDataTicket = (
