@@ -88,7 +88,7 @@ export const TESTIMONIALS = [
 ];
 export const EXPERIENCES: ExperienceCard[] = [
   {
-    key: "BANA",
+    key: "BNC",
     nameKey: "product.bana.name",
     taglineKey: "product.bana.tagline",
     badgeKey: "product.bana.badge",
@@ -96,6 +96,7 @@ export const EXPERIENCES: ExperienceCard[] = [
     image2: "bana2.jpg",
     color: "from-amber-500 to-orange-600",
     category: "Theme Park",
+    alt: "Cáp treo Bà Nà Hills",
   },
   {
     key: "VINPER",
@@ -106,6 +107,7 @@ export const EXPERIENCES: ExperienceCard[] = [
     image2: "namha2.jpg",
     color: "from-blue-500 to-cyan-600",
     category: "Water Park",
+    alt: "Vinpearl Nam Hội An",
   },
   {
     key: "KWHOIAN",
@@ -116,6 +118,7 @@ export const EXPERIENCES: ExperienceCard[] = [
     image2: "hoian2.jpg",
     color: "from-rose-500 to-pink-600",
     category: "Show",
+    alt: "Hội An Ancient Town",
   },
   {
     key: "NUITHANTAI",
@@ -126,6 +129,7 @@ export const EXPERIENCES: ExperienceCard[] = [
     image2: "thantai2.jpg",
     color: "from-emerald-500 to-teal-600",
     category: "Hot Spring",
+    alt: "Núi Thần Tài",
   },
   {
     key: "DUTHUYEN",
@@ -136,6 +140,7 @@ export const EXPERIENCES: ExperienceCard[] = [
     image2: "duthuyen2.jpg",
     color: "from-indigo-500 to-blue-600",
     category: "River Cruise",
+    alt: "Du thuyền sông Hàn",
   },
   {
     key: "MIKAZUKI",
@@ -146,5 +151,6 @@ export const EXPERIENCES: ExperienceCard[] = [
     image2: "mikazuki2.webp",
     color: "from-indigo-500 to-blue-600",
     category: "Mikayuki",
+    alt: "Mikazuki",
   },
 ] as const;

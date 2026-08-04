@@ -52,6 +52,7 @@ export function ExperiencesSection({
                     {item.exp.category}
                   </div>
                   <HoverImage
+                    alt={item.exp.alt}
                     image={`/${item.exp.image1}`}
                     hoverImage={`/${item.exp.image2}`}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"

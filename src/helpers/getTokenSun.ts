@@ -33,6 +33,7 @@ export async function refreshSunworldToken() {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   });
+
   if (data) {
     supabaseAdmin.from(DB_TABLE_NAME.SYSTEM_SETTINGS).upsert({
       key: "sunworld_token",

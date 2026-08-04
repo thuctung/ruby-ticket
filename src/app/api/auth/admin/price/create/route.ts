@@ -21,7 +21,6 @@ export async function POST(request: Request) {
   if (existed) {
     return NextResponse.json({ message: "Cặp Khu vực và Level đã tồn tại" }, { status: 200 });
   }
-
   const { data, error } = await supabaseAdmin
     .from(DB_TABLE_NAME.AGENT_PRICE)
     .insert({
