@@ -43,8 +43,8 @@ export const downloadTicketPDF = async (
   tickets: TicketResultQRType[],
   focTicket: TicketResultQRType[]
 ) => {
-  const PAGE_W = 220;
-  const PAGE_H = 550;
+  const PAGE_W = 250;
+  const PAGE_H = 630;
   const pdf = new jsPDF({
     unit: "px",
     format: [PAGE_W, PAGE_H],
@@ -258,62 +258,51 @@ export const downloadTicketPDF = async (
     // ===== HƯỚNG DẪN / INSTRUCTIONS =====
     pdf.setTextColor(...RED_LABEL);
     pdf.setFont("Roboto", "bold");
-    pdf.setFontSize(8);
+    pdf.setFontSize(9);
     pdf.text("HƯỚNG DẪN SỬ DỤNG/USER GUIDE:", 18, y);
 
     y += 10;
 
-    pdf.setTextColor(...TEXT_GUIDE);
-    pdf.setFont("Roboto", "normal");
-    pdf.setFontSize(6);
+    const funcRenderTexts = (texts: string[] | any) => {
+      pdf.setTextColor(...TEXT_GUIDE);
+      pdf.setFont("Roboto", "normal");
+      pdf.setFontSize(8);
+      pdf.setLineHeightFactor(1.5);
+      if (texts?.length) {
+        texts?.forEach((g: string, index: number) => {
+          const lines = pdf.splitTextToSize(`- ${g}`, PAGE_W - 36);
+          pdf.text(lines, 18, y);
+          const dimensions = pdf.getTextDimensions(lines);
+          y += dimensions.h + 5;
+        });
+      }
+    };
 
     if (isFOCTicket) {
-      FOC_GUIDES.forEach((g) => {
-        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
-        pdf.text(lines, 18, y);
-        y += lines.length * 5.2 + 4;
-      });
+      funcRenderTexts(FOC_GUIDES);
     } else {
       const guides = getGuideByProductCode(t.siteCode, t.productCode);
-      guides.forEach((g) => {
-        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
-        pdf.text(lines, 18, y);
-        y += lines.length * 5.2 + 4;
-      });
+      if (guides) {
+        funcRenderTexts(guides);
+      }
     }
 
-    y += 10;
+    y += 5;
 
     // ===== NOTE =====
     pdf.setTextColor(...RED_LABEL);
     pdf.setFont("Roboto", "bold");
-    pdf.setFontSize(8);
+    pdf.setFontSize(9);
     pdf.text("LƯU Ý/NOTE:", 18, y);
 
     y += 10;
 
-    pdf.setTextColor(...TEXT_GUIDE);
-    pdf.setFont("Roboto", "normal");
-    pdf.setFontSize(6);
-
     if (isFOCTicket) {
-      FOC_NOTES.forEach((g) => {
-        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
-        pdf.text(lines, 18, y);
-        y += lines.length * 5.2 + 4;
-      });
+      funcRenderTexts(FOC_NOTES);
     } else if (t.siteCode === "BNC") {
-      BNC_NOTES.forEach((g) => {
-        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
-        pdf.text(lines, 18, y);
-        y += lines.length * 5.2 + 4;
-      });
+      funcRenderTexts(BNC_NOTES);
     } else {
-      NOTES.forEach((g) => {
-        const lines = pdf.splitTextToSize(`${g}`, PAGE_W - 36);
-        pdf.text(lines, 18, y);
-        y += lines.length * 5.2 + 4;
-      });
+      funcRenderTexts(NOTES);
     }
 
     // ===== FOOTER =====
