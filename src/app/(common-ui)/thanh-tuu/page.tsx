@@ -20,12 +20,12 @@ import {
 export const metadata: Metadata = {
   title: "Thành tựu | Ruby Travel",
   description:
-    "Ruby Travel tự hào nằm trong Top 20 doanh số Bà Nà toàn quốc và là đại lý uy tín của Vinpearl. Đặt vé nhanh, nhận QR tức thì.",
+    "Ruby Travel tự hào nằm trong Top 10 doanh số Bà Nà toàn quốc và là đại lý uy tín của Vinpearl. Đặt vé nhanh, nhận QR tức thì.",
 };
 
 const achievements = [
   {
-    title: "Top 20 doanh số Bà Nà toàn quốc",
+    title: "Top 10 doanh số Bà Nà toàn quốc",
     desc: "Hiệu suất bán hàng ổn định, quy trình xuất vé nhanh và tỉ lệ phản hồi hỗ trợ cao.",
     icon: Mountain,
     color: "text-amber-700",
@@ -102,7 +102,7 @@ export default function ThanhTuuPage() {
 
               <p className="text-base leading-relaxed text-slate-600 md:text-lg">
                 Ruby Travel tự hào nằm trong{" "}
-                <span className="font-bold text-slate-900">Top 20 doanh số Bà Nà toàn quốc</span> và
+                <span className="font-bold text-slate-900">Top 10 doanh số Bà Nà toàn quốc</span> và
                 là <span className="font-bold text-slate-900">đại lý uy tín của Vinpearl</span>.
                 Chúng tôi tối ưu quy trình để khách hàng đặt vé nhanh, nhận QR tức thì; cộng tác
                 viên bán dễ, quản lý gọn.
