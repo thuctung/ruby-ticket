@@ -70,6 +70,8 @@ export const ADMIN_UPDATE_STATUS_TOPUP = "/api/webhook/sepay";
 
 export const SUN_BOOKING_CANCLE = "/api/sun-api/booking-cancel";
 
+export const GET_PRODUCT_IN_SYSTEM = "/api/auth/products";
+
 // Sun API
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";
 

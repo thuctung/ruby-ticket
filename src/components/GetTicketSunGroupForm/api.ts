@@ -1,6 +1,11 @@
 import api from "@/axios";
-import { SUCCESS_ORDER_TICKET, SUN_GET_PRODOCT_LIST, SUN_GET_SITE_LIST } from "@/commons/apiURL";
-import { DB_TABLE_NAME } from "@/commons/constant";
+import {
+  GET_PRODUCT_IN_SYSTEM,
+  SUCCESS_ORDER_TICKET,
+  SUN_GET_PRODOCT_LIST,
+  SUN_GET_SITE_LIST,
+} from "@/commons/apiURL";
+import { DB_TABLE_NAME, SITE_CODES } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
@@ -92,8 +97,21 @@ export const getAllSite = async () => {
     setGlobalLoading(true);
     const [sunSites, systemSites] = await Promise.all([getSiteListSun(), getSiteInSystem()]);
 
-    const getBana = sunSites?.find((site: any) => site.code === "BNC") || {};
-    return sunSites;
+    const getBana = sunSites?.find((site: any) => site.code === SITE_CODES.BANAHILL) || {};
+    const getInSystem = systemSites?.filter((site: any) => site.status) || [];
+    return [getBana, ...getInSystem];
+  } catch (error: any) {
+    setToastMessage(error.message || "Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getProductionInSystem = async (site_code: string) => {
+  try {
+    setGlobalLoading(true);
+    const { data } = await api.post(GET_PRODUCT_IN_SYSTEM, { site_code });
+    return groupTicketSunGroup(data);
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {

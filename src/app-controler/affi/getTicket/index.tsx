@@ -33,14 +33,14 @@ import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/consta
 import { toast } from "react-toastify";
 import { senTicketToMail } from "@/app-controler/checkout-client/api";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
-import { ACC_STATUS, SITE_SUB_GROUP } from "@/commons/constant";
+import { ACC_STATUS, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
   const { setProfile }: CommonType | any = useProfileStore.getState();
 
-  const [location, setLocation] = useState("BNC");
+  const [location, setLocation] = useState(SITE_CODES.BANAHILL);
 
   const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
     const { products, totalMoney, date_use, siteCode, haveFOC } = values;

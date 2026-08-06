@@ -138,6 +138,7 @@ export const DB_TABLE_NAME = {
   FUNC_GET_ALL_SALE_SUMARY: "get_all_sale_summary",
   FUNC_COMPLETE_ORDER_CUSTOMER: "complete_order_customer",
   SYSTEM_SETTINGS: "system_settings",
+  PRODUCTS: "products",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -256,4 +257,8 @@ export const ERROR_MESSAGE = {
   SUN_WORLD_TICKET: "Lỗi xuất vé từ Sun world",
   PAYMENT_TIMEOUT: "Hết thời gian thanh toán",
   USER_CANCLE: "Người dùng hủy đơn",
+};
+
+export const SITE_CODES = {
+  BANAHILL: "BNC",
 };

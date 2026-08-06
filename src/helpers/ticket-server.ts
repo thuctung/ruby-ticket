@@ -18,7 +18,7 @@ import {
 } from "@/app-controler/affi/getTicket/components/constants";
 import { getPerSonTypeName } from "@/components/GetTicketSunGroupForm/constants";
 import { get } from "lodash";
-import { SITE_SUB_GROUP } from "@/commons/constant";
+import { SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 
 let cachedFontBase64: string | null = null;
 
@@ -294,7 +294,7 @@ export const downloadTicketPDFServer = async (
 
     if (isFOCTicket) {
       funcRenderTexts(FOC_NOTES);
-    } else if (t.siteCode === "BNC") {
+    } else if (t.siteCode === SITE_CODES.BANAHILL) {
       funcRenderTexts(BNC_NOTES);
     } else {
       funcRenderTexts(NOTES);

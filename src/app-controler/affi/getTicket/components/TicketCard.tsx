@@ -7,6 +7,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, FULL_DATE_TIME_FORMAT } from "@/helpers/dateTime";
 import { formatVND } from "@/helpers/money";
+import { SITE_CODES } from "@/commons/constant";
 
 export default function TicketCard({
   ticketItem,
@@ -119,7 +120,7 @@ export default function TicketCard({
             LƯU Ý/NOTE:
           </p>
           <ul className="space-y-1.5">
-            {(ticketItem.siteCode === "BNC" ? BNC_GUIDES : GUIDES).map((item, i) => (
+            {(ticketItem.siteCode === SITE_CODES.BANAHILL ? BNC_GUIDES : GUIDES).map((item, i) => (
               <li key={i} className="relative pl-3 text-[9.3px] leading-relaxed text-stone-700">
                 <span className="absolute left-0 font-bold text-red-700">–</span>
                 {item}

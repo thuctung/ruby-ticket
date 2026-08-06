@@ -1,4 +1,4 @@
-import { SITE_SUB_GROUP, TYPE_TRANSACTION } from "@/commons/constant";
+import { SITE_CODES, SITE_SUB_GROUP, TYPE_TRANSACTION } from "@/commons/constant";
 import { formatVND } from "@/helpers/money";
 import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
 
@@ -299,7 +299,7 @@ export const downloadTicketPDF = async (
 
     if (isFOCTicket) {
       funcRenderTexts(FOC_NOTES);
-    } else if (t.siteCode === "BNC") {
+    } else if (t.siteCode === SITE_CODES.BANAHILL) {
       funcRenderTexts(BNC_NOTES);
     } else {
       funcRenderTexts(NOTES);

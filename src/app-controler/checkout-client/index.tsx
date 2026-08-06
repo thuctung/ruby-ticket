@@ -20,7 +20,13 @@ import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
 import { CommonType, QRBankResponseType } from "@/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-import { DB_TABLE_NAME, ERROR_MESSAGE, SITE_SUB_GROUP, TYPE_TRANSFER } from "@/commons/constant";
+import {
+  DB_TABLE_NAME,
+  ERROR_MESSAGE,
+  SITE_CODES,
+  SITE_SUB_GROUP,
+  TYPE_TRANSFER,
+} from "@/commons/constant";
 import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
@@ -38,6 +44,7 @@ const initOrderData = {
   dateUse: "",
   orderCode: "",
   orderId: "",
+  siteCode: "",
 };
 
 export default function CheckoutControlerPage() {
@@ -113,11 +120,18 @@ export default function CheckoutControlerPage() {
       products,
       thirdPartyNumber: thirdPartyNum,
     };
-    // STEP 1: CREATE ORDER WITH SUN WORLD
-    const dataOrderSunWorld: TicketReponseType = await customerCreateOrder(paramCreateOrder);
+    let passProcess = true;
+    let dataOrderSunWorld: TicketReponseType | any = {};
+    if (siteCode === SITE_CODES.BANAHILL) {
+      // STEP 1: CREATE ORDER WITH SUN WORLD
+      dataOrderSunWorld = await customerCreateOrder(paramCreateOrder);
+      if (!dataOrderSunWorld) {
+        passProcess = false;
+      }
+    }
 
     // SUCCESS OF SUN WORLD
-    if (dataOrderSunWorld) {
+    if (passProcess) {
       // STEP 2: SAVE ORDER IN DATABASE WITH STATUS "pending" (WAIT PAYMENT)
       const dataSubmit: ClientOrderItem = {
         userEmail: email,
@@ -129,9 +143,8 @@ export default function CheckoutControlerPage() {
         listTicketSubmit: products,
         siteCode,
         paymentCode,
-        orderCode: dataOrderSunWorld.orderCode,
+        orderCode: dataOrderSunWorld.orderCode || thirdPartyNum, // in system user thirdPartyNum for ordercde
       };
-
       const orderID = await customerCreateOrderTicket(dataSubmit);
 
       // CREATE ORDER SUCCESS: SHOW QR PAYMENT AND LISTEN PAYMENT CHANNEL (chanenSupbase.current)
@@ -148,6 +161,7 @@ export default function CheckoutControlerPage() {
           orderCode: dataOrderSunWorld.orderCode,
           orderId: orderID,
           dateUse: date_use,
+          siteCode,
         });
 
         // CANCLE ORDER TIMEOUT :
@@ -155,6 +169,8 @@ export default function CheckoutControlerPage() {
       }
     }
   };
+
+  const sendMailTicketInSystem = () => {};
 
   const getTicketSuccess = async () => {
     handleDoneQR();
@@ -164,6 +180,7 @@ export default function CheckoutControlerPage() {
     }
 
     const { orderCode, orderId, dateUse } = currentOrderData;
+
     const ticketSuccess: TicketReponseType = await getTicketSunWorld(orderCode);
 
     const payloadFinal: CustomerBuyFilnalType = {
@@ -214,6 +231,7 @@ export default function CheckoutControlerPage() {
     }
     await updateStatusGetTicketFinal(payloadFinal);
   };
+
   const handleCancleBooking = async () => {
     await cancleBooking(currentOrderData.orderCode);
     cancleOrderTimeout(currentOrderData.orderId, ERROR_MESSAGE.USER_CANCLE, false);
@@ -327,7 +345,7 @@ export default function CheckoutControlerPage() {
         <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
           <div className="bg-white rounded-3xl shadow-2xl p-2 md:p-4">
             <GetTicketSunGroupForm
-              location="BNC"
+              location={SITE_CODES.BANAHILL}
               onBuyTicket={confirmBuyTicket}
               formType={SUN_BOOKING_FORM_TYPE.CUSTOMER}
             />

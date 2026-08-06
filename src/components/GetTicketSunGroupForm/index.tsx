@@ -2,7 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Fraunces, Be_Vietnam_Pro } from "next/font/google";
-import { getAllSite, getPriceBuyAgentLevel, getProductBySiteSun, getSiteListSun } from "./api";
+import {
+  getAllSite,
+  getPriceBuyAgentLevel,
+  getProductBySiteSun,
+  getProductionInSystem,
+  getSiteListSun,
+} from "./api";
 import {
   ProductSubmitType,
   ResultListProductType,
@@ -18,7 +24,7 @@ import CustomerBookingForm from "./CustomerForm";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { ProfileType } from "@/types";
 import { get } from "lodash";
-import { CUSTOMER } from "@/commons/constant";
+import { CUSTOMER, SITE_CODES } from "@/commons/constant";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
@@ -96,11 +102,17 @@ export default function GetTicketSunGroupForm({
     }
   };
 
-  const fetchProductBySite = async (siteSunCode: string) => {
-    const data: any = await getProductBySiteSun(
-      siteSunCode,
-      dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
-    );
+  const fetchProductBySite = async (siteCode: string) => {
+    let data: any = [];
+    if (siteCode === SITE_CODES.BANAHILL) {
+      data = await getProductBySiteSun(
+        siteCode,
+        dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
+      );
+    } else {
+      data = await getProductionInSystem(siteCode);
+    }
+
     if (data) {
       setListProductSun(data);
     }
@@ -114,16 +126,16 @@ export default function GetTicketSunGroupForm({
         productCode: item.code,
         siteCode: siteSunCode,
         quantity: quantities[item.code],
-        usageDate: item.pricePolicy.usageDate,
-        usageDateTo: item.pricePolicy.validDateTo,
-        performanceId: item.performances[0].performanceId,
+        usageDate: item?.pricePolicy?.usageDate || "",
+        usageDateTo: item?.pricePolicy?.validDateTo || "",
+        performanceId: item?.performances?.[0]?.performanceId || "",
         productsName: item.name,
         publicPrice: item.publicPrice,
         unitPrice: priceSell,
-        restaurantName: item.restaurantName,
-        siteName: item.site.name,
+        restaurantName: item?.restaurantName || "",
+        siteName: item?.site?.name || siteSunCode,
         personType: item.personType,
-        time: `${item.openTime}-${item.closeTime}`,
+        time: `${item?.openTime || ""}-${item?.closeTime || ""}`,
       };
     });
 
@@ -150,10 +162,6 @@ export default function GetTicketSunGroupForm({
       setQuantities({});
     }
   }, [siteSunCode, profile.agent_level, formType, formData.date_use]);
-
-  // useEffect(() => {
-  //   getAllSite();
-  // }, []);
 
   useEffect(() => {
     getAllLocations();
