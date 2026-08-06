@@ -72,6 +72,22 @@ export const SUN_BOOKING_CANCLE = "/api/sun-api/booking-cancel";
 
 export const GET_PRODUCT_IN_SYSTEM = "/api/auth/products";
 
+export const GET_SITE_BY_STATUS = "/api/auth/admin/sites/get-site-by-status";
+
+export const GET_ALL_SITE = "/api/auth/admin/sites/get-all-site";
+
+export const UPDATE_SITE = "/api/auth/admin/sites/update-site";
+
+export const GET_PROD = "/api/auth/admin/sites/update-site";
+
+export const GET_PRODUCT_CATEGORY = "/api/auth/admin/ticket-price/get-category";
+
+export const GET_PRODUCT_PARAMS = "/api/auth/admin/ticket-price/get-products";
+
+export const UPDATE_PRODUCT = "/api/auth/admin/ticket-price/update-product";
+
+export const DELETE_PRODUCT = "/api/auth/admin/ticket-price/delete-product";
+
 // Sun API
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";
 

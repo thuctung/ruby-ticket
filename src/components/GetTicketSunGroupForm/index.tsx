@@ -3,11 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Fraunces, Be_Vietnam_Pro } from "next/font/google";
 import {
-  getAllSite,
   getPriceBuyAgentLevel,
   getProductBySiteSun,
   getProductionInSystem,
-  getSiteListSun,
+  getSiteByStatus,
 } from "./api";
 import {
   ProductSubmitType,
@@ -94,9 +93,8 @@ export default function GetTicketSunGroupForm({
     setAgentPrice(price);
   };
 
-  const getAllLocations = async () => {
-    const data = await getAllSite();
-
+  const getSiteActive = async () => {
+    const data = await getSiteByStatus(true);
     if (data?.length) {
       setListSideSungroup(data);
     }
@@ -164,7 +162,7 @@ export default function GetTicketSunGroupForm({
   }, [siteSunCode, profile.agent_level, formType, formData.date_use]);
 
   useEffect(() => {
-    getAllLocations();
+    getSiteActive();
   }, []);
 
   const commonProps = {

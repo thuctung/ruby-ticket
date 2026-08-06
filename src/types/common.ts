@@ -66,6 +66,7 @@ export type SelectBoxProps = {
   firstOption?: boolean;
   className?: string;
   children: any;
+  style?: any;
 };
 
 export type InputProps = {

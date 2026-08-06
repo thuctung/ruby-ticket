@@ -1,6 +1,7 @@
 import api from "@/axios";
 import {
   GET_PRODUCT_IN_SYSTEM,
+  GET_SITE_BY_STATUS,
   SUCCESS_ORDER_TICKET,
   SUN_GET_PRODOCT_LIST,
   SUN_GET_SITE_LIST,
@@ -72,34 +73,12 @@ export const getPriceBuyAgentLevel = async (site_code: string, agent_code: strin
   }
 };
 
-export const getSiteListSun = async () => {
+export const getSiteByStatus = async (status?: boolean) => {
   try {
     setGlobalLoading(true);
-    const { data }: any = await api.get(SUN_GET_SITE_LIST);
-    return data.result;
-  } catch (e) {
-    setToastMessage("Có lỗi xảy ra! Thử lại sau");
-  } finally {
-    setGlobalLoading(false);
-  }
-};
+    const { data } = await api.post(GET_SITE_BY_STATUS, { status });
 
-export const getSiteInSystem = async () => {
-  const { data, error } = await clientSupbase.from(DB_TABLE_NAME.SITES).select("*");
-
-  if (error) throw error;
-
-  return data;
-};
-
-export const getAllSite = async () => {
-  try {
-    setGlobalLoading(true);
-    const [sunSites, systemSites] = await Promise.all([getSiteListSun(), getSiteInSystem()]);
-
-    const getBana = sunSites?.find((site: any) => site.code === SITE_CODES.BANAHILL) || {};
-    const getInSystem = systemSites?.filter((site: any) => site.status) || [];
-    return [getBana, ...getInSystem];
+    return data;
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {

@@ -1,7 +1,7 @@
 import { SideSunGroupType } from "@/types/ticket";
 import { useEffect, useState } from "react";
 import { formatVND } from "@/helpers/money";
-import { getSiteListSun } from "@/components/GetTicketSunGroupForm/api";
+import { getSiteByStatus } from "@/components/GetTicketSunGroupForm/api";
 import { getCurrentMoeny } from "../api";
 import { PriceSunWorldType } from "../type";
 import { SITE_CODES } from "@/commons/constant";
@@ -13,7 +13,7 @@ export function CurrentMoney() {
   const [currentPrice, setCurrentPrice] = useState(0);
 
   const fetchSiteList = async () => {
-    const data = await getSiteListSun();
+    const data = await getSiteByStatus(true);
     if (data) {
       setSiteList(data);
     }
