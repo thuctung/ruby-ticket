@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { formatVND } from "@/lib/money";
 import { exportExcel, getTicketSaleAdmin } from "./api";
-import { AdminSearchReport, SearchTableType, SearchTicketSale } from "@/types";
+import { AdminSearchReport, SearchTableType } from "@/types";
 import { SearchReport } from "./components/searchReport";
 import { SiteType } from "@/types/ticket";
 import { getLocation } from "@/app-controler/affi/getTicket/api";
@@ -27,11 +27,11 @@ export default function AdminHistoryPageControler() {
     currentPage: 1,
   });
 
-  const handleChangeForm = (value: SearchTicketSale) => {
-    setParams({
+  const handleChangeForm = (key: string, value: string) => {
+    setParams((pre) => ({
       currentPage: 1,
-      searchValue: { ...value },
-    });
+      searchValue: { ...pre.searchValue, [key]: value },
+    }));
   };
 
   const handleResetForm = () => {
@@ -58,7 +58,7 @@ export default function AdminHistoryPageControler() {
   };
 
   const handleExportExcel = async () => {
-    const data = await exportExcel(params.searchValue);
+    exportExcel(params.searchValue);
   };
 
   const columnAdminReport: TableColumn<AdminReportResponseType>[] = [
@@ -151,7 +151,7 @@ export default function AdminHistoryPageControler() {
 
   useEffect(() => {
     fetchTicketSale();
-  }, [params]);
+  }, []);
 
   useEffect(() => {
     handleGetLocation();
@@ -164,6 +164,7 @@ export default function AdminHistoryPageControler() {
         onReset={handleResetForm}
         searchValue={params.searchValue}
         handleExcel={handleExportExcel}
+        onSearch={fetchTicketSale}
       />
 
       <CustomTable
