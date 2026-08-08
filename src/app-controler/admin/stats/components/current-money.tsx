@@ -1,13 +1,13 @@
-import { SideSunGroupType } from "@/types/ticket";
+import { SiteType } from "@/types/ticket";
 import { useEffect, useState } from "react";
 import { formatVND } from "@/helpers/money";
-import { getSiteByStatus } from "@/components/GetTicketSunGroupForm/api";
+import { getSiteByStatus } from "@/components/GetTicketForm/api";
 import { getCurrentMoeny } from "../api";
 import { PriceSunWorldType } from "../type";
 import { SITE_CODES } from "@/commons/constant";
 
 export function CurrentMoney() {
-  const [siteList, setSiteList] = useState<SideSunGroupType[]>([]);
+  const [siteList, setSiteList] = useState<SiteType[]>([]);
   const [siteCode, setSiteCode] = useState(SITE_CODES.BANAHILL);
   const [listPrice, setListPrice] = useState<PriceSunWorldType[]>([]);
   const [currentPrice, setCurrentPrice] = useState(0);

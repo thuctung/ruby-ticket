@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Phone,  Facebook, Headset } from "lucide-react";
+import { Phone, Facebook, Headset } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const FloatingContact = () => {
@@ -12,7 +12,7 @@ const FloatingContact = () => {
       name: "Zalo",
       icon: (
         <svg viewBox="0 0 24 24" className="h-6 w-6 fill-white" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2C6.477 2 2 6.477 2 12c0 1.15.195 2.253.553 3.282l-1.51 5.51a.75.75 0 0 0 .925.925l5.51-1.51A9.954 9.954 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm4.5 13.5h-9a.75.75 0 0 1 0-1.5h9a.75.75 0 0 1 0 1.5zM16.5 12h-9a.75.75 0 0 1 0-1.5h9a.75.75 0 0 1 0 1.5zM16.5 8.5h-9a.75.75 0 0 1 0-1.5h9a.75.75 0 0 1 0 1.5z"/>
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 1.15.195 2.253.553 3.282l-1.51 5.51a.75.75 0 0 0 .925.925l5.51-1.51A9.954 9.954 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm4.5 13.5h-9a.75.75 0 0 1 0-1.5h9a.75.75 0 0 1 0 1.5zM16.5 12h-9a.75.75 0 0 1 0-1.5h9a.75.75 0 0 1 0 1.5zM16.5 8.5h-9a.75.75 0 0 1 0-1.5h9a.75.75 0 0 1 0 1.5z" />
         </svg>
       ),
       label: "Zalo",
@@ -39,16 +39,20 @@ const FloatingContact = () => {
   ];
 
   return (
-    <div 
+    <div
       className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Sub Buttons */}
-      <div className={cn(
-        "flex flex-col gap-3 transition-all duration-500 ease-in-out transform",
-        isHovered ? "opacity-100 translate-y-0 scale-100 visible" : "opacity-0 translate-y-10 scale-50 invisible pointer-events-none"
-      )}>
+      <div
+        className={cn(
+          "flex flex-col gap-3 transition-all duration-500 ease-in-out transform",
+          isHovered
+            ? "opacity-100 translate-y-0 scale-100 visible"
+            : "opacity-0 translate-y-10 scale-50 invisible pointer-events-none"
+        )}
+      >
         {updatedContacts.map((contact, idx) => (
           <a
             key={contact.name}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -28,12 +28,12 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
-import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
-import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 import { toast } from "react-toastify";
 import { senTicketToMail } from "@/app-controler/checkout-client/api";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
 import { ACC_STATUS, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
+import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
+import GetTicketForm from "@/components/GetTicketForm";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -42,102 +42,130 @@ export default function GetTicketPageControler() {
 
   const [location, setLocation] = useState(SITE_CODES.BANAHILL);
 
-  const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
-    const { products, totalMoney, date_use, siteCode, haveFOC } = values;
+  const handleValidBeforeByTicket = async (values: SubmitSelectTicket) => {
+    let result = true;
+    const { totalMoney, products } = values;
     if (totalMoney > profile.balance) {
       setToastMessage("Số dư không đủ!!");
-      return;
-    }
-
-    if (profile && products.length) {
-      // check status profile
+      result = false;
+    } else if (profile && products.length) {
       const status = await getStatusProfile(profile.user_id);
+      if (status !== ACC_STATUS.APPROVED) {
+        result = false;
+        setToastMessage("Bạn đã bị khóa tài khoản, vui lòng liên hệ quản trị viên để được hỗ trợ");
+      }
+    } else {
+      result = false;
+    }
+    return result;
+  };
 
-      if (status === ACC_STATUS.APPROVED) {
-        const items: TicketSubmitAgentType[] = products.map((item) => ({
-          quantity: item.quantity,
-          price: Number(item.unitPrice),
-          product_code: item.productCode,
-          product_name: item.productsName,
-          date_use: date_use,
-        }));
+  const handleByTicketSunWorld = async (
+    order_id: string,
+    thirdPartyNumber: string,
+    values: SubmitSelectTicket
+  ) => {
+    if (order_id) {
+      const { products, totalMoney, date_use, haveFOC } = values;
 
-        const thirdPartyNumber = generateThirdPartyCode();
-        const params: ParamCreateTicketAgentType = {
-          items,
-          user_id: profile.user_id || "",
-          date_use: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
-          email: profile.email || "",
-          total_amount: totalMoney,
-          side_code: siteCode,
-          thirdPartyNumber,
-        };
+      const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(
+        products,
+        thirdPartyNumber,
+        {
+          email: profile.email,
+          fullname: profile.full_name,
+          phone: profile.phone,
+        }
+      );
 
-        const order_id = await createOrderTicket(params);
+      if (tickets) {
+        const result: TicketResultQRType[] | any = rebuildDataTicket(tickets, order_id, date_use);
 
-        if (order_id) {
-          const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(
-            products,
-            thirdPartyNumber,
-            {
-              email: profile.email,
-              fullname: profile.full_name,
-              phone: profile.phone,
-            }
+        const addPublicPrice = result.map((item: TicketResultQRType) => {
+          const ticketItemSelect = products.find(
+            (proSelect) => item.productCode === proSelect.productCode
           );
 
-          if (tickets) {
-            const result: TicketResultQRType[] | any = rebuildDataTicket(
-              tickets,
-              order_id,
-              date_use
-            );
+          return {
+            ...item,
+            publicPrice: ticketItemSelect?.publicPrice || 0,
+            siteName: SITE_SUB_GROUP[item.siteCode as keyof typeof SITE_SUB_GROUP] || "",
+            restaurantName: ticketItemSelect?.restaurantName,
+            personType: ticketItemSelect?.personType,
+            time: ticketItemSelect?.time,
+          };
+        });
 
-            const addPublicPrice = result.map((item: TicketResultQRType) => {
-              const ticketItemSelect = products.find(
-                (proSelect) => item.productCode === proSelect.productCode
-              );
+        const { focTickets, customerTickets } = getTicketFOCAndCutomer(addPublicPrice);
 
-              return {
-                ...item,
-                publicPrice: ticketItemSelect?.publicPrice || 0,
-                siteName: SITE_SUB_GROUP[item.siteCode as keyof typeof SITE_SUB_GROUP] || "",
-                restaurantName: ticketItemSelect?.restaurantName,
-                personType: ticketItemSelect?.personType,
-                time: ticketItemSelect?.time,
-              };
-            });
+        await downloadTicketPDF(customerTickets, haveFOC ? focTickets : []);
 
-            const { focTickets, customerTickets } = getTicketFOCAndCutomer(addPublicPrice);
+        const currentBalance = profile.balance - totalMoney;
+        setProfile({
+          ...profile,
+          balance: currentBalance,
+        });
+        updateSuccessOrder({
+          orderCode: tickets.orderCode,
+          tickets: result,
+          referenceCode: tickets.referenceCode,
+          orderId: order_id,
+        });
+        toast.success(`Rút vé thành công`);
 
-            await downloadTicketPDF(customerTickets, haveFOC ? focTickets : []);
+        senTicketToMail({
+          email: profile.email || "",
+          customerTickets,
+          focTickets: haveFOC ? focTickets : [],
+          orderCode: tickets.orderCode,
+        });
+      } else {
+        updateStatusOrderFail(order_id);
+        setToastMessage("Không tạo được vé!");
+      }
+    }
+  };
 
-            const currentBalance = profile.balance - totalMoney;
-            setProfile({
-              ...profile,
-              balance: currentBalance,
-            });
-            updateSuccessOrder({
-              orderCode: tickets.orderCode,
-              tickets: result,
-              referenceCode: tickets.referenceCode,
-              orderId: order_id,
-            });
-            toast.success(`Rút vé thành công`);
+  const handleBuyTicketInSystem = async (order_id: string) => {
+    // send mail to admin & user
+  };
 
-            senTicketToMail({
-              email: profile.email || "",
-              customerTickets,
-              focTickets: haveFOC ? focTickets : [],
-              orderCode: tickets.orderCode,
-            });
-          } else {
-            updateStatusOrderFail(order_id);
-            setToastMessage("Không tạo được vé!");
-          }
+  const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
+    const validByTicket = await handleValidBeforeByTicket(values);
+
+    if (validByTicket) {
+      const { products, totalMoney, date_use, siteCode, in_system } = values;
+
+      const items: TicketSubmitAgentType[] = products.map((item) => ({
+        quantity: item.quantity,
+        price: Number(item.unitPrice),
+        product_code: item.productCode,
+        product_name: item.productsName,
+        date_use: date_use,
+      }));
+
+      const thirdPartyNumber = generateThirdPartyCode();
+      const params: ParamCreateTicketAgentType = {
+        items,
+        user_id: profile.user_id || "",
+        date_use: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
+        email: profile.email || "",
+        total_amount: totalMoney,
+        side_code: siteCode,
+        thirdPartyNumber,
+      };
+
+      const order_id = await createOrderTicket(params);
+
+      if (in_system) {
+        if (siteCode === "NUITHANTAI") {
+          // TODO
+          handleBuyTicketInSystem(order_id);
+        } else {
+          setToastMessage("Chưa mở bán ở địa điểm này!");
         }
       } else {
-        setToastMessage("Bạn đã bị khóa tài khoản, vui lòng liên hệ quản trị viên để được hỗ trợ");
+        handleByTicketSunWorld(order_id, thirdPartyNumber, values);
       }
     }
   };
@@ -161,10 +189,10 @@ export default function GetTicketPageControler() {
             </>
           )}
 
-          <GetTicketSunGroupForm
+          <GetTicketForm
             location={location}
             onBuyTicket={handleBuyTicketAff}
-            formType={SUN_BOOKING_FORM_TYPE.AFFILATE}
+            formType={BOOKING_FORM_TYPE.AFFILATE}
           />
         </CardContent>
       </Card>

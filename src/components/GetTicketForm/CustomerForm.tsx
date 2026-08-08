@@ -33,12 +33,12 @@ const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
 export default function CustomerBookingForm({
-  siteSunCode,
-  setSideSunCode,
-  listSideSunGroup,
+  siteCode,
+  setSiteCode,
+  listSite,
   setFieldFormData,
   formData,
-  listProductSun,
+  listProduct,
   setQty,
   quantities,
   totalTickets,
@@ -79,12 +79,12 @@ export default function CustomerBookingForm({
                   <label className="mb-1.5 block text-xs font-medium text-gray-500">Địa điểm</label>
                   <div className="relative">
                     <SelectBox
-                      value={siteSunCode}
-                      onChange={(value) => setSideSunCode(value)}
+                      value={siteCode}
+                      onChange={(value) => setSiteCode(value)}
                       className="h-13 "
                       firstOption
                     >
-                      {listSideSunGroup.map((side) => (
+                      {listSite.map((side) => (
                         <option key={side.code} value={side.code}>
                           {side.name}
                         </option>
@@ -154,7 +154,7 @@ export default function CustomerBookingForm({
               </div>
             </section>
 
-            {listProductSun.map((group, index: number) => (
+            {listProduct.map((group, index: number) => (
               <section
                 key={index}
                 className="rounded-2xl border border-red-100 bg-white p-4 shadow-sm shadow-red-900/5 sm:p-6"

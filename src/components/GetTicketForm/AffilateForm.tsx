@@ -26,12 +26,12 @@ const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
 
 export default function AffilateBookingForm({
-  siteSunCode,
-  setSideSunCode,
-  listSideSunGroup,
+  siteCode,
+  setSiteCode,
+  listSite,
   setFieldFormData,
   formData,
-  listProductSun,
+  listProduct,
   setQty,
   quantities,
   totalTickets,
@@ -70,12 +70,12 @@ export default function AffilateBookingForm({
               <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Field label="Địa điểm">
                   <SelectBox
-                    value={siteSunCode}
-                    onChange={(value) => setSideSunCode(value)}
+                    value={siteCode}
+                    onChange={(value) => setSiteCode(value)}
                     className="h-13 "
                     firstOption
                   >
-                    {listSideSunGroup.map((side) => (
+                    {listSite.map((side) => (
                       <option key={side.code} value={side.code}>
                         {side.name}
                       </option>
@@ -95,7 +95,7 @@ export default function AffilateBookingForm({
               </div>
             </section>
 
-            {listProductSun.map((item, index: number) => (
+            {listProduct.map((item, index: number) => (
               <section
                 key={index}
                 className="rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] p-6 shadow-[0_1px_2px_rgba(31,58,47,0.05)] sm:p-8"

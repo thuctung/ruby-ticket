@@ -31,8 +31,8 @@ import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
-import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
-import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
+import GetTicketForm from "@/components/GetTicketForm";
+import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType } from "./type";
 import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import { toast } from "react-toastify";
@@ -344,10 +344,10 @@ export default function CheckoutControlerPage() {
 
         <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
           <div className="bg-white rounded-3xl shadow-2xl p-2 md:p-4">
-            <GetTicketSunGroupForm
+            <GetTicketForm
               location={SITE_CODES.BANAHILL}
               onBuyTicket={confirmBuyTicket}
-              formType={SUN_BOOKING_FORM_TYPE.CUSTOMER}
+              formType={BOOKING_FORM_TYPE.CUSTOMER}
             />
           </div>
         </div>

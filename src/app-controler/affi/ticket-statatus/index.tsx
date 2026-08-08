@@ -12,8 +12,8 @@ import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 
 import { get } from "lodash";
 import { statusClass, StatusData } from "./contants";
-import { getSiteByStatus } from "@/components/GetTicketSunGroupForm/api";
-import { SideSunGroupType } from "@/types/ticket";
+import { getSiteByStatus } from "@/components/GetTicketForm/api";
+import { SiteType } from "@/types/ticket";
 import { ParamStatusTicketType, TicketStatusType } from "./type";
 import { getStatusTicket } from "./api";
 import { toast } from "react-toastify";
@@ -21,7 +21,7 @@ import { toast } from "react-toastify";
 export default function TicketStatusControler() {
   const [ticketLits, setTicketList] = useState<TicketStatusType[]>([]);
 
-  const [listSideSun, setListSideSun] = useState<SideSunGroupType[]>([]);
+  const [listSideSun, setListSideSun] = useState<SiteType[]>([]);
 
   const handleSearch = async (value: ParamStatusTicketType) => {
     if (!value.orderCode || !value.siteCode) {

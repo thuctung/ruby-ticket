@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { CategoryType, ProductType, SearchProductType, SiteType } from "./type";
 import { isEmpty } from "lodash";
-import { getProductionInSystem, getSiteByStatus } from "@/components/GetTicketSunGroupForm/api";
+import { getProductionInSystem, getSiteByStatus } from "@/components/GetTicketForm/api";
 import { ProductBanaType } from "@/types/ticket";
 import { formatVND } from "@/lib/money";
 import { AgentType, CommonType } from "@/types";

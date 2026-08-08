@@ -16,7 +16,7 @@ import {
   LogoBySite,
   NOTES,
 } from "@/app-controler/affi/getTicket/components/constants";
-import { getPerSonTypeName } from "@/components/GetTicketSunGroupForm/constants";
+import { getPerSonTypeName } from "@/components/GetTicketForm/constants";
 import { get } from "lodash";
 import { SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 

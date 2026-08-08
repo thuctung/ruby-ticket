@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, X } from "lucide-react";
 import { AgentType } from "@/types";
-import { SideSunGroupType } from "@/types/ticket";
+import { SiteType } from "@/types/ticket";
 import { formatVND } from "@/helpers/money";
 import { AgentPriceSubmitType } from "../type";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 export interface EditUserLevelDialogProps {
   open: boolean;
   onClose: () => void;
-  listSide: SideSunGroupType[];
+  listSide: SiteType[];
   agentList: AgentType[];
   onSubmit: (value: AgentPriceSubmitType) => void;
 }

@@ -15,7 +15,7 @@ import {
   LogoBySite,
   NOTES,
 } from "@/app-controler/affi/getTicket/components/constants";
-import { getPerSonTypeName } from "@/components/GetTicketSunGroupForm/constants";
+import { getPerSonTypeName } from "@/components/GetTicketForm/constants";
 import { get } from "lodash";
 
 let cachedFontBase64: string | null = null;

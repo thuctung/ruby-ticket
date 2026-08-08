@@ -5,7 +5,7 @@ import { SelectBox } from "@/components/ui/customs/selectBox";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SideSunGroupType } from "@/types/ticket";
+import { SiteType } from "@/types/ticket";
 
 import { useState } from "react";
 

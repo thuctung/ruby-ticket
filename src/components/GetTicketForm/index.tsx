@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Fraunces, Be_Vietnam_Pro } from "next/font/google";
 import {
   getPriceBuyAgentLevel,
   getProductBySiteSun,
@@ -11,13 +10,13 @@ import {
 import {
   ProductSubmitType,
   ResultListProductType,
-  SideSunGroupType,
+  SiteType,
   SubmitSelectTicket,
 } from "@/types/ticket";
 
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
-import { getPriceAgentAndMultiple, SUN_BOOKING_FORM_TYPE } from "./constants";
+import { getPriceAgentAndMultiple, BOOKING_FORM_TYPE } from "./constants";
 import AffilateBookingForm from "./AffilateForm";
 import CustomerBookingForm from "./CustomerForm";
 import { useProfileStore } from "@/stores/useProfileStore";
@@ -34,42 +33,42 @@ const initFormValues = {
   description: "",
 };
 
-type GetTicketSunGroupFormprops = {
+type GetTicketFormProps = {
   location: string;
   onBuyTicket: (productsSubmit: SubmitSelectTicket) => void;
   formType: string;
 };
 
-export default function GetTicketSunGroupForm({
+export default function GetTicketForm({
   location,
   onBuyTicket,
-  formType = SUN_BOOKING_FORM_TYPE.AFFILATE,
-}: GetTicketSunGroupFormprops) {
+  formType = BOOKING_FORM_TYPE.AFFILATE,
+}: GetTicketFormProps) {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
 
-  const [listSideSunGroup, setListSideSungroup] = useState<SideSunGroupType[]>([]);
-  const [siteSunCode, setSideSunCode] = useState("");
+  const [listSite, setListSides] = useState<SiteType[]>([]);
+  const [siteCode, setSiteCode] = useState("");
   const [exportGuideTicket, setExportGuideTicket] = useState(false);
 
-  const [listProductSun, setListProductSun] = useState<ResultListProductType[]>([]);
+  const [listProduct, setListProductSun] = useState<ResultListProductType[]>([]);
 
   const [agentPrice, setAgentPrice] = useState(0);
 
   const [formData, setFormData] = useState<any>(initFormValues);
 
   const sideName = useMemo(() => {
-    if (listSideSunGroup.length && siteSunCode) {
-      return listSideSunGroup.find((item) => item.code === siteSunCode)?.name || "";
+    if (listSite.length && siteCode) {
+      return listSite.find((item) => item.code === siteCode)?.name || "";
     }
     return "";
-  }, [listSideSunGroup, siteSunCode]);
+  }, [listSite, siteCode]);
 
   const selectedLines = useMemo(() => {
-    const listProduct = listProductSun.flatMap((item) => item.ticket);
-    return listProduct.filter((t) => (quantities[t.code] ?? 0) > 0);
-  }, [listProductSun, quantities]);
+    const listProductSeletect = listProduct.flatMap((item) => item.ticket);
+    return listProductSeletect.filter((t) => (quantities[t.code] ?? 0) > 0);
+  }, [listProduct, quantities]);
 
   const totalTickets = selectedLines.reduce((sum, t) => sum + (quantities[t.code] ?? 0), 0);
 
@@ -96,7 +95,7 @@ export default function GetTicketSunGroupForm({
   const getSiteActive = async () => {
     const data = await getSiteByStatus(true);
     if (data?.length) {
-      setListSideSungroup(data);
+      setListSides(data);
     }
   };
 
@@ -122,7 +121,7 @@ export default function GetTicketSunGroupForm({
 
       return {
         productCode: item.code,
-        siteCode: siteSunCode,
+        siteCode: siteCode,
         quantity: quantities[item.code],
         usageDate: item?.pricePolicy?.usageDate || "",
         usageDateTo: item?.pricePolicy?.validDateTo || "",
@@ -131,35 +130,37 @@ export default function GetTicketSunGroupForm({
         publicPrice: item.publicPrice,
         unitPrice: priceSell,
         restaurantName: item?.restaurantName || "",
-        siteName: item?.site?.name || siteSunCode,
+        siteName: item?.site?.name || siteCode,
         personType: item.personType,
         time: `${item?.openTime || ""}-${item?.closeTime || ""}`,
       };
     });
+    const in_system = listSite.find((item) => item.code === siteCode)?.in_system || false;
 
     onBuyTicket({
       products: products,
       totalMoney: total,
       date_use: formData.date_use,
-      siteCode: siteSunCode,
+      siteCode: siteCode,
       formData: formData,
       haveFOC: exportGuideTicket,
+      in_system,
     });
   };
 
   useEffect(() => {
-    if (siteSunCode) {
+    if (siteCode) {
       let level = "";
-      if (SUN_BOOKING_FORM_TYPE.AFFILATE === formType && profile?.agent_level) {
+      if (BOOKING_FORM_TYPE.AFFILATE === formType && profile?.agent_level) {
         level = profile?.agent_level;
-      } else if (SUN_BOOKING_FORM_TYPE.CUSTOMER) {
+      } else if (BOOKING_FORM_TYPE.CUSTOMER) {
         level = CUSTOMER;
       }
-      if (level) fetchPriceAgentLevel(siteSunCode, level);
-      fetchProductBySite(siteSunCode);
+      if (level) fetchPriceAgentLevel(siteCode, level);
+      fetchProductBySite(siteCode);
       setQuantities({});
     }
-  }, [siteSunCode, profile.agent_level, formType, formData.date_use]);
+  }, [siteCode, profile.agent_level, formType, formData.date_use]);
 
   useEffect(() => {
     getSiteActive();
@@ -168,10 +169,10 @@ export default function GetTicketSunGroupForm({
   const commonProps = {
     agentPrice,
     formType,
-    siteSunCode,
-    listSideSunGroup,
+    siteCode,
+    listSite,
     formData,
-    listProductSun,
+    listProduct,
     quantities,
     totalTickets,
     total,
@@ -182,10 +183,10 @@ export default function GetTicketSunGroupForm({
     handleBuyTicket,
     setFieldFormData,
     setQty,
-    setSideSunCode,
+    setSiteCode,
   };
 
-  return formType === SUN_BOOKING_FORM_TYPE.AFFILATE ? (
+  return formType === BOOKING_FORM_TYPE.AFFILATE ? (
     <AffilateBookingForm {...commonProps} />
   ) : (
     <CustomerBookingForm {...commonProps} />
