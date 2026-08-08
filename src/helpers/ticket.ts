@@ -1,4 +1,4 @@
-import { SITE_CODES, SITE_SUB_GROUP, TYPE_TRANSACTION } from "@/commons/constant";
+import { SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { formatVND } from "@/helpers/money";
 import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
 
@@ -11,7 +11,6 @@ import {
   FOC_GUIDES,
   FOC_NOTES,
   getGuideByProductCode,
-  GUIDES,
   LogoBySite,
   NOTES,
 } from "@/app-controler/affi/getTicket/components/constants";
@@ -20,7 +19,7 @@ import { get } from "lodash";
 
 let cachedFontBase64: string | null = null;
 
-export async function getFontBase64() {
+export async function getFontBase64Client() {
   if (cachedFontBase64) return cachedFontBase64;
 
   const res = await fetch("/font/Roboto-Regular.ttf");
@@ -38,6 +37,26 @@ export async function getFontBase64() {
 
   return cachedFontBase64;
 }
+let cachedFontBold64: string | null = null;
+
+export async function getFontBold64Client() {
+  if (cachedFontBold64) return cachedFontBold64;
+
+  const res = await fetch("/font/Roboto-Bold.ttf");
+  const buffer = await res.arrayBuffer();
+
+  // convert 1 lần duy nhất
+  let binary = "";
+  const bytes = new Uint8Array(buffer);
+
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+
+  cachedFontBold64 = btoa(binary);
+
+  return cachedFontBold64;
+}
 
 export const downloadTicketPDF = async (
   tickets: TicketResultQRType[],
@@ -52,11 +71,14 @@ export const downloadTicketPDF = async (
 
   const finalList = [...tickets, ...focTicket];
 
-  const fontBase64 = await getFontBase64();
-  pdf.addFileToVFS("Roboto.ttf", fontBase64);
-  pdf.addFont("Roboto.ttf", "Roboto", "normal");
-  pdf.addFont("Roboto.ttf", "Roboto", "bold");
-  pdf.setFont("Roboto");
+  const fontBase64 = await getFontBase64Client();
+  const fontBold = await getFontBold64Client();
+
+  pdf.addFileToVFS("Roboto-Regular.ttf", fontBase64);
+  pdf.addFont("Roboto-Regular.ttf", "Roboto", "normal");
+
+  pdf.addFileToVFS("Roboto-Bold.ttf", fontBold);
+  pdf.addFont("Roboto-Bold.ttf", "Roboto", "bold");
 
   // Load logos
   const rubyLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
@@ -130,26 +152,30 @@ export const downloadTicketPDF = async (
     // ===== Site Name / đối tượng / Nhà Hàng  =====
     pdf.setFontSize(10);
     pdf.setTextColor(...RED_LABEL);
-    pdf.setFont("Roboto", "bold");
+    pdf.setFont("Roboto", "normal");
     pdf.text("Site:", leftX, y);
     pdf.setTextColor(...TEXT_DARK);
+    pdf.setFont("Roboto", "bold");
     pdf.text(get(SITE_SUB_GROUP, t.siteCode), leftX + 18, y);
 
     if (!isFOCTicket) {
       y += 12;
       pdf.setTextColor(...RED_LABEL);
-      pdf.setFont("Roboto", "bold");
+      pdf.setFont("Roboto", "normal");
       pdf.text("Đối tượng/Type:", leftX, y);
       pdf.setTextColor(...TEXT_DARK);
+      pdf.setFont("Roboto", "bold");
       pdf.text(getPerSonTypeName(t.personType), leftX + 57, y);
     }
 
     if (t.restaurantName) {
       y += 12;
       pdf.setTextColor(...RED_LABEL);
+      pdf.setFont("Roboto", "normal");
       pdf.text("Khu vực/Restaurant:", leftX, y);
 
       pdf.setTextColor(...TEXT_DARK);
+      pdf.setFont("Roboto", "bold");
       pdf.text(t.restaurantName, leftX + 71, y, { align: "left" });
       // y += 12;
       // pdf.setTextColor(...RED_LABEL);
@@ -163,26 +189,24 @@ export const downloadTicketPDF = async (
     // ===== MÃ ĐƠN (trái) / ORDER (phải) =====
 
     pdf.setTextColor(...RED_LABEL);
-    pdf.setFont("Roboto", "bold");
+    pdf.setFont("Roboto", "normal");
     pdf.setFontSize(7);
     pdf.text("MÃ ĐƠN", leftX, y);
     pdf.text("MÃ BOOKING", rightX - 40, y, { align: "right" });
 
     y += 6;
 
-    pdf.setFillColor(...RED_DARK);
-    pdf.roundedRect(leftX, y, 90, 18, 4, 4, "F");
-    pdf.setTextColor(255, 255, 255);
     pdf.setFont("Roboto", "bold");
+    pdf.setFillColor(...RED_DARK);
+    pdf.setTextColor(255, 255, 255);
     pdf.setFontSize(10);
+
+    pdf.roundedRect(leftX, y, 90, 18, 4, 4, "F");
     pdf.text(String(t.orderCode), leftX + 45, y + 12, { align: "center" });
 
     pdf.setFillColor(...RED_DARK);
     pdf.roundedRect(rightX - 70, y, 70, 18, 4, 4, "F");
     pdf.setTextColor(255, 255, 255);
-    pdf.setFont("Roboto", "bold");
-    pdf.setTextColor("white");
-    pdf.setFontSize(10);
     pdf.text(String(t.pnr), rightX - 10, y + 12, { align: "right" });
 
     y += 30;
@@ -208,9 +232,6 @@ export const downloadTicketPDF = async (
       y
     );
 
-    pdf.setTextColor(...TEXT_DARK);
-    pdf.setFont("Roboto", "bold");
-    pdf.setFontSize(11);
     pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
 
     y += 10;
@@ -264,11 +285,11 @@ export const downloadTicketPDF = async (
     y += 10;
 
     const funcRenderTexts = (texts: string[] | any) => {
-      pdf.setTextColor(...TEXT_GUIDE);
-      pdf.setFont("Roboto", "normal");
-      pdf.setFontSize(8);
-      pdf.setLineHeightFactor(1.5);
       if (texts?.length) {
+        pdf.setFont("Roboto", "normal");
+        pdf.setTextColor(...TEXT_GUIDE);
+        pdf.setFontSize(8);
+        pdf.setLineHeightFactor(1.5);
         texts?.forEach((g: string, index: number) => {
           const lines = pdf.splitTextToSize(`- ${g}`, PAGE_W - 36);
           pdf.text(lines, 18, y);
@@ -296,6 +317,7 @@ export const downloadTicketPDF = async (
     pdf.text("LƯU Ý/NOTE:", 18, y);
 
     y += 10;
+    pdf.setFont("Roboto", "normal");
 
     if (isFOCTicket) {
       funcRenderTexts(FOC_NOTES);
@@ -311,7 +333,7 @@ export const downloadTicketPDF = async (
     // pdf.roundedRect(8, PAGE_H - 34, PAGE_W - 16, 26, r, r, "F");
     pdf.rect(8, PAGE_H - 44, PAGE_W - 16, r, "F");
     pdf.setTextColor(0, 0, 0);
-    pdf.setFont("Roboto", "bold");
+    pdf.setFont("Roboto", "normal");
     pdf.setFontSize(12);
     pdf.text("RUBY TRAVEL", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
 

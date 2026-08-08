@@ -1,14 +1,4 @@
-"use client";
-
-import { useLang } from "@/lib/useLang";
-import { t } from "@/lib/i18n/t";
-import Image from "next/image";
-import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
-
 export default function Footer() {
-  const lang = useLang();
-
   return (
     <footer className="bg-neutral-950 text-neutral-400 py-16 text-sm">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -64,7 +54,7 @@ export default function Footer() {
             <p className="leading-relaxed">
               Hotline: <span className="text-white">0705 551 668</span>
               <br />
-              Email: <span className="text-white">rubytraveldanang@gmail.com</span>
+              Email: <span className="text-white">{process.env.NEXT_PUBLIC_EMAIL_COMPANY}</span>
             </p>
           </div>
         </div>

@@ -34,6 +34,7 @@ import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants
 import { ACC_STATUS, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import GetTicketForm from "@/components/GetTicketForm";
+import { generateBookingVoucher } from "@/helpers/e-voucher";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -128,9 +129,70 @@ export default function GetTicketPageControler() {
 
   const handleBuyTicketInSystem = async (order_id: string) => {
     // send mail to admin & user
+    // generateBookingVoucher({
+    //   orderCode: "26RUBYASSJ2424",
+    //   // parkName: "CÔNG VIÊN SKN NÚI THẦN TÀI",
+    //   packageName: "ALL GÓI TÍCH LỘC",
+    //   nationality: "Tất cả",
+    //   nationalityEn: "All nationality",
+    //   date: "2024-09-25",
+    //   leadTraveler: "khánh",
+    //   phone: "0987468718",
+    //   note: "đn",
+    //   adults: 7,
+    //   kids: 5,
+    //   openingHours: "08:30 - 17:30",
+    //   openingHoursEn: "Opening hours: 08:30 - 17:30",
+    //   bungalowNote: "Quy định sử dụng tối đa 8 khách/ căn (Nếu quý khách có máu cần)",
+    //   buffetTime: "10h30 - 14h00",
+    //   buffetTimeEn: "Buffet lunch time is from 10:30 a.m. - 2:00 p.m",
+    //   importantNotes: [
+    //     {
+    //       vi: "Quý khách vui lòng bảo mật QR code.Vé đã mua không thể hoàn hủy và chỉ có giá trị sử dụng 1 lần.",
+    //       en: "Please keep the QR code secure. Purchased tickets cannot be refunded and are only valid for one-time use.",
+    //     },
+    //     {
+    //       vi: "Mẫu e-voucher phải giữ nguyên định dạng của Asia. Mọi thay đổi và chỉnh sửa đều không được chấp nhận để sử dụng dịch vụ.",
+    //       en: "The e-voucher form must maintain Asia's format. Any changes and modifications are not acceptable for use of the service.",
+    //     },
+    //     {
+    //       vi: "Vui lòng đến quầy vé Công viên và trình vé điện tử đã mua để đổi vé vào cửa.",
+    //     },
+    //   ],
+    //   includes: [
+    //     { vi: "Phí vào cửa phổ thông.", en: "General admission fee." },
+    //     { vi: "Ăn Buffet trưa/ Set menu.", en: "Eat buffet lunch/ Set menu." },
+    //   ],
+    //   hotline: "0905154351",
+    //   email: "ctyasiagroup@gmail.com",
+    //   listTicket: [
+    //     {
+    //       name: "Vé A người lớn",
+    //       quantity: 1,
+    //     },
+    //     {
+    //       name: "Vé A người lớn",
+    //       quantity: 1,
+    //     },
+    //     {
+    //       name: "Vé A người lớn",
+    //       quantity: 1,
+    //     },
+    //     {
+    //       name: "Vé A người lớn",
+    //       quantity: 1,
+    //     },
+    //     {
+    //       name: "Vé A người lớn",
+    //       quantity: 1,
+    //     },
+    //   ],
+    // });
   };
 
   const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
+    handleBuyTicketInSystem("SSDF");
+    return;
     const validByTicket = await handleValidBeforeByTicket(values);
 
     if (validByTicket) {
