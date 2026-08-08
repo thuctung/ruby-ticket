@@ -63,6 +63,7 @@ export const CHANGE_PASSWORD = "/api/auth/affiliate/profile/change-password";
 export const GET_ADMIN_REPORT = "/api/auth/admin/history/get-report";
 
 export const COUNT_REPORT = "/api/auth/admin/history/count-report";
+export const EXPORT_EXCEL = "/api/auth/admin/history/export-excel";
 
 export const ADMIN_GET_SALE_SUMARY = "/api/auth/admin/stats/sumary-email";
 
