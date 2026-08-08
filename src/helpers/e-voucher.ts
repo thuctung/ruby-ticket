@@ -1,93 +1,9 @@
-/**
- * generateBookingVoucher.ts
- * -----------------------------------------------------------------------
- * Template tạo PDF phiếu đặt dịch vụ (booking voucher) bằng jsPDF,
- * dùng cho Next.js (chạy phía client - "use client").
- *
- * Cài đặt:
- *   npm install jspdf
- *
- * Cách dùng (trong 1 component/page Next.js):
- *
- *   "use client";
- *   import { generateBookingVoucher } from "@/lib/generateBookingVoucher";
- *
-
- *
- * -----------------------------------------------------------------------
- */
-
 import jsPDF from "jspdf";
 import { getFontBase64Client, getFontBold64Client } from "./ticket";
-import { SendTicketInSystemMailType, TicketInSystem } from "@/app-controler/affi/getTicket/type";
+import { SendTicketInSystemMailType } from "@/app-controler/affi/getTicket/type";
+import { getFontBase64, getFontBoldBase64, getImageBase64 } from "./ticket-server";
 
-export interface NoteLine {
-  vi: string;
-  en?: string;
-}
-
-export interface BookingVoucherData {
-  orderCode: string;
-  parkName: string;
-  packageName: string;
-  nationality: string;
-  nationalityEn?: string;
-  date: string;
-  leadTraveler: string;
-  phone?: string;
-  note?: string;
-  adults: number;
-  kids: number;
-  openingHours: string;
-  openingHoursEn?: string;
-  bungalowNote?: string;
-  buffetTime?: string;
-  buffetTimeEn?: string;
-  importantNotes: NoteLine[];
-  includes: NoteLine[];
-  hotline: string;
-  email: string;
-  /** Optional logo images as base64 dataURL (PNG/JPEG) */
-  logoLeft?: string;
-  logoRight?: string;
-  listTicket: TicketInSystem[];
-}
-
-// ------------------------------------------------------------------------
-// Layout constants (mm, A4-ish narrow voucher width)
-// ------------------------------------------------------------------------
-const PAGE_WIDTH = 105; // narrow receipt-like width, change to 210 for full A4
 const MARGIN = 6;
-const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
-
-const COLORS = {
-  text: [255, 255, 255] as [number, number, number],
-  subtext: [90, 90, 90] as [number, number, number],
-  border: [180, 180, 180] as [number, number, number],
-  headerBg: [235, 245, 235] as [number, number, number],
-  highlightBg: [255, 235, 59] as [number, number, number],
-  bullet: [200, 30, 30] as [number, number, number],
-};
-
-function addWrappedText(
-  pdf: jsPDF,
-  text: string,
-  x: number,
-  y: number,
-  maxWidth: number,
-  lineHeight = 4.2
-): number {
-  const lines = pdf.splitTextToSize(text, maxWidth);
-  pdf.text(lines, x, y);
-  return y + lines.length * lineHeight;
-}
-
-function drawDivider(pdf: jsPDF, y: number): number {
-  pdf.setDrawColor(...COLORS.border);
-  pdf.setLineWidth(0.2);
-  pdf.line(MARGIN, y, PAGE_WIDTH - MARGIN, y);
-  return y + 4;
-}
 
 const NOTES = [
   "Quý khách vui lòng bảo mật vé.Vé đã mua không thể hoàn hủy và chỉ có giá trị sử dụng 1 lần.",
@@ -111,22 +27,11 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
   pdf.setLineWidth(1);
   pdf.roundedRect(8, 8, PAGE_W - 16, PAGE_H - 16, 10, 10);
 
-  const rubyLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = "/logo.png";
-  });
+  const rubyLogo = getImageBase64("/logo.png");
+  const thanTaiLogo = getImageBase64("/nuithantai/logo.webp");
 
-  const thanTaiLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = "/nuithantai/logo.webp";
-  });
-
-  const fontBase64 = await getFontBase64Client();
-  const fontBold = await getFontBold64Client();
+  const fontBase64 = await getFontBase64();
+  const fontBold = await getFontBoldBase64();
   pdf.addFileToVFS("Roboto-Regular.ttf", fontBase64);
   pdf.addFont("Roboto-Regular.ttf", "Roboto", "normal");
 
@@ -255,6 +160,5 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
     align: "center",
   });
 
-  pdf.save(`voucher-${data.orderCode}.pdf`);
-  return pdf;
+  return Buffer.from(pdf.output("arraybuffer"));
 };

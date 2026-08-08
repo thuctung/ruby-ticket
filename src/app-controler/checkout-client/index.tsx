@@ -31,14 +31,14 @@ import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
-import GetTicketForm from "@/components/GetTicketForm";
-import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType } from "./type";
 import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import { toast } from "react-toastify";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { getTicketFOCAndCutomer } from "./contants";
+import GetTicketForm from "@/components/GetTicketForm";
+import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 
 const initOrderData = {
   dateUse: "",
@@ -108,7 +108,7 @@ export default function CheckoutControlerPage() {
   const handleBuyTicket = async (values: SubmitSelectTicket) => {
     const { formData, totalMoney, siteCode, products, date_use } = values;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
-    const thirdPartyNum = generateThirdPartyCode();
+    const thirdPartyNum = generateThirdPartyCode(false);
     const { email, phone, fullname }: any = formData;
     setProductSelected(products);
     setCustomerEmail(email);

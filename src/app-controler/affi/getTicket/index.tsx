@@ -19,8 +19,10 @@ import {
 } from "@/types/ticket";
 import {
   createOrderTicket,
+  createTemplateTicketThanTaiMountain,
   getStatusProfile,
   getTicketFromSunGroup,
+  updateOrderAndBalaceInSystem,
   updateStatusOrderFail,
   updateSuccessOrder,
 } from "./api";
@@ -31,10 +33,12 @@ import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/
 import { toast } from "react-toastify";
 import { senTicketToMail } from "@/app-controler/checkout-client/api";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
-import { ACC_STATUS, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
+import { ACC_STATUS, ERROR_MESSAGE, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import GetTicketForm from "@/components/GetTicketForm";
 import { generateBookingVoucher } from "@/helpers/e-voucher";
+import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "./type";
+import { KEY_MODIFY_DATA } from "../stats/contants";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -42,6 +46,15 @@ export default function GetTicketPageControler() {
   const { setProfile }: CommonType | any = useProfileStore.getState();
 
   const [location, setLocation] = useState(SITE_CODES.BANAHILL);
+
+  const updateBalaceProfile = (totalMoney: number) => {
+    const currentBalance = profile.balance - totalMoney;
+    setProfile({
+      ...profile,
+      balance: currentBalance,
+    });
+    return currentBalance;
+  };
 
   const handleValidBeforeByTicket = async (values: SubmitSelectTicket) => {
     let result = true;
@@ -101,11 +114,8 @@ export default function GetTicketPageControler() {
 
         await downloadTicketPDF(customerTickets, haveFOC ? focTickets : []);
 
-        const currentBalance = profile.balance - totalMoney;
-        setProfile({
-          ...profile,
-          balance: currentBalance,
-        });
+        updateBalaceProfile(totalMoney);
+
         updateSuccessOrder({
           orderCode: tickets.orderCode,
           tickets: result,
@@ -121,78 +131,47 @@ export default function GetTicketPageControler() {
           orderCode: tickets.orderCode,
         });
       } else {
-        updateStatusOrderFail(order_id);
+        updateStatusOrderFail(order_id, ERROR_MESSAGE.SUN_WORLD_TICKET);
         setToastMessage("Không tạo được vé!");
       }
     }
   };
 
-  const handleBuyTicketInSystem = async (order_id: string) => {
-    // send mail to admin & user
-    // generateBookingVoucher({
-    //   orderCode: "26RUBYASSJ2424",
-    //   // parkName: "CÔNG VIÊN SKN NÚI THẦN TÀI",
-    //   packageName: "ALL GÓI TÍCH LỘC",
-    //   nationality: "Tất cả",
-    //   nationalityEn: "All nationality",
-    //   date: "2024-09-25",
-    //   leadTraveler: "khánh",
-    //   phone: "0987468718",
-    //   note: "đn",
-    //   adults: 7,
-    //   kids: 5,
-    //   openingHours: "08:30 - 17:30",
-    //   openingHoursEn: "Opening hours: 08:30 - 17:30",
-    //   bungalowNote: "Quy định sử dụng tối đa 8 khách/ căn (Nếu quý khách có máu cần)",
-    //   buffetTime: "10h30 - 14h00",
-    //   buffetTimeEn: "Buffet lunch time is from 10:30 a.m. - 2:00 p.m",
-    //   importantNotes: [
-    //     {
-    //       vi: "Quý khách vui lòng bảo mật QR code.Vé đã mua không thể hoàn hủy và chỉ có giá trị sử dụng 1 lần.",
-    //       en: "Please keep the QR code secure. Purchased tickets cannot be refunded and are only valid for one-time use.",
-    //     },
-    //     {
-    //       vi: "Mẫu e-voucher phải giữ nguyên định dạng của Asia. Mọi thay đổi và chỉnh sửa đều không được chấp nhận để sử dụng dịch vụ.",
-    //       en: "The e-voucher form must maintain Asia's format. Any changes and modifications are not acceptable for use of the service.",
-    //     },
-    //     {
-    //       vi: "Vui lòng đến quầy vé Công viên và trình vé điện tử đã mua để đổi vé vào cửa.",
-    //     },
-    //   ],
-    //   includes: [
-    //     { vi: "Phí vào cửa phổ thông.", en: "General admission fee." },
-    //     { vi: "Ăn Buffet trưa/ Set menu.", en: "Eat buffet lunch/ Set menu." },
-    //   ],
-    //   hotline: "0905154351",
-    //   email: "ctyasiagroup@gmail.com",
-    //   listTicket: [
-    //     {
-    //       name: "Vé A người lớn",
-    //       quantity: 1,
-    //     },
-    //     {
-    //       name: "Vé A người lớn",
-    //       quantity: 1,
-    //     },
-    //     {
-    //       name: "Vé A người lớn",
-    //       quantity: 1,
-    //     },
-    //     {
-    //       name: "Vé A người lớn",
-    //       quantity: 1,
-    //     },
-    //     {
-    //       name: "Vé A người lớn",
-    //       quantity: 1,
-    //     },
-    //   ],
-    // });
+  const handleBuyTicketInSystem = async (
+    order_id: string,
+    products: ProductSubmitType[],
+    thirdPartyNumber: string,
+    dateUse: string,
+    totalMoney: number
+  ) => {
+    if (profile.email && profile.phone) {
+      const payload: SendTicketInSystemMailType = {
+        orderCode: thirdPartyNumber,
+        dateUse,
+        email: profile.email,
+        phone: profile.phone,
+        listTicket: products.map((item) => ({ name: item.productsName, quantity: item.quantity })),
+      };
+      const data = await createTemplateTicketThanTaiMountain(payload);
+
+      if (data) {
+        const payloadUpdate: PayloadUdateOrderBalanceType = {
+          balance: updateBalaceProfile(totalMoney),
+          user_id: profile.user_id,
+          order_id,
+          description: "",
+          status: KEY_MODIFY_DATA.SUCCESS,
+          amount: totalMoney,
+        };
+        updateOrderAndBalaceInSystem(payloadUpdate);
+        toast.success("Đặt vé thành công");
+      } else {
+        updateStatusOrderFail(order_id, ERROR_MESSAGE.ERROR_SYSTEM_CREATE_TICKET);
+      }
+    }
   };
 
   const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
-    handleBuyTicketInSystem("SSDF");
-    return;
     const validByTicket = await handleValidBeforeByTicket(values);
 
     if (validByTicket) {
@@ -206,7 +185,7 @@ export default function GetTicketPageControler() {
         date_use: date_use,
       }));
 
-      const thirdPartyNumber = generateThirdPartyCode();
+      const thirdPartyNumber = generateThirdPartyCode(in_system);
       const params: ParamCreateTicketAgentType = {
         items,
         user_id: profile.user_id || "",
@@ -222,7 +201,7 @@ export default function GetTicketPageControler() {
       if (in_system) {
         if (siteCode === "NUITHANTAI") {
           // TODO
-          handleBuyTicketInSystem(order_id);
+          handleBuyTicketInSystem(order_id, products, thirdPartyNumber, date_use, totalMoney);
         } else {
           setToastMessage("Chưa mở bán ở địa điểm này!");
         }

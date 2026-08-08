@@ -5,7 +5,7 @@ import {
   CLIENT_BUY_TICKET_FINAL,
   CLIENT_CREATE_ORDER_TICKET,
   CLIENT_SEND_TICET_TO_MAIL,
-  CLIENT_UPDATE_STATUS_ORDER,
+  CLIENT_UPDATE_STATUS_ORDER_ERROR,
   SUN_BOOKING_CANCLE,
   SUN_BOOKING_CONFIRM,
   SUN_BOOKING_CREATE,
@@ -80,7 +80,7 @@ export const updateStatusGetTicketFinal = async (payload: CustomerBuyFilnalType)
 export const updateStatusOrder = async (payload: UpdateOrderType) => {
   try {
     setGlobalLoading(true);
-    const { data }: any = await api.post(CLIENT_UPDATE_STATUS_ORDER, payload);
+    const { data }: any = await api.post(CLIENT_UPDATE_STATUS_ORDER_ERROR, payload);
     return data;
   } catch {
     setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");

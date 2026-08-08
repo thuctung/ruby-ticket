@@ -376,11 +376,18 @@ export const rebuildDataTicket = (
   return result;
 };
 
-export const generateThirdPartyCode = (length = 12): string => {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const randomValues = crypto.getRandomValues(new Uint32Array(length));
+export const year2Digit = new Date().getFullYear().toString().slice(-2);
 
-  return Array.from(randomValues, (value) => {
+export const generateThirdPartyCode = (in_system: boolean): string => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const length = in_system ? 7 : 14;
+  const randomValues = crypto.getRandomValues(new Uint32Array(length));
+  const code = Array.from(randomValues, (value) => {
     return chars[value % chars.length];
   }).join("");
+
+  if (in_system) {
+    return `${year2Digit}RUBY${code}`;
+  }
+  return code;
 };

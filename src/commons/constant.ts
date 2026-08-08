@@ -150,6 +150,7 @@ export const DB_TABLE_NAME = {
   SYSTEM_SETTINGS: "system_settings",
   PRODUCTS: "products",
   PRODUCT_CATEGORY: "category",
+  FUNC_UPDATE_ORDER_BALANCE: "update_order_and_balance",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -268,6 +269,7 @@ export const ERROR_MESSAGE = {
   SUN_WORLD_TICKET: "Lỗi xuất vé từ Sun world",
   PAYMENT_TIMEOUT: "Hết thời gian thanh toán",
   USER_CANCLE: "Người dùng hủy đơn",
+  ERROR_SYSTEM_CREATE_TICKET: "Lỗi tạo vé từ hệ thống",
 };
 
 export const SITE_CODES = {

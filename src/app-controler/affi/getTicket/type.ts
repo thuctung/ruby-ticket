@@ -9,4 +9,14 @@ export type SendTicketInSystemMailType = {
   dateUse: string;
   listTicket: TicketInSystem[];
   email: string;
+  paymentCode?: string;
+};
+
+export type PayloadUdateOrderBalanceType = {
+  order_id: string;
+  user_id: string;
+  balance: number;
+  status: string;
+  description: string;
+  amount: number;
 };

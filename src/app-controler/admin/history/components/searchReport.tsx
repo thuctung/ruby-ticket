@@ -4,37 +4,27 @@ import { SearchButton } from "@/components/ui/customs/searchButton";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
 
-import { checkDateRange } from "@/helpers/dateTime";
-import { AdminSearchReport, SearchTicketSale } from "@/types";
-import { SiteType } from "@/types/ticket";
+import { SearchTicketSale } from "@/types";
 import { Calendar, MapPin, User } from "lucide-react";
-import { useState } from "react";
-import { BuyMethod, intForm } from "../constant";
 import { StatusData } from "@/app-controler/affi/stats/contants";
 
 type SearchTicketFormProps = {
-  onChangeForm: (filter: SearchTicketSale) => void;
+  onChangeForm: (key: string, value: string) => void;
   onReset: () => void;
+  onSearch: () => void;
   searchValue: SearchTicketSale;
+  handleExcel: () => void;
 };
 
-export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicketFormProps) {
-  const [filter, setFilter] = useState<AdminSearchReport>({
-    ...searchValue,
-  });
-  const handleChangeFilter = (key: string, value: string) => {
-    setFilter((pre) => ({ ...pre, [key]: value }));
-  };
-
-  const handleSerch = () => {
-    if (checkDateRange(filter.from, filter.to)) {
-      onChangeForm(filter);
-    }
-  };
-
+export function SearchReport({
+  searchValue,
+  handleExcel,
+  onReset,
+  onChangeForm,
+  onSearch,
+}: SearchTicketFormProps) {
   const handleResetForm = () => {
     onReset();
-    setFilter({ ...intForm });
   };
 
   return (
@@ -49,9 +39,9 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
             </label>
             <div>
               <DatePickerCustom
-                value={filter.from}
-                onChange={(date: string) => handleChangeFilter("from", date)}
-                maxDate={filter.to}
+                value={searchValue.from}
+                onChange={(date: string) => onChangeForm("from", date)}
+                maxDate={searchValue.to}
               />
             </div>
           </div>
@@ -63,8 +53,8 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
             </label>
             <div>
               <DatePickerCustom
-                value={filter.to}
-                onChange={(date: string) => handleChangeFilter("to", date)}
+                value={searchValue.to}
+                onChange={(date: string) => onChangeForm("to", date)}
               />
             </div>
           </div>
@@ -75,33 +65,14 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
             </label>
 
             <SelectBox
-              value={filter.status || ""}
-              onChange={(value) => handleChangeFilter("status", value)}
+              value={searchValue.status || ""}
+              onChange={(value) => onChangeForm("status", value)}
               className=" h-12"
             >
               <option value="">Tất cả</option>
               {Object.keys(StatusData).map((key: string) => (
                 <option key={key} value={key}>
                   {StatusData[key]}
-                </option>
-              ))}
-            </SelectBox>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
-              Người mua
-            </label>
-
-            <SelectBox
-              value={filter.payment_method || "all"}
-              onChange={(value) => handleChangeFilter("payment_method", value)}
-              className=" h-12"
-            >
-              <option value="all">Tất cả</option>
-              {BuyMethod.map((item) => (
-                <option key={item.code} value={item.code}>
-                  {item.name}
                 </option>
               ))}
             </SelectBox>
@@ -115,16 +86,22 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
             <Input
               type="text"
               placeholder="email "
-              value={filter.email || ""}
+              value={searchValue.email || ""}
               className="h-12"
-              onChange={(value: string) => handleChangeFilter("email", value)}
+              onChange={(value: string) => onChangeForm("email", value)}
             />
           </div>
         </div>
         <div className=" flex flex-wrap justify-end  pr-3">
           <div className="flex justify-end gap-3 mt-6">
-            <SearchButton onClick={handleSerch} />
+            <SearchButton onClick={onSearch} />
             <ResetButton onClick={handleResetForm} />
+            <button
+              onClick={handleExcel}
+              className="px-6 py-2.5 rounded-xl border border-gray-200 font-semibold text-gray-600 hover:bg-white transition-all"
+            >
+              Export Excel
+            </button>
           </div>
         </div>
       </div>

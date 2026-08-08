@@ -2,9 +2,11 @@ import api from "@/axios";
 import {
   AFF_GET_STATUS,
   CREATE_ORDER_TICKET,
+  SEND_MAIL_TICKET_NUI_THAN_TAI,
   SUCCESS_ORDER_TICKET,
   SUN_V2_CREATE_ORDER,
-  UPDATE_STATUS_ORDER,
+  UPDATE_ORDER_BALANCE,
+  UPDATE_STATUS_ORDER_ERROR,
 } from "@/commons/apiURL";
 import { DB_TABLE_NAME } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
@@ -12,6 +14,7 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import { ParamCreateTicketAgentType, ProductSubmitType, TicketReponseType } from "@/types/ticket";
 import { get } from "lodash";
+import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "./type";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 const clientSupbase = createSupabaseBrowserClient();
@@ -74,10 +77,13 @@ export const getTicketFromSunGroup = async (
   }
 };
 
-export const updateStatusOrderFail = async (order_id: string) => {
+export const updateStatusOrderFail = async (order_id: string, description: string) => {
   try {
     setGlobalLoading(true);
-    const { data, error }: any = await api.post(UPDATE_STATUS_ORDER, { order_id });
+    const { data, error }: any = await api.post(UPDATE_STATUS_ORDER_ERROR, {
+      order_id,
+      description,
+    });
     if (error) {
       setToastMessage(error.message);
       return;
@@ -113,6 +119,26 @@ export const getStatusProfile = async (user_id: string) => {
     return status;
   } catch (e) {
     setToastMessage("Có lỗi xảy ra");
+  } finally {
+  }
+};
+
+export const createTemplateTicketThanTaiMountain = async (payload: SendTicketInSystemMailType) => {
+  try {
+    setGlobalLoading(true);
+    const { data }: any = await api.post(SEND_MAIL_TICKET_NUI_THAN_TAI, payload);
+    return data;
+  } catch (e) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const updateOrderAndBalaceInSystem = async (payload: PayloadUdateOrderBalanceType) => {
+  try {
+    await api.post(UPDATE_ORDER_BALANCE, payload);
+  } catch (e) {
   } finally {
   }
 };
