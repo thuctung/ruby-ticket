@@ -1,5 +1,5 @@
 import api from "@/axios";
-import { GET_ADMIN_REPORT } from "@/commons/apiURL";
+import { EXPORT_EXCEL, GET_ADMIN_REPORT } from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { AdminSearchReport, CommonType, SearchTableType } from "@/types";
@@ -35,6 +35,29 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
     return data;
   } catch (error) {
     setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const exportExcel = async (payload: AdminSearchReport) => {
+  try {
+    setGlobalLoading(true);
+
+    const res: any = await api.post(EXPORT_EXCEL, payload, {
+      responseType: "blob",
+    });
+    const url = URL.createObjectURL(res.data);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "sales-report.xlsx";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  } catch (e) {
+    console.log("e", e);
+    setToastMessage("Lỗi khi xuất excel");
   } finally {
     setGlobalLoading(false);
   }

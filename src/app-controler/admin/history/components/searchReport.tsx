@@ -16,9 +16,15 @@ type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
   onReset: () => void;
   searchValue: SearchTicketSale;
+  handleExcel: () => void;
 };
 
-export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicketFormProps) {
+export function SearchReport({
+  searchValue,
+  handleExcel,
+  onReset,
+  onChangeForm,
+}: SearchTicketFormProps) {
   const [filter, setFilter] = useState<AdminSearchReport>({
     ...searchValue,
   });
@@ -125,6 +131,12 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
           <div className="flex justify-end gap-3 mt-6">
             <SearchButton onClick={handleSerch} />
             <ResetButton onClick={handleResetForm} />
+            <button
+              onClick={handleExcel}
+              className="px-6 py-2.5 rounded-xl border border-gray-200 font-semibold text-gray-600 hover:bg-white transition-all"
+            >
+              Export Excel
+            </button>
           </div>
         </div>
       </div>

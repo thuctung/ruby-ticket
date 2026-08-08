@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { formatVND } from "@/lib/money";
-import { getTicketSaleAdmin } from "./api";
+import { exportExcel, getTicketSaleAdmin } from "./api";
 import { AdminSearchReport, SearchTableType, SearchTicketSale } from "@/types";
 import { SearchReport } from "./components/searchReport";
 import { SiteType } from "@/types/ticket";
@@ -55,6 +55,10 @@ export default function AdminHistoryPageControler() {
     if (resLocation) {
       setLocationList(resLocation);
     }
+  };
+
+  const handleExportExcel = async () => {
+    const data = await exportExcel(params.searchValue);
   };
 
   const columnAdminReport: TableColumn<AdminReportResponseType>[] = [
@@ -159,6 +163,7 @@ export default function AdminHistoryPageControler() {
         onChangeForm={handleChangeForm}
         onReset={handleResetForm}
         searchValue={params.searchValue}
+        handleExcel={handleExportExcel}
       />
 
       <CustomTable
