@@ -11,7 +11,7 @@ export async function POST(req: Request) {
         siteCodes,
         date,
         page: 1,
-        per_page: 50,
+        per_page: 100,
       },
     });
     return NextResponse.json(data, { status: 200 });

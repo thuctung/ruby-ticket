@@ -46,8 +46,8 @@ export const downloadTicketPDFServer = async (
   tickets: TicketResultQRType[],
   focTicket: TicketResultQRType[]
 ) => {
-  const PAGE_W = 220;
-  const PAGE_H = 500;
+  const PAGE_W = 250;
+  const PAGE_H = 630;
   const pdf = new jsPDF({
     unit: "px",
     format: [PAGE_W, PAGE_H],

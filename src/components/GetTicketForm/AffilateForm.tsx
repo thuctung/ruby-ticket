@@ -49,18 +49,18 @@ export default function AffilateBookingForm({
       className={`${display.variable} ${body.variable} min-h-screen bg-[#EEF1EC] font-[family-name:var(--font-body)] text-[#1C2620]`}
     >
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:py-14">
-        <header className="mb-8 sm:mb-10">
+        <div className="mb-8 sm:mb-10">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8A9A8E]">
             Đặt vé tham quan
           </p>
           <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-[#1F3A2F] sm:text-4xl">
             Sun World
           </h1>
-        </header>
+        </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_360px] lg:items-start lg:gap-8">
           {/* Left: form */}
-          <div className="space-y-6">
+          <div className="space-y-6 ">
             {/* Step 1 */}
             <section className="rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] p-6 shadow-[0_1px_2px_rgba(31,58,47,0.05)] sm:p-8">
               <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#1F3A2F]">
@@ -98,10 +98,9 @@ export default function AffilateBookingForm({
             {listProduct.map((item, index: number) => (
               <section
                 key={index}
-                className="rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] p-6 shadow-[0_1px_2px_rgba(31,58,47,0.05)] sm:p-8"
+                className="rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] p-6 shadow-[0_1px_2px_rgba(31,58,47,0.05)] sm:p-8 "
               >
                 <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#1F3A2F]">
-                  Loại vé
                   {PRODUCT_TYPE[item.personType as keyof typeof PRODUCT_TYPE] || item.personType}
                 </h2>
                 <p className="mt-1 text-sm text-[#6E7C73]">Chọn loại vé và nhập số lượng bạn cần</p>
@@ -121,6 +120,7 @@ export default function AffilateBookingForm({
                         <div className="flex shrink-0 items-center rounded-lg border border-[#DCD6C2] w-fit">
                           <button
                             type="button"
+                            disabled={(quantities[product.code] ?? 0) === 0}
                             aria-label={`Giảm số lượng ${product.name}`}
                             onClick={() =>
                               setQty(product.code, (quantities[product.code] ?? 0) - 1)
@@ -161,7 +161,7 @@ export default function AffilateBookingForm({
 
           {/* Right: summary (ticket stub) */}
 
-          <div>
+          <div className="lg:sticky lg:top-[58px] lg:self-start">
             <div className="relative overflow-hidden rounded-2xl border border-[#E3DFCF] bg-[#F7F4EC] shadow-[0_1px_2px_rgba(31,58,47,0.05)]">
               <div className="p-6 sm:p-7">
                 <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#1F3A2F]">

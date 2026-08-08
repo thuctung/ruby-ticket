@@ -56,6 +56,8 @@ export const PRODUCT_TYPE = {
   ["ADULT"]: "Người lớn",
   ["CHILD"]: "Trẻ em",
   ["ALL"]: "Chung",
+  ["SENIORS"]: "Người cao tuổi",
+  ["BEST_SELLER"]: "Bán chạy",
 };
 
 export const getPerSonTypeName = (typeCode: string) => {
