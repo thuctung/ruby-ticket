@@ -22,6 +22,7 @@ export interface SearchTicketSale {
   from: string;
   to: string;
   status?: string;
+  email?: string;
 }
 
 export interface AdminSearchReport {
