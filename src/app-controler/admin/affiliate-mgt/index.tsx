@@ -69,7 +69,6 @@ export default function AffiliateMgt() {
 
   const handleUpdateSearch = useCallback(
     (value: SearchAffiType) => {
-      console.log("value", value);
       setParams({
         searchValue: value,
         currentPage: 1,
