@@ -1,6 +1,12 @@
 import api from "@/axios";
-import { SUCCESS_ORDER_TICKET, SUN_GET_PRODOCT_LIST, SUN_GET_SITE_LIST } from "@/commons/apiURL";
-import { DB_TABLE_NAME } from "@/commons/constant";
+import {
+  GET_PRODUCT_IN_SYSTEM,
+  GET_SITE_BY_STATUS,
+  SUCCESS_ORDER_TICKET,
+  SUN_GET_PRODOCT_LIST,
+  SUN_GET_SITE_LIST,
+} from "@/commons/apiURL";
+import { DB_TABLE_NAME, SITE_CODES } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
@@ -67,33 +73,24 @@ export const getPriceBuyAgentLevel = async (site_code: string, agent_code: strin
   }
 };
 
-export const getSiteListSun = async () => {
+export const getSiteByStatus = async (status?: boolean) => {
   try {
     setGlobalLoading(true);
-    const { data }: any = await api.get(SUN_GET_SITE_LIST);
-    return data.result;
-  } catch (e) {
-    setToastMessage("Có lỗi xảy ra! Thử lại sau");
+    const { data } = await api.post(GET_SITE_BY_STATUS, { status });
+
+    return data;
+  } catch (error: any) {
+    setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {
     setGlobalLoading(false);
   }
 };
 
-export const getSiteInSystem = async () => {
-  const { data, error } = await clientSupbase.from(DB_TABLE_NAME.SITES).select("*");
-
-  if (error) throw error;
-
-  return data;
-};
-
-export const getAllSite = async () => {
+export const getProductionInSystem = async (site_code: string) => {
   try {
     setGlobalLoading(true);
-    const [sunSites, systemSites] = await Promise.all([getSiteListSun(), getSiteInSystem()]);
-
-    const getBana = sunSites?.find((site: any) => site.code === "BNC") || {};
-    return sunSites;
+    const { data } = await api.post(GET_PRODUCT_IN_SYSTEM, { site_code });
+    return groupTicketSunGroup(data);
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {

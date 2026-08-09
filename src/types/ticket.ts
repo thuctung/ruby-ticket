@@ -1,8 +1,10 @@
 import { number } from "zod";
 
 export interface SiteType {
-  name: string;
   code: string;
+  status: string;
+  name: string;
+  in_system: boolean;
 }
 
 export type TicketType = {
@@ -129,14 +131,6 @@ export type TicketTypeLocation = {
   ticket_variants: ProductType[];
 };
 
-export type SideSunGroupType = {
-  address: string;
-  code: string;
-  description: string;
-  name: string;
-  id: number;
-};
-
 type PricePolicyType = {
   publicPrice: number;
   unitPrice: number;
@@ -193,6 +187,7 @@ export type SubmitSelectTicket = {
   formData?: object;
   verifyCode?: string;
   haveFOC: boolean;
+  in_system: boolean;
 };
 
 export type TicketInItemType = {

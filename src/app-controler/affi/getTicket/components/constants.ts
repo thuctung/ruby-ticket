@@ -1,3 +1,5 @@
+import { SITE_CODES } from "@/commons/constant";
+
 export const GUIDES = [
   "Giờ hoạt động có thể thay đổi. Vui lòng cập nhật thông tin tại https://sunworld.vn/operations trước khi khởi hành/Operating hours are subject to change. Please check the latest information at https://sunworld.vn/operations before your visit",
   "Vé đã mua không hoàn hủy/Tickets purchased are non-refundable",
@@ -255,7 +257,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         }
       }
     }
-    case "BNC": {
+    case SITE_CODES.BANAHILL: {
       switch (productCode) {
         case "E2300E78-815E-EDD6-48AD-01954640B753": {
           return [

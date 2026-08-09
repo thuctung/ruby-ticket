@@ -4,18 +4,18 @@ import { Save, Users } from "lucide-react";
 import { createAgentPrice, getListPriceBySiteCode, updateAgentPrice } from "./api";
 import { AgentType } from "@/types";
 import { SelectBox } from "@/components/ui/customs/selectBox";
-import { SideSunGroupType } from "@/types/ticket";
-import { getSiteListSun } from "@/components/GetTicketSunGroupForm/api";
+import { SiteType } from "@/types/ticket";
 import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 import CreatePriceForm from "./components/create-price";
 import { getListAgent } from "../agent-mgt/api";
 import { AgentPriceSubmitType, AgentPriceType } from "./type";
 import { CUSTOMER } from "@/commons/constant";
+import { getSiteByStatus } from "@/components/GetTicketForm/api";
 
-export default function PricingPageControler() {
+export default function AgentPricePageControler() {
   const [listPrice, setListPrice] = useState<AgentPriceType[]>([]);
 
-  const [siteSunGroup, setSiteSunGroup] = useState<SideSunGroupType[]>([]);
+  const [siteSunGroup, setSiteSunGroup] = useState<SiteType[]>([]);
 
   const [siteSunCode, setSiteSunCode] = useState("");
 
@@ -24,7 +24,7 @@ export default function PricingPageControler() {
   const [agentList, setAgentList] = useState<AgentType[]>([]);
 
   const getSiteSunGroup = async () => {
-    const data = await getSiteListSun();
+    const data = await getSiteByStatus(true);
     if (data) {
       setSiteSunGroup(data);
     }

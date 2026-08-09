@@ -5,7 +5,7 @@ import * as XLSX from "xlsx";
 import { dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
 
 export async function POST(req: Request) {
-  const { from, to, email }: AdminSearchReport = await req.json();
+  const { from, to, email, siteCode, full_name }: AdminSearchReport = await req.json();
 
   let query = supabaseAdmin
     .from(DB_TABLE_NAME.VIEW_TICKET_SALE)
@@ -19,7 +19,9 @@ export async function POST(req: Request) {
   if (from) {
     query = query.gte("created_at", `${from}${START_DATE_GMT7}`);
   }
-
+  if (siteCode) {
+    query = query.eq("site_code", siteCode);
+  }
   if (to) {
     query = query.lte("created_at", `${to}${END_DATE_GMT7}`);
   }
@@ -34,6 +36,7 @@ export async function POST(req: Request) {
   const exportData = data.map((item) => ({
     "Mã đơn hàng": item.order_code,
     Email: item.user_email,
+    "Tên đại lý": full_name,
     "Tên sản phẩm": item.product_name,
     "Số lượng": item.quantity,
     "Số tiền": item.total_amount,
@@ -43,7 +46,7 @@ export async function POST(req: Request) {
   const worksheet = XLSX.utils.json_to_sheet(exportData);
   const workbook = XLSX.utils.book_new();
 
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Sales Report");
+  XLSX.utils.book_append_sheet(workbook, worksheet, full_name);
 
   const excelBuffer = XLSX.write(workbook, {
     type: "buffer",

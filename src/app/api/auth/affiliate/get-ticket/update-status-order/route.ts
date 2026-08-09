@@ -4,13 +4,13 @@ import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
 
 export async function POST(req: Request) {
   const body: any = await req.json();
-  const { order_id } = body;
+  const { order_id, description } = body;
 
   const { data, error } = await supabaseAdmin
     .from(DB_TABLE_NAME.ORDERS)
     .update({
       status: KEY_MODIFY_DATA.ERROR,
-      description: ERROR_MESSAGE.SUN_WORLD_TICKET,
+      description,
     })
     .eq("id", order_id);
   if (error) {

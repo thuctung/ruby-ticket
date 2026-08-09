@@ -20,24 +20,36 @@ import BankTransferQR from "../affi/topup/components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
 import { CommonType, QRBankResponseType } from "@/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-import { DB_TABLE_NAME, ERROR_MESSAGE, SITE_SUB_GROUP, TYPE_TRANSFER } from "@/commons/constant";
+import {
+  DB_TABLE_NAME,
+  ERROR_MESSAGE,
+  PAYMENT_STATUS,
+  SITE_CODES,
+  TYPE_TRANSFER,
+} from "@/commons/constant";
 import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
-import GetTicketSunGroupForm from "@/components/GetTicketSunGroupForm";
-import { SUN_BOOKING_FORM_TYPE } from "@/components/GetTicketSunGroupForm/constants";
 import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType } from "./type";
 import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import { toast } from "react-toastify";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { getTicketFOCAndCutomer } from "./contants";
+import GetTicketForm from "@/components/GetTicketForm";
+import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
+import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "../affi/getTicket/type";
+import { createTemplateTicketThanTaiMountain } from "../affi/getTicket/api";
 
 const initOrderData = {
   dateUse: "",
   orderCode: "",
   orderId: "",
+  siteCode: "",
+  thirdPartyNum: "",
+  formData: {},
+  in_system: false,
 };
 
 export default function CheckoutControlerPage() {
@@ -50,7 +62,7 @@ export default function CheckoutControlerPage() {
 
   const chanenSupbase = useRef<any>(null);
 
-  const [currentOrderData, setCurrentOrderData] = useState(initOrderData);
+  const [currentOrderData, setCurrentOrderData] = useState<any>(initOrderData);
 
   const [customerEmail, setCustomerEmail] = useState("");
 
@@ -99,9 +111,9 @@ export default function CheckoutControlerPage() {
   };
 
   const handleBuyTicket = async (values: SubmitSelectTicket) => {
-    const { formData, totalMoney, siteCode, products, date_use } = values;
+    const { formData, totalMoney, siteCode, products, date_use, in_system } = values;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
-    const thirdPartyNum = generateThirdPartyCode();
+    const thirdPartyNum = generateThirdPartyCode(in_system);
     const { email, phone, fullname }: any = formData;
     setProductSelected(products);
     setCustomerEmail(email);
@@ -113,11 +125,18 @@ export default function CheckoutControlerPage() {
       products,
       thirdPartyNumber: thirdPartyNum,
     };
-    // STEP 1: CREATE ORDER WITH SUN WORLD
-    const dataOrderSunWorld: TicketReponseType = await customerCreateOrder(paramCreateOrder);
+    let passProcess = true;
+    let dataOrderSunWorld: TicketReponseType | any = {};
+    if (siteCode === SITE_CODES.BANAHILL) {
+      // STEP 1: CREATE ORDER WITH SUN WORLD
+      dataOrderSunWorld = await customerCreateOrder(paramCreateOrder);
+      if (!dataOrderSunWorld) {
+        passProcess = false;
+      }
+    }
 
     // SUCCESS OF SUN WORLD
-    if (dataOrderSunWorld) {
+    if (passProcess) {
       // STEP 2: SAVE ORDER IN DATABASE WITH STATUS "pending" (WAIT PAYMENT)
       const dataSubmit: ClientOrderItem = {
         userEmail: email,
@@ -129,9 +148,8 @@ export default function CheckoutControlerPage() {
         listTicketSubmit: products,
         siteCode,
         paymentCode,
-        orderCode: dataOrderSunWorld.orderCode,
+        orderCode: dataOrderSunWorld.orderCode || thirdPartyNum, // in system user thirdPartyNum for ordercde
       };
-
       const orderID = await customerCreateOrderTicket(dataSubmit);
 
       // CREATE ORDER SUCCESS: SHOW QR PAYMENT AND LISTEN PAYMENT CHANNEL (chanenSupbase.current)
@@ -146,14 +164,54 @@ export default function CheckoutControlerPage() {
 
         setCurrentOrderData({
           orderCode: dataOrderSunWorld.orderCode,
+          products,
           orderId: orderID,
           dateUse: date_use,
+          siteCode,
+          formData,
+          thirdPartyNum,
+          in_system,
+          paymentCode,
         });
 
         // CANCLE ORDER TIMEOUT :
         timeCancelOrderRef.current = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
       }
     }
+  };
+
+  const sendMailTicketInSystem = async (
+    orderId: string,
+    products: ProductSubmitType[],
+    thirdPartyNumber: string,
+    dateUse: string,
+    formData: any,
+    paymentCode: string
+  ) => {
+    const payload: SendTicketInSystemMailType = {
+      orderCode: thirdPartyNumber,
+      dateUse,
+      email: formData.email,
+      phone: formData.phone,
+      paymentCode,
+      listTicket: products.map((item) => ({ name: item.productsName, quantity: item.quantity })),
+    };
+    const data = await createTemplateTicketThanTaiMountain(payload);
+
+    const payloadUpdate = {
+      orderId: orderId,
+      status_payment: PAYMENT_STATUS.SUCCESS,
+      status: KEY_MODIFY_DATA.ERROR,
+      description: "Lỗi đặt vé từ khách lẻ",
+    };
+    if (data) {
+      payloadUpdate.status = KEY_MODIFY_DATA.SUCCESS;
+      payloadUpdate.description = "";
+      toast.success("Đặt vé thành công");
+    } else {
+      toast.error("Có lỗi xảy ra, liên hệ để được hỗ trợ");
+    }
+    updateStatusOrder(payloadUpdate);
   };
 
   const getTicketSuccess = async () => {
@@ -163,7 +221,21 @@ export default function CheckoutControlerPage() {
       timeCancelOrderRef.current = null;
     }
 
-    const { orderCode, orderId, dateUse } = currentOrderData;
+    const {
+      orderCode,
+      orderId,
+      dateUse,
+      in_system,
+      thirdPartyNum,
+      formData,
+      products,
+      paymentCode,
+    } = currentOrderData;
+    if (in_system) {
+      sendMailTicketInSystem(orderId, products, thirdPartyNum, dateUse, formData, paymentCode);
+      return;
+    }
+
     const ticketSuccess: TicketReponseType = await getTicketSunWorld(orderCode);
 
     const payloadFinal: CustomerBuyFilnalType = {
@@ -214,6 +286,7 @@ export default function CheckoutControlerPage() {
     }
     await updateStatusGetTicketFinal(payloadFinal);
   };
+
   const handleCancleBooking = async () => {
     await cancleBooking(currentOrderData.orderCode);
     cancleOrderTimeout(currentOrderData.orderId, ERROR_MESSAGE.USER_CANCLE, false);
@@ -326,10 +399,10 @@ export default function CheckoutControlerPage() {
 
         <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
           <div className="bg-white rounded-3xl shadow-2xl p-2 md:p-4">
-            <GetTicketSunGroupForm
-              location="BNC"
+            <GetTicketForm
+              location={SITE_CODES.BANAHILL}
               onBuyTicket={confirmBuyTicket}
-              formType={SUN_BOOKING_FORM_TYPE.CUSTOMER}
+              formType={BOOKING_FORM_TYPE.CUSTOMER}
             />
           </div>
         </div>

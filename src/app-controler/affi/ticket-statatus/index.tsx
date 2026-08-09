@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, dayjsEx } from "@/helpers/dateTime";
 import { SearchTicketStatus } from "./components/searchTicketForm";
 
@@ -13,8 +12,8 @@ import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 
 import { get } from "lodash";
 import { statusClass, StatusData } from "./contants";
-import { getSiteListSun } from "@/components/GetTicketSunGroupForm/api";
-import { SideSunGroupType } from "@/types/ticket";
+import { getSiteByStatus } from "@/components/GetTicketForm/api";
+import { SiteType } from "@/types/ticket";
 import { ParamStatusTicketType, TicketStatusType } from "./type";
 import { getStatusTicket } from "./api";
 import { toast } from "react-toastify";
@@ -22,7 +21,7 @@ import { toast } from "react-toastify";
 export default function TicketStatusControler() {
   const [ticketLits, setTicketList] = useState<TicketStatusType[]>([]);
 
-  const [listSideSun, setListSideSun] = useState<SideSunGroupType[]>([]);
+  const [listSideSun, setListSideSun] = useState<SiteType[]>([]);
 
   const handleSearch = async (value: ParamStatusTicketType) => {
     if (!value.orderCode || !value.siteCode) {
@@ -38,7 +37,7 @@ export default function TicketStatusControler() {
   };
 
   const fetchListSite = async () => {
-    const data = await getSiteListSun();
+    const data = await getSiteByStatus(true);
     if (data?.length) {
       setListSideSun(data);
     }

@@ -1,18 +1,18 @@
-import { ProductBanaType, ResultListProductType, SideSunGroupType } from "@/types/ticket";
+import { ProductBanaType, ResultListProductType, SiteType } from "@/types/ticket";
 import z from "zod";
 
-export const SUN_BOOKING_FORM_TYPE = {
+export const BOOKING_FORM_TYPE = {
   ["AFFILATE"]: "AFFILATE",
   ["CUSTOMER"]: "CUSTOMER",
 };
 
 export type BookingFormProps = {
-  siteSunCode: string;
-  setSideSunCode: (value: string) => void;
-  listSideSunGroup: SideSunGroupType[];
+  siteCode: string;
+  setSiteCode: (value: string) => void;
+  listSite: SiteType[];
   formData: any;
   setFieldFormData: (key: string, value: any) => void;
-  listProductSun: ResultListProductType[];
+  listProduct: ResultListProductType[];
   setQty: (code: string, value: number) => void;
   quantities: Record<string, number>;
   totalTickets: number;
@@ -43,13 +43,13 @@ export const getPriceAgentAndMultiple = (
   agentPrice: number
 ) => {
   let price =
-    agentCode === SUN_BOOKING_FORM_TYPE.AFFILATE
+    agentCode === BOOKING_FORM_TYPE.AFFILATE
       ? ticket.unitPrice
       : ticket.publicPrice - ticket.publicPrice * (agentPrice / 100);
 
   price = ticket.multiple > 1 ? price / ticket.multiple : price;
 
-  return agentCode === SUN_BOOKING_FORM_TYPE.AFFILATE ? price + agentPrice : price;
+  return agentCode === BOOKING_FORM_TYPE.AFFILATE ? price + agentPrice : price;
 };
 
 export const PRODUCT_TYPE = {

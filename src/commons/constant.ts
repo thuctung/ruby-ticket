@@ -44,7 +44,7 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
     icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
   },
   {
-    link: "/admin/pricing",
+    link: "/admin/agent-price",
     lable: "Quản lý giá đại lý",
     icon: "M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
   },
@@ -79,6 +79,16 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
     link: "/admin/history",
     lable: "Lịch sử rút vé",
     icon: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M12 7v5l4 2",
+  },
+  {
+    link: "/admin/site",
+    lable: "Quản lý công viên",
+    icon: "M12 2a1 1 0 011 1v2.05a5 5 0 013.95 3.95H19a1 1 0 110 2h-1v1a6 6 0 01-5 5.91V21a1 1 0 11-2 0v-3.09A6 6 0 016 11v-1H5a1 1 0 010-2h2.05A5 5 0 0111 5.05V3a1 1 0 011-1z",
+  },
+  {
+    link: "/admin/ticket-price",
+    lable: "Thông tin giá vé",
+    icon: "M4 5a2 2 0 00-2 2v2a2 2 0 012 2 2 2 0 010 4v2a2 2 0 002 2h12a2 2 0 002-2v-2a2 2 0 010-4 2 2 0 012-2V7a2 2 0 00-2-2H4zm5 3a1 1 0 112 0v8a1 1 0 11-2 0V8z",
   },
 ];
 
@@ -138,6 +148,9 @@ export const DB_TABLE_NAME = {
   FUNC_GET_ALL_SALE_SUMARY: "get_all_sale_summary",
   FUNC_COMPLETE_ORDER_CUSTOMER: "complete_order_customer",
   SYSTEM_SETTINGS: "system_settings",
+  PRODUCTS: "products",
+  PRODUCT_CATEGORY: "category",
+  FUNC_UPDATE_ORDER_BALANCE: "update_order_and_balance",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -165,6 +178,7 @@ export const PAYMENT_STATUS = {
   PENDING: "pending",
   COMPLETED: "completed",
   FAILED: "failed",
+  SUCCESS: "success",
 };
 
 export const AGENT_CODE = {
@@ -256,4 +270,9 @@ export const ERROR_MESSAGE = {
   SUN_WORLD_TICKET: "Lỗi xuất vé từ Sun world",
   PAYMENT_TIMEOUT: "Hết thời gian thanh toán",
   USER_CANCLE: "Người dùng hủy đơn",
+  ERROR_SYSTEM_CREATE_TICKET: "Lỗi tạo vé từ hệ thống",
+};
+
+export const SITE_CODES = {
+  BANAHILL: "BNC",
 };

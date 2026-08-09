@@ -19,6 +19,7 @@ export function LoadingGlobal() {
           background: "transparent",
           boxShadow: "none",
           width: "auto",
+          zIndex: 10000,
         }}
       >
         <DialogTitle></DialogTitle>

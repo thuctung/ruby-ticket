@@ -1,5 +1,5 @@
 import api from "@/axios";
-import { EXPORT_EXCEL, GET_ADMIN_REPORT } from "@/commons/apiURL";
+import { EXPORT_EXCEL, GET_ADMIN_REPORT, GET_ALL_AFFILATE } from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { AdminSearchReport, CommonType, SearchTableType } from "@/types";
@@ -12,7 +12,7 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
   try {
     setGlobalLoading(true);
     const { currentPage, searchValue } = params;
-    const { location, from, to, email, payment_method, status } = searchValue;
+    const { location, from, to, email, payment_method, status, siteCode } = searchValue;
     const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
@@ -24,6 +24,7 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
       email,
       payment_method,
       status,
+      siteCode,
     };
 
     const response = await api.post(GET_ADMIN_REPORT, {
@@ -46,6 +47,7 @@ export const exportExcel = async (payload: AdminSearchReport) => {
     const { from, to } = payload;
     const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
+
     const res: any = await api.post(
       EXPORT_EXCEL,
       {
@@ -67,6 +69,22 @@ export const exportExcel = async (payload: AdminSearchReport) => {
     URL.revokeObjectURL(url);
   } catch (e) {
     setToastMessage("Lỗi khi xuất excel");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getAllAffilate = async () => {
+  setGlobalLoading(true);
+  try {
+    const { data } = await api.get(GET_ALL_AFFILATE);
+    const listAff = get(data, "data", [])?.map((item: any) => ({
+      value: item.email,
+      label: item.full_name,
+    }));
+    return listAff;
+  } catch (err: any) {
+    setToastMessage(err.response?.data?.error || err.message || "Lỗi khi tải danh sách");
   } finally {
     setGlobalLoading(false);
   }

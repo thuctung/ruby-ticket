@@ -162,8 +162,6 @@ export default function UserMgt() {
     },
   ];
 
-  console.log("profiles", profiles);
-
   return (
     <div className="space-y-4">
       <Card className="rounded-2xl">

@@ -11,7 +11,8 @@ export const intForm: AdminSearchReport = {
   to: df_To,
   email: "",
   location: "all",
-  status: "",
+  status: "success",
+  full_name: "",
 };
 
 export const BuyMethod = [

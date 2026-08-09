@@ -23,6 +23,7 @@ export interface SearchTicketSale {
   to: string;
   status?: string;
   email?: string;
+  siteCode?: string;
 }
 
 export interface AdminSearchReport {
@@ -32,4 +33,6 @@ export interface AdminSearchReport {
   email?: string;
   status?: string;
   payment_method?: string;
+  full_name?: string;
+  siteCode?: string;
 }

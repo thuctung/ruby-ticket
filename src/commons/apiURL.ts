@@ -18,9 +18,14 @@ export const UPDATE_STATUS_TOPUP_MGT = "/api/auth/admin/topup-mgt/update-status"
 
 export const CREATE_ORDER_TICKET = "/api/auth/affiliate/get-ticket/create-order";
 
-export const UPDATE_STATUS_ORDER = "/api/auth/affiliate/get-ticket/update-status-order";
+export const UPDATE_STATUS_ORDER_ERROR = "/api/auth/affiliate/get-ticket/update-status-order";
 
 export const SUCCESS_ORDER_TICKET = "/api/auth/affiliate/get-ticket/success-order";
+
+export const SEND_MAIL_TICKET_NUI_THAN_TAI =
+  "/api/auth/affiliate/get-ticket/send-mail-nui-than-tai";
+
+export const UPDATE_ORDER_BALANCE = "/api/auth/affiliate/get-ticket/update-order-balance";
 
 export const GET_TRANSACTION = "/api/auth/affiliate/transaction/get-transaction";
 
@@ -44,7 +49,7 @@ export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";
 
 export const CLIENT_BUY_TICKET_FINAL = "/api/public/buy-ticket-final";
 
-export const CLIENT_UPDATE_STATUS_ORDER = "/api/public/update-status-order";
+export const CLIENT_UPDATE_STATUS_ORDER_ERROR = "/api/public/update-status-order";
 
 export const CLIENT_SEND_TICET_TO_MAIL = "/api/public/send-ticket-mail";
 
@@ -63,13 +68,34 @@ export const CHANGE_PASSWORD = "/api/auth/affiliate/profile/change-password";
 export const GET_ADMIN_REPORT = "/api/auth/admin/history/get-report";
 
 export const COUNT_REPORT = "/api/auth/admin/history/count-report";
+
 export const EXPORT_EXCEL = "/api/auth/admin/history/export-excel";
+
+export const GET_ALL_AFFILATE = "/api/auth/admin/history/get-all-affilate";
 
 export const ADMIN_GET_SALE_SUMARY = "/api/auth/admin/stats/sumary-email";
 
 export const ADMIN_UPDATE_STATUS_TOPUP = "/api/webhook/sepay";
 
 export const SUN_BOOKING_CANCLE = "/api/sun-api/booking-cancel";
+
+export const GET_PRODUCT_IN_SYSTEM = "/api/auth/products";
+
+export const GET_SITE_BY_STATUS = "/api/auth/admin/sites/get-site-by-status";
+
+export const GET_ALL_SITE = "/api/auth/admin/sites/get-all-site";
+
+export const UPDATE_SITE = "/api/auth/admin/sites/update-site";
+
+export const GET_PROD = "/api/auth/admin/sites/update-site";
+
+export const GET_PRODUCT_CATEGORY = "/api/auth/admin/ticket-price/get-category";
+
+export const GET_PRODUCT_PARAMS = "/api/auth/admin/ticket-price/get-products";
+
+export const UPDATE_PRODUCT = "/api/auth/admin/ticket-price/update-product";
+
+export const DELETE_PRODUCT = "/api/auth/admin/ticket-price/delete-product";
 
 // Sun API
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";

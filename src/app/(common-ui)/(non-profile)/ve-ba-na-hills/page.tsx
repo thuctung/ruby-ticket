@@ -1,3 +1,4 @@
+import { SITE_CODES } from "@/commons/constant";
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -184,7 +185,7 @@ export default function Page() {
               </p>
               <div className="flex flex-wrap items-center gap-4">
                 <a
-                  href="/checkout?site=BNC"
+                  href={`/checkout?site=${SITE_CODES.BANAHILL}`}
                   className="bg-brass hover:bg-brassLight text-pineDeep font-semibold px-7 py-3.5 rounded-sm transition-colors bg-[#ee3d8e]"
                 >
                   Vé Bà Nà Hills
@@ -301,7 +302,7 @@ export default function Page() {
             </div>
 
             <a
-              href="/checkout?site=BNC"
+              href={`/checkout?site=${SITE_CODES.BANAHILL}`}
               className="bg-brass hover:bg-brassLight text-[white] font-semibold px-7 py-3.5 rounded-sm transition-colors bg-[#ee3d8e]"
             >
               Mua vé ngay
