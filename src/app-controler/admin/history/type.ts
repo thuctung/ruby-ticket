@@ -19,3 +19,8 @@ export type AdminReportResponseType = {
   status_payment: string;
   order_code: string;
 };
+
+export type ListAffDropdownType = {
+  value: string;
+  label: string;
+};

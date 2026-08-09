@@ -71,6 +71,8 @@ export const COUNT_REPORT = "/api/auth/admin/history/count-report";
 
 export const EXPORT_EXCEL = "/api/auth/admin/history/export-excel";
 
+export const GET_ALL_AFFILATE = "/api/auth/admin/history/get-all-affilate";
+
 export const ADMIN_GET_SALE_SUMARY = "/api/auth/admin/stats/sumary-email";
 
 export const ADMIN_UPDATE_STATUS_TOPUP = "/api/webhook/sepay";

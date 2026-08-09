@@ -7,26 +7,27 @@ import DatePickerCustom from "@/components/ui/date-picker";
 import { SearchTicketSale } from "@/types";
 import { Calendar, MapPin, User } from "lucide-react";
 import { StatusData } from "@/app-controler/affi/stats/contants";
+import DropdownSearch from "@/components/ui/dropdown-search";
+import { ListAffDropdownType } from "../type";
+import { SiteType } from "@/types/ticket";
 
 type SearchTicketFormProps = {
   onChangeForm: (key: string, value: string) => void;
-  onReset: () => void;
   onSearch: () => void;
   searchValue: SearchTicketSale;
   handleExcel: () => void;
+  listAff: ListAffDropdownType[];
+  listSite: SiteType[];
 };
 
 export function SearchReport({
   searchValue,
+  listAff,
+  listSite,
   handleExcel,
-  onReset,
   onChangeForm,
   onSearch,
 }: SearchTicketFormProps) {
-  const handleResetForm = () => {
-    onReset();
-  };
-
   return (
     <div>
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-6">
@@ -45,7 +46,6 @@ export function SearchReport({
               />
             </div>
           </div>
-
           {/* Đến ngày */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
@@ -58,7 +58,6 @@ export function SearchReport({
               />
             </div>
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
               Trạng thái
@@ -77,7 +76,37 @@ export function SearchReport({
               ))}
             </SelectBox>
           </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+              Công viên
+            </label>
 
+            <SelectBox
+              value={searchValue.siteCode || ""}
+              onChange={(value) => onChangeForm("siteCode", value)}
+              className=" h-12"
+            >
+              <option value="">Tất cả</option>
+              {listSite.map((item) => (
+                <option key={item.code} value={item.code}>
+                  {item.name}
+                </option>
+              ))}
+            </SelectBox>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+              <User size={14} /> Tên đại lý
+            </label>
+            <DropdownSearch
+              options={listAff}
+              value={searchValue.email}
+              onChange={(value: string) => onChangeForm("email", value)}
+              placeholder="Chọn tên đại lý"
+              searchPlaceholder="Gõ để tìm..."
+            />
+          </div>
           {/* Tên/Email aff */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
@@ -95,7 +124,6 @@ export function SearchReport({
         <div className=" flex flex-wrap justify-end  pr-3">
           <div className="flex justify-end gap-3 mt-6">
             <SearchButton onClick={onSearch} />
-            <ResetButton onClick={handleResetForm} />
             <button
               onClick={handleExcel}
               className="px-6 py-2.5 rounded-xl border border-gray-200 font-semibold text-gray-600 hover:bg-white transition-all"

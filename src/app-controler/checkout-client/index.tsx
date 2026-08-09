@@ -23,8 +23,8 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import {
   DB_TABLE_NAME,
   ERROR_MESSAGE,
+  PAYMENT_STATUS,
   SITE_CODES,
-  SITE_SUB_GROUP,
   TYPE_TRANSFER,
 } from "@/commons/constant";
 import { LodingMessage } from "@/components/ui/loading-message";
@@ -39,12 +39,17 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { getTicketFOCAndCutomer } from "./contants";
 import GetTicketForm from "@/components/GetTicketForm";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
+import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "../affi/getTicket/type";
+import { createTemplateTicketThanTaiMountain } from "../affi/getTicket/api";
 
 const initOrderData = {
   dateUse: "",
   orderCode: "",
   orderId: "",
   siteCode: "",
+  thirdPartyNum: "",
+  formData: {},
+  in_system: false,
 };
 
 export default function CheckoutControlerPage() {
@@ -57,7 +62,7 @@ export default function CheckoutControlerPage() {
 
   const chanenSupbase = useRef<any>(null);
 
-  const [currentOrderData, setCurrentOrderData] = useState(initOrderData);
+  const [currentOrderData, setCurrentOrderData] = useState<any>(initOrderData);
 
   const [customerEmail, setCustomerEmail] = useState("");
 
@@ -106,9 +111,9 @@ export default function CheckoutControlerPage() {
   };
 
   const handleBuyTicket = async (values: SubmitSelectTicket) => {
-    const { formData, totalMoney, siteCode, products, date_use } = values;
+    const { formData, totalMoney, siteCode, products, date_use, in_system } = values;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
-    const thirdPartyNum = generateThirdPartyCode(false);
+    const thirdPartyNum = generateThirdPartyCode(in_system);
     const { email, phone, fullname }: any = formData;
     setProductSelected(products);
     setCustomerEmail(email);
@@ -159,9 +164,14 @@ export default function CheckoutControlerPage() {
 
         setCurrentOrderData({
           orderCode: dataOrderSunWorld.orderCode,
+          products,
           orderId: orderID,
           dateUse: date_use,
           siteCode,
+          formData,
+          thirdPartyNum,
+          in_system,
+          paymentCode,
         });
 
         // CANCLE ORDER TIMEOUT :
@@ -170,7 +180,39 @@ export default function CheckoutControlerPage() {
     }
   };
 
-  const sendMailTicketInSystem = () => {};
+  const sendMailTicketInSystem = async (
+    orderId: string,
+    products: ProductSubmitType[],
+    thirdPartyNumber: string,
+    dateUse: string,
+    formData: any,
+    paymentCode: string
+  ) => {
+    const payload: SendTicketInSystemMailType = {
+      orderCode: thirdPartyNumber,
+      dateUse,
+      email: formData.email,
+      phone: formData.phone,
+      paymentCode,
+      listTicket: products.map((item) => ({ name: item.productsName, quantity: item.quantity })),
+    };
+    const data = await createTemplateTicketThanTaiMountain(payload);
+
+    const payloadUpdate = {
+      orderId: orderId,
+      status_payment: PAYMENT_STATUS.SUCCESS,
+      status: KEY_MODIFY_DATA.ERROR,
+      description: "Lỗi đặt vé từ khách lẻ",
+    };
+    if (data) {
+      payloadUpdate.status = KEY_MODIFY_DATA.SUCCESS;
+      payloadUpdate.description = "";
+      toast.success("Đặt vé thành công");
+    } else {
+      toast.error("Có lỗi xảy ra, liên hệ để được hỗ trợ");
+    }
+    updateStatusOrder(payloadUpdate);
+  };
 
   const getTicketSuccess = async () => {
     handleDoneQR();
@@ -179,7 +221,20 @@ export default function CheckoutControlerPage() {
       timeCancelOrderRef.current = null;
     }
 
-    const { orderCode, orderId, dateUse } = currentOrderData;
+    const {
+      orderCode,
+      orderId,
+      dateUse,
+      in_system,
+      thirdPartyNum,
+      formData,
+      products,
+      paymentCode,
+    } = currentOrderData;
+    if (in_system) {
+      sendMailTicketInSystem(orderId, products, thirdPartyNum, dateUse, formData, paymentCode);
+      return;
+    }
 
     const ticketSuccess: TicketReponseType = await getTicketSunWorld(orderCode);
 

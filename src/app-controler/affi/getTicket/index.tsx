@@ -9,7 +9,6 @@ import { formatVND } from "@/lib/money";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
 import {
-  SiteType,
   TicketResultQRType,
   TicketSubmitAgentType,
   ParamCreateTicketAgentType,
@@ -36,7 +35,6 @@ import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants
 import { ACC_STATUS, ERROR_MESSAGE, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import GetTicketForm from "@/components/GetTicketForm";
-import { generateBookingVoucher } from "@/helpers/e-voucher";
 import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "./type";
 import { KEY_MODIFY_DATA } from "../stats/contants";
 
@@ -161,6 +159,7 @@ export default function GetTicketPageControler() {
           order_id,
           description: "",
           status: KEY_MODIFY_DATA.SUCCESS,
+          orderCode: thirdPartyNumber,
           amount: totalMoney,
         };
         updateOrderAndBalaceInSystem(payloadUpdate);

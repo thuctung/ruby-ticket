@@ -1,5 +1,5 @@
 import api from "@/axios";
-import { EXPORT_EXCEL, GET_ADMIN_REPORT } from "@/commons/apiURL";
+import { EXPORT_EXCEL, GET_ADMIN_REPORT, GET_ALL_AFFILATE } from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { AdminSearchReport, CommonType, SearchTableType } from "@/types";
@@ -12,18 +12,19 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
   try {
     setGlobalLoading(true);
     const { currentPage, searchValue } = params;
-    const { location, from, to, email, payment_method, status } = searchValue;
-    const dateForm = dayjsEx(from, BASIC_DATE_FORMAT);
+    const { location, from, to, email, payment_method, status, siteCode } = searchValue;
+    const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
     const body: any = {
       currentPage,
       location: location === "all" ? "" : location,
-      from: dayjs(dateForm).format(SERVER_DATE_FORMAT),
+      from: dayjs(dateFrom).format(SERVER_DATE_FORMAT),
       to: dayjs(dateTo).format(SERVER_DATE_FORMAT),
       email,
       payment_method,
       status,
+      siteCode,
     };
 
     const response = await api.post(GET_ADMIN_REPORT, {
@@ -43,10 +44,21 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
 export const exportExcel = async (payload: AdminSearchReport) => {
   try {
     setGlobalLoading(true);
+    const { from, to } = payload;
+    const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
+    const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
-    const res: any = await api.post(EXPORT_EXCEL, payload, {
-      responseType: "blob",
-    });
+    const res: any = await api.post(
+      EXPORT_EXCEL,
+      {
+        ...payload,
+        from: dayjs(dateFrom).format(SERVER_DATE_FORMAT),
+        to: dayjs(dateTo).format(SERVER_DATE_FORMAT),
+      },
+      {
+        responseType: "blob",
+      }
+    );
     const url = URL.createObjectURL(res.data);
 
     const a = document.createElement("a");
@@ -56,8 +68,23 @@ export const exportExcel = async (payload: AdminSearchReport) => {
 
     URL.revokeObjectURL(url);
   } catch (e) {
-    console.log("e", e);
     setToastMessage("Lỗi khi xuất excel");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getAllAffilate = async () => {
+  setGlobalLoading(true);
+  try {
+    const { data } = await api.get(GET_ALL_AFFILATE);
+    const listAff = get(data, "data", [])?.map((item: any) => ({
+      value: item.email,
+      label: item.full_name,
+    }));
+    return listAff;
+  } catch (err: any) {
+    setToastMessage(err.response?.data?.error || err.message || "Lỗi khi tải danh sách");
   } finally {
     setGlobalLoading(false);
   }

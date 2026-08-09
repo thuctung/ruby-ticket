@@ -8,8 +8,7 @@ import {
   UPDATE_ORDER_BALANCE,
   UPDATE_STATUS_ORDER_ERROR,
 } from "@/commons/apiURL";
-import { DB_TABLE_NAME } from "@/commons/constant";
-import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import { ParamCreateTicketAgentType, ProductSubmitType, TicketReponseType } from "@/types/ticket";
@@ -17,25 +16,6 @@ import { get } from "lodash";
 import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "./type";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
-const clientSupbase = createSupabaseBrowserClient();
-
-export const getLocation = async () => {
-  try {
-    setGlobalLoading(true);
-    const { data, error } = await clientSupbase
-      .from(DB_TABLE_NAME.SITES)
-      .select("*")
-      .eq("status", true);
-    if (error) {
-      setToastMessage(error.message);
-    }
-    return data;
-  } catch {
-    setToastMessage("Có lỗi xảy ra");
-  } finally {
-    setGlobalLoading(false);
-  }
-};
 
 export const createOrderTicket = async (params: ParamCreateTicketAgentType) => {
   try {

@@ -139,7 +139,7 @@ export const DB_TABLE_NAME = {
   PROMOTION_LOCATION: "promotion_location",
   ORDERS: "orders",
   ORDERS_ITEMS: "order_items",
-  VIEW_TICET_SALE: "view_sale_history",
+  VIEW_TICKET_SALE: "view_sale_history",
   FUNC_AFF_ADD_MONEY: "handle_topup_webhook",
   AGENTS: "agents",
   FUNC_CREATE_ORDER_PENDING: "create_order_pending",
@@ -178,6 +178,7 @@ export const PAYMENT_STATUS = {
   PENDING: "pending",
   COMPLETED: "completed",
   FAILED: "failed",
+  SUCCESS: "success",
 };
 
 export const AGENT_CODE = {

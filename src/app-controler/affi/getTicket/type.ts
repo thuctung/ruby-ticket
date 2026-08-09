@@ -19,4 +19,5 @@ export type PayloadUdateOrderBalanceType = {
   status: string;
   description: string;
   amount: number;
+  orderCode: string;
 };

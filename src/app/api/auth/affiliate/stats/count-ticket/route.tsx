@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   const { user_id, from, to } = body;
 
   let query = supabaseAdmin
-    .from(DB_TABLE_NAME.VIEW_TICET_SALE)
+    .from(DB_TABLE_NAME.VIEW_TICKET_SALE)
     .select("quantity, total")
     .eq("status", KEY_MODIFY_DATA.SUCCESS)
     .eq("payment_method", AGENT);

@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { orderId, status, description, status_payment = null } = await req.json();
+    const { orderId, status, description, status_payment } = await req.json();
 
     await supabaseAdmin
       .from(DB_TABLE_NAME.ORDERS)

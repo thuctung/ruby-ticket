@@ -1,7 +1,7 @@
 "use client";
 
 import { Fraunces, Be_Vietnam_Pro } from "next/font/google";
-
+import { Minus, Plus, Trash2 } from "lucide-react";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
 import dayjs from "dayjs";
@@ -172,18 +172,72 @@ export default function AffilateBookingForm({
                   <Row label="Ngày đi" value={formData.date_use} strong />
                 </dl>
                 {selectedLines.length > 0 && (
+                  // <div className="mt-4 space-y-2 border-t border-dashed border-[#DCD6C2] pt-4 text-sm">
+                  //   {selectedLines.map((t) => (
+                  //     <div key={t.code} className="flex items-center justify-between gap-3">
+                  //       <span className="text-[#6E7C73]">
+                  //         {t.name} × {quantities[t.code]}
+                  //       </span>
+                  //       <span className="shrink-0 font-medium text-[#1C2620]">
+                  //         {currency(
+                  //           getPriceAgentAndMultiple(t, formType, agentPrice) *
+                  //             (quantities[t.code] ?? 0)
+                  //         )}
+                  //       </span>
+                  //     </div>
+                  //   ))}
+                  // </div>
                   <div className="mt-4 space-y-2 border-t border-dashed border-[#DCD6C2] pt-4 text-sm">
-                    {selectedLines.map((t) => (
-                      <div key={t.code} className="flex items-center justify-between gap-3">
-                        <span className="text-[#6E7C73]">
-                          {t.name} × {quantities[t.code]}
-                        </span>
-                        <span className="shrink-0 font-medium text-[#1C2620]">
-                          {currency(
-                            getPriceAgentAndMultiple(t, formType, agentPrice) *
-                              (quantities[t.code] ?? 0)
-                          )}
-                        </span>
+                    {selectedLines.map((t, index) => (
+                      <div
+                        key={t.code}
+                        className={`gap-3 border-r-2 border-r-[#ccc] rounded-r-[6px]  ${index !== selectedLines.length - 1 ? "mb-8" : ""}`}
+                      >
+                        <span className="text-[#6E7C73]">{t.name}</span>
+                        <div className="flex items-center gap-3 shrink-0 justify-end mt-4">
+                          <div className="flex items-center gap-1.5 rounded-md border border-[#DCD6C2] px-1.5 py-0.5">
+                            <button
+                              type="button"
+                              aria-label={`Giảm số lượng ${t.name}`}
+                              onClick={() => setQty(t.code, quantities[t.code] - 1)}
+                              className="flex h-5 w-5 items-center justify-center rounded text-[#6E7C73] transition-colors hover:bg-[#F0EBDD] hover:text-[#1C2620] disabled:opacity-40"
+                              disabled={(quantities[t.code] ?? 1) <= 1}
+                            >
+                              <Minus className="h-3.5 w-3.5" />
+                            </button>
+
+                            <span className="w-5 text-center text-[#1C2620]">
+                              {quantities[t.code]}
+                            </span>
+
+                            <button
+                              type="button"
+                              aria-label={`Tăng số lượng ${t.name}`}
+                              onClick={() => setQty(t.code, quantities[t.code] + 1)}
+                              className="flex h-5 w-5 items-center justify-center rounded text-[#6E7C73] transition-colors hover:bg-[#F0EBDD] hover:text-[#1C2620]"
+                            >
+                              <Plus className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+
+                          {/* Price */}
+                          <span className="font-medium text-[#1C2620]">
+                            {currency(
+                              getPriceAgentAndMultiple(t, formType, agentPrice) *
+                                (quantities[t.code] ?? 0)
+                            )}
+                          </span>
+
+                          {/* Delete */}
+                          <button
+                            type="button"
+                            aria-label={`Xóa ${t.name}`}
+                            onClick={() => setQty(t.code, 0)}
+                            className="flex h-5 w-5 items-center justify-center rounded text-[#6E7C73] transition-colors hover:bg-red-50 hover:text-red-500"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>

@@ -3,22 +3,24 @@
 import { useEffect, useState } from "react";
 
 import { formatVND } from "@/lib/money";
-import { exportExcel, getTicketSaleAdmin } from "./api";
+import { exportExcel, getAllAffilate, getTicketSaleAdmin } from "./api";
 import { AdminSearchReport, SearchTableType } from "@/types";
 import { SearchReport } from "./components/searchReport";
 import { SiteType } from "@/types/ticket";
-import { getLocation } from "@/app-controler/affi/getTicket/api";
 import { intForm } from "./constant";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
-import { AdminReportResponseType } from "./type";
+import { AdminReportResponseType, ListAffDropdownType } from "./type";
 import { BASIC_DATE_FORMAT, dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
 import { get } from "lodash";
 import { statusClass, StatusData } from "@/app-controler/affi/stats/contants";
 import { CUSTOMER } from "@/commons/constant";
+import { getSiteByStatus } from "@/components/GetTicketForm/api";
 
 export default function AdminHistoryPageControler() {
   const [totalPages, setTotalPage] = useState(0);
-  const [locationList, setLocationList] = useState<SiteType[]>([]);
+  const [listSite, setListSite] = useState<SiteType[]>([]);
+
+  const [listAff, setListAff] = useState<ListAffDropdownType[]>([]);
 
   const [reportList, setReportList] = useState<AdminReportResponseType[]>([]);
 
@@ -34,11 +36,14 @@ export default function AdminHistoryPageControler() {
     }));
   };
 
-  const handleResetForm = () => {
-    setParams({
-      searchValue: { ...intForm },
-      currentPage: 1,
-    });
+  const fetchAffilate = async () => {
+    const listAff = await getAllAffilate();
+    setListAff(listAff);
+  };
+
+  const fetchSites = async () => {
+    const sites = await getSiteByStatus(true);
+    setListSite(sites);
   };
 
   const fetchTicketSale = async () => {
@@ -50,15 +55,12 @@ export default function AdminHistoryPageControler() {
     }
   };
 
-  const handleGetLocation = async () => {
-    const resLocation = await getLocation();
-    if (resLocation) {
-      setLocationList(resLocation);
-    }
-  };
-
   const handleExportExcel = async () => {
-    exportExcel(params.searchValue);
+    const getFullName = listAff.find((item) => item.value === params.searchValue.email)?.label;
+    exportExcel({
+      ...params.searchValue,
+      full_name: getFullName,
+    });
   };
 
   const columnAdminReport: TableColumn<AdminReportResponseType>[] = [
@@ -151,20 +153,22 @@ export default function AdminHistoryPageControler() {
 
   useEffect(() => {
     fetchTicketSale();
-  }, []);
+  }, [params.currentPage]);
 
   useEffect(() => {
-    handleGetLocation();
+    fetchAffilate();
+    fetchSites();
   }, []);
 
   return (
     <div className="space-y-6">
       <SearchReport
         onChangeForm={handleChangeForm}
-        onReset={handleResetForm}
         searchValue={params.searchValue}
         handleExcel={handleExportExcel}
         onSearch={fetchTicketSale}
+        listAff={listAff}
+        listSite={listSite}
       />
 
       <CustomTable

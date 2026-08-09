@@ -15,19 +15,6 @@ import { CommonType } from "@/types";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { formatVND } from "@/helpers/money";
 
-interface TicketOption {
-  id: string;
-  name: string;
-  price: number;
-}
-
-interface TicketGroup {
-  id: string;
-  label: string;
-  hint: string;
-  items: TicketOption[];
-}
-
 const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
