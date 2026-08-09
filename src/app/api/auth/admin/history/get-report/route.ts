@@ -14,7 +14,7 @@ export async function POST(request: Request) {
   const { from, to, email, payment_method, status }: AdminSearchReport = searchValue;
 
   let query = supabaseAdmin
-    .from(DB_TABLE_NAME.VIEW_TICET_SALE)
+    .from(DB_TABLE_NAME.VIEW_TICKET_SALE)
     .select("*", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(offset, offset + LIMIT_TABLE - 1);

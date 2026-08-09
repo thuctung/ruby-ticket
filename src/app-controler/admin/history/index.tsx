@@ -151,7 +151,7 @@ export default function AdminHistoryPageControler() {
 
   useEffect(() => {
     fetchTicketSale();
-  }, []);
+  }, [params.currentPage]);
 
   useEffect(() => {
     handleGetLocation();

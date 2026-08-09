@@ -13,13 +13,13 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
     setGlobalLoading(true);
     const { currentPage, searchValue } = params;
     const { location, from, to, email, payment_method, status } = searchValue;
-    const dateForm = dayjsEx(from, BASIC_DATE_FORMAT);
+    const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
     const body: any = {
       currentPage,
       location: location === "all" ? "" : location,
-      from: dayjs(dateForm).format(SERVER_DATE_FORMAT),
+      from: dayjs(dateFrom).format(SERVER_DATE_FORMAT),
       to: dayjs(dateTo).format(SERVER_DATE_FORMAT),
       email,
       payment_method,
@@ -43,10 +43,20 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
 export const exportExcel = async (payload: AdminSearchReport) => {
   try {
     setGlobalLoading(true);
-
-    const res: any = await api.post(EXPORT_EXCEL, payload, {
-      responseType: "blob",
-    });
+    const { from, to } = payload;
+    const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
+    const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
+    const res: any = await api.post(
+      EXPORT_EXCEL,
+      {
+        ...payload,
+        from: dayjs(dateFrom).format(SERVER_DATE_FORMAT),
+        to: dayjs(dateTo).format(SERVER_DATE_FORMAT),
+      },
+      {
+        responseType: "blob",
+      }
+    );
     const url = URL.createObjectURL(res.data);
 
     const a = document.createElement("a");
@@ -56,7 +66,6 @@ export const exportExcel = async (payload: AdminSearchReport) => {
 
     URL.revokeObjectURL(url);
   } catch (e) {
-    console.log("e", e);
     setToastMessage("Lỗi khi xuất excel");
   } finally {
     setGlobalLoading(false);

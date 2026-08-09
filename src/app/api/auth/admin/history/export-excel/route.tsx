@@ -5,10 +5,10 @@ import * as XLSX from "xlsx";
 import { dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
 
 export async function POST(req: Request) {
-  const { from, to, email, status }: AdminSearchReport = await req.json();
+  const { from, to, email }: AdminSearchReport = await req.json();
 
   let query = supabaseAdmin
-    .from(DB_TABLE_NAME.VIEW_TICET_SALE)
+    .from(DB_TABLE_NAME.VIEW_TICKET_SALE)
     .select("*", { count: "exact" })
     .order("created_at", { ascending: false });
 
@@ -25,11 +25,12 @@ export async function POST(req: Request) {
   }
   query = query.eq("status", "success");
 
-  const { data, error, count } = await query;
+  const { data, error } = await query;
 
   if (error) {
     return Response.json({ message: error.message }, { status: 500 });
   }
+
   const exportData = data.map((item) => ({
     "Mã đơn hàng": item.order_code,
     Email: item.user_email,
@@ -38,6 +39,7 @@ export async function POST(req: Request) {
     "Số tiền": item.total_amount,
     "Ngày mua": dayjsEx(item.created_at).format(FULL_DATE_FORMAT),
   }));
+
   const worksheet = XLSX.utils.json_to_sheet(exportData);
   const workbook = XLSX.utils.book_new();
 
