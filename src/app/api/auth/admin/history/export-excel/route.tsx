@@ -39,8 +39,8 @@ export async function POST(req: Request) {
     "Tên đại lý": full_name,
     "Tên sản phẩm": item.product_name,
     "Số lượng": item.quantity,
-    "Số tiền": item.total_amount,
-    "Ngày mua": dayjsEx(item.created_at).format(FULL_DATE_FORMAT),
+    "Số tiền": item.total,
+    "Ngày mua": dayjsEx(item.created_at).tz("Asia/Ho_Chi_Minh").format(FULL_DATE_FORMAT),
   }));
 
   const worksheet = XLSX.utils.json_to_sheet(exportData);
