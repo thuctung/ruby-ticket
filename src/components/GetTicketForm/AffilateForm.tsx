@@ -172,21 +172,6 @@ export default function AffilateBookingForm({
                   <Row label="Ngày đi" value={formData.date_use} strong />
                 </dl>
                 {selectedLines.length > 0 && (
-                  // <div className="mt-4 space-y-2 border-t border-dashed border-[#DCD6C2] pt-4 text-sm">
-                  //   {selectedLines.map((t) => (
-                  //     <div key={t.code} className="flex items-center justify-between gap-3">
-                  //       <span className="text-[#6E7C73]">
-                  //         {t.name} × {quantities[t.code]}
-                  //       </span>
-                  //       <span className="shrink-0 font-medium text-[#1C2620]">
-                  //         {currency(
-                  //           getPriceAgentAndMultiple(t, formType, agentPrice) *
-                  //             (quantities[t.code] ?? 0)
-                  //         )}
-                  //       </span>
-                  //     </div>
-                  //   ))}
-                  // </div>
                   <div className="mt-4 space-y-2 border-t border-dashed border-[#DCD6C2] pt-4 text-sm">
                     {selectedLines.map((t, index) => (
                       <div
@@ -228,7 +213,6 @@ export default function AffilateBookingForm({
                             )}
                           </span>
 
-                          {/* Delete */}
                           <button
                             type="button"
                             aria-label={`Xóa ${t.name}`}

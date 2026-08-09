@@ -161,6 +161,7 @@ export type ProductBanaType = {
   multiple: number;
   site: SiteType;
   openTime: string;
+  description?: string;
 };
 
 export type ProductSubmitType = {

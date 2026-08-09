@@ -39,7 +39,7 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { getTicketFOCAndCutomer } from "./contants";
 import GetTicketForm from "@/components/GetTicketForm";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
-import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "../affi/getTicket/type";
+import { SendTicketInSystemMailType } from "../affi/getTicket/type";
 import { createTemplateTicketThanTaiMountain } from "../affi/getTicket/api";
 
 const initOrderData = {
@@ -399,11 +399,7 @@ export default function CheckoutControlerPage() {
 
         <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
           <div className="bg-white rounded-3xl shadow-2xl p-2 md:p-4">
-            <GetTicketForm
-              location={SITE_CODES.BANAHILL}
-              onBuyTicket={confirmBuyTicket}
-              formType={BOOKING_FORM_TYPE.CUSTOMER}
-            />
+            <GetTicketForm onBuyTicket={confirmBuyTicket} formType={BOOKING_FORM_TYPE.CUSTOMER} />
           </div>
         </div>
       </section>

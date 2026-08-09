@@ -44,7 +44,7 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
 export const exportExcel = async (payload: AdminSearchReport) => {
   try {
     setGlobalLoading(true);
-    const { from, to } = payload;
+    const { from, to, full_name } = payload;
     const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
@@ -63,7 +63,7 @@ export const exportExcel = async (payload: AdminSearchReport) => {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "sales-report.xlsx";
+    a.download = `${full_name}-report.xlsx`;
     a.click();
 
     URL.revokeObjectURL(url);

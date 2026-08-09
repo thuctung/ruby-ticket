@@ -275,4 +275,5 @@ export const ERROR_MESSAGE = {
 
 export const SITE_CODES = {
   BANAHILL: "BNC",
+  NUITHANTAI: "NUITHANTAI",
 };

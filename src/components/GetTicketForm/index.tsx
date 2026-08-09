@@ -23,6 +23,7 @@ import { useProfileStore } from "@/stores/useProfileStore";
 import { ProfileType } from "@/types";
 import { get } from "lodash";
 import { CUSTOMER, SITE_CODES } from "@/commons/constant";
+import { useSearchParams } from "next/navigation";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
@@ -34,18 +35,18 @@ const initFormValues = {
 };
 
 type GetTicketFormProps = {
-  location: string;
   onBuyTicket: (productsSubmit: SubmitSelectTicket) => void;
   formType: string;
 };
 
 export default function GetTicketForm({
-  location,
   onBuyTicket,
   formType = BOOKING_FORM_TYPE.AFFILATE,
 }: GetTicketFormProps) {
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const searchParams = useSearchParams();
+  const productURL = searchParams.get("product");
 
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
 
   const [listSite, setListSides] = useState<SiteType[]>([]);
@@ -100,18 +101,20 @@ export default function GetTicketForm({
   };
 
   const fetchProductBySite = async (siteCode: string) => {
-    let data: any = [];
-    if (siteCode === SITE_CODES.BANAHILL) {
-      data = await getProductBySiteSun(
-        siteCode,
-        dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
-      );
-    } else {
-      data = await getProductionInSystem(siteCode);
-    }
+    if (listSite.length) {
+      let data: any = [];
+      if (siteCode === SITE_CODES.BANAHILL) {
+        data = await getProductBySiteSun(
+          siteCode,
+          dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
+        );
+      } else {
+        data = await getProductionInSystem(siteCode);
+      }
 
-    if (data) {
-      setListProductSun(data);
+      if (data) {
+        setListProductSun(data);
+      }
     }
   };
 
@@ -157,10 +160,21 @@ export default function GetTicketForm({
         level = CUSTOMER;
       }
       if (level) fetchPriceAgentLevel(siteCode, level);
-      fetchProductBySite(siteCode);
       setQuantities({});
     }
   }, [siteCode, profile.agent_level, formType, formData.date_use]);
+
+  useEffect(() => {
+    if (siteCode) {
+      fetchProductBySite(siteCode);
+    }
+  }, [siteCode]);
+
+  useEffect(() => {
+    if (productURL && listSite.length) {
+      setSiteCode(productURL);
+    }
+  }, [productURL, listSite]);
 
   useEffect(() => {
     getSiteActive();

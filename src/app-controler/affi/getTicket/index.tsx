@@ -229,11 +229,7 @@ export default function GetTicketPageControler() {
             </>
           )}
 
-          <GetTicketForm
-            location={location}
-            onBuyTicket={handleBuyTicketAff}
-            formType={BOOKING_FORM_TYPE.AFFILATE}
-          />
+          <GetTicketForm onBuyTicket={handleBuyTicketAff} formType={BOOKING_FORM_TYPE.AFFILATE} />
         </CardContent>
       </Card>
     </div>

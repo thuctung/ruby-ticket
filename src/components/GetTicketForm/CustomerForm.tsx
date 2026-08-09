@@ -1,6 +1,6 @@
 "use client";
 
-import { Minus, Plus, Ticket } from "lucide-react";
+import { Minus, Plus, Ticket, ChevronDown } from "lucide-react";
 import {
   BookingFormProps,
   CustomerInfoSchema,
@@ -14,6 +14,7 @@ import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { CommonType } from "@/types";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { formatVND } from "@/helpers/money";
+import { useState } from "react";
 
 const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
 
@@ -49,6 +50,15 @@ export default function CustomerBookingForm({
       return false;
     }
     handleBuyTicket();
+  };
+
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const toggleExpand = (id: string) => {
+    setExpandedItems((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
   };
 
   return (
@@ -153,8 +163,62 @@ export default function CustomerBookingForm({
 
                 <div className="mt-4 space-y-3">
                   {group.ticket.map((item) => {
-                    const qty = quantities[item.id] ?? 0;
                     return (
+                      // <div
+                      //   key={item.id}
+                      //   className="flex flex-col gap-3 rounded-xl border border-gray-100 bg-[#FFFAFA] px-3 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-4"
+                      // >
+                      //   <div className="flex min-w-0 items-start gap-3">
+                      //     <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-50 text-[#C81418]">
+                      //       <Ticket className="h-4 w-4" />
+                      //     </span>
+                      //     <div className="min-w-0">
+                      //       <p className="text-xm font-semibold leading-snug text-[#2A1414] break-words">
+                      //         {item.name}
+                      //       </p>
+                      //       <span className="mt-0.5 text-xs font-medium text-[#8e8e8e] line-through">
+                      //         Giá công bố: {formatVND(item.publicPrice)}
+                      //       </span>
+                      //       <p className="mt-0.5 text-sm font-medium text-[#C81418]">
+                      //         {formatVND(getPriceAgentAndMultiple(item, formType, agentPrice))}
+                      //       </p>
+                      //       {item.multiple > 1 ? (
+                      //         <p className="text-sm text-[red] leading-snug">{`Số vé phải là bội của: ${item.multiple}`}</p>
+                      //       ) : null}
+                      //     </div>
+                      //   </div>
+
+                      //   <div className="flex shrink-0 items-center gap-1 self-end rounded-full border border-gray-200 bg-white p-1 sm:self-auto">
+                      //     <button
+                      //       onClick={() => {
+                      //         setQty(item.code, (quantities[item.code] ?? 0) - 1);
+                      //       }}
+                      //       className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 disabled:opacity-30 disabled:hover:bg-transparent"
+                      //       aria-label="Giảm số lượng"
+                      //     >
+                      //       <Minus className="h-3.5 w-3.5" />
+                      //     </button>
+                      //     <input
+                      //       type="number"
+                      //       min={0}
+                      //       max={1000}
+                      //       inputMode="numeric"
+                      //       value={quantities[item.code] ?? 0}
+                      //       onChange={(e) => {
+                      //         setQty(item.code, Number(e.target.value) || 0);
+                      //       }}
+                      //       aria-label={`Số lượng ${item.name}`}
+                      //       className="h-9 w-12 border-x border-[#DCD6C2] text-center text-sm font-semibold text-[#1C2620] outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                      //     />
+                      //     <button
+                      //       onClick={() => setQty(item.code, (quantities[item.code] ?? 0) + 1)}
+                      //       className="flex h-7 w-7 items-center justify-center rounded-full bg-[#C81418] text-white transition hover:bg-[#A61115]"
+                      //       aria-label="Tăng số lượng"
+                      //     >
+                      //       <Plus className="h-3.5 w-3.5" />
+                      //     </button>
+                      //   </div>
+                      // </div>
                       <div
                         key={item.id}
                         className="flex flex-col gap-3 rounded-xl border border-gray-100 bg-[#FFFAFA] px-3 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-4"
@@ -176,14 +240,38 @@ export default function CustomerBookingForm({
                             {item.multiple > 1 ? (
                               <p className="text-sm text-[red] leading-snug">{`Số vé phải là bội của: ${item.multiple}`}</p>
                             ) : null}
+
+                            {item.description ? (
+                              <button
+                                type="button"
+                                onClick={() => toggleExpand(item.code)}
+                                className="mt-1 flex items-center gap-1 text-xs font-medium text-[#6E7C73] transition-colors hover:text-[#C81418]"
+                              >
+                                Xem chi tiết
+                                <ChevronDown
+                                  className={`h-3 w-3 transition-transform ${
+                                    expandedItems.has(item.code) ? "rotate-180" : ""
+                                  }`}
+                                />
+                              </button>
+                            ) : null}
+
+                            {expandedItems.has(item.code) && item.description ? (
+                              <div className="mt-2 max-w-md space-y-1 text-xs leading-relaxed text-[#6E7C73]">
+                                {item.description
+                                  .split("\n")
+                                  .filter(Boolean)
+                                  .map((line, idx) => (
+                                    <p key={idx}>- {line}</p>
+                                  ))}
+                              </div>
+                            ) : null}
                           </div>
                         </div>
 
                         <div className="flex shrink-0 items-center gap-1 self-end rounded-full border border-gray-200 bg-white p-1 sm:self-auto">
                           <button
-                            onClick={() => {
-                              setQty(item.code, (quantities[item.code] ?? 0) - 1);
-                            }}
+                            onClick={() => setQty(item.code, (quantities[item.code] ?? 0) - 1)}
                             className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 disabled:opacity-30 disabled:hover:bg-transparent"
                             aria-label="Giảm số lượng"
                           >
@@ -195,9 +283,7 @@ export default function CustomerBookingForm({
                             max={1000}
                             inputMode="numeric"
                             value={quantities[item.code] ?? 0}
-                            onChange={(e) => {
-                              setQty(item.code, Number(e.target.value) || 0);
-                            }}
+                            onChange={(e) => setQty(item.code, Number(e.target.value) || 0)}
                             aria-label={`Số lượng ${item.name}`}
                             className="h-9 w-12 border-x border-[#DCD6C2] text-center text-sm font-semibold text-[#1C2620] outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                           />
