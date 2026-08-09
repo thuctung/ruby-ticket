@@ -56,7 +56,7 @@ export async function POST(req: Request) {
     status: 200,
     headers: {
       "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "Content-Disposition": `attachment; filename=sales-report-${Date.now()}.xlsx`,
+      "Content-Disposition": `attachment; filename=${full_name}.xlsx`,
     },
   });
 }

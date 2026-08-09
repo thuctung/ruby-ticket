@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
   await resend.emails.send({
     from: "Ruby Travel System<noreply@rubytraveldanang.com>",
-    to: [email, "hoatrambanve@gmail.com"],
+    to: [email, "hoatrambanve@gmail.com", "sales7@nuithantai.vn"],
     subject: `Đặt vé Núi Thần Tài - ${dateUse}`,
     html: `
       <div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
                   paymentCode
                     ? ` <tr> 
                   <td style="padding: 8px; font-weight: bold;">Mã thanh toán:</td> 
-                  <td style="padding: 8px;">${email}</td>
+                  <td style="padding: 8px;">${paymentCode}</td>
                 </tr>`
                     : ""
                 }
