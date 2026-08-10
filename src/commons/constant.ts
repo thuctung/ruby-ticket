@@ -277,3 +277,6 @@ export const SITE_CODES = {
   BANAHILL: "BNC",
   NUITHANTAI: "NUITHANTAI",
 };
+
+export const BEST_SELLER = "BEST_SELLER";
+export const ALL = "ALL";
