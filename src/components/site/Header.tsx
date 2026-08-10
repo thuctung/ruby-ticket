@@ -30,6 +30,7 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const lang = useLang();
+  console.log("pathname", pathname);
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const supabase = createSupabaseBrowserClient();
@@ -116,9 +117,14 @@ export default function Header() {
                     }
                 }}
                 href={item.link}
-                className="hover:text-blue-600 transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full"
+                className={`relative pb-1 text-[15px] font-medium transition-colors ${
+                  item.link === pathname ? "text-red-600" : "text-gray-600 hover:text-gray-900"
+                }`}
               >
                 {item.name}
+                {item.link === pathname && (
+                  <span className="absolute -bottom-[13px] left-0 right-0 h-0.5 rounded-full bg-red-600" />
+                )}
               </Link>
             ))}
           </nav>
