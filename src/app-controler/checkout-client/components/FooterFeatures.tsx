@@ -3,8 +3,8 @@ import { BadgeCheck, HeadphonesIcon, RotateCcw, ShieldCheck } from "lucide-react
 const FEATURES = [
   {
     icon: BadgeCheck,
-    title: "Giá tốt nhất",
-    desc: "Cam kết giá tốt nhất thị trường",
+    title: "Giá tốt ",
+    desc: "Giá ưu đãi so với thị trường",
   },
   {
     icon: ShieldCheck,
