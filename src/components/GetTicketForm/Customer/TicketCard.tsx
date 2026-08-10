@@ -67,7 +67,7 @@ interface Props {
 
 const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPrice }: Props) => {
   const style = CATEGORY_STYLES[ticket.personType] || {
-    badgeBg: "bg-green-50",
+    badgeBg: "bg-green-100",
     badgeText: "text-green-500",
     iconBg: "bg-green-400",
   };
@@ -95,7 +95,7 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
           return "/bana2.jpg";
       }
     } else {
-      return "";
+      return "nui-than-tai-3.webp";
     }
   };
   return (
@@ -112,7 +112,7 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
       <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/60 to-white/30" />
 
       {/* Content */}
-      <div className="relative p-5">
+      <div className="relative p-5 bg-[#ffffff9c]">
         {/* Header */}
         <div className=" flex flex-col items-start justify-between gap-3 md:flex-row md:items-center">
           <div className="min-w-0">
@@ -129,7 +129,7 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
             <div className="text-lg font-bold text-red-600 sm:text-xl">
               {formatVND(getPriceAgentAndMultiple(ticket, formType, agentPrice))}
             </div>
-            <div className="mt-0.5 text-xs font-medium text-[#8e8e8e] line-through">
+            <div className="mt-0.5 text-xs font-medium text-[#862a42] line-through">
               Giá công bố: {formatVND(ticket.publicPrice)}
             </div>
           </div>
@@ -154,7 +154,9 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
               .split("\n")
               .filter(Boolean)
               .map((line, idx) => (
-                <p key={idx}>- {line}</p>
+                <p className="text-[#f33131f0]" key={idx}>
+                  - {line}
+                </p>
               ))}
           </div>
         ) : null}

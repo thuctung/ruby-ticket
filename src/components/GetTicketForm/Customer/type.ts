@@ -17,17 +17,17 @@ export const CATEGORY_STYLES: Record<
   { badgeBg: string; badgeText: string; iconBg: string }
 > = {
   ["ADULT"]: {
-    badgeBg: "bg-blue-50",
+    badgeBg: "bg-blue-100",
     badgeText: "text-blue-600",
     iconBg: "bg-blue-500",
   },
   ["CHILD"]: {
-    badgeBg: "bg-orange-50",
+    badgeBg: "bg-orange-100",
     badgeText: "text-orange-500",
     iconBg: "bg-orange-400",
   },
   ["SENIORS"]: {
-    badgeBg: "bg-purple-50",
+    badgeBg: "bg-purple-100",
     badgeText: "text-purple-600",
     iconBg: "bg-purple-500",
   },
