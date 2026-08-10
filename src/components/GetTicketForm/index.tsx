@@ -18,12 +18,12 @@ import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { getPriceAgentAndMultiple, BOOKING_FORM_TYPE } from "./constants";
 import AffilateBookingForm from "./AffilateForm";
-import CustomerBookingForm from "./CustomerForm";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { ProfileType } from "@/types";
 import { get } from "lodash";
 import { CUSTOMER, SITE_CODES } from "@/commons/constant";
 import { useSearchParams } from "next/navigation";
+import CustomerForm from "./Customer";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
@@ -203,6 +203,6 @@ export default function GetTicketForm({
   return formType === BOOKING_FORM_TYPE.AFFILATE ? (
     <AffilateBookingForm {...commonProps} />
   ) : (
-    <CustomerBookingForm {...commonProps} />
+    <CustomerForm {...commonProps} />
   );
 }
