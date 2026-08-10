@@ -1,7 +1,6 @@
 import jsPDF from "jspdf";
-import { getFontBase64Client, getFontBold64Client } from "./ticket";
 import { SendTicketInSystemMailType } from "@/app-controler/affi/getTicket/type";
-import { getFontBase64, getFontBoldBase64, getImageBase64 } from "./ticket-server";
+import { getFontBase64, getFontBoldBase64, getImage } from "./loadFont";
 
 const MARGIN = 6;
 
@@ -27,8 +26,8 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
   pdf.setLineWidth(1);
   pdf.roundedRect(8, 8, PAGE_W - 16, PAGE_H - 16, 10, 10);
 
-  const rubyLogo = getImageBase64("/logo.png");
-  const thanTaiLogo = getImageBase64("/nuithantai/logo.webp");
+  const rubyLogo = getImage("/logo.png");
+  const thanTaiLogo = getImage("/nuithantai/logo.webp");
 
   const fontBase64 = await getFontBase64();
   const fontBold = await getFontBoldBase64();

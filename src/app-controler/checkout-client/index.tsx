@@ -269,6 +269,11 @@ export default function CheckoutControlerPage() {
       payloadFinal.referenceCode = ticketSuccess.referenceCode;
 
       const { customerTickets } = getTicketFOCAndCutomer(formatTickets);
+      downloadTicketPDF(customerTickets, []);
+      // reset data
+      setProductSelected([]);
+      setCustomerEmail("");
+      setCurrentOrderData(initOrderData);
       // SEND TICKET TO MAIL AND DOWN FILE PDF
       await senTicketToMail({
         email: customerEmail,
@@ -276,12 +281,7 @@ export default function CheckoutControlerPage() {
         focTickets: [],
         orderCode,
       });
-      downloadTicketPDF(customerTickets, []);
       toast.success(`Vé đã được gửi qua email: ${customerEmail}`);
-      // reset data
-      setProductSelected([]);
-      setCustomerEmail("");
-      setCurrentOrderData(initOrderData);
     } else {
       payloadFinal.description = ERROR_MESSAGE.SUN_WORLD_TICKET;
       toast.error("Có lỗi xảy ra, vui lòng liên hệ để được hỗ trợ");

@@ -1,7 +1,5 @@
 import { formatVND } from "@/helpers/money";
 import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
-import fs from "fs";
-import path from "path";
 
 import { jsPDF } from "jspdf";
 import QRCodePDF from "qrcode";
@@ -18,34 +16,7 @@ import {
 import { getPerSonTypeName } from "@/components/GetTicketForm/constants";
 import { get } from "lodash";
 import { SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
-
-let cachedFontBase64: string | null = null;
-
-export const getFontBase64 = () => {
-  if (cachedFontBase64) {
-    return cachedFontBase64;
-  }
-
-  const fontPath = path.join(process.cwd(), "public", "font", "Roboto-Regular.ttf");
-
-  const fontBuffer = fs.readFileSync(fontPath);
-
-  cachedFontBase64 = fontBuffer.toString("base64");
-
-  return cachedFontBase64;
-};
-
-export const getFontBoldBase64 = () => {
-  const fontPath = path.join(process.cwd(), "public", "font", "Roboto-Bold.ttf");
-
-  return fs.readFileSync(fontPath).toString("base64");
-};
-
-export function getImageBase64(fileName: string) {
-  const filePath = path.join(process.cwd(), "public", fileName);
-
-  return fs.readFileSync(filePath).toString("base64");
-}
+import { getFontBase64, getFontBoldBase64, getImage } from "./loadFont";
 
 export const downloadTicketPDFServer = async (
   tickets: TicketResultQRType[],
@@ -60,8 +31,9 @@ export const downloadTicketPDFServer = async (
 
   const finalList = [...tickets, ...focTicket];
 
-  const fontBase64 = await getFontBase64();
+  const fontBase64 = getFontBase64();
   const bold = getFontBoldBase64();
+
   pdf.addFileToVFS("Roboto-Regular.ttf", fontBase64);
   pdf.addFont("Roboto-Regular.ttf", "Roboto", "normal");
 
@@ -69,11 +41,11 @@ export const downloadTicketPDFServer = async (
   pdf.addFont("Roboto-Bold.ttf", "Roboto", "bold");
 
   // Load logos
-  const rubyLogo = getImageBase64("/logo.png");
+  const rubyLogo = getImage("/logo.png");
 
   const logo = LogoBySite[finalList[0].siteCode as keyof typeof LogoBySite] ?? LogoBySite.HLS;
 
-  const sunWorldLogo = getImageBase64(logo);
+  const sunWorldLogo = getImage(logo);
 
   // Colors dùng xuyên suốt (theo đúng mẫu thiết kế)
   const RED_BRIGHT = [200, 20, 24] as const; // dải tiêu đề / nút "Mã vé" / footer
@@ -102,8 +74,8 @@ export const downloadTicketPDFServer = async (
     pdf.roundedRect(8, 8, PAGE_W - 16, PAGE_H - 16, 10, 10);
 
     // ===== HEADER: 2 logo =====
-    pdf.addImage(`data:image/png;base64,${sunWorldLogo}`, "PNG", 18, y, 70, 22);
-    pdf.addImage(`data:image/png;base64,${rubyLogo}`, "PNG", PAGE_W - 50, y, 32, 24);
+    pdf.addImage(sunWorldLogo, "PNG", 18, y, 70, 22);
+    pdf.addImage(rubyLogo, "PNG", PAGE_W - 50, y, 32, 24);
 
     y += 24;
 
