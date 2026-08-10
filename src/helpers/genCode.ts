@@ -1,5 +1,5 @@
-import { TYPE_TRANSFER } from "@/commons/constant";
-import { ProductBanaType, ResultListProductType } from "@/types/ticket";
+import { BEST_SELLER, TYPE_TRANSFER } from "@/commons/constant";
+import { ResultListProductType } from "@/types/ticket";
 import { customAlphabet } from "nanoid";
 
 const key: string = process.env.NEXT_PUBLIC_GEN_CODE_TOPUP || "";
@@ -73,7 +73,7 @@ export const groupTicketSunGroup = (tickets: any[]) => {
       return aIndex - bIndex;
     });
   if (nearlyTicket.length) {
-    return [{ personType: "BEST_SELLER", ticket: nearlyTicket }, ...grouped];
+    return [{ personType: BEST_SELLER, ticket: nearlyTicket }, ...grouped];
   }
   return grouped;
 };

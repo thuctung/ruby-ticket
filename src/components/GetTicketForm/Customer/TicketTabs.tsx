@@ -1,5 +1,6 @@
 import { Baby, PersonStanding, Ticket, Users } from "lucide-react";
 import { PRODUCT_TYPE } from "../constants";
+import { BEST_SELLER } from "@/commons/constant";
 
 const ICONS = {
   ["ADULT"]: Users,
@@ -23,11 +24,13 @@ export default function TicketTabs({ active, onChange, listType }: Props) {
     },
   ];
   listType.forEach((item) => {
-    listTab.push({
-      key: item,
-      label: PRODUCT_TYPE[item as keyof typeof PRODUCT_TYPE] || item,
-      icon: ICONS[item as keyof typeof ICONS] || Ticket,
-    });
+    if (item !== "ALL" && item !== BEST_SELLER) {
+      listTab.push({
+        key: item,
+        label: PRODUCT_TYPE[item as keyof typeof PRODUCT_TYPE] || item,
+        icon: ICONS[item as keyof typeof ICONS] || Ticket,
+      });
+    }
   });
 
   return (
