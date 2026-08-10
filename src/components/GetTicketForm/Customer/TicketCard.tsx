@@ -114,7 +114,7 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
       {/* Content */}
       <div className="relative p-5">
         {/* Header */}
-        <div className="flex items-start justify-between gap-4">
+        <div className=" flex flex-col items-start justify-between gap-3 md:flex-row md:items-center">
           <div className="min-w-0">
             <h3 className="text-lg font-bold leading-tight text-gray-900">{ticket.name}</h3>
 
@@ -129,7 +129,7 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
             <div className="text-lg font-bold text-red-600 sm:text-xl">
               {formatVND(getPriceAgentAndMultiple(ticket, formType, agentPrice))}
             </div>
-            <div className="mt-0.5 text-xs font-medium text-[#0710018c] line-through">
+            <div className="mt-0.5 text-xs font-medium text-[#8e8e8e] line-through">
               Giá công bố: {formatVND(ticket.publicPrice)}
             </div>
           </div>
