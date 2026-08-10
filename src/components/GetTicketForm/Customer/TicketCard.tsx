@@ -36,6 +36,7 @@ import {
   Sparkles,
   ChevronDown,
 } from "lucide-react";
+import Image from "next/image";
 
 const ftBaNA = ["Vườn hoa", "Cáp treo khứ hồi", "Vòng quay", "Biểu diễn"];
 const ftNTT = ["Vào cổng", "Tham quan", "Đền thờ", "Trượt ván"];
@@ -81,23 +82,54 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
 
   const featues = ticket?.site?.code === "BNC" ? ftBaNA : ftNTT;
 
+  const getBgImg = (personType: string, siteCode: string) => {
+    if (siteCode === "BNC") {
+      switch (personType) {
+        case "ADULT":
+          return "/ba-na-lon.jpg";
+        case "SENIOR":
+          return "/ba-na-gia.jpg";
+        case "CHILD":
+          return "/ba-na-nho.jpg";
+        default:
+          return "/bana2.jpg";
+      }
+    } else {
+      return "";
+    }
+  };
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-gray-100 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_60%,#eff6ff_100%)] p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 sm:flex-row">
-      <div className="flex flex-1 flex-col">
-        <div className="flex flex-col items-start justify-between gap-3 md:flex-row md:items-center">
-          <div>
-            <h3 className="text-lg font-bold text-gray-900">{ticket.name}</h3>
+    <div className="relative overflow-hidden rounded-2xl border border-white/60 shadow-sm">
+      {/* Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${getBgImg(ticket.personType, ticket?.site?.code)})`,
+        }}
+      />
+
+      {/* Overlay giúp text rõ hơn */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/60 to-white/30" />
+
+      {/* Content */}
+      <div className="relative p-5">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <h3 className="text-lg font-bold leading-tight text-gray-900">{ticket.name}</h3>
+
             <span
               className={`mt-1.5 inline-block rounded-md px-2.5 py-1 text-xs font-semibold ${style.badgeBg} ${style.badgeText}`}
             >
               {PRODUCT_TYPE[ticket.personType as keyof typeof PRODUCT_TYPE] || ticket.personType}
             </span>
           </div>
+
           <div className="shrink-0 text-right flex flex-col-reverse items-start md:flex-col md:items-end">
             <div className="text-lg font-bold text-red-600 sm:text-xl">
               {formatVND(getPriceAgentAndMultiple(ticket, formType, agentPrice))}
             </div>
-            <div className="mt-0.5 text-xs font-medium text-[#8e8e8e] line-through">
+            <div className="mt-0.5 text-xs font-medium text-[#0710018c] line-through">
               Giá công bố: {formatVND(ticket.publicPrice)}
             </div>
           </div>
@@ -126,35 +158,44 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
               ))}
           </div>
         ) : null}
-
-        <div className="mt-4 flex items-center justify-between">
-          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5">
+        {/* Bottom */}
+        <div className="mt-5 flex items-center justify-between gap-4">
+          {/* Features */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             {featues.map((feature) => {
               const Icon = FEATURE_ICON_BANA[feature] ?? Compass;
+
               return (
-                <span key={feature} className="flex items-center gap-1.5 text-xs text-gray-500">
-                  <Icon size={14} className="text-green-500" />
+                <span
+                  key={feature}
+                  className="flex items-center gap-1.5 text-xs font-medium text-gray-600"
+                >
+                  <Icon size={14} strokeWidth={2} className="text-emerald-500" />
                   {feature}
                 </span>
               );
             })}
           </div>
-          <div className="flex items-center gap-3 rounded-full border border-gray-200 px-2 py-1.5">
+
+          {/* Quantity */}
+          <div className="flex shrink-0 items-center gap-2 rounded-full border border-white/80 bg-white/80 px-2 py-1.5 shadow-sm backdrop-blur-md">
             <button
               aria-label="Giảm số lượng"
               onClick={() => setQty(ticket.code, (quantities ?? 0) - 1)}
-              className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 disabled:opacity-30"
               disabled={quantities === 0}
+              className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 disabled:opacity-30"
             >
               <Minus size={14} />
             </button>
-            <span className="w-4 text-center text-sm font-semibold text-gray-900">
+
+            <span className="w-5 text-center text-sm font-bold text-gray-900">
               {quantities ?? 0}
             </span>
+
             <button
               aria-label="Tăng số lượng"
               onClick={() => setQty(ticket.code, (quantities ?? 0) + 1)}
-              className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100"
+              className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
             >
               <Plus size={14} />
             </button>

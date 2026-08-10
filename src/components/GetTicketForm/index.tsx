@@ -53,6 +53,8 @@ export default function GetTicketForm({
   const [siteCode, setSiteCode] = useState("");
   const [exportGuideTicket, setExportGuideTicket] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const [listProduct, setListProductSun] = useState<ResultListProductType[]>([]);
 
   const [agentPrice, setAgentPrice] = useState(0);
@@ -117,11 +119,20 @@ export default function GetTicketForm({
 
       if (data) {
         setListProductSun(data);
+      } else {
+        setListProductSun([]);
       }
     }
   };
 
+  const onCloseLoading = (result: boolean) => {
+    if (result) {
+      setQuantities({});
+    }
+    setLoading(false);
+  };
   const handleBuyTicket = () => {
+    setLoading(true);
     const products: ProductSubmitType[] = selectedLines.map((item) => {
       const priceSell = getPriceAgentAndMultiple(item, formType, agentPrice);
 
@@ -151,6 +162,7 @@ export default function GetTicketForm({
       formData: formData,
       haveFOC: exportGuideTicket,
       in_system,
+      callback: onCloseLoading,
     });
   };
 
@@ -165,13 +177,13 @@ export default function GetTicketForm({
       if (level) fetchPriceAgentLevel(siteCode, level);
       setQuantities({});
     }
-  }, [siteCode, profile.agent_level, formType, formData.date_use]);
+  }, [siteCode, profile.agent_level, formType]);
 
   useEffect(() => {
     if (siteCode) {
       fetchProductBySite(siteCode);
     }
-  }, [siteCode]);
+  }, [siteCode, formData.date_use]);
 
   useEffect(() => {
     if (productURL && listSite.length) {
@@ -196,6 +208,7 @@ export default function GetTicketForm({
     sideName,
     selectedLines,
     exportGuideTicket,
+    loading,
     setExportGuideTicket,
     handleBuyTicket,
     setFieldFormData,

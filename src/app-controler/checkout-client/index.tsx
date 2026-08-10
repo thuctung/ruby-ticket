@@ -109,11 +109,14 @@ export default function CheckoutControlerPage() {
       message: "Thông tin mua vé đã đúng, xác nhận mua vé?",
       okFunc: async () => handleBuyTicket(values),
       textOk: "Mua",
+      onCancle: () => {
+        if (values.callback) values.callback(false);
+      },
     });
   };
 
   const handleBuyTicket = async (values: SubmitSelectTicket) => {
-    const { formData, totalMoney, siteCode, products, date_use, in_system } = values;
+    const { formData, totalMoney, siteCode, products, date_use, in_system, callback } = values;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
     const thirdPartyNum = generateThirdPartyCode(in_system);
     const { email, phone, fullname }: any = formData;
@@ -180,6 +183,7 @@ export default function CheckoutControlerPage() {
         timeCancelOrderRef.current = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
       }
     }
+    if (callback) callback();
   };
 
   const sendMailTicketInSystem = async (

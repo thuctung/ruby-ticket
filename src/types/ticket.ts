@@ -189,6 +189,7 @@ export type SubmitSelectTicket = {
   verifyCode?: string;
   haveFOC: boolean;
   in_system: boolean;
+  callback?: Function;
 };
 
 export type TicketInItemType = {

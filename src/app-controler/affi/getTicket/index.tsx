@@ -77,9 +77,9 @@ export default function GetTicketPageControler() {
     thirdPartyNumber: string,
     values: SubmitSelectTicket
   ) => {
-    if (order_id) {
-      const { products, totalMoney, date_use, haveFOC } = values;
+    const { products, totalMoney, date_use, haveFOC, callback } = values;
 
+    if (order_id) {
       const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(
         products,
         thirdPartyNumber,
@@ -109,7 +109,6 @@ export default function GetTicketPageControler() {
         });
 
         const { focTickets, customerTickets } = getTicketFOCAndCutomer(addPublicPrice);
-
         await downloadTicketPDF(customerTickets, haveFOC ? focTickets : []);
 
         updateBalaceProfile(totalMoney);
@@ -128,10 +127,14 @@ export default function GetTicketPageControler() {
           focTickets: haveFOC ? focTickets : [],
           orderCode: tickets.orderCode,
         });
+        if (callback) callback(true);
       } else {
         updateStatusOrderFail(order_id, ERROR_MESSAGE.SUN_WORLD_TICKET);
         setToastMessage("Không tạo được vé!");
+        if (callback) callback(false);
       }
+    } else {
+      if (callback) callback(false);
     }
   };
 
@@ -140,7 +143,8 @@ export default function GetTicketPageControler() {
     products: ProductSubmitType[],
     thirdPartyNumber: string,
     dateUse: string,
-    totalMoney: number
+    totalMoney: number,
+    callback?: Function
   ) => {
     if (profile.email && profile.phone) {
       const payload: SendTicketInSystemMailType = {
@@ -164,8 +168,10 @@ export default function GetTicketPageControler() {
         };
         updateOrderAndBalaceInSystem(payloadUpdate);
         toast.success("Đặt vé thành công");
+        if (callback) callback(true);
       } else {
         updateStatusOrderFail(order_id, ERROR_MESSAGE.ERROR_SYSTEM_CREATE_TICKET);
+        if (callback) callback(false);
       }
     }
   };
@@ -174,8 +180,7 @@ export default function GetTicketPageControler() {
     const validByTicket = await handleValidBeforeByTicket(values);
 
     if (validByTicket) {
-      const { products, totalMoney, date_use, siteCode, in_system } = values;
-
+      const { products, totalMoney, date_use, siteCode, in_system, callback } = values;
       const items: TicketSubmitAgentType[] = products.map((item) => ({
         quantity: item.quantity,
         price: Number(item.unitPrice),
@@ -200,7 +205,14 @@ export default function GetTicketPageControler() {
       if (in_system) {
         if (siteCode === "NUITHANTAI") {
           // TODO
-          handleBuyTicketInSystem(order_id, products, thirdPartyNumber, date_use, totalMoney);
+          handleBuyTicketInSystem(
+            order_id,
+            products,
+            thirdPartyNumber,
+            date_use,
+            totalMoney,
+            callback
+          );
         } else {
           setToastMessage("Chưa mở bán ở địa điểm này!");
         }

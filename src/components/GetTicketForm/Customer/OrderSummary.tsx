@@ -23,15 +23,16 @@ const PERKS = [
 
 type OrderSummaryProps = {
   selectedLines: any;
-  onRemove: (id: string) => void;
   sideName: string;
   dateUse: string;
   totalTickets: number;
   formType: string;
   agentPrice: number;
   total: number;
-  onBuyTicket: () => void;
   quantities: any;
+  loading: boolean;
+  onBuyTicket: () => void;
+  onRemove: (id: string) => void;
 };
 
 export default function OrderSummary({
@@ -43,6 +44,7 @@ export default function OrderSummary({
   formType,
   totalTickets,
   agentPrice,
+  loading,
   onRemove,
   onBuyTicket,
 }: OrderSummaryProps) {
@@ -97,12 +99,12 @@ export default function OrderSummary({
       </div>
 
       <button
-        disabled={totalTickets === 0}
+        disabled={totalTickets === 0 || loading}
         onClick={onBuyTicket}
         className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-300"
       >
         <Hourglass size={18} />
-        Đặt vé ngay
+        {loading ? "Đang tạo..." : "Đặt vé ngay"}
       </button>
 
       <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-gray-400">

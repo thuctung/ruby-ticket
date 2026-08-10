@@ -8,12 +8,10 @@ export const BOOKING_FORM_TYPE = {
 
 export type BookingFormProps = {
   siteCode: string;
-  setSiteCode: (value: string) => void;
+  loading: boolean;
   listSite: SiteType[];
   formData: any;
-  setFieldFormData: (key: string, value: any) => void;
   listProduct: ResultListProductType[];
-  setQty: (code: string, value: number) => void;
   quantities: Record<string, number>;
   totalTickets: number;
   total: number;
@@ -21,8 +19,12 @@ export type BookingFormProps = {
   selectedLines: any[];
   agentPrice: number;
   formType: string;
-  handleBuyTicket: () => void;
   exportGuideTicket?: boolean;
+
+  setFieldFormData: (key: string, value: any, needCallData?: boolean) => void;
+  setSiteCode: (value: string) => void;
+  setQty: (code: string, value: number) => void;
+  handleBuyTicket: () => void;
   setExportGuideTicket?: (value: boolean) => void;
 };
 

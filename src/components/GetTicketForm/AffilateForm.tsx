@@ -27,21 +27,22 @@ const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
 
 export default function AffilateBookingForm({
   siteCode,
-  setSiteCode,
   listSite,
-  setFieldFormData,
   formData,
   listProduct,
-  setQty,
   quantities,
   totalTickets,
   selectedLines,
   total,
   sideName,
   exportGuideTicket,
-  setExportGuideTicket,
   agentPrice,
   formType,
+  loading,
+  setExportGuideTicket,
+  setFieldFormData,
+  setSiteCode,
+  setQty,
   handleBuyTicket,
 }: BookingFormProps) {
   return (
@@ -86,7 +87,7 @@ export default function AffilateBookingForm({
                 <Field label="Ngày đi">
                   <DatePickerCustom
                     value={formData.date_use}
-                    onChange={(val: any) => setFieldFormData("date_use", val)}
+                    onChange={(val: any) => setFieldFormData("date_use", val, true)}
                     minDate={toDate}
                     name="date_use"
                     id="date_use"
@@ -259,11 +260,12 @@ export default function AffilateBookingForm({
 
                 <button
                   type="button"
-                  disabled={totalTickets === 0}
+                  disabled={totalTickets === 0 || loading}
                   className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#1F3A2F] py-3.5 text-sm font-semibold text-white transition hover:bg-[#183024] disabled:cursor-not-allowed disabled:bg-[#B7C2BB]"
                   onClick={handleBuyTicket}
                 >
-                  <TicketIcon /> Xuất vé
+                  <TicketIcon />
+                  {loading ? "Đang tạo..." : "Xuất vé"}
                 </button>
               </div>
             </div>

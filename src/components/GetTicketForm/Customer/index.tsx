@@ -14,12 +14,9 @@ import { ProductBanaType } from "@/types/ticket";
 
 export default function CustomerForm({
   siteCode,
-  setSiteCode,
   listSite,
-  setFieldFormData,
   formData,
   listProduct,
-  setQty,
   quantities,
   totalTickets,
   total,
@@ -27,6 +24,10 @@ export default function CustomerForm({
   selectedLines,
   agentPrice,
   formType,
+  loading,
+  setQty,
+  setFieldFormData,
+  setSiteCode,
   handleBuyTicket,
 }: BookingFormProps) {
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
@@ -117,6 +118,7 @@ export default function CustomerForm({
               agentPrice={agentPrice}
               total={total}
               onBuyTicket={onBuyTicket}
+              loading={loading}
             />
           </div>
         </main>
