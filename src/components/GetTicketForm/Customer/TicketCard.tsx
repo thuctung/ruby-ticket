@@ -1,7 +1,7 @@
 import { CATEGORY_STYLES, Ticket } from "./type";
 import { formatVND } from "@/helpers/money";
 import { ProductBanaType } from "@/types/ticket";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getPriceAgentAndMultiple, PRODUCT_TYPE } from "../constants";
 
 import {
@@ -58,19 +58,18 @@ const FEATURE_ICON_BANA: Record<string, React.ElementType> = {
 
 interface Props {
   ticket: ProductBanaType;
-  quantities: any;
+  quantities: number;
   agentPrice: number;
   formType: string;
   setQty: (code: string, next: number) => void;
 }
 
-export default function TicketCard({ ticket, setQty, quantities, formType, agentPrice }: Props) {
+const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPrice }: Props) => {
   const style = CATEGORY_STYLES[ticket.personType] || {
     badgeBg: "bg-green-50",
     badgeText: "text-green-500",
     iconBg: "bg-green-400",
   };
-
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const toggleExpand = (id: string) => {
     setExpandedItems((prev) => {
@@ -143,18 +142,18 @@ export default function TicketCard({ ticket, setQty, quantities, formType, agent
           <div className="flex items-center gap-3 rounded-full border border-gray-200 px-2 py-1.5">
             <button
               aria-label="Giảm số lượng"
-              onClick={() => setQty(ticket.code, (quantities[ticket.code] ?? 0) - 1)}
+              onClick={() => setQty(ticket.code, (quantities ?? 0) - 1)}
               className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 disabled:opacity-30"
-              disabled={quantities[ticket.code] === 0}
+              disabled={quantities === 0}
             >
               <Minus size={14} />
             </button>
             <span className="w-4 text-center text-sm font-semibold text-gray-900">
-              {quantities[ticket.code] ?? 0}
+              {quantities ?? 0}
             </span>
             <button
               aria-label="Tăng số lượng"
-              onClick={() => setQty(ticket.code, (quantities[ticket.code] ?? 0) + 1)}
+              onClick={() => setQty(ticket.code, (quantities ?? 0) + 1)}
               className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100"
             >
               <Plus size={14} />
@@ -164,4 +163,5 @@ export default function TicketCard({ ticket, setQty, quantities, formType, agent
       </div>
     </div>
   );
-}
+});
+export default TicketCard;

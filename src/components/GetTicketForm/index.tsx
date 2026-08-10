@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   getPriceBuyAgentLevel,
   getProductBySiteSun,
@@ -79,9 +79,12 @@ export default function GetTicketForm({
     return sum + price * (quantities[t.code] ?? 0);
   }, 0);
 
-  const setQty = (key: string, next: number) => {
-    setQuantities((q) => ({ ...q, [key]: next }));
-  };
+  const setQty = useCallback(
+    (key: string, next: number) => {
+      setQuantities((q) => ({ ...q, [key]: next }));
+    },
+    [setQuantities]
+  );
 
   const setFieldFormData = (key: string, val: any, needCalPrice = false) => {
     setFormData((p: any) => ({ ...p, [key]: val }));

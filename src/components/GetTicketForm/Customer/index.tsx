@@ -87,7 +87,7 @@ export default function CustomerForm({
                   <TicketCard
                     key={ticket.code}
                     ticket={ticket}
-                    quantities={quantities}
+                    quantities={quantities[ticket.code]}
                     formType={formType}
                     agentPrice={agentPrice}
                     setQty={setQty}
@@ -111,7 +111,7 @@ export default function CustomerForm({
               dateUse={formData.date_use}
               selectedLines={selectedLines}
               quantities={quantities}
-              onRemove={() => console.log("")}
+              onRemove={(code) => setQty(code, 0)}
               totalTickets={totalTickets}
               formType={formType}
               agentPrice={agentPrice}
