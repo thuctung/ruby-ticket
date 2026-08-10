@@ -184,7 +184,7 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
             <button
               aria-label="Giảm số lượng"
               onClick={() => setQty(ticket.code, (quantities ?? 0) - 1)}
-              disabled={quantities === 0}
+              disabled={!quantities}
               className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 disabled:opacity-30"
             >
               <Minus size={14} />
