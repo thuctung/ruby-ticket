@@ -2,6 +2,7 @@ import { Hourglass, RefreshCw, ShieldCheck, Ticket as TicketIcon, X } from "luci
 import { CATEGORY_STYLES, Ticket } from "./type";
 import { formatVND } from "@/helpers/money";
 import { getPriceAgentAndMultiple } from "../constants";
+import { useState } from "react";
 
 const PERKS = [
   {
@@ -48,8 +49,10 @@ export default function OrderSummary({
   onRemove,
   onBuyTicket,
 }: OrderSummaryProps) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <aside className="sticky top-20 h-fit rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+    <aside className="sticky h-fit rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
       <h3 className="text-lg font-bold text-gray-900">Thông tin đơn hàng</h3>
       <div className="mt-4 space-y-2.5 text-sm">
         <div className="flex items-center justify-between">

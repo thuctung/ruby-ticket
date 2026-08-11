@@ -12,6 +12,7 @@ import TicketCard from "./TicketCard";
 import TicketTabs from "./TicketTabs";
 import { ProductBanaType } from "@/types/ticket";
 import { geNoteSiteCode } from "./constants";
+import OrderAffSummary from "../Affilate/Summary";
 
 export default function CustomerForm({
   siteCode,
@@ -26,6 +27,8 @@ export default function CustomerForm({
   agentPrice,
   formType,
   loading,
+  exportGuideTicket,
+  setExportGuideTicket,
   setQty,
   setFieldFormData,
   setSiteCode,
@@ -110,7 +113,7 @@ export default function CustomerForm({
               </div>
             </div>
 
-            <OrderSummary
+            <OrderAffSummary
               siteName={siteName}
               dateUse={formData.date_use}
               selectedLines={selectedLines}
@@ -120,8 +123,11 @@ export default function CustomerForm({
               formType={formType}
               agentPrice={agentPrice}
               total={total}
-              onBuyTicket={onBuyTicket}
+              onBuyTicket={handleBuyTicket}
               loading={loading}
+              exportGuideTicket={exportGuideTicket}
+              setExportGuideTicket={setExportGuideTicket}
+              setQty={setQty}
             />
           </div>
         </main>
