@@ -10,6 +10,8 @@ export type SendTicketInSystemMailType = {
   listTicket: TicketInSystem[];
   email: string;
   paymentCode?: string;
+  siteName?: string;
+  fullName?: string;
 };
 
 export type PayloadUdateOrderBalanceType = {

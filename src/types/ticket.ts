@@ -160,6 +160,7 @@ export type ProductBanaType = {
   performances: PerformancesType[];
   multiple: number;
   site: SiteType;
+  site_code: string;
   openTime: string;
   description?: string;
 };
@@ -189,6 +190,7 @@ export type SubmitSelectTicket = {
   verifyCode?: string;
   haveFOC: boolean;
   in_system: boolean;
+  siteName: string;
   callback?: Function;
 };
 

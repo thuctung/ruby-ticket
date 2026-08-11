@@ -53,6 +53,8 @@ export const CLIENT_UPDATE_STATUS_ORDER_ERROR = "/api/public/update-status-order
 
 export const CLIENT_SEND_TICET_TO_MAIL = "/api/public/send-ticket-mail";
 
+export const SEND_MAIL_TICKET_IN_SYSTEM = "/api/public/send-mail-ticket-in-system";
+
 export const GET_ORDER_HISTORY = "/api/auth/affiliate/stats/order-history";
 
 export const GET_ORDER_DETAIL = "/api/auth/affiliate/stats/order-detail";

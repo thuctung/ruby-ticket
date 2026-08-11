@@ -15,7 +15,7 @@ export type BookingFormProps = {
   quantities: Record<string, number>;
   totalTickets: number;
   total: number;
-  sideName: string;
+  siteName: string;
   selectedLines: any[];
   agentPrice: number;
   formType: string;

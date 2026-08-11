@@ -6,6 +6,7 @@ import {
   customerCreateOrder,
   customerCreateOrderTicket,
   getTicketSunWorld,
+  senMailOrderProductInSystem,
   senTicketToMail,
   updateStatusGetTicketFinal,
   updateStatusOrder,
@@ -116,7 +117,8 @@ export default function CheckoutControlerPage() {
   };
 
   const handleBuyTicket = async (values: SubmitSelectTicket) => {
-    const { formData, totalMoney, siteCode, products, date_use, in_system, callback } = values;
+    const { formData, totalMoney, siteCode, products, date_use, in_system, siteName, callback } =
+      values;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
     const thirdPartyNum = generateThirdPartyCode(in_system);
     const { email, phone, fullname }: any = formData;
@@ -177,7 +179,9 @@ export default function CheckoutControlerPage() {
           thirdPartyNum,
           in_system,
           paymentCode,
+          siteName,
         });
+        if (callback) callback(true);
 
         // CANCLE ORDER TIMEOUT :
         timeCancelOrderRef.current = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
@@ -186,23 +190,27 @@ export default function CheckoutControlerPage() {
     if (callback) callback();
   };
 
-  const sendMailTicketInSystem = async (
-    orderId: string,
-    products: ProductSubmitType[],
-    thirdPartyNumber: string,
-    dateUse: string,
-    formData: any,
-    paymentCode: string
-  ) => {
+  const sendMailTicketInSystem = async () => {
+    const { siteCode, orderId, dateUse, formData, thirdPartyNum, siteName, products, paymentCode } =
+      currentOrderData;
     const payload: SendTicketInSystemMailType = {
-      orderCode: thirdPartyNumber,
+      orderCode: thirdPartyNum,
       dateUse,
       email: formData.email,
       phone: formData.phone,
+      fullName: formData.fullname,
       paymentCode,
-      listTicket: products.map((item) => ({ name: item.productsName, quantity: item.quantity })),
+      siteName,
+      listTicket: products.map((item: ProductSubmitType) => ({
+        name: item.productsName,
+        quantity: item.quantity,
+      })),
     };
-    const data = await createTemplateTicketThanTaiMountain(payload);
+
+    const senTicket =
+      siteCode === "NUITHANTAI" ? createTemplateTicketThanTaiMountain : senMailOrderProductInSystem;
+
+    const data = await senTicket(payload);
 
     const payloadUpdate = {
       orderId: orderId,
@@ -214,6 +222,7 @@ export default function CheckoutControlerPage() {
       payloadUpdate.status = KEY_MODIFY_DATA.SUCCESS;
       payloadUpdate.description = "";
       toast.success("Đặt vé thành công");
+      setCurrentOrderData(initOrderData);
     } else {
       toast.error("Có lỗi xảy ra, liên hệ để được hỗ trợ");
     }
@@ -227,18 +236,10 @@ export default function CheckoutControlerPage() {
       timeCancelOrderRef.current = null;
     }
 
-    const {
-      orderCode,
-      orderId,
-      dateUse,
-      in_system,
-      thirdPartyNum,
-      formData,
-      products,
-      paymentCode,
-    } = currentOrderData;
+    const { orderCode, orderId, dateUse, in_system } = currentOrderData;
+
     if (in_system) {
-      sendMailTicketInSystem(orderId, products, thirdPartyNum, dateUse, formData, paymentCode);
+      sendMailTicketInSystem();
       return;
     }
 

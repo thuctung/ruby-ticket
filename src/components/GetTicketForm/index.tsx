@@ -61,11 +61,10 @@ export default function GetTicketForm({
 
   const [formData, setFormData] = useState<any>(initFormValues);
 
-  const sideName = useMemo(() => {
+  const currentSite: SiteType | undefined = useMemo(() => {
     if (listSite.length && siteCode) {
-      return listSite.find((item) => item.code === siteCode)?.name || "";
+      return listSite.find((item) => item.code === siteCode);
     }
-    return "";
   }, [listSite, siteCode]);
 
   const selectedLines = useMemo(() => {
@@ -106,9 +105,9 @@ export default function GetTicketForm({
   };
 
   const fetchProductBySite = async (siteCode: string) => {
-    if (listSite.length) {
+    if (currentSite) {
       let data: any = [];
-      if (siteCode === SITE_CODES.BANAHILL) {
+      if (!currentSite.in_system) {
         data = await getProductBySiteSun(
           siteCode,
           dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
@@ -162,6 +161,7 @@ export default function GetTicketForm({
       formData: formData,
       haveFOC: exportGuideTicket,
       in_system,
+      siteName: currentSite?.name || "",
       callback: onCloseLoading,
     });
   };
@@ -205,7 +205,7 @@ export default function GetTicketForm({
     quantities,
     totalTickets,
     total,
-    sideName,
+    siteName: currentSite?.name || "",
     selectedLines,
     exportGuideTicket,
     loading,

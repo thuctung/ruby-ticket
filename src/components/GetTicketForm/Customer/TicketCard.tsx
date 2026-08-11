@@ -1,61 +1,11 @@
-import { CATEGORY_STYLES, Ticket } from "./type";
+import { CATEGORY_STYLES } from "./type";
 import { formatVND } from "@/helpers/money";
 import { ProductBanaType } from "@/types/ticket";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getPriceAgentAndMultiple, PRODUCT_TYPE } from "../constants";
 
-import {
-  CircleUser,
-  Minus,
-  Plus,
-  DoorOpen,
-  CableCar,
-  Compass,
-  UtensilsCrossed,
-  Landmark,
-  Waves,
-  Snowflake,
-  CloudSun,
-  FerrisWheel,
-  Flower2,
-  Camera,
-  TreePine,
-  Music,
-  Gamepad2,
-  Bike,
-  Sunrise,
-  Moon,
-  Coffee,
-  Gift,
-  ParkingCircle,
-  Bus,
-  Users,
-  Baby,
-  Tent,
-  MapPin,
-  Sparkles,
-  ChevronDown,
-} from "lucide-react";
-import Image from "next/image";
-
-const ftBaNA = ["Vườn hoa", "Cáp treo khứ hồi", "Vòng quay", "Biểu diễn"];
-const ftNTT = ["Vào cổng", "Tham quan", "Đền thờ", "Trượt ván"];
-
-const FEATURE_ICON_BANA: Record<string, React.ElementType> = {
-  "Vào cổng": DoorOpen,
-  "Cáp treo khứ hồi": CableCar,
-  "Tham quan": Compass,
-  "Trượt tuyết": Snowflake,
-  "Săn mây": CloudSun,
-  "Vòng quay": FerrisWheel,
-  "Vườn hoa": Flower2,
-  "Biểu diễn": Music,
-  "Trải nghiệm đặc biệt": Sparkles,
-  "Đền thờ": Landmark,
-  "Tắm khoáng": Waves,
-  "Trượt ván": Bike,
-  "Rừng thông": TreePine,
-};
+import { featues, FEATURE_ICON_BANA, getBgImg } from "./constants";
+import { ChevronDown, Compass, Minus, Plus } from "lucide-react";
 
 interface Props {
   ticket: ProductBanaType;
@@ -79,41 +29,22 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
       return next;
     });
   };
+  const bgImage = getBgImg(ticket.personType, ticket?.site_code);
 
-  const featues = ticket?.site?.code === "BNC" ? ftBaNA : ftNTT;
-
-  const getBgImg = (personType: string, siteCode: string) => {
-    if (siteCode === "BNC") {
-      switch (personType) {
-        case "ADULT":
-          return "/ba-na-lon.jpg";
-        case "SENIOR":
-          return "/ba-na-gia.jpg";
-        case "CHILD":
-          return "/ba-na-nho.jpg";
-        default:
-          return "/bana2.jpg";
-      }
-    } else {
-      return "nui-than-tai-3.webp";
-    }
-  };
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/60 shadow-sm">
-      {/* Background */}
+    <div
+      className={` relative overflow-hidden rounded-2xl border hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 sm:flex-row ${bgImage ? "border-white/60 shadow-sm" : " border-gray-100 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_60%,#eff6ff_100%)] p-5 shadow-sm "}  `}
+    >
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `url(${getBgImg(ticket.personType, ticket?.site?.code)})`,
+          backgroundImage: `url(${bgImage})`,
         }}
       />
 
-      {/* Overlay giúp text rõ hơn */}
       <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/60 to-white/30" />
 
-      {/* Content */}
-      <div className="relative p-5 bg-[#ffffff9c]">
-        {/* Header */}
+      <div className={`relative p-5  ${bgImage ? "bg-[#ffffff9c]" : ""}`}>
         <div className=" flex flex-col items-start justify-between gap-3 md:flex-row md:items-center">
           <div className="min-w-0">
             <h3 className="text-lg font-bold leading-tight text-gray-900">{ticket.name}</h3>
@@ -162,11 +93,9 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
         ) : null}
         {/* Bottom */}
         <div className="mt-5 flex items-center justify-between gap-4">
-          {/* Features */}
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            {featues.map((feature) => {
+            {featues(ticket?.site?.code).map((feature) => {
               const Icon = FEATURE_ICON_BANA[feature] ?? Compass;
-
               return (
                 <span
                   key={feature}

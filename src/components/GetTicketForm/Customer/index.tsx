@@ -11,6 +11,7 @@ import OrderSummary from "./OrderSummary";
 import TicketCard from "./TicketCard";
 import TicketTabs from "./TicketTabs";
 import { ProductBanaType } from "@/types/ticket";
+import { geNoteSiteCode } from "./constants";
 
 export default function CustomerForm({
   siteCode,
@@ -20,7 +21,7 @@ export default function CustomerForm({
   quantities,
   totalTickets,
   total,
-  sideName,
+  siteName,
   selectedLines,
   agentPrice,
   formType,
@@ -84,6 +85,15 @@ export default function CustomerForm({
               </div>
 
               <div className="mt-5 flex flex-col gap-4">
+                <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3.5 text-sm text-amber-700">
+                  <AlertCircle size={18} className="mt-0.5 shrink-0" />
+                  <div>
+                    <p className="font-medium">{geNoteSiteCode(siteCode)}</p>
+                    <p className="mt-0.5 text-amber-600/90">
+                      Vui lòng mang theo giấy tờ tuỳ thân để được kiểm tra khi cần thiết.
+                    </p>
+                  </div>
+                </div>
                 {listTicketFilter.map((ticket) => (
                   <TicketCard
                     key={ticket.code}
@@ -95,20 +105,10 @@ export default function CustomerForm({
                   />
                 ))}
               </div>
-
-              <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3.5 text-sm text-amber-700">
-                <AlertCircle size={18} className="mt-0.5 shrink-0" />
-                <div>
-                  <p className="font-medium">Trẻ em dưới 1m: Miễn phí vé (đi kèm người lớn)</p>
-                  <p className="mt-0.5 text-amber-600/90">
-                    Vui lòng mang theo giấy tờ tuỳ thân để được kiểm tra khi cần thiết.
-                  </p>
-                </div>
-              </div>
             </div>
 
             <OrderSummary
-              sideName={sideName}
+              siteName={siteName}
               dateUse={formData.date_use}
               selectedLines={selectedLines}
               quantities={quantities}

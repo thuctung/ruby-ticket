@@ -22,7 +22,6 @@ export const getSiteByFormType = async (formType: string) => {
   try {
     setGlobalLoading(true);
     const { data } = await api.post(GET_SITE_BY_FORM_TYPE, { formType });
-
     return data;
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");
@@ -90,6 +89,10 @@ export const getProductionInSystem = async (site_code: string) => {
   try {
     setGlobalLoading(true);
     const { data } = await api.post(GET_PRODUCT_IN_SYSTEM, { site_code });
+    if (data.length === 0) {
+      setToastMessage("Không có vé phù hợp");
+      return [];
+    }
     return groupTicketSunGroup(data);
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");

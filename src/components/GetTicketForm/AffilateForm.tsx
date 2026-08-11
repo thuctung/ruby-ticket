@@ -23,7 +23,7 @@ export default function AffilateBookingForm({
   totalTickets,
   selectedLines,
   total,
-  sideName,
+  siteName,
   exportGuideTicket,
   agentPrice,
   formType,
@@ -158,7 +158,7 @@ export default function AffilateBookingForm({
                   Tóm tắt đơn hàng
                 </h2>
                 <dl className="mt-5 space-y-3 text-sm">
-                  <Row label="Điểm đến" value={sideName} />
+                  <Row label="Điểm đến" value={siteName} />
                   <Row label="Ngày đi" value={formData.date_use} strong />
                 </dl>
                 {selectedLines.length > 0 && (

@@ -6,6 +6,7 @@ import {
   CLIENT_CREATE_ORDER_TICKET,
   CLIENT_SEND_TICET_TO_MAIL,
   CLIENT_UPDATE_STATUS_ORDER_ERROR,
+  SEND_MAIL_TICKET_IN_SYSTEM,
   SUN_BOOKING_CANCLE,
   SUN_BOOKING_CONFIRM,
   SUN_BOOKING_CREATE,
@@ -18,6 +19,7 @@ import {
   UpdateOrderType,
 } from "./type";
 import { get } from "lodash";
+import { SendTicketInSystemMailType } from "../affi/getTicket/type";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 export const customerCreateOrderTicket = async (params: ClientOrderItem) => {
@@ -107,6 +109,18 @@ export const cancleBooking = async (orderCode: string) => {
     return data.result;
   } catch {
     setToastMessage("");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const senMailOrderProductInSystem = async (payload: SendTicketInSystemMailType) => {
+  try {
+    setGlobalLoading(true);
+    const { data }: any = await api.post(SEND_MAIL_TICKET_IN_SYSTEM, payload);
+    return data;
+  } catch (e) {
+    setToastMessage("Có lỗi xảy ra");
   } finally {
     setGlobalLoading(false);
   }

@@ -23,7 +23,7 @@ const PERKS = [
 
 type OrderSummaryProps = {
   selectedLines: any;
-  sideName: string;
+  siteName: string;
   dateUse: string;
   totalTickets: number;
   formType: string;
@@ -38,7 +38,7 @@ type OrderSummaryProps = {
 export default function OrderSummary({
   selectedLines,
   quantities,
-  sideName,
+  siteName,
   dateUse,
   total,
   formType,
@@ -54,7 +54,7 @@ export default function OrderSummary({
       <div className="mt-4 space-y-2.5 text-sm">
         <div className="flex items-center justify-between">
           <span className="text-gray-500">Điểm đến</span>
-          <span className="font-semibold text-[#2A1414]">{sideName}</span>
+          <span className="font-semibold text-[#2A1414]">{siteName}</span>
         </div>
         <div className="flex items-center justify-between">
           <span className="text-gray-500">Ngày đi</span>

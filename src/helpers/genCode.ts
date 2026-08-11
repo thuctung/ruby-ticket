@@ -40,10 +40,11 @@ export const groupTicketSunGroup = (tickets: any[]) => {
   const grouped = Object.entries(
     tickets.reduce(
       (acc, item) => {
+        const newItem = { ...item, site_code: item?.site?.code || item.site_code };
         if (LIST_PRODUCT_CUSTOM[item.code as keyof typeof LIST_PRODUCT_CUSTOM]) {
-          nearlyTicket.push(item);
+          nearlyTicket.push(newItem);
         } else {
-          (acc[item.personType] ??= []).push(item);
+          (acc[item.personType] ??= []).push(newItem);
         }
         return acc;
       },
