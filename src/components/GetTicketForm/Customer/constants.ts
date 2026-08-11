@@ -70,7 +70,7 @@ export const geNoteSiteCode = (siteCode: string) => {
     case "NUITHANTAI":
       return "Miễn phí vé với trẻ em dưới 1 met (đi kèm người lớn)";
     case "DUTHUYEN":
-      return "Miễn phí vé với trẻ em dưới 1 tuổi (đi kèm người lớn)";
+      return "Miễn phí vé với trẻ em dưới 1 tuổi (Thêm vào đơn để được xếp chỗ ngồi)";
     default:
       return "";
   }

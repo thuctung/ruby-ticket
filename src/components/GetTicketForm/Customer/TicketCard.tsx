@@ -80,13 +80,13 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
           </button>
         ) : null}
         {expandedItems.has(ticket.code) && ticket.description ? (
-          <div className="mt-2 max-w-md space-y-1 text-xs leading-relaxed text-[#6E7C73]">
+          <div className="mt-2 space-y-1 text-xs leading-relaxed text-[#432020f0]">
             {ticket.description
-              .split("\n")
+              .split("/n")
               .filter(Boolean)
               .map((line, idx) => (
                 <p className="text-[#f33131f0]" key={idx}>
-                  - {line}
+                  - {line.replace(/\/n/g, "")}
                 </p>
               ))}
           </div>
