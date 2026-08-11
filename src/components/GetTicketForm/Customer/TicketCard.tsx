@@ -109,24 +109,30 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
           </div>
 
           {/* Quantity */}
-          <div className="flex shrink-0 items-center gap-2 rounded-full border border-white/80 bg-white/80 px-2 py-1.5 shadow-sm backdrop-blur-md">
+          <div className="flex shrink-0 items-center gap-2 rounded-full border border-white/80 bg-white/80 px-1.5 py-1.5 shadow-sm backdrop-blur-md">
             <button
               aria-label="Giảm số lượng"
               onClick={() => setQty(ticket.code, (quantities ?? 0) - 1)}
               disabled={!quantities}
-              className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 disabled:opacity-30"
+              className="flex h-5 w-6 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 disabled:opacity-30"
             >
               <Minus size={14} />
             </button>
 
-            <span className="w-5 text-center text-sm font-bold text-gray-900">
-              {quantities ?? 0}
-            </span>
+            <input
+              type="number"
+              min={0}
+              inputMode="numeric"
+              value={quantities ?? 0}
+              onChange={(e) => setQty(ticket.code, Number(e.target.value) || 0)}
+              aria-label={`Số lượng ${ticket.name}`}
+              className="h-5 w-8  text-center text-sm font-semibold text-[#1C2620] outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            />
 
             <button
               aria-label="Tăng số lượng"
               onClick={() => setQty(ticket.code, (quantities ?? 0) + 1)}
-              className="flex h-7 w-7 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
+              className="flex h-5 w-6 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
             >
               <Plus size={14} />
             </button>
