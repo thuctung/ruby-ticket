@@ -31,7 +31,7 @@ export default function CustomerBookingForm({
   quantities,
   totalTickets,
   total,
-  sideName,
+  siteName,
   selectedLines,
   agentPrice,
   formType,
@@ -310,7 +310,7 @@ export default function CustomerBookingForm({
             <div className="mt-4 space-y-2.5 text-sm">
               <div className="flex items-center justify-between">
                 <span className="text-gray-500">Điểm đến</span>
-                <span className="font-semibold text-[#2A1414]">{sideName}</span>
+                <span className="font-semibold text-[#2A1414]">{siteName}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-500">Ngày đi</span>
