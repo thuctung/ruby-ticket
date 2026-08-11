@@ -33,7 +33,7 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
 
   return (
     <div
-      className={` relative overflow-hidden rounded-2xl border hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 sm:flex-row ${bgImage ? "border-white/60 shadow-sm" : " border-gray-100 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_60%,#eff6ff_100%)] p-5 shadow-sm "}  `}
+      className={` relative overflow-hidden rounded-2xl border hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 sm:flex-row ${bgImage ? "border-white/60 shadow-sm" : " border-gray-100 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_60%,#eff6ff_100%)] shadow-sm "}  `}
     >
       <div
         className="absolute inset-0 bg-cover bg-center"
