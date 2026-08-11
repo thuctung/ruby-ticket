@@ -123,7 +123,7 @@ export default function CustomerForm({
               formType={formType}
               agentPrice={agentPrice}
               total={total}
-              onBuyTicket={handleBuyTicket}
+              onBuyTicket={onBuyTicket}
               loading={loading}
               exportGuideTicket={exportGuideTicket}
               setExportGuideTicket={setExportGuideTicket}
