@@ -27,8 +27,9 @@ export async function POST(req: any) {
     const payment_content = body.content || "";
     const transferAmount = Number(body.transferAmount);
     const parts = payment_content.trim().split(/\s+/);
-
     const payment_code = parts[0];
+    console.log("payment_code", payment_code);
+
     let resMessage = "";
 
     if (payment_code) {

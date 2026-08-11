@@ -1,10 +1,10 @@
 import api from "@/axios";
 import {
   GET_PRODUCT_IN_SYSTEM,
+  GET_SITE_BY_FORM_TYPE,
   GET_SITE_BY_STATUS,
   SUCCESS_ORDER_TICKET,
   SUN_GET_PRODOCT_LIST,
-  SUN_GET_SITE_LIST,
 } from "@/commons/apiURL";
 import { DB_TABLE_NAME, SITE_CODES } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
@@ -17,6 +17,36 @@ import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 const clientSupbase = createSupabaseBrowserClient();
+
+export const getSiteByFormType = async (formType: string) => {
+  try {
+    setGlobalLoading(true);
+    const { data } = await api.post(GET_SITE_BY_FORM_TYPE, { formType });
+
+    return data;
+  } catch (error: any) {
+    setToastMessage(error.message || "Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getPriceBuyAgentLevel = async (site_code: string, agent_code: string) => {
+  try {
+    const { data, error } = await clientSupbase
+      .from(DB_TABLE_NAME.AGENT_PRICE)
+      .select("price")
+      .eq("agent_code", agent_code)
+      .eq("site_code", site_code)
+      .maybeSingle();
+    if (error) {
+      setToastMessage(error.message);
+    }
+    return data;
+  } catch {
+    setToastMessage("Có lỗi xảy ra");
+  }
+};
 
 export const getProductBySiteSun = async (siteCodes: string, date: string) => {
   try {
@@ -56,20 +86,15 @@ export const updateSuccessOrder = async (payload: any) => {
   }
 };
 
-export const getPriceBuyAgentLevel = async (site_code: string, agent_code: string) => {
+export const getProductionInSystem = async (site_code: string) => {
   try {
-    const { data, error } = await clientSupbase
-      .from(DB_TABLE_NAME.AGENT_PRICE)
-      .select("price")
-      .eq("agent_code", agent_code)
-      .eq("site_code", site_code)
-      .maybeSingle();
-    if (error) {
-      setToastMessage(error.message);
-    }
-    return data;
-  } catch {
-    setToastMessage("Có lỗi xảy ra");
+    setGlobalLoading(true);
+    const { data } = await api.post(GET_PRODUCT_IN_SYSTEM, { site_code });
+    return groupTicketSunGroup(data);
+  } catch (error: any) {
+    setToastMessage(error.message || "Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
   }
 };
 
@@ -79,18 +104,6 @@ export const getSiteByStatus = async (status?: boolean) => {
     const { data } = await api.post(GET_SITE_BY_STATUS, { status });
 
     return data;
-  } catch (error: any) {
-    setToastMessage(error.message || "Có lỗi xảy ra");
-  } finally {
-    setGlobalLoading(false);
-  }
-};
-
-export const getProductionInSystem = async (site_code: string) => {
-  try {
-    setGlobalLoading(true);
-    const { data } = await api.post(GET_PRODUCT_IN_SYSTEM, { site_code });
-    return groupTicketSunGroup(data);
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {

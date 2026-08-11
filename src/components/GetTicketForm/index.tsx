@@ -5,7 +5,7 @@ import {
   getPriceBuyAgentLevel,
   getProductBySiteSun,
   getProductionInSystem,
-  getSiteByStatus,
+  getSiteByFormType,
 } from "./api";
 import {
   ProductSubmitType,
@@ -99,7 +99,7 @@ export default function GetTicketForm({
   };
 
   const getSiteActive = async () => {
-    const data = await getSiteByStatus(true);
+    const data = await getSiteByFormType(formType);
     if (data?.length) {
       setListSides(data);
     }

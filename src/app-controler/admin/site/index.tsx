@@ -14,6 +14,7 @@ const EMPTY_FORM: SiteType = {
   name: "",
   status: false,
   in_system: false,
+  status_affilate: false,
 };
 
 const initValue = {
@@ -41,7 +42,7 @@ export default function SitesPageController() {
     },
     {
       key: "status",
-      title: "Trạng thái",
+      title: "Mở cho khách lẻ",
       render: (row) =>
         row.status ? (
           <span className="text-[green]">Mở</span>
@@ -49,7 +50,16 @@ export default function SitesPageController() {
           <span className="text-[red]">Đóng</span>
         ),
     },
-
+    {
+      key: "status",
+      title: "Mở cho đại lý",
+      render: (row) =>
+        row.status_affilate ? (
+          <span className="text-[green]">Mở</span>
+        ) : (
+          <span className="text-[red]">Đóng</span>
+        ),
+    },
     {
       key: "in_system",
       title: "Khu vực",

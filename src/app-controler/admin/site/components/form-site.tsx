@@ -38,11 +38,16 @@ const FormSite = ({ mode, currentSite, onClose, onSubmit }: FormSiteProps) => {
         />
       </Field>
 
-      <div className="flex gap-6 pt-1">
+      <div className="flex gap-6 pt-1 flex-wrap mt-4">
         <ToggleCustom
-          label="Hoạt động"
+          label="Khách lẻ"
           checked={site.status}
           onChange={(v) => setSite((f) => ({ ...f, status: v }))}
+        />
+        <ToggleCustom
+          label="Đại lý"
+          checked={site.status_affilate}
+          onChange={(v) => setSite((f) => ({ ...f, status_affilate: v }))}
         />
         <ToggleCustom
           label="Trong hệ thống"
