@@ -224,26 +224,20 @@ export default function GetTicketPageControler() {
 
   return (
     <div className="space-y-4">
-      <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle>Rút vé (trừ tiền ví)</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {profile.role !== "admin" && (
-            <>
-              <div className="flex items-center justify-end">
-                <div className="text-sm text-muted-foreground mr-2">Số dư: </div>
-                <div className="text-lg font-semibold">
-                  {profile.balance ? formatVND(profile.balance) : 0}
-                </div>
+      <CardContent className="space-y-6">
+        {profile.role !== "admin" && (
+          <>
+            <div className="flex items-center justify-end">
+              <div className="text-sm text-muted-foreground mr-2">Số dư: </div>
+              <div className="text-lg font-semibold">
+                {profile.balance ? formatVND(profile.balance) : 0}
               </div>
-              <Separator />
-            </>
-          )}
-
-          <GetTicketForm onBuyTicket={handleBuyTicketAff} formType={BOOKING_FORM_TYPE.AFFILATE} />
-        </CardContent>
-      </Card>
+            </div>
+            <Separator />
+          </>
+        )}
+      </CardContent>
+      <GetTicketForm onBuyTicket={handleBuyTicketAff} formType={BOOKING_FORM_TYPE.AFFILATE} />
     </div>
   );
 }

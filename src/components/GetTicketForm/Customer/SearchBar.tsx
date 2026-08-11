@@ -44,7 +44,7 @@ export default function SearchBar({
   );
 
   return (
-    <section className="relative z-10 mx-auto -mt-16 max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="relative z-10 mx-auto -mt-16 ">
       <div className="rounded-2xl bg-white p-6 shadow-xl ring-1 ring-black/5 sm:p-8">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-end">
           <div>

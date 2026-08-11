@@ -38,14 +38,11 @@ export default function AffilateBookingForm({
     <div
       className={`${body.variable} ${mono.variable} min-h-screen bg-[#EEF1EC] font-[family-name:var(--font-body)] text-[#1C2620]`}
     >
-      <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:py-14">
+      <div className="mx-auto  px-4 py-10 sm:px-6 lg:py-14">
         <div className="mb-8 sm:mb-10">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8A9A8E]">
             Đặt vé tham quan
           </p>
-          <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-[#1F3A2F] sm:text-4xl">
-            Sun World
-          </h1>
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_360px] lg:items-start lg:gap-8">

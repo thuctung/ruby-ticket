@@ -24,6 +24,7 @@ import { get } from "lodash";
 import { CUSTOMER, SITE_CODES } from "@/commons/constant";
 import { useSearchParams } from "next/navigation";
 import CustomerForm from "./Customer";
+import AffilateBooking from "./Affilate";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
@@ -105,6 +106,7 @@ export default function GetTicketForm({
   };
 
   const fetchProductBySite = async (siteCode: string) => {
+    setQuantities({});
     if (currentSite) {
       let data: any = [];
       if (!currentSite.in_system) {
@@ -217,7 +219,7 @@ export default function GetTicketForm({
   };
 
   return formType === BOOKING_FORM_TYPE.AFFILATE ? (
-    <AffilateBookingForm {...commonProps} />
+    <AffilateBooking {...commonProps} />
   ) : (
     <CustomerForm {...commonProps} />
   );

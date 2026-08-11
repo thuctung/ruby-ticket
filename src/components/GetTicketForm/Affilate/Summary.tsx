@@ -1,0 +1,136 @@
+import { Minus, Plus, Trash2 } from "lucide-react";
+import { formatVND } from "@/helpers/money";
+import { getPriceAgentAndMultiple } from "../constants";
+
+type OrderSummaryProps = {
+  selectedLines: any;
+  siteName: string;
+  dateUse: string;
+  totalTickets: number;
+  formType: string;
+  agentPrice: number;
+  total: number;
+  quantities: any;
+  loading: boolean;
+  onBuyTicket: () => void;
+  onRemove: (id: string) => void;
+  exportGuideTicket: any;
+  setExportGuideTicket: any;
+  setQty: (code: string, next: number) => void;
+};
+
+export default function OrderAffSummary({
+  selectedLines,
+  quantities,
+  siteName,
+  dateUse,
+  total,
+  formType,
+  totalTickets,
+  agentPrice,
+  loading,
+  setExportGuideTicket,
+  exportGuideTicket,
+  onBuyTicket,
+  setQty,
+}: OrderSummaryProps) {
+  return (
+    <aside className="sticky top-20 h-fit rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+      <h3 className="text-lg font-bold text-gray-900">Thông tin đơn hàng</h3>
+      <div className="mt-4 space-y-2.5 text-sm">
+        <div className="flex items-center justify-between">
+          <span className="text-gray-500">Điểm đến</span>
+          <span className="font-semibold text-[#2A1414]">{siteName}</span>
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="text-gray-500">Ngày đi</span>
+          <span className="font-semibold text-[#2A1414]">{dateUse}</span>
+        </div>
+      </div>
+      <br />
+      <div className="mt-4 flex flex-col gap-4">
+        {selectedLines.length === 0 && (
+          <p className="text-sm text-gray-400">Chưa có vé nào được chọn.</p>
+        )}
+        {selectedLines.length &&
+          selectedLines.map((t: any) => {
+            return (
+              <div
+                key={t.code}
+                className=" border-b border-dashed border-[#DCD6C2] pb-4 last:border-0 last:pb-0"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-sm font-semibold text-gray-900">{t.name}</p>
+                </div>
+
+                <div className="mt-2 flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-1.5 rounded-md border border-[#DCD6C2] px-1.5 py-0.5">
+                    <button
+                      type="button"
+                      aria-label={`Giảm số lượng ${t.name}`}
+                      onClick={() => setQty(t.code, quantities[t.code] - 1)}
+                      className="flex h-5 w-5 items-center justify-center rounded text-[#6E7C73] transition-colors hover:bg-[#F0EBDD] hover:text-[#1C2620] disabled:opacity-40"
+                      disabled={(quantities[t.code] ?? 1) <= 1}
+                    >
+                      <Minus className="h-3.5 w-3.5" />
+                    </button>
+
+                    <span className="w-5 text-center text-[#1C2620]">{quantities[t.code]}</span>
+
+                    <button
+                      type="button"
+                      aria-label={`Tăng số lượng ${t.name}`}
+                      onClick={() => setQty(t.code, quantities[t.code] + 1)}
+                      className="flex h-5 w-5 items-center justify-center rounded text-[#6E7C73] transition-colors hover:bg-[#F0EBDD] hover:text-[#1C2620]"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                  <div className="flex">
+                    <span className="font-semibold text-red-600">
+                      {formatVND(
+                        getPriceAgentAndMultiple(t, formType, agentPrice) *
+                          (quantities[t.code] ?? 0)
+                      )}
+                    </span>
+                    <button
+                      type="button"
+                      aria-label={`Xóa ${t.name}`}
+                      onClick={() => setQty(t.code, 0)}
+                      className="flex h-5 w-5 items-center justify-center rounded text-[#6E7C73] transition-colors hover:bg-red-50 hover:text-red-500"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+
+      <div className="mt-4 flex items-center justify-between border-t border-red-300 pt-4">
+        <span className="text-base font-bold text-gray-900">Tổng cộng</span>
+        <span className="text-xl font-extrabold text-red-600">{formatVND(total)}</span>
+      </div>
+
+      <button
+        disabled={totalTickets === 0 || loading}
+        onClick={onBuyTicket}
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+      >
+        {loading ? "Đang tạo..." : "Xuất vé"}
+      </button>
+      {selectedLines.length ? (
+        <label className="mt-4 flex cursor-pointer items-center gap-2 text-sm text-[#1F3A2F]">
+          <input
+            type="checkbox"
+            checked={exportGuideTicket}
+            onChange={(e) => setExportGuideTicket?.(e.target.checked)}
+            className="h-4 w-4 rounded border-[#DCD6C2] text-[#1F3A2F] focus:ring-[#1F3A2F]"
+          />
+          <span>Xuất vé cho hướng dẫn viên</span>
+        </label>
+      ) : null}
+    </aside>
+  );
+}

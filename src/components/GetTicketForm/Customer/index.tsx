@@ -65,13 +65,16 @@ export default function CustomerForm({
 
   return (
     <>
-      <SearchBar
-        listSite={listSite}
-        siteCode={siteCode}
-        setSiteCode={setSiteCode}
-        dateUse={formData.date_use}
-        setDateUse={(value) => setFieldFormData("date_use", value)}
-      />
+      <div className=" mx-auto max-w-7xl  sm:px-6 lg:px-8">
+        <SearchBar
+          listSite={listSite}
+          siteCode={siteCode}
+          setSiteCode={setSiteCode}
+          dateUse={formData.date_use}
+          setDateUse={(value) => setFieldFormData("date_use", value)}
+        />
+      </div>
+
       <CustomerInfoForm value={formData} errors={{}} onChange={setFieldFormData} />
 
       {listTicketFilter.length > 0 && (
