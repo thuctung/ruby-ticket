@@ -1,26 +1,4 @@
-// File: app/chinh-sach-ve/page.tsx
-// Next.js (App Router) + Tailwind CSS
-// Yêu cầu: Tailwind CSS đã cấu hình trong project (v3.3+ để hỗ trợ arbitrary value cho font-family)
-
-// ---------- Dữ liệu nội dung ----------
-import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
-
-const display = Fraunces({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-display",
-});
-const body = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-body",
-});
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-mono",
-});
+import { body, mono } from "@/helpers/font-client";
 
 const refundTiers = [
   {
@@ -163,7 +141,7 @@ function TicketCard({
 export default function TicketPolicyPage() {
   return (
     <div
-      className={`${display.variable} ${body.variable} ${mono.variable} min-h-screen bg-[#EFE9D8] font-[family-name:var(--font-body)] text-[#16213E]`}
+      className={` ${body.variable} ${mono.variable} min-h-screen bg-[#EFE9D8] font-[family-name:var(--font-body)] text-[#16213E]`}
     >
       <div className="mx-auto max-w-4xl px-4 py-10 sm:py-16">
         {/* HERO — trình bày như mặt trước của một tấm vé lớn */}

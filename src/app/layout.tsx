@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
-import { Be_Vietnam_Pro, Geist_Mono } from "next/font/google";
 // @ts-ignore: CSS module declarations not found in this environment
 import "./globals.css";
 import ToastMessage from "@/components/ui/toast-message";
@@ -8,16 +7,8 @@ import { LoadingGlobal } from "@/components/ui/loading";
 // @ts-ignore: CSS module declarations not found in this environment
 import "react-datepicker/dist/react-datepicker.css";
 import { Suspense } from "react";
-const beVietnamPro = Be_Vietnam_Pro({
-  variable: "--font-sans",
-  subsets: ["latin", "vietnamese"],
-  weight: ["300", "400", "500", "600", "700"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { body, mono } from "@/helpers/font-client";
 
 export const metadata: Metadata = {
   title: "Ruby Travel",
@@ -33,9 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className={`${beVietnamPro.variable} ${geistMono.variable}`}>
+    <html lang="vi" className={`${body.variable} ${mono.variable}`}>
       <meta name="google-site-verification" content="SI9lUDpDSzVXJTFANBGfg32-6nUdgAh6t0LD-0axg8E" />
-      <body className="antialiased">
+      <body className={body.className}>
         <Suspense fallback={<LoadingGlobal />}>{children}</Suspense>
         <div id="modal-root"></div>
         <ToastMessage />

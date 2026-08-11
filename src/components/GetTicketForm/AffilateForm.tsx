@@ -1,6 +1,7 @@
 "use client";
 
-import { Fraunces, Be_Vietnam_Pro } from "next/font/google";
+import { body, mono } from "@/helpers/font-client";
+
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
@@ -8,18 +9,6 @@ import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { BookingFormProps, getPriceAgentAndMultiple, PRODUCT_TYPE } from "./constants";
 import { formatVND } from "@/helpers/money";
-
-const display = Fraunces({
-  subsets: ["latin", "vietnamese"],
-  weight: ["500", "600", "700"],
-  variable: "--font-display",
-});
-
-const body = Be_Vietnam_Pro({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-body",
-});
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
@@ -47,7 +36,7 @@ export default function AffilateBookingForm({
 }: BookingFormProps) {
   return (
     <div
-      className={`${display.variable} ${body.variable} min-h-screen bg-[#EEF1EC] font-[family-name:var(--font-body)] text-[#1C2620]`}
+      className={`${body.variable} ${mono.variable} min-h-screen bg-[#EEF1EC] font-[family-name:var(--font-body)] text-[#1C2620]`}
     >
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:py-14">
         <div className="mb-8 sm:mb-10">
