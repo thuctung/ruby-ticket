@@ -118,13 +118,14 @@ export default function TicketPricePageController() {
   };
 
   const handleSubmitForm = async (value: ProductType) => {
-    if (value && curentData) {
-      await updateProduct({ ...value, site_code: curentData.siteCode });
-      handleCloseModal();
-      handleSearchProduct(curentData);
-      toast.success("Thành công");
-    } else {
-      setToastMessage("Chưa chọn công viên");
+    if (value) {
+      const data = await updateProduct(value);
+      if (data) {
+        handleCloseModal();
+        toast.success("Thành công");
+      } else {
+        toast.success("Có lỗi xảy ra");
+      }
     }
   };
   const handleDeleteTicket = (value: ProductType) => {
@@ -188,6 +189,7 @@ export default function TicketPricePageController() {
           onSubmit={handleSubmitForm}
           mode={modalMode}
           listCategory={categoryList}
+          listSite={listSite}
         />
       )}
     </div>

@@ -1,6 +1,6 @@
 import Modal from "@/components/site/Modal";
 import { useState } from "react";
-import { CategoryType, ProductType } from "../type";
+import { CategoryType, ProductType, SiteType } from "../type";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import { formatVND } from "@/lib/money";
 
@@ -10,8 +10,16 @@ type FormSiteProps = {
   onSubmit: (value: any) => void;
   currentProduct: ProductType;
   listCategory: CategoryType[];
+  listSite: SiteType[];
 };
-const FormProduct = ({ mode, currentProduct, listCategory, onClose, onSubmit }: FormSiteProps) => {
+const FormProduct = ({
+  mode,
+  currentProduct,
+  listSite,
+  listCategory,
+  onClose,
+  onSubmit,
+}: FormSiteProps) => {
   const [product, setProduct] = useState({ ...currentProduct });
 
   const handleSubmit = () => {
@@ -24,6 +32,21 @@ const FormProduct = ({ mode, currentProduct, listCategory, onClose, onSubmit }: 
 
   return (
     <Modal onClose={onClose} title={mode === "create" ? "Tạo vé mới" : "Chỉnh sửa vé"}>
+      <Field label="Công viên">
+        <SelectBox
+          value={product.site_code}
+          onChange={(value) => handleChangeProduct("site_code", value)}
+          className=" h-12"
+          style={{ border: "1px solid" }}
+        >
+          <option value="">Chọn</option>
+          {listSite.map((item) => (
+            <option key={item.code} value={item.code}>
+              {item.name}
+            </option>
+          ))}
+        </SelectBox>
+      </Field>
       <Field label="Mã vé">
         <input
           value={product.code}
@@ -80,7 +103,7 @@ const FormProduct = ({ mode, currentProduct, listCategory, onClose, onSubmit }: 
         </SelectBox>
       </Field>
 
-      <Field label="Tên vé">
+      <Field label="Thông tin">
         <textarea
           value={product.description}
           onChange={(e) => handleChangeProduct("description", e.target.value)}
