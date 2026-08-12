@@ -12,6 +12,7 @@ export async function POST(request: Request) {
   const { data } = await supabaseAdmin
     .from(DB_TABLE_NAME.PRODUCTS)
     .select("*")
-    .eq("site_code", site_code);
+    .eq("site_code", site_code)
+    .eq("status", true);
   return NextResponse.json(data);
 }

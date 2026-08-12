@@ -73,6 +73,8 @@ export default function GetTicketForm({
     return listProductSeletect.filter((t) => (quantities[t.code] ?? 0) > 0);
   }, [listProduct, quantities]);
 
+  console.log("selectedLines", selectedLines);
+
   const totalTickets = selectedLines.reduce((sum, t) => sum + (quantities[t.code] ?? 0), 0);
 
   const total = selectedLines.reduce((sum, t) => {

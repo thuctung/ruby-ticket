@@ -23,6 +23,9 @@ const EMPTY_FORM: ProductType = {
   description: "",
   publicPrice: 0,
   unitPrice: 0,
+  status: false,
+  order: 1,
+  multiple: 1,
 };
 
 export default function TicketPricePageController() {
@@ -62,6 +65,19 @@ export default function TicketPricePageController() {
     {
       key: "personType",
       title: "Loại vé",
+    },
+    {
+      key: "status",
+      title: "Trạng thái",
+      render: (row) => (row.status ? "Đang mở" : "Đóng"),
+    },
+    {
+      key: "order",
+      title: "Thứ tự hiển thị",
+    },
+    {
+      key: "multiple",
+      title: "Số lượng bắc buộc",
     },
     {
       key: "",
@@ -155,7 +171,7 @@ export default function TicketPricePageController() {
 
   return (
     <div className="min-h-screen ">
-      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto  py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <button

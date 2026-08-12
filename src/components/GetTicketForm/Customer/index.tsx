@@ -58,7 +58,7 @@ export default function CustomerForm({
       listTicket = listTicket.concat([...item.ticket]);
       listPersonType.push(item.personType);
     });
-    return [listTicket, listPersonType];
+    return [listTicket.sort((a, b) => (a.order ?? 1) - (b.order ?? 1)), listPersonType];
   }, [listProduct]);
 
   const listTicketFilter = useMemo(() => {

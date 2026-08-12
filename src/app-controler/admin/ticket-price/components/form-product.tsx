@@ -3,6 +3,7 @@ import { useState } from "react";
 import { CategoryType, ProductType, SiteType } from "../type";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import { formatVND } from "@/lib/money";
+import ToggleCustom from "@/components/site/Toggle";
 
 type FormSiteProps = {
   onClose: () => void;
@@ -26,7 +27,7 @@ const FormProduct = ({
     onSubmit(product);
   };
 
-  const handleChangeProduct = (key: string, value: string | number) => {
+  const handleChangeProduct = (key: string, value: string | number | boolean) => {
     setProduct((pre) => ({ ...pre, [key]: value }));
   };
 
@@ -102,7 +103,29 @@ const FormProduct = ({
           ))}
         </SelectBox>
       </Field>
-
+      <div className="flex justify-between">
+        <Field label="Thứ tự hiển thị">
+          <input
+            min={0}
+            value={product.order}
+            onChange={(e) => handleChangeProduct("order", Number(e.target.value))}
+            className={inputClass(false)}
+          />
+        </Field>
+        <Field label="Số lượng vé đôi">
+          <input
+            min={0}
+            value={product.multiple}
+            onChange={(e) => handleChangeProduct("multiple", Number(e.target.value))}
+            className={inputClass(false)}
+          />
+        </Field>
+      </div>
+      <ToggleCustom
+        label="Trạng thái"
+        checked={product.status}
+        onChange={(v) => handleChangeProduct("status", v)}
+      />
       <Field label="Thông tin">
         <textarea
           value={product.description}
@@ -145,7 +168,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mb-4">
+    <div className="mb-2">
       <label className="mb-1 block text-sm font-medium ">{label}</label>
       {children}
       {error ? (

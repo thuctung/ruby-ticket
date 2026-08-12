@@ -163,6 +163,7 @@ export type ProductBanaType = {
   site_code: string;
   openTime: string;
   description?: string;
+  order?: number;
 };
 
 export type ProductSubmitType = {

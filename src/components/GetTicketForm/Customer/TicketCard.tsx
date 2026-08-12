@@ -31,6 +31,18 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
   };
   const bgImage = getBgImg(ticket.personType, ticket?.site_code);
 
+  const handleChangeQuantity = (ticket: ProductBanaType, value: number, input = false) => {
+    let num = quantities ?? 0;
+    if (ticket.multiple > 1) {
+      num += value;
+    } else if (input) {
+      num = value;
+    } else {
+      num += value;
+    }
+    setQty(ticket.code, num);
+  };
+
   return (
     <div
       className={` relative overflow-hidden rounded-2xl border hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 sm:flex-row ${bgImage ? "border-white/60 shadow-sm" : " border-gray-100 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_60%,#eff6ff_100%)] shadow-sm "}  `}
@@ -61,8 +73,14 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
               {formatVND(getPriceAgentAndMultiple(ticket, formType, agentPrice))}
             </div>
             <div className="mt-0.5 text-xs font-medium text-[#862a42] line-through">
-              Giá công bố: {formatVND(ticket.publicPrice)}
+              Giá công bố:{" "}
+              {formatVND(
+                ticket.multiple ? ticket.publicPrice / ticket.multiple : ticket.publicPrice
+              )}
             </div>
+            {ticket.multiple > 1 ? (
+              <p className="text-sm text-[red] leading-snug">{`Số vé phải là bội của: ${ticket.multiple}`}</p>
+            ) : null}
           </div>
         </div>
         {ticket.description ? (
@@ -112,7 +130,7 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
           <div className="flex shrink-0 items-center gap-2 rounded-full border border-white/80 bg-white/80 px-1.5 py-1.5 shadow-sm backdrop-blur-md">
             <button
               aria-label="Giảm số lượng"
-              onClick={() => setQty(ticket.code, (quantities ?? 0) - 1)}
+              onClick={() => handleChangeQuantity(ticket, -ticket.multiple)}
               disabled={!quantities}
               className="flex h-5 w-6 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 disabled:opacity-30"
             >
@@ -124,14 +142,15 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
               min={0}
               inputMode="numeric"
               value={quantities ?? 0}
-              onChange={(e) => setQty(ticket.code, Number(e.target.value) || 0)}
+              disabled={ticket.multiple > 1}
+              onChange={(e) => handleChangeQuantity(ticket, Number(e.target.value) || 0, true)}
               aria-label={`Số lượng ${ticket.name}`}
               className="h-5 w-8  text-center text-sm font-semibold text-[#1C2620] outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
 
             <button
               aria-label="Tăng số lượng"
-              onClick={() => setQty(ticket.code, (quantities ?? 0) + 1)}
+              onClick={() => handleChangeQuantity(ticket, ticket.multiple)}
               className="flex h-5 w-6 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
             >
               <Plus size={14} />

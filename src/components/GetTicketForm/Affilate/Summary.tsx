@@ -4,6 +4,7 @@ import { BOOKING_FORM_TYPE, getPriceAgentAndMultiple } from "../constants";
 import { useState } from "react";
 import { useIsMobile } from "@/helpers/useResize";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { ProductBanaType } from "@/types/ticket";
 
 type OrderSummaryProps = {
   selectedLines: any;
@@ -42,6 +43,19 @@ export default function OrderAffSummary({
   const classDesktop = isMobile ? "bottom-0 overflow-hidden" : "top-20";
   const classList = isMobile ? "max-h-[200px]" : "max-h-[400px]";
   const style = open ? "530px" : "92px";
+
+  const handleChangeQuantity = (ticket: ProductBanaType, value: number, input = false) => {
+    let num = quantities[ticket.code] ?? 0;
+    if (ticket.multiple > 1) {
+      num += value;
+    } else if (input) {
+      num = value;
+    } else {
+      num += value;
+    }
+    setQty(ticket.code, num);
+  };
+
   return (
     <aside
       className={`sticky  rounded-2xl border border-gray-100 bg-white shadow-sm  h-fit ${classDesktop} transition-height `}
@@ -91,7 +105,7 @@ export default function OrderAffSummary({
                       <button
                         type="button"
                         aria-label={`Giảm số lượng ${t.name}`}
-                        onClick={() => setQty(t.code, quantities[t.code] - 1)}
+                        onClick={() => handleChangeQuantity(t, -t.multiple)}
                         className="flex h-5 w-5 items-center justify-center rounded text-[#6E7C73] transition-colors hover:bg-[#F0EBDD] hover:text-[#1C2620] disabled:opacity-40"
                         disabled={(quantities[t.code] ?? 1) <= 1}
                       >
@@ -103,7 +117,7 @@ export default function OrderAffSummary({
                       <button
                         type="button"
                         aria-label={`Tăng số lượng ${t.name}`}
-                        onClick={() => setQty(t.code, quantities[t.code] + 1)}
+                        onClick={() => handleChangeQuantity(t, t.multiple)}
                         className="flex h-5 w-5 items-center justify-center rounded text-[#6E7C73] transition-colors hover:bg-[#F0EBDD] hover:text-[#1C2620]"
                       >
                         <Plus className="h-3.5 w-3.5" />
