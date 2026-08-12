@@ -7,7 +7,7 @@ const resend = new Resend(env.SEND_MAIL_KEY);
 const adminMail = env.SEND_MAIL_ADMIN;
 export async function POST(req: Request) {
   const body: SendTicketInSystemMailType = await req.json();
-  const { email, listTicket, phone, dateUse, orderCode, paymentCode } = body;
+  const { email, listTicket, phone, dateUse, orderCode, paymentCode, fullName } = body;
   const pdfBuffer = await generateBookingVoucher(body);
 
   const toMail = ["sales2@nuithantai.vn", "sales7@nuithantai.vn", adminMail];
@@ -32,12 +32,19 @@ export async function POST(req: Request) {
                 ${
                   paymentCode
                     ? ` <tr>
-                  <td style="padding: 8px; font-weight: bold;">Mã thanh toán:</td>
-                  <td style="padding: 8px;">${paymentCode}</td>
-                </tr>`
+                          <td style="padding: 8px; font-weight: bold;">Mã thanh toán:</td>
+                          <td style="padding: 8px;">${paymentCode}</td>
+                        </tr>`
                     : ""
                 }
-
+                ${
+                  fullName
+                    ? ` <tr>
+                            <td style="padding: 8px; font-weight: bold;">Tên khách hàng</td>
+                            <td style="padding: 8px;">${fullName}</td>
+                        </tr>`
+                    : ""
+                }
                 <tr>
                   <td style="padding: 8px; font-weight: bold;">Email</td>
                   <td style="padding: 8px;">${email}</td>
