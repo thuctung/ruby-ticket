@@ -11,7 +11,15 @@ export async function POST(request: Request) {
 
   const offset = (currentPage - 1) * LIMIT_TABLE;
 
-  const { from, to, email, payment_method, status, siteCode }: AdminSearchReport = searchValue;
+  const {
+    from,
+    to,
+    email,
+    payment_method,
+    status,
+    siteCode,
+    third_party_number,
+  }: AdminSearchReport = searchValue;
 
   let query = supabaseAdmin
     .from(DB_TABLE_NAME.VIEW_TICKET_SALE)
@@ -25,6 +33,10 @@ export async function POST(request: Request) {
 
   if (payment_method) {
     query = query.eq("payment_method", payment_method);
+  }
+
+  if (third_party_number) {
+    query = query.eq("third_party_number", third_party_number);
   }
 
   if (status) {

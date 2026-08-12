@@ -34,12 +34,13 @@ export async function POST(req: Request) {
   }
 
   const exportData = data.map((item) => ({
-    "Mã đơn hàng": item.order_code,
+    "Mã order": item.order_code,
     Email: item.user_email,
     "Tên đại lý": full_name,
     "Tên sản phẩm": item.product_name,
     "Số lượng": item.quantity,
     "Số tiền": item.total,
+    "Mã đơn hàng": item.third_party_number,
     "Ngày mua": dayjsEx(item.created_at).tz("Asia/Ho_Chi_Minh").format(FULL_DATE_FORMAT),
   }));
 

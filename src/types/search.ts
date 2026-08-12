@@ -24,6 +24,7 @@ export interface SearchTicketSale {
   status?: string;
   email?: string;
   siteCode?: string;
+  third_party_number?: string;
 }
 
 export interface AdminSearchReport {
@@ -35,4 +36,5 @@ export interface AdminSearchReport {
   payment_method?: string;
   full_name?: string;
   siteCode?: string;
+  third_party_number?: string;
 }

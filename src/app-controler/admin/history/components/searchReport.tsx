@@ -120,6 +120,18 @@ export function SearchReport({
               onChange={(value: string) => onChangeForm("email", value)}
             />
           </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+              Third party code
+            </label>
+            <Input
+              type="text"
+              placeholder=""
+              value={searchValue.third_party_number || ""}
+              className="h-12"
+              onChange={(value: string) => onChangeForm("third_party_number", value)}
+            />
+          </div>
         </div>
         <div className=" flex flex-wrap justify-end  pr-3">
           <div className="flex justify-end gap-3 mt-6">
