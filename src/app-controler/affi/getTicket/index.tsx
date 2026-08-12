@@ -37,6 +37,7 @@ import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import GetTicketForm from "@/components/GetTicketForm";
 import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "./type";
 import { KEY_MODIFY_DATA } from "../stats/contants";
+import { generateBookingVoucherClient } from "@/helpers/e-voucher-client";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -156,8 +157,8 @@ export default function GetTicketPageControler() {
         listTicket: products.map((item) => ({ name: item.productsName, quantity: item.quantity })),
       };
       const data = await createTemplateTicketThanTaiMountain(payload);
-
       if (data) {
+        generateBookingVoucherClient(payload);
         const payloadUpdate: PayloadUdateOrderBalanceType = {
           balance: updateBalaceProfile(totalMoney),
           user_id: profile.user_id,

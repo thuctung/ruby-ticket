@@ -93,5 +93,8 @@ export async function POST(req: Request) {
     ],
   });
 
-  return new Response("ok", { status: 200 });
+  return Response.json({
+    success: true,
+    pdf: Buffer.from(pdfBuffer).toString("base64"),
+  });
 }

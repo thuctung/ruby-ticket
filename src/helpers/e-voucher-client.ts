@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 import { SendTicketInSystemMailType } from "@/app-controler/affi/getTicket/type";
 import { getFontBase64, getFontBoldBase64, getImage } from "./loadFont";
+import { getFontBase64Client, getFontBold64Client } from "./ticket";
 
 const MARGIN = 6;
 
@@ -10,7 +11,7 @@ const NOTES = [
   "Vui lòng đến quầy vé Công viên và trình vé điện tử đã mua để đổi vé vào cửa.",
 ];
 
-export const generateBookingVoucher = async (data: SendTicketInSystemMailType) => {
+export const generateBookingVoucherClient = async (data: SendTicketInSystemMailType) => {
   const PAGE_W = 250;
   const PAGE_H = 300 + data.listTicket.length * 20;
   const RED_LABEL = [180, 20, 24] as const;
@@ -26,11 +27,29 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
   pdf.setLineWidth(1);
   pdf.roundedRect(8, 8, PAGE_W - 16, PAGE_H - 16, 10, 10);
 
-  const rubyLogo = getImage("/logo.png");
-  const thanTaiLogo = getImage("/nuithantai/logo.webp");
+  const fontBase64 = await getFontBase64Client();
+  const fontBold = await getFontBold64Client();
 
-  const fontBase64 = await getFontBase64();
-  const fontBold = await getFontBoldBase64();
+  pdf.addFileToVFS("Roboto-Regular.ttf", fontBase64);
+  pdf.addFont("Roboto-Regular.ttf", "Roboto", "normal");
+
+  pdf.addFileToVFS("Roboto-Bold.ttf", fontBold);
+  pdf.addFont("Roboto-Bold.ttf", "Roboto", "bold");
+
+  // Load logos
+  const rubyLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = "/logo.png";
+  });
+  const thanTaiLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = "/nuithantai/logo.webp";
+  });
+
   pdf.addFileToVFS("Roboto-Regular.ttf", fontBase64);
   pdf.addFont("Roboto-Regular.ttf", "Roboto", "normal");
 
@@ -189,5 +208,5 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
     align: "center",
   });
 
-  return Buffer.from(pdf.output("arraybuffer"));
+  pdf.save(`NUITHANTAI-${data.orderCode}-${data.dateUse}.pdf`);
 };
