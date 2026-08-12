@@ -54,7 +54,7 @@ export const groupTicketSunGroup = (tickets: any[]) => {
     .map(([personType, items]: any) => {
       const res: ResultListProductType = {
         personType,
-        ticket: items,
+        ticket: items.sort((a: any, b: any) => a?.order - b?.order),
       };
       return res;
     })

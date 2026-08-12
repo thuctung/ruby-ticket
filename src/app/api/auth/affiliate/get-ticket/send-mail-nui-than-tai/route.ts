@@ -7,7 +7,7 @@ const resend = new Resend(env.SEND_MAIL_KEY);
 const adminMail = env.SEND_MAIL_ADMIN;
 export async function POST(req: Request) {
   const body: SendTicketInSystemMailType = await req.json();
-  const { email, listTicket, phone, dateUse, orderCode, paymentCode } = body;
+  const { email, listTicket, phone, dateUse, orderCode, paymentCode, fullName } = body;
   const pdfBuffer = await generateBookingVoucher(body);
 
   const toMail = ["sales2@nuithantai.vn", "sales7@nuithantai.vn", adminMail];
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   await resend.emails.send({
     from: "Ruby Travel System<noreply@rubytraveldanang.com>",
     to: toMail,
-    subject: `Đặt vé Núi Thần Tài - ${dateUse}`,
+    subject: `Đặt vé Núi Thần Tài-${orderCode}, Ngày ${dateUse}`,
     html: `
       <div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
          <h2 style="color: #d32f2f;">Xác nhận đặt vé thành công</h2>
@@ -29,15 +29,26 @@ export async function POST(req: Request) {
                    <td style="padding: 8px; font-weight: bold; width: 180px;">Mã đơn hàng</td>
                     <td style="padding: 8px;">${orderCode}</td>
                 </tr>
+                <tr>
+                   <td style="padding: 8px; font-weight: bold; width: 180px;">Ngày sử dụng</td>
+                    <td style="padding: 8px;">${dateUse}</td>
+                </tr>
                 ${
                   paymentCode
                     ? ` <tr>
-                  <td style="padding: 8px; font-weight: bold;">Mã thanh toán:</td>
-                  <td style="padding: 8px;">${paymentCode}</td>
-                </tr>`
+                          <td style="padding: 8px; font-weight: bold;">Mã thanh toán:</td>
+                          <td style="padding: 8px;">${paymentCode}</td>
+                        </tr>`
                     : ""
                 }
-
+                ${
+                  fullName
+                    ? ` <tr>
+                            <td style="padding: 8px; font-weight: bold;">Tên khách hàng</td>
+                            <td style="padding: 8px;">${fullName}</td>
+                        </tr>`
+                    : ""
+                }
                 <tr>
                   <td style="padding: 8px; font-weight: bold;">Email</td>
                   <td style="padding: 8px;">${email}</td>

@@ -152,6 +152,7 @@ export default function GetTicketPageControler() {
         dateUse,
         email: profile.email,
         phone: profile.phone,
+        fullName: profile.full_name || "",
         listTicket: products.map((item) => ({ name: item.productsName, quantity: item.quantity })),
       };
       const data = await createTemplateTicketThanTaiMountain(payload);

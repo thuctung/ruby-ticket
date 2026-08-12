@@ -250,7 +250,10 @@ export const SITE_SUB_GROUP = {
   SCB: "Sun world Cát Bà",
   HTI: "Sun World Hòn Thơm",
   SWH: "SunWorld Holding",
+  NUITHANTAI: "Núi Thần Tài",
+  DUTHUYEN: "Du Thuyền Sông Hàn",
   SWV: "Sun World Vũng Tàu",
+  VINPER: "Vinpearl Nam Hội An",
 };
 
 export const LOCAL_SUN_TOKEN = "sun_access_token";
