@@ -7,10 +7,10 @@ const resend = new Resend(env.SEND_MAIL_KEY);
 export async function POST(req: Request) {
   const body: SendTicketInSystemMailType = await req.json();
   const { email, listTicket, phone, dateUse, orderCode, paymentCode, siteName, fullName } = body;
-
+  const adminMail = env.SEND_MAIL_ADMIN;
   await resend.emails.send({
     from: "Ruby Travel System<noreply@rubytraveldanang.com>",
-    to: [email, "hoatrambanve@gmail.com"],
+    to: [email, adminMail],
     subject: `Đặt vé ${siteName} Ngày: ${dateUse}`,
     html: `
       <div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
