@@ -254,15 +254,16 @@ export default function CheckoutControlerPage() {
     if (ticketSuccess) {
       // succes step: update status order
       const result: TicketResultQRType[] | any = rebuildDataTicket(ticketSuccess, orderId, dateUse);
-
+      let siteName = "";
       const formatTickets = result.map((item: TicketResultQRType) => {
         const ticketItemSelect = productSelected.find(
           (proSelect) => item.productCode === proSelect.productCode
         );
+        siteName = ticketItemSelect?.siteName || "";
         return {
           ...item,
           publicPrice: ticketItemSelect?.publicPrice || 0,
-          siteName: ticketItemSelect?.siteName || "",
+          siteName,
           restaurantName: ticketItemSelect?.restaurantName,
           personType: ticketItemSelect?.personType,
           time: ticketItemSelect?.time,
@@ -285,6 +286,7 @@ export default function CheckoutControlerPage() {
         customerTickets,
         focTickets: [],
         orderCode,
+        siteName,
       });
       toast.success(`Vé đã được gửi qua email: ${customerEmail}`);
     } else {

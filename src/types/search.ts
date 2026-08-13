@@ -17,6 +17,16 @@ export interface SearchTraction {
   to: string;
 }
 
+export interface SearchDateRangePayload {
+  from: string;
+  to: string;
+}
+
+export interface SearchTractionPayload extends SearchTraction {
+  user_id: string;
+  currentPage: number;
+}
+
 export interface SearchTicketSale {
   location?: string;
   from: string;
@@ -25,6 +35,13 @@ export interface SearchTicketSale {
   email?: string;
   siteCode?: string;
   third_party_number?: string;
+  currentPage?: number;
+}
+
+export interface SearchTicketSalePayload extends SearchTicketSale {
+  user_id: string | undefined;
+  currentPage: number;
+  type?: string;
 }
 
 export interface AdminSearchReport {
@@ -37,4 +54,5 @@ export interface AdminSearchReport {
   full_name?: string;
   siteCode?: string;
   third_party_number?: string;
+  currentPage?: number;
 }

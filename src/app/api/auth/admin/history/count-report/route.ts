@@ -1,9 +1,10 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { DB_TABLE_NAME, END_DATE_GMT7, START_DATE_GMT7 } from "@/commons/constant";
+import { SearchDateRangePayload } from "@/types";
 
 export async function POST(req: Request) {
-  const body: any = await req.json();
-  const { user_id, from, to } = body;
+  const body: SearchDateRangePayload = await req.json();
+  const { from, to } = body;
 
   let query = supabaseAdmin.from(DB_TABLE_NAME.VIEW_TICKET_SALE).select("quantity, total_amount");
 

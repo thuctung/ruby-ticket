@@ -27,6 +27,8 @@ import { get } from "lodash";
 import { statusClass, StatusData } from "./contants";
 import { Button } from "@/components/ui/button";
 import OrderDetailDialog from "./components/OrderDetail";
+import { getSiteByStatus } from "@/components/GetTicketForm/api";
+import { SiteType } from "@/types/ticket";
 
 const df_From = dayjs(new Date()).add(-30, "day").format(BASIC_DATE_FORMAT);
 const df_To = dayjs(new Date()).format(BASIC_DATE_FORMAT);
@@ -36,6 +38,7 @@ const intForm: SearchTicketSale = {
   from: df_From,
   to: df_To,
   status: "",
+  siteCode: "",
 };
 
 export default function AffiliateStatsControler() {
@@ -47,7 +50,7 @@ export default function AffiliateStatsControler() {
   const [countTicket, setCountTicket] = useState({ quantity: 0, total: 0 });
 
   const [orderDetails, setOrderDetails] = useState<OrderDetailType[]>([]);
-
+  const [siteList, setSiteList] = useState<SiteType[]>([]);
   const [params, setParams] = useState<SearchTableType<SearchTicketSale>>({
     searchValue: intForm,
     currentPage: 1,
@@ -79,7 +82,8 @@ export default function AffiliateStatsControler() {
     const { data } = await countTicketSale(
       params.searchValue.from,
       params.searchValue.to,
-      profile.user_id
+      profile.user_id,
+      params.searchValue.siteCode
     );
     if (data) {
       const result = data.reduce(
@@ -148,18 +152,22 @@ export default function AffiliateStatsControler() {
       align: "center",
     },
   ];
-
+  const fetchSiteList = async () => {
+    const data = await getSiteByStatus(true);
+    if (data) {
+      setSiteList(data);
+    }
+  };
   useEffect(() => {
     if (profile.user_id) {
       fetchTicketSale();
+      handleCountTicketSale();
     }
   }, [params, profile.user_id]);
 
   useEffect(() => {
-    if (profile.user_id) {
-      handleCountTicketSale();
-    }
-  }, [params.searchValue.from, params.searchValue.to, profile.user_id]);
+    fetchSiteList();
+  }, []);
 
   return (
     <div className="space-y-4">
@@ -173,6 +181,7 @@ export default function AffiliateStatsControler() {
             onChangeForm={handleChangeForm}
             onReset={handleResetForm}
             searchValue={params.searchValue}
+            siteList={siteList}
           />
 
           <Revenue

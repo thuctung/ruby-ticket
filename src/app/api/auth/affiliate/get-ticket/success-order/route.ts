@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { DB_TABLE_NAME } from "@/commons/constant";
-import { ParamCreateTicketAgentType } from "@/types/ticket";
+import { UpdateSuccessOrderParam } from "@/app-controler/affi/getTicket/type";
 
 export async function POST(req: Request) {
-  const body: any = await req.json();
+  const body: UpdateSuccessOrderParam = await req.json();
   const { orderCode, tickets, referenceCode, orderId } = body;
 
   const data = await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_COMPLETE_ORDER, {

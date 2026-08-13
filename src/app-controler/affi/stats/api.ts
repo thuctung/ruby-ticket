@@ -7,21 +7,28 @@ import {
 } from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { CommonType, SearchTableType, SearchTicketSale } from "@/types";
+import { CommonType, SearchTableType, SearchTicketSale, SearchTicketSalePayload } from "@/types";
 import dayjs from "dayjs";
 import { get } from "lodash";
+import { CountTicketSaleParamType } from "./type";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 
-export const countTicketSale = async (from: string, to: string, user_id: string) => {
+export const countTicketSale = async (
+  from: string,
+  to: string,
+  user_id: string,
+  siteCode?: string
+) => {
   try {
     const dateForm = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
-    const body: any = {
+    const body: CountTicketSaleParamType = {
       user_id,
       from: dayjs(dateForm).format(SERVER_DATE_FORMAT),
       to: dayjs(dateTo).format(SERVER_DATE_FORMAT),
+      siteCode,
     };
     const response = await api.post(COUNT_TICKET_SALE, body);
     const data = get(response, "data") || [];
@@ -40,16 +47,17 @@ export const getOrderHistory = async (
   try {
     setGlobalLoading(true);
     const { currentPage, searchValue } = params;
-    const { from, to, status } = searchValue;
+    const { from, to, status, siteCode } = searchValue;
     const dateForm = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
-    const body: any = {
+    const body: SearchTicketSalePayload = {
       user_id,
       currentPage,
       status,
       from: dayjs(dateForm).format(SERVER_DATE_FORMAT),
       to: dayjs(dateTo).format(SERVER_DATE_FORMAT),
+      siteCode,
     };
     const response = await api.post(GET_ORDER_HISTORY, body);
     const data = get(response, "data") || [];
@@ -64,7 +72,7 @@ export const getOrderHistory = async (
 export const getOrderDetail = async (order_id?: string) => {
   try {
     setGlobalLoading(true);
-    const body: any = {
+    const body = {
       order_id,
     };
     const response = await api.post(GET_ORDER_DETAIL, body);

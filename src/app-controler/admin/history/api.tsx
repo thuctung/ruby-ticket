@@ -17,7 +17,7 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
     const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
-    const body: any = {
+    const body: AdminSearchReport = {
       currentPage,
       location: location === "all" ? "" : location,
       from: dayjs(dateFrom).format(SERVER_DATE_FORMAT),

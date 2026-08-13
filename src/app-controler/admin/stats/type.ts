@@ -13,6 +13,8 @@ export type SearchSalteSumamryType = {
   from: string;
   to: string;
   email?: string;
+  siteCode?: string;
+  user_id?: string;
 };
 
 export type AllSaleType = {

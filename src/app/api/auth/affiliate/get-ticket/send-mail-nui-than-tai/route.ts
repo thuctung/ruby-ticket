@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   await resend.emails.send({
     from: "Ruby Travel System<noreply@rubytraveldanang.com>",
     to: toMail,
-    subject: `Đặt vé Núi Thần Tài-${orderCode}, Ngày ${dateUse}`,
+    subject: `Đặt vé Núi Thần Tài ${orderCode}, Ngày ${dateUse}`,
     html: `
       <div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
          <h2 style="color: #d32f2f;">Xác nhận đặt vé thành công</h2>

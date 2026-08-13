@@ -15,10 +15,16 @@ import dayjs from "dayjs";
 type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
   onReset: () => void;
+  siteList: SiteType[];
   searchValue: SearchTicketSale;
 };
 
-export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicketFormProps) {
+export function SearchReport({
+  searchValue,
+  siteList,
+  onReset,
+  onChangeForm,
+}: SearchTicketFormProps) {
   const [filter, setFilter] = useState<AdminSearchReport>({
     ...searchValue,
   });
@@ -80,6 +86,24 @@ export function SearchReport({ searchValue, onReset, onChangeForm }: SearchTicke
               className="h-12"
               onChange={(value: string) => handleChangeFilter("email", value)}
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+              <MapPin size={14} />
+              Địa điểm
+            </label>
+            <select
+              value={filter.siteCode}
+              className="w-full appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-9 text-sm font-medium text-[#2A1414] outline-none transition focus:border-[#C81418] focus:ring-2 focus:ring-red-100 disabled:opacity-60"
+              onChange={(e) => handleChangeFilter("siteCode", e.target.value)}
+            >
+              <option value="">Chọn công viên</option>
+              {siteList.map((site) => (
+                <option key={site.code} value={site.code}>
+                  {site.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className=" flex flex-wrap justify-end  pr-3">

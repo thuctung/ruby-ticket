@@ -6,17 +6,28 @@ import { downloadTicketPDFServer } from "@/helpers/ticket-server";
 const resend = new Resend(env.SEND_MAIL_KEY);
 
 export async function POST(req: Request) {
-  const { email, customerTickets, focTickets, orderCode }: SendTicketMailType = await req.json();
+  const { email, customerTickets, focTickets, orderCode, siteName }: SendTicketMailType =
+    await req.json();
 
   const pdfBuffer = await downloadTicketPDFServer(customerTickets, focTickets);
 
   await resend.emails.send({
     from: "Ruby Travel System<noreply@rubytraveldanang.com>",
     to: email,
-    subject: `Vé ${orderCode}`,
+    subject: `Đặt vé ${siteName}  ${orderCode}`,
     html: `
-      <p>Cảm ơn bạn đã đặt vé.</p>
-      <p>Mã đơn hàng: ${orderCode}</p>
+          <p>
+            Cảm ơn bạn đã đặt vé tại <strong>Ruby Travel</strong>.
+            Đơn hàng của bạn đã được ghi nhận thành công.
+          </p>
+
+          <p>
+            <strong>Mã đơn hàng:</strong> ${orderCode}<br />
+          </p>
+         <p style="margin-top: 24px;">
+                  Vé điện tử được đính kèm trong email này. Vui lòng xuất trình mã khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: 0705 551 668.
+            </p>
+            <p> Trân trọng,<br /> Ruby Travel </p>
     `,
     attachments: [
       {

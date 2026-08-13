@@ -6,10 +6,11 @@ import {
   LIMIT_TABLE,
   START_DATE_GMT7,
 } from "@/commons/constant";
+import { SearchTicketSalePayload } from "@/types";
 
 export async function POST(req: Request) {
-  const body: any = await req.json();
-  const { currentPage, user_id, from, to, location, status } = body;
+  const body: SearchTicketSalePayload = await req.json();
+  const { currentPage, user_id, from, to, status, siteCode } = body;
 
   const fromIdx = (currentPage - 1) * LIMIT_TABLE;
   const toIdx = fromIdx + LIMIT_TABLE - 1;
@@ -25,8 +26,8 @@ export async function POST(req: Request) {
   if (user_id) {
     query = query.eq("user_id", user_id);
   }
-  if (location) {
-    query = query.eq("location_code", location);
+  if (siteCode) {
+    query = query.eq("site_code", siteCode);
   }
 
   if (status) {

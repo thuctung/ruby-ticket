@@ -2,7 +2,13 @@ import api from "@/axios";
 import { GET_TRANSACTION } from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { CommonType, SearchTableType, SearchTraction } from "@/types";
+import {
+  CommonType,
+  SearchTableType,
+  SearchTicketSalePayload,
+  SearchTraction,
+  SearchTractionPayload,
+} from "@/types";
 import dayjs from "dayjs";
 import { get } from "lodash";
 
@@ -18,7 +24,7 @@ export const getListTransaction = async (
     const { type, from, to } = searchValue;
     const dateForm = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
-    const body: any = {
+    const body: SearchTractionPayload = {
       user_id,
       currentPage,
       type: type === "all" ? "" : type,

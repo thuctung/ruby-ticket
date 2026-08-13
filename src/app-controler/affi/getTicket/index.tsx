@@ -93,16 +93,16 @@ export default function GetTicketPageControler() {
 
       if (tickets) {
         const result: TicketResultQRType[] | any = rebuildDataTicket(tickets, order_id, date_use);
-
+        let siteName = "";
         const addPublicPrice = result.map((item: TicketResultQRType) => {
           const ticketItemSelect = products.find(
             (proSelect) => item.productCode === proSelect.productCode
           );
-
+          siteName = SITE_SUB_GROUP[item.siteCode as keyof typeof SITE_SUB_GROUP] || "";
           return {
             ...item,
             publicPrice: ticketItemSelect?.publicPrice || 0,
-            siteName: SITE_SUB_GROUP[item.siteCode as keyof typeof SITE_SUB_GROUP] || "",
+            siteName,
             restaurantName: ticketItemSelect?.restaurantName,
             personType: ticketItemSelect?.personType,
             time: ticketItemSelect?.time,
@@ -127,6 +127,7 @@ export default function GetTicketPageControler() {
           customerTickets,
           focTickets: haveFOC ? focTickets : [],
           orderCode: tickets.orderCode,
+          siteName,
         });
         if (callback) callback(true);
       } else {

@@ -1,4 +1,4 @@
-import { formatVND } from "@/helpers/money";
+import { formatVND } from "@/lib/money";
 
 type RevenueProps = { total: number; ticket: number; from: string; to: string };
 

@@ -13,7 +13,12 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 import { ParamCreateTicketAgentType, ProductSubmitType, TicketReponseType } from "@/types/ticket";
 import { get } from "lodash";
-import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "./type";
+import {
+  CreateOrderSunGroupPayload,
+  PayloadUdateOrderBalanceType,
+  SendTicketInSystemMailType,
+  UpdateSuccessOrderParam,
+} from "./type";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 
@@ -40,11 +45,12 @@ export const getTicketFromSunGroup = async (
 ) => {
   try {
     setGlobalLoading(true);
-    const { data, error }: any = await api.post(SUN_V2_CREATE_ORDER, {
+    const paload: CreateOrderSunGroupPayload = {
       thirdPartyNumber,
       products: params,
       ...userBooking,
-    });
+    };
+    const { data, error }: any = await api.post(SUN_V2_CREATE_ORDER, paload);
     if (data.errors?.length) {
       setToastMessage(data.messages?.[0] || "");
       return;
@@ -75,7 +81,7 @@ export const updateStatusOrderFail = async (order_id: string, description: strin
   }
 };
 
-export const updateSuccessOrder = async (payload: any) => {
+export const updateSuccessOrder = async (payload: UpdateSuccessOrderParam) => {
   try {
     const { data, error }: any = await api.post(SUCCESS_ORDER_TICKET, payload);
     if (error) {

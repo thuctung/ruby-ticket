@@ -40,6 +40,7 @@ export type UpdateOrderType = {
 export type SendTicketMailType = {
   orderCode: string;
   email: string;
+  siteName: string;
   customerTickets: TicketResultQRType[];
   focTickets: TicketResultQRType[];
 };

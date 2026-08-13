@@ -9,4 +9,5 @@ export const intForm: AdminSearchReport = {
   from: df_From,
   to: df_To,
   email: "",
+  siteCode: "",
 };

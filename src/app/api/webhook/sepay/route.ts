@@ -23,12 +23,10 @@ export async function POST(req: any) {
     if (signature !== expected) {
       return NextResponse.json({ error: "Failed" }, { status: 500 });
     }
-
-    const payment_content = body.content || "";
+    const payment_content = body.code || "";
     const transferAmount = Number(body.transferAmount);
     const parts = payment_content.trim().split(/\s+/);
     const payment_code = parts[0];
-
     let resMessage = "";
 
     if (payment_code) {
