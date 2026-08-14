@@ -58,6 +58,8 @@ export const getBgImg = (personType: string, siteCode: string) => {
     }
   } else if (siteCode === "NUITHANTAI") {
     return "/nui-than-tai-3.webp";
+  } else if (siteCode === "DUTHUYEN") {
+    return "/cau-rong.png";
   } else {
     return "";
   }
