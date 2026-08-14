@@ -6,19 +6,16 @@ import {
   CustomerInfoSchema,
   getPriceAgentAndMultiple,
   PRODUCT_TYPE,
+  toDate,
 } from "./constants";
 import { SelectBox } from "../ui/customs/selectBox";
 import DatePickerCustom from "../ui/date-picker";
-import dayjs from "dayjs";
-import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { CommonType } from "@/types";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { formatVND } from "@/helpers/money";
 import { useState } from "react";
 
 const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
-
-const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
 export default function CustomerBookingForm({
   siteCode,

@@ -5,12 +5,8 @@ import { body, mono } from "@/helpers/font-client";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
-import dayjs from "dayjs";
-import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
-import { BookingFormProps, getPriceAgentAndMultiple, PRODUCT_TYPE } from "./constants";
+import { BookingFormProps, getPriceAgentAndMultiple, PRODUCT_TYPE, toDate } from "./constants";
 import { formatVND } from "@/helpers/money";
-
-const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
 const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
 

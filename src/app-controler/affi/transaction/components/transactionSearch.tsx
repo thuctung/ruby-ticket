@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SearchTraction, StatusType } from "@/types";
 import DatePickerCustom from "@/components/ui/date-picker";
 import { checkDateRange } from "@/helpers/dateTime";
+import { toDate } from "@/components/GetTicketForm/constants";
 
 type TransactionSearch = {
   onChangeForm: (filter: SearchTraction) => void;
@@ -63,7 +64,7 @@ export function TransactionSearch({ listStatus, searchValue, onChangeForm, onRes
           <DatePickerCustom
             value={filter.to}
             onChange={(date: string) => handleChangeFilter("to", date)}
-            maxDate={filter.to}
+            maxDate={toDate}
           />
         </div>
       </div>

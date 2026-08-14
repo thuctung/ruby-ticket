@@ -1,4 +1,6 @@
+import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { ProductBanaType, ResultListProductType, SiteType } from "@/types/ticket";
+import dayjs from "dayjs";
 import z from "zod";
 
 export const BOOKING_FORM_TYPE = {
@@ -74,3 +76,4 @@ export const getPerSonTypeName = (typeCode: string) => {
       return typeCode || "";
   }
 };
+export const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);

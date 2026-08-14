@@ -16,8 +16,7 @@ import {
 
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
-import { getPriceAgentAndMultiple, BOOKING_FORM_TYPE } from "./constants";
-import AffilateBookingForm from "./AffilateForm";
+import { getPriceAgentAndMultiple, BOOKING_FORM_TYPE, toDate } from "./constants";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { ProfileType } from "@/types";
 import { get } from "lodash";
@@ -26,7 +25,6 @@ import { useSearchParams } from "next/navigation";
 import CustomerForm from "./Customer";
 import AffilateBooking from "./Affilate";
 
-const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
   email: "",
   phone: "",

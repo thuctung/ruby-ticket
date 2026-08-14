@@ -1,30 +1,12 @@
 "use client";
 
-import { body, mono } from "@/helpers/font-client";
-
-import { Minus, Plus, Trash2 } from "lucide-react";
-import { SelectBox } from "@/components/ui/customs/selectBox";
-import DatePickerCustom from "@/components/ui/date-picker";
-import dayjs from "dayjs";
-import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
-import {
-  BOOKING_FORM_TYPE,
-  BookingFormProps,
-  getPriceAgentAndMultiple,
-  PRODUCT_TYPE,
-} from "../constants";
-import { formatVND } from "@/helpers/money";
+import { BOOKING_FORM_TYPE, BookingFormProps, PRODUCT_TYPE } from "../constants";
 import SearchBar from "../Customer/SearchBar";
 import TicketCard from "../Customer/TicketCard";
-import OrderSummary from "../Customer/OrderSummary";
 import OrderAffSummary from "./Summary";
 import { getOrder } from "./constants";
 import { useMemo, useState } from "react";
 import TicketTabs from "../Customer/TicketTabs";
-
-const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
-
-const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
 
 export default function AffilateBooking({
   siteCode,

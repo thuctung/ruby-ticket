@@ -2,11 +2,10 @@
 
 import DatePickerCustom from "@/components/ui/date-picker";
 import DropdownSearch from "@/components/ui/dropdown-search";
-import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { SiteType } from "@/types/ticket";
-import dayjs from "dayjs";
-import { CalendarDays, ChevronDown, Info, MapPin, Search, Ticket } from "lucide-react";
+import { Info, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { toDate } from "../constants";
 
 type SearchBarProp = {
   siteCode: string;
@@ -15,7 +14,6 @@ type SearchBarProp = {
   dateUse: string;
   setDateUse: (value: string) => void;
 };
-const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
 export default function SearchBar({
   siteCode,
