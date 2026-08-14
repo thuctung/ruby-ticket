@@ -9,6 +9,8 @@ export const getStatusTopupName = (status: string) => {
       return "Đang xử lý";
     case TOPUPS_STATUS.REJECTED:
       return "Thất bại";
+    case TOPUPS_STATUS.ERROR:
+      return "Lỗi";
     default:
       return "";
   }

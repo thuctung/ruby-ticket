@@ -3,25 +3,16 @@ import { DB_TABLE_NAME, TYPE_TRANSFER } from "@/commons/constant";
 import { env } from "@/lib/env";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
-const crypto = require("crypto");
 
 const secret = env.SEA_PAY_SECRET_KEY;
 
 export async function POST(req: any) {
   try {
-    const signature = req.headers.get("x-sepay-signature") || "";
-    const timestamp = req.headers.get("x-sepay-timestamp") || "";
+    const authenWebhook = req.headers.get("authorization");
     const body = await req.json();
-    const payload = JSON.stringify(body);
-    const expected =
-      "sha256=" +
-      crypto
-        .createHmac("sha256", secret)
-        .update(timestamp + "." + payload)
-        .digest("hex");
 
-    if (signature !== expected) {
-      return NextResponse.json({ error: "Failed" }, { status: 500 });
+    if (`Apikey ${secret}` !== authenWebhook) {
+      return NextResponse.json({ error: "Không đúng bảo mật" }, { status: 500 });
     }
     const payment_content = body.code || "";
     const transferAmount = Number(body.transferAmount);
@@ -31,7 +22,6 @@ export async function POST(req: any) {
 
     if (payment_code) {
       const typeTransfer = payment_code.slice(0, 3);
-
       if (typeTransfer === TYPE_TRANSFER.AFF) {
         // aff nạp tiền
         await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_AFF_ADD_MONEY, {

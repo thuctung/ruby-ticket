@@ -33,6 +33,7 @@ export const TOPUPS_STATUS = {
   PENDING: "pending",
   APPROVED: "completed",
   REJECTED: "rejected",
+  ERROR: "error",
 };
 
 export const LIMIT_TABLE = 10;
