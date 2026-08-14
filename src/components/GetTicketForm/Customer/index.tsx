@@ -49,7 +49,7 @@ export default function CustomerForm({
     handleBuyTicket();
   };
 
-  const [filter, setFilter] = useState("ALL");
+  const [filter, setFilter] = useState("");
 
   const [tickets, personTypes] = useMemo(() => {
     let listTicket: ProductBanaType[] = [];
@@ -62,7 +62,7 @@ export default function CustomerForm({
   }, [listProduct]);
 
   const listTicketFilter = useMemo(() => {
-    if (filter === "ALL") return tickets;
+    if (!filter) return tickets;
     return tickets.filter((item) => item.personType === filter);
   }, [filter, tickets]);
 
@@ -87,7 +87,12 @@ export default function CustomerForm({
               <h2 className="text-2xl font-bold text-gray-900">Danh sách vé</h2>
 
               <div className="mt-4">
-                <TicketTabs active={filter} onChange={setFilter} listType={personTypes} />
+                <TicketTabs
+                  formType={formType}
+                  active={filter}
+                  onChange={setFilter}
+                  listType={personTypes}
+                />
               </div>
 
               <div className="mt-5 flex flex-col gap-4">

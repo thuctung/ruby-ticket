@@ -7,12 +7,20 @@ import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
-import { BookingFormProps, getPriceAgentAndMultiple, PRODUCT_TYPE } from "../constants";
+import {
+  BOOKING_FORM_TYPE,
+  BookingFormProps,
+  getPriceAgentAndMultiple,
+  PRODUCT_TYPE,
+} from "../constants";
 import { formatVND } from "@/helpers/money";
 import SearchBar from "../Customer/SearchBar";
 import TicketCard from "../Customer/TicketCard";
 import OrderSummary from "../Customer/OrderSummary";
 import OrderAffSummary from "./Summary";
+import { getOrder } from "./constants";
+import { useMemo, useState } from "react";
+import TicketTabs from "../Customer/TicketTabs";
 
 const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
@@ -38,6 +46,18 @@ export default function AffilateBooking({
   setQty,
   handleBuyTicket,
 }: BookingFormProps) {
+  const [filter, setFilter] = useState("");
+
+  const [listProductFilter, listType] = useMemo(() => {
+    const listType = listProduct.map((product) => product.personType);
+    if (!filter) {
+      return [listProduct, listType];
+    } else {
+      const filterList = listProduct.filter((product) => product.personType === filter) || [];
+      return [filterList, listType];
+    }
+  }, [listProduct, filter]);
+
   return (
     <div className="pt-16">
       <SearchBar
@@ -47,11 +67,21 @@ export default function AffilateBooking({
         dateUse={formData.date_use}
         setDateUse={(value) => setFieldFormData("date_use", value)}
       />
+      {listProductFilter.length ? (
+        <div className="mt-4">
+          <TicketTabs
+            formType={BOOKING_FORM_TYPE.AFFILATE}
+            active={filter}
+            onChange={setFilter}
+            listType={listType}
+          />
+        </div>
+      ) : null}
 
       <div className="mx-auto">
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_360px] lg:items-start lg:gap-8">
           <div className="space-y-6 ">
-            {listProduct.map((item, index: number) => (
+            {listProductFilter.map((item, index: number) => (
               <section
                 key={index}
                 className=" md:p-6 sm:p-8 md:rounded-2xl md:border md:border-[#E3DFCF]"
@@ -60,17 +90,19 @@ export default function AffilateBooking({
                   {PRODUCT_TYPE[item.personType as keyof typeof PRODUCT_TYPE] || item.personType}
                 </h2>
 
-                {item.ticket.map((product) => (
-                  <div key={product.code} className="mt-5">
-                    <TicketCard
-                      ticket={product}
-                      quantities={quantities[product.code]}
-                      formType={formType}
-                      agentPrice={agentPrice}
-                      setQty={setQty}
-                    />
-                  </div>
-                ))}
+                {item.ticket
+                  .sort((a, b) => getOrder(a.id) - getOrder(b.id))
+                  .map((product) => (
+                    <div key={product.code} className="mt-5">
+                      <TicketCard
+                        ticket={product}
+                        quantities={quantities[product.code]}
+                        formType={formType}
+                        agentPrice={agentPrice}
+                        setQty={setQty}
+                      />
+                    </div>
+                  ))}
               </section>
             ))}
 
