@@ -121,16 +121,9 @@ export default function RegisterPage() {
 
       <div className="mx-auto w-full max-w-2xl flex-1 p-6">
         <Card className="rounded-2xl">
-          <CardHeader>
-            <CardTitle>Đăng ký cộng tác viên (Affiliate)</CardTitle>
-          </CardHeader>
           <CardContent className="space-y-5">
             <div className="text-center mb-7">
               <h1 className="text-2xl font-bold text-gray-900">Đăng ký cộng tác viên</h1>
-              <p className="text-sm text-gray-400 mt-1">
-                Sau khi gửi, tài khoản sẽ ở trạng thái{" "}
-                <span className="font-semibold text-gray-600">pending</span> và chờ admin duyệt.
-              </p>
             </div>
 
             <Separator />
