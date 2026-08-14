@@ -185,7 +185,7 @@ export default function Page() {
               </p>
               <div className="flex flex-wrap items-center gap-4">
                 <a
-                  href={`/checkout?product=${SITE_CODES.BANAHILL}`}
+                  href={`/mua-ve-tham-quan?product=${SITE_CODES.BANAHILL}`}
                   className="bg-brass hover:bg-brassLight text-pineDeep font-semibold px-7 py-3.5 rounded-sm transition-colors bg-[#ee3d8e]"
                 >
                   Vé Bà Nà Hills
@@ -302,7 +302,7 @@ export default function Page() {
             </div>
 
             <a
-              href={`/checkout?product=${SITE_CODES.BANAHILL}`}
+              href={`/mua-ve-tham-quan?product=${SITE_CODES.BANAHILL}`}
               className="bg-brass hover:bg-brassLight text-[white] font-semibold px-7 py-3.5 rounded-sm transition-colors bg-[#ee3d8e]"
             >
               Mua vé ngay

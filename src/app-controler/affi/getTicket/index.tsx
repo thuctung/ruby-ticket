@@ -30,14 +30,14 @@ import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
 import { toast } from "react-toastify";
-import { senTicketToMail } from "@/app-controler/checkout-client/api";
-import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
 import { ACC_STATUS, ERROR_MESSAGE, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import GetTicketForm from "@/components/GetTicketForm";
 import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "./type";
 import { KEY_MODIFY_DATA } from "../stats/contants";
 import { generateBookingVoucherClient } from "@/helpers/e-voucher-client";
+import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
+import { senTicketToMail } from "@/app-controler/checkout-client/api";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);

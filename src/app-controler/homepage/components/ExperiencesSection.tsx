@@ -88,7 +88,7 @@ export function ExperiencesSection({
                     >
                       {item.status ? (
                         <a
-                          href={`/checkout?product=${item.code}`}
+                          href={`/mua-ve-tham-quan?product=${item.code}`}
                           className="flex items-center gap-2"
                         >
                           Mua Ngay
@@ -150,7 +150,10 @@ export function ExperiencesSection({
                       asChild
                       className="rounded-xl bg-slate-900 hover:bg-blue-600 px-6 transition-colors"
                     >
-                      <a href={`/checkout?product=${x.key}`} className="flex items-center gap-2">
+                      <a
+                        href={`/mua-ve-tham-quan?product=${x.key}`}
+                        className="flex items-center gap-2"
+                      >
                         Mua Ngay
                         <ChevronRight className="h-4 w-4" />
                       </a>

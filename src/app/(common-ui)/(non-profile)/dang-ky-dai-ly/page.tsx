@@ -116,9 +116,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header />
-
+    <main className="flex flex-col bg-background text-foreground">
       <div className="mx-auto w-full max-w-2xl flex-1 p-6">
         <Card className="rounded-2xl">
           <CardContent className="space-y-5">
@@ -237,8 +235,6 @@ export default function RegisterPage() {
           </CardContent>
         </Card>
       </div>
-
-      <Footer />
     </main>
   );
 }

@@ -114,7 +114,7 @@ export default function ThanhTuuPage() {
                   className="h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 px-6 shadow-lg shadow-blue-200"
                   asChild
                 >
-                  <Link href="/checkout" className="inline-flex items-center gap-2">
+                  <Link href="/mua-ve-tham-quan" className="inline-flex items-center gap-2">
                     Đặt vé ngay
                     <ChevronRight className="h-4 w-4" />
                   </Link>
@@ -125,7 +125,7 @@ export default function ThanhTuuPage() {
                   className="h-12 rounded-2xl border-slate-200 bg-white hover:bg-slate-50 text-slate-900 px-6 shadow-sm"
                   asChild
                 >
-                  <Link href="/register" className="inline-flex items-center gap-2">
+                  <Link href="/dang-ky-dai-ly" className="inline-flex items-center gap-2">
                     Trở thành cộng tác viên
                     <ChevronRight className="h-4 w-4" />
                   </Link>
@@ -209,7 +209,7 @@ export default function ThanhTuuPage() {
                   className="h-12 rounded-2xl bg-blue-600 text-white hover:bg-blue-700 px-6 shadow-lg shadow-blue-200"
                   asChild
                 >
-                  <Link href="/checkout" className="inline-flex items-center gap-2">
+                  <Link href="/mua-ve-tham-quan" className="inline-flex items-center gap-2">
                     Mua vé ngay
                     <ChevronRight className="h-4 w-4" />
                   </Link>
@@ -220,7 +220,7 @@ export default function ThanhTuuPage() {
                   className="h-12 rounded-2xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50 px-6 shadow-sm"
                   asChild
                 >
-                  <Link href="/register" className="inline-flex items-center gap-2">
+                  <Link href="/dang-ky-dai-ly" className="inline-flex items-center gap-2">
                     Đăng ký đại lý
                     <ChevronRight className="h-4 w-4" />
                   </Link>

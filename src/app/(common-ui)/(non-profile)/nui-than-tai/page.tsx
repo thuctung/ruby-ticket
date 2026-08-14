@@ -163,7 +163,7 @@ export default function NuiThanTaiPage() {
 
             <div className="mt-6 flex flex-wrap gap-3">
               <a
-                href={`/checkout?product=${SITE_CODES.NUITHANTAI}`}
+                href={`/mua-ve-tham-quan?product=${SITE_CODES.NUITHANTAI}`}
                 className="inline-flex items-center gap-2 rounded-lg bg-[#D9A441] px-6 py-3 text-sm font-semibold text-[#1C2620] shadow-lg transition-colors hover:bg-[#E5B458]"
               >
                 <Ticket className="h-4 w-4" />
@@ -259,7 +259,7 @@ export default function NuiThanTaiPage() {
             </p>
 
             <a
-              href={`/checkout?product=${SITE_CODES.NUITHANTAI}`}
+              href={`/mua-ve-tham-quan?product=${SITE_CODES.NUITHANTAI}`}
               className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#1C2620] px-8 py-3.5 text-sm font-semibold text-[#FAF7EE] shadow-md transition-colors hover:bg-[#2B3A31]"
             >
               <Ticket className="h-4 w-4" />

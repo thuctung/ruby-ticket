@@ -1,7 +1,7 @@
-import { SendTicketMailType } from "@/app-controler/checkout-client/type";
 import { Resend } from "resend";
 import { env } from "@/lib/env";
 import { downloadTicketPDFServer } from "@/helpers/ticket-server";
+import { SendTicketMailType } from "@/app-controler/checkout-client/type";
 
 const resend = new Resend(env.SEND_MAIL_KEY);
 

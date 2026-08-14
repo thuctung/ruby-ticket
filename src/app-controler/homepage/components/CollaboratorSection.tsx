@@ -29,7 +29,7 @@ export function CollaboratorSection({ lang }: { lang: LangKey }) {
                 className="h-14 px-8 rounded-2xl bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-100"
                 asChild
               >
-                <a href="/register">Đăng ký làm Affiliate</a>
+                <a href="/dang-ky-dai-ly">Đăng ký làm Affiliate</a>
               </Button>
               <Button
                 size="lg"

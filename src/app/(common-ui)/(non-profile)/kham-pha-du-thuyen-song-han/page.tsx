@@ -97,7 +97,7 @@ const jsonLd = {
     priceCurrency: "VND",
     price: "450000",
     availability: "https://schema.org/InStock",
-    url: `${SITE_URL}/checkout?product=DUTHUYEN`,
+    url: `${SITE_URL}/mua-ve-tham-quan?product=DUTHUYEN`,
   },
   provider: {
     "@type": "Organization",
@@ -121,7 +121,7 @@ export default function Page() {
           Sông Hàn <span className="text-[#EDE7D6]">by night</span>
         </span>
         <Link
-          href="/checkout?product=DUTHUYEN"
+          href="/mua-ve-tham-quan?product=DUTHUYEN"
           className="rounded-full border border-[#F4A340]/60 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[#F4A340] transition hover:bg-[#F4A340] hover:text-[#0B1D33]"
         >
           Mua vé
@@ -151,7 +151,7 @@ export default function Page() {
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
-              href="/checkout?product=DUTHUYEN"
+              href="/mua-ve-tham-quan?product=DUTHUYEN"
               className="rounded-full bg-[#F4A340] px-8 py-3 text-sm font-semibold uppercase tracking-widest text-[#0B1D33] shadow-[0_0_25px_rgba(244,163,64,0.45)] transition hover:shadow-[0_0_40px_rgba(244,163,64,0.7)]"
             >
               Mua vé ngay
@@ -228,7 +228,7 @@ export default function Page() {
             nhạc sống và toàn bộ hành trình 90 phút.
           </p>
           <Link
-            href="/checkout?product=DUTHUYEN"
+            href="/mua-ve-tham-quan?product=DUTHUYEN"
             className="mt-8 inline-block rounded-full bg-[#F4A340] px-10 py-4 text-sm font-semibold uppercase tracking-widest text-[#0B1D33] shadow-[0_0_25px_rgba(244,163,64,0.45)] transition hover:shadow-[0_0_40px_rgba(244,163,64,0.7)]"
           >
             Mua vé ngay

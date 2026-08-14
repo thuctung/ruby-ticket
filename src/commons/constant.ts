@@ -210,7 +210,7 @@ export const MENUS = [
     iconColor: "text-violet-600",
   },
   {
-    link: "/checkout",
+    link: "/mua-ve-tham-quan",
     name: "Mua vé tham quan",
     icon: Ticket,
     iconBg: "bg-green-50",
@@ -232,7 +232,7 @@ export const MENUS = [
     iconColor: "text-gray-600",
   },
   {
-    link: "/register",
+    link: "/dang-ky-dai-ly",
     name: "Đăng ký đại lý",
     icon: Store,
     iconBg: "bg-purple-50",
