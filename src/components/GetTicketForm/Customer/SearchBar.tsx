@@ -6,7 +6,7 @@ import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { SiteType } from "@/types/ticket";
 import dayjs from "dayjs";
 import { CalendarDays, ChevronDown, Info, MapPin, Search, Ticket } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type SearchBarProp = {
   siteCode: string;
@@ -42,6 +42,12 @@ export default function SearchBar({
     () => listSite.map((item) => ({ value: item.code, label: item.name })),
     [listSite]
   );
+
+  useEffect(() => {
+    if (siteCode) {
+      setState((pre) => ({ ...pre, siteCode }));
+    }
+  }, [siteCode]);
 
   return (
     <section className="relative z-10 mx-auto -mt-16 ">
