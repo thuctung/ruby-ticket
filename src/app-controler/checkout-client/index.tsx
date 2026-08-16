@@ -208,7 +208,9 @@ export default function CheckoutControlerPage() {
     };
 
     const senTicket =
-      siteCode === "NUITHANTAI" ? createTemplateTicketThanTaiMountain : senMailOrderProductInSystem;
+      siteCode === SITE_CODES.NUITHANTAI
+        ? createTemplateTicketThanTaiMountain
+        : senMailOrderProductInSystem;
 
     const data = await senTicket(payload);
 

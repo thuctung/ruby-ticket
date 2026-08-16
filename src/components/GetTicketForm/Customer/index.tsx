@@ -7,7 +7,6 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { useMemo, useState } from "react";
 import SearchBar from "./SearchBar";
 import CustomerInfoForm from "./CustomerInfoForm";
-import OrderSummary from "./OrderSummary";
 import TicketCard from "./TicketCard";
 import TicketTabs from "./TicketTabs";
 import { ProductBanaType } from "@/types/ticket";

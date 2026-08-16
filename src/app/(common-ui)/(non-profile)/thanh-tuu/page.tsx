@@ -21,6 +21,16 @@ export const metadata: Metadata = {
   title: "Thành tựu | Ruby Travel",
   description:
     "Ruby Travel tự hào nằm trong Top 10 doanh số Bà Nà toàn quốc và là đại lý uy tín của Vinpearl. Đặt vé nhanh, nhận QR tức thì.",
+  keywords: [
+    "vé bà nà",
+    "vé bà nà hills",
+    "mua vé bà nà online",
+    "du lịch bà nà hills",
+    "vé điện tử bà nà hills",
+    "giá vé bà nà hills",
+    "bà nà hills ticket",
+    "bà nà hills entrance fee",
+  ],
 };
 
 const achievements = [
@@ -47,7 +57,7 @@ const achievements = [
   },
   {
     title: "Đồng hành cùng cộng tác viên",
-    desc: "Chính sách rõ ràng, công cụ quản lý thuận tiện, hỗ trợ onboarding nhanh.",
+    desc: "Chính sách rõ ràng, công cụ quản lý thuận tiện, hỗ trợ thủ tục nhanh chóng.",
     icon: Handshake,
     color: "text-violet-700",
     bg: "bg-violet-100",
@@ -62,7 +72,7 @@ const reasons = [
   },
   {
     title: "Thao tác đơn giản",
-    desc: "Chọn điểm đến, chọn ngày, nhập số lượng và nhận QR ngay.",
+    desc: "Chọn điểm đến, chọn ngày, nhập số lượng, thanh toán và nhận vé ngay.",
     icon: TrendingUp,
   },
   {
@@ -72,7 +82,7 @@ const reasons = [
   },
   {
     title: "Cơ hội kiếm thêm thu nhập",
-    desc: "Trở thành cộng tác viên/đại lý để nhận chính sách hấp dẫn.",
+    desc: "Trở thành cộng tác viên/đại lý để nhận chính sách ưu đãi hấp dẫn.",
     icon: Users,
   },
 ] as const;
@@ -89,7 +99,7 @@ export default function ThanhTuuPage() {
         <div className="mx-auto max-w-6xl px-6 py-14 md:py-20">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
             <div className="space-y-6">
-              <Badge className="bg-white/80 text-slate-700 hover:bg-white border border-slate-200 rounded-full px-4 py-1.5 shadow-sm">
+              <Badge className="bg-white/80 text-slate-700 hover:bg-white border border-slate-200 text-[red] rounded-full px-4 py-1.5 shadow-sm">
                 Ruby Travel • Đà Nẵng
               </Badge>
 
@@ -142,7 +152,7 @@ export default function ThanhTuuPage() {
                   <div>
                     <div className="text-sm font-extrabold text-slate-900">Ruby Travel</div>
                     <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">
-                      Uy tín • Nhanh • Rõ ràng
+                      Uy tín • Nhanh • Tiện lợi
                     </div>
                   </div>
                 </div>

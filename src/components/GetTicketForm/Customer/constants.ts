@@ -1,3 +1,4 @@
+import { SITE_CODES } from "@/commons/constant";
 import {
   DoorOpen,
   CableCar,
@@ -36,16 +37,16 @@ export const FEATURE_ICON_BANA: Record<string, React.ElementType> = {
 };
 
 export const featues = (siteCode: string) => {
-  if (siteCode === "BNC") {
+  if (siteCode === SITE_CODES.BANAHILL) {
     return ftBaNA;
-  } else if (siteCode === "NUITHANTAI") {
+  } else if (siteCode === SITE_CODES.NUITHANTAI) {
     return ftNTT;
   }
   return orther;
 };
 
 export const getBgImg = (personType: string, siteCode: string) => {
-  if (siteCode === "BNC") {
+  if (siteCode === SITE_CODES.BANAHILL) {
     switch (personType) {
       case "ADULT":
         return "/ba-na-lon.jpg";
@@ -56,9 +57,9 @@ export const getBgImg = (personType: string, siteCode: string) => {
       default:
         return "/bana2.jpg";
     }
-  } else if (siteCode === "NUITHANTAI") {
+  } else if (siteCode === SITE_CODES.NUITHANTAI) {
     return "/nui-than-tai-3.webp";
-  } else if (siteCode === "DUTHUYEN") {
+  } else if (siteCode === SITE_CODES.DUTHUYEN) {
     return "/cau-rong.png";
   } else {
     return "";
@@ -67,11 +68,11 @@ export const getBgImg = (personType: string, siteCode: string) => {
 
 export const geNoteSiteCode = (siteCode: string) => {
   switch (siteCode) {
-    case "BNC":
+    case SITE_CODES.BANAHILL:
       return "Trẻ từ 1m đến 1m4 tính vé Trẻ em, Người cao tuổi đủ 70 tuổi trở lên, miễn phí trẻ dưới 1m.";
-    case "NUITHANTAI":
+    case SITE_CODES.NUITHANTAI:
       return "Trẻ từ 1m đến 1m4 tính vé Trẻ em, miễn phí trẻ dưới 1m(đi kèm người lớn)";
-    case "DUTHUYEN":
+    case SITE_CODES.DUTHUYEN:
       return "Miễn phí vé với trẻ em dưới 1 tuổi (Thêm vào đơn để được xếp chỗ ngồi)";
     default:
       return "";

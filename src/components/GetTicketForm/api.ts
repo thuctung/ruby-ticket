@@ -6,12 +6,12 @@ import {
   SUCCESS_ORDER_TICKET,
   SUN_GET_PRODOCT_LIST,
 } from "@/commons/apiURL";
-import { DB_TABLE_NAME, SITE_CODES } from "@/commons/constant";
+import { DB_TABLE_NAME } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 
-import { groupTicketSunGroup } from "@/helpers/genCode";
+import { groupTickets } from "@/helpers/genCode";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 
@@ -64,7 +64,8 @@ export const getProductBySiteSun = async (siteCodes: string, date: string) => {
         `SAP không cấu hình mở bán cho sản phẩm vào ngày ${dayjs(date, SERVER_DATE_FORMAT).format(BASIC_DATE_FORMAT)}`
       );
     }
-    return groupTicketSunGroup(data.result);
+    console.log("data.result", data.result);
+    return groupTickets(data.result);
   } catch (e) {
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
   } finally {
@@ -93,7 +94,7 @@ export const getProductionInSystem = async (site_code: string) => {
       setToastMessage("Không có vé phù hợp");
       return [];
     }
-    return groupTicketSunGroup(data);
+    return groupTickets(data);
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {

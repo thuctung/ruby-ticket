@@ -40,9 +40,12 @@ const LIST_PRODUCT_CUSTOM = {
   ["64E2F7D9-97F0-7310-4E04-01954640D3CF"]: 1,
   ["C522BC15-0B7A-B290-4917-01954640B983"]: 1,
   ["8903DC30-9806-3E68-5151-01954640E519"]: 1,
+  ["AC13DF90-1886-0B61-5859-019546410BD0"]: 1,
+  ["C2F74D42-3A86-765A-4FAB-01954640DC5E"]: 1,
+  ["EC984FE8-9A38-56B2-02EB-019B569AFA36"]: 1,
 };
 
-export const groupTicketSunGroup = (tickets: any[]) => {
+export const groupTickets = (tickets: any[]) => {
   const nearlyTicket: any = [];
 
   const grouped = Object.entries(

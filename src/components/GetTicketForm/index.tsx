@@ -20,7 +20,7 @@ import { getPriceAgentAndMultiple, BOOKING_FORM_TYPE, toDate } from "./constants
 import { useProfileStore } from "@/stores/useProfileStore";
 import { ProfileType } from "@/types";
 import { get } from "lodash";
-import { CUSTOMER, SITE_CODES } from "@/commons/constant";
+import { CUSTOMER } from "@/commons/constant";
 import { useSearchParams } from "next/navigation";
 import CustomerForm from "./Customer";
 import AffilateBooking from "./Affilate";

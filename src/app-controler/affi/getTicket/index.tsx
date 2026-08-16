@@ -44,8 +44,6 @@ export default function GetTicketPageControler() {
   const { setToastMessage }: CommonType | any = useCommonStore.getState();
   const { setProfile }: CommonType | any = useProfileStore.getState();
 
-  const [location, setLocation] = useState(SITE_CODES.BANAHILL);
-
   const updateBalaceProfile = (totalMoney: number) => {
     const currentBalance = profile.balance - totalMoney;
     setProfile({
@@ -205,8 +203,7 @@ export default function GetTicketPageControler() {
       const order_id = await createOrderTicket(params);
 
       if (in_system) {
-        if (siteCode === "NUITHANTAI") {
-          // TODO
+        if (siteCode === SITE_CODES.NUITHANTAI) {
           handleBuyTicketInSystem(
             order_id,
             products,

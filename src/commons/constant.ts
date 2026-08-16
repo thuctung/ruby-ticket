@@ -280,6 +280,7 @@ export const ERROR_MESSAGE = {
 export const SITE_CODES = {
   BANAHILL: "BNC",
   NUITHANTAI: "NUITHANTAI",
+  DUTHUYEN: "DUTHUYEN",
 };
 
 export const BEST_SELLER = "BEST_SELLER";

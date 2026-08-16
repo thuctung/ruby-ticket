@@ -28,6 +28,10 @@ export const ORDER_PRODUCT_IN_BANA: Record<number, number> = {
   10000982: 25,
   10002222: 25,
   10000981: 26,
+  10000985: 28,
+  10000983: 29,
+  10001001: 30,
+  10001004: 31,
 };
 
 export const getOrder = (productId: number): number => {
