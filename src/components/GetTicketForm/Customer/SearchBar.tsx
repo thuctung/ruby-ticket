@@ -58,7 +58,7 @@ export default function SearchBar({
               value={state.siteCode}
               onChange={(value: string) => onChangeForm("siteCode", value)}
               placeholder="Chọn tên công viên"
-              searchPlaceholder="Gõ để tìm..."
+              searchPlaceholder="Nhập để tìm..."
             />
           </div>
 

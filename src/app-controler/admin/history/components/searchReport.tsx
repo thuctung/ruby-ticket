@@ -104,7 +104,7 @@ export function SearchReport({
               value={searchValue.email}
               onChange={(value: string) => onChangeForm("email", value)}
               placeholder="Chọn tên đại lý"
-              searchPlaceholder="Gõ để tìm..."
+              searchPlaceholder="Nhập để tìm..."
             />
           </div>
           {/* Tên/Email aff */}
