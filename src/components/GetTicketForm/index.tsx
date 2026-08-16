@@ -131,7 +131,6 @@ export default function GetTicketForm({
     setLoading(false);
   };
   const handleBuyTicket = () => {
-    return;
     setLoading(true);
     const products: ProductSubmitType[] = selectedLines.map((item) => {
       const priceSell = getPriceAgentAndMultiple(item, formType, agentPrice);
