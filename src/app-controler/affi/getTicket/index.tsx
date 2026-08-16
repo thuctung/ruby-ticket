@@ -91,7 +91,7 @@ export default function GetTicketPageControler() {
         }
       );
 
-      if (tickets) {
+      if (tickets && typeof tickets !== "string") {
         const result: TicketResultQRType[] | any = rebuildDataTicket(tickets, order_id, date_use);
         let siteName = "";
         const addPublicPrice = result.map((item: TicketResultQRType) => {
@@ -131,8 +131,7 @@ export default function GetTicketPageControler() {
         });
         if (callback) callback(true);
       } else {
-        updateStatusOrderFail(order_id, ERROR_MESSAGE.SUN_WORLD_TICKET);
-        setToastMessage("Không tạo được vé!");
+        updateStatusOrderFail(order_id, tickets || ERROR_MESSAGE.ERROR_SYSTEM_CREATE_TICKET);
         if (callback) callback(false);
       }
     } else {

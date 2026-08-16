@@ -50,14 +50,14 @@ export const getTicketFromSunGroup = async (
       products: params,
       ...userBooking,
     };
-    const { data, error }: any = await api.post(SUN_V2_CREATE_ORDER, paload);
+    const { data }: any = await api.post(SUN_V2_CREATE_ORDER, paload);
     if (data.errors?.length) {
       setToastMessage(data.messages?.[0] || "");
-      return;
+      return data.messages?.[0];
     }
     return data.result as unknown as TicketReponseType;
   } catch (e) {
-    setToastMessage("Có lỗi xảy ra! Thử lại sau");
+    setToastMessage("Lỗi không tạo được vé!");
   } finally {
     setGlobalLoading(false);
   }
