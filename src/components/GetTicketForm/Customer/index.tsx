@@ -13,6 +13,8 @@ import TicketTabs from "./TicketTabs";
 import { ProductBanaType } from "@/types/ticket";
 import { geNoteSiteCode } from "./constants";
 import OrderAffSummary from "../Affilate/Summary";
+import { getOrder } from "../Affilate/constants";
+import { SITE_CODES } from "@/commons/constant";
 
 export default function CustomerForm({
   siteCode,
@@ -62,9 +64,17 @@ export default function CustomerForm({
   }, [listProduct]);
 
   const listTicketFilter = useMemo(() => {
-    if (!filter) return tickets;
-    return tickets.filter((item) => item.personType === filter);
-  }, [filter, tickets]);
+    let result: ProductBanaType[] = [];
+    if (!filter) {
+      result = tickets;
+    } else {
+      result = tickets.filter((item) => item.personType === filter);
+    }
+    if (siteCode === SITE_CODES.BANAHILL) {
+      return result.sort((a, b) => getOrder(a.id) - getOrder(b.id));
+    }
+    return result;
+  }, [filter, tickets, siteCode]);
 
   return (
     <>

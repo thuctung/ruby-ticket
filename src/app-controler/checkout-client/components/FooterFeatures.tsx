@@ -25,7 +25,7 @@ const FEATURES = [
 
 export default function FooterFeatures() {
   return (
-    <footer className="border-t border-gray-100 bg-white">
+    <footer className="border-t border-gray-100 bg-white mt-6">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-10 sm:px-6 md:grid-cols-4 lg:px-8">
         {FEATURES.map(({ icon: Icon, title, desc }) => (
           <div key={title} className="flex items-start gap-3">

@@ -86,10 +86,7 @@ export default function OrderAffSummary({
         </div>
         <br />
         <div className={`mt-4 flex flex-col gap-4 h-auto overflow-auto ${classList}`}>
-          {selectedLines.length === 0 && (
-            <p className="text-sm text-gray-400">Chưa có vé nào được chọn.</p>
-          )}
-          {selectedLines.length &&
+          {selectedLines.length > 0 ? (
             selectedLines.map((t: any) => {
               return (
                 <div
@@ -142,7 +139,10 @@ export default function OrderAffSummary({
                   </div>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <p className="text-sm text-gray-400">Chưa có vé nào được chọn.</p>
+          )}
         </div>
 
         <div className="mt-4 flex items-center justify-between border-t border-red-300 pt-4">
