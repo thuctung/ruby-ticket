@@ -57,7 +57,7 @@ export default function SearchBar({
               options={lisStateCover}
               value={state.siteCode}
               onChange={(value: string) => onChangeForm("siteCode", value)}
-              placeholder="Chọn tên đại lý"
+              placeholder="Chọn tên công viên"
               searchPlaceholder="Gõ để tìm..."
             />
           </div>
