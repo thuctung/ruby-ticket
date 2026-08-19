@@ -348,7 +348,7 @@ export const downloadTicketPDF = async (
 
 export const rebuildDataTicket = (
   finalList: TicketReponseType,
-  orderId: string,
+  orderId: string | null,
   date_use: string,
   productSelected?: ProductSubmitType[]
 ) => {

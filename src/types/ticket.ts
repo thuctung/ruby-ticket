@@ -211,6 +211,8 @@ export type TicketItemReponseType = {
   siteCode: string;
   unitPrice: number;
   tickets: TicketInItemType[];
+  quantity: number;
+  usageDate: string;
 };
 
 export type TicketReponseType = {
@@ -221,6 +223,7 @@ export type TicketReponseType = {
   orderCode: string;
   items: TicketItemReponseType[];
   pnr: string;
+  totalOrderPrice: number;
 };
 
 export type ResTicketFormatType = {

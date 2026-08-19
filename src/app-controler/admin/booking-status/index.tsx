@@ -1,26 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-import { BASIC_DATE_FORMAT, dayjsEx } from "@/helpers/dateTime";
-
-import { CustomTable, TableColumn } from "@/components/ui/customs/table";
-
-import { get } from "lodash";
 import { getStatusBooking } from "./api";
 import { toast } from "react-toastify";
-import { TicketStatusType } from "@/app-controler/affi/ticket-statatus/type";
-import { statusClass } from "../affiliate-mgt/constants";
-import { StatusData } from "@/app-controler/affi/stats/contants";
 import { SearchBookingStatus } from "./components/searchTicketForm";
-import { AdminBookingStatusResponseType } from "./type";
 import BookingDetailCard from "./components/bookingDetail";
+import { TicketReponseType } from "@/types/ticket";
 
 export default function AdminBookingStatusPageControler() {
-  const [bookingDetail, setBookingDetail] = useState<AdminBookingStatusResponseType>();
+  const [bookingDetail, setBookingDetail] = useState<TicketReponseType>();
 
   const handleSearch = async (value: string) => {
     if (!value) {

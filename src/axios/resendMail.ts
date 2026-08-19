@@ -7,7 +7,7 @@ export const sendMailTicketBaNa = async (payloadSendMailBaNa: SendMailBaNaType) 
   const { mail, siteName, orderCode, fileAttch } = payloadSendMailBaNa;
   return await resendMail.emails.send({
     from: "Ruby Travel System<noreply@rubytraveldanang.com>",
-    to: "thuctung190298@gmail.com",
+    to: mail,
     subject: `Đặt vé ${siteName} ${orderCode}`,
     html: `
           <p>

@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     }
     await resendMail.emails.send({
       from: "Ruby Travel System<noreply@rubytraveldanang.com>",
-      to: "tungkiz190298@gmail.com",
+      to: toMail,
       subject: `Đặt vé Núi Thần Tài ${orderCode}, Ngày ${dateUse}`,
       html: `
       <div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
