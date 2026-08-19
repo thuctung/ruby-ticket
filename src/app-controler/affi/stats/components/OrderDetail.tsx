@@ -74,7 +74,6 @@ export default function OrderDetailDialog({
     const { focTickets, customerTickets } = getTicketFOCAndCutomer(result);
     await downloadTicketPDF(customerTickets, focTickets);
   };
-  console.log("currentOrder", currentOrder);
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"

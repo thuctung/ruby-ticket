@@ -20,6 +20,8 @@ const ftBaNA = ["Vườn hoa", "Cáp treo khứ hồi", "Vòng quay", "Biểu di
 
 const orther = ["Trải nghiệm đặc biệt", "Biểu diễn"];
 
+const CONTROIDG = ["Trải nghiệm đặc biệt", "Rừng thông", "Vườn hoa", "Cáp treo khứ hồi"];
+
 export const FEATURE_ICON_BANA: Record<string, React.ElementType> = {
   "Vào cổng": DoorOpen,
   "Cáp treo khứ hồi": CableCar,
@@ -37,12 +39,20 @@ export const FEATURE_ICON_BANA: Record<string, React.ElementType> = {
 };
 
 export const featues = (siteCode: string) => {
-  if (siteCode === SITE_CODES.BANAHILL) {
-    return ftBaNA;
-  } else if (siteCode === SITE_CODES.NUITHANTAI) {
-    return ftNTT;
+  switch (siteCode) {
+    case SITE_CODES.BANAHILL: {
+      return ftBaNA;
+    }
+    case SITE_CODES.NUITHANTAI: {
+      return ftNTT;
+    }
+    case SITE_CODES.CONGTROI: {
+      return CONTROIDG;
+    }
+    default: {
+      return orther;
+    }
   }
-  return orther;
 };
 
 export const getBgImg = (personType: string, siteCode: string) => {
@@ -61,11 +71,14 @@ export const getBgImg = (personType: string, siteCode: string) => {
     return "/nui-than-tai-3.webp";
   } else if (siteCode === SITE_CODES.DUTHUYEN) {
     return "/cau-rong.png";
+  } else if (siteCode === SITE_CODES.KWHOIAN) {
+    return "/hoi-an-banner.jpg";
+  } else if (siteCode === SITE_CODES.CONGTROI) {
+    return "/cong-troi-banner.webp";
   } else {
     return "";
   }
 };
-
 export const geNoteSiteCode = (siteCode: string) => {
   switch (siteCode) {
     case SITE_CODES.BANAHILL:
