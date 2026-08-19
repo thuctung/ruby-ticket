@@ -26,18 +26,14 @@ export async function POST(req: Request) {
     });
     const { result, messages, success } = data;
 
-    if (!success) {
-      const resMess = messages?.[0] || "Lỗi khi tạo vé";
-      await supabaseAdmin
-        .from(DB_TABLE_NAME.ORDERS)
-        .update({
-          status: KEY_MODIFY_DATA.ERROR,
-          description: resMess,
-        })
-        .eq("id", order_id);
-      return NextResponse.json({ data: [], messages: resMess }, { status: 200 });
-    } else if (result) {
-      const ticketBuild: TicketResultQRType[] | any = rebuildDataTicket(
+    if (success) {
+      await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_COMPLETE_ORDER, {
+        p_order_id: order_id,
+        p_provider_order_code: result.orderCode,
+        p_tickets: [],
+        p_reference_code: result.referenceCode,
+      });
+      const ticketBuild: TicketResultQRType[] = rebuildDataTicket(
         result,
         order_id,
         date_use,
@@ -46,33 +42,50 @@ export async function POST(req: Request) {
       const siteName = get(ticketBuild, [0, "siteName"]) || "";
       const { focTickets, customerTickets } = getTicketFOCAndCutomer(ticketBuild);
 
-      await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_COMPLETE_ORDER, {
-        p_order_id: order_id,
-        p_provider_order_code: result.orderCode,
-        p_tickets: ticketBuild,
-        p_reference_code: result.referenceCode,
-      });
+      try {
+        const pdfBuffer = await downloadTicketPDFServer(customerTickets, focTickets);
+        const filePath = `${DB_TABLE_NAME.STORAGE_EMAIL_VOUCHERS}/${result.orderCode}.pdf`;
 
-      const pdfBuffer = await downloadTicketPDFServer(customerTickets, focTickets);
-      const filePath = `email-vouchers/${result.orderCode}.pdf`;
-
-      await supabaseAdmin.storage
-        .from(DB_TABLE_NAME.STORAGE_EMAIL_VOUCHERS)
-        .upload(filePath, pdfBuffer, {
-          contentType: "application/pdf",
-          upsert: true,
+        await Promise.allSettled([
+          supabaseAdmin.storage
+            .from(DB_TABLE_NAME.STORAGE_EMAIL_VOUCHERS)
+            .upload(filePath, pdfBuffer, {
+              contentType: "application/pdf",
+              upsert: true,
+            }),
+          supabaseAdmin.from(DB_TABLE_NAME.EMAIL_QUEUE).insert({
+            email: email,
+            site_name: siteName,
+            order_code: result.orderCode,
+            file_path: filePath,
+            status: KEY_MODIFY_DATA.PENDING,
+          }),
+        ]);
+      } catch (e) {
+        await supabaseAdmin.from(DB_TABLE_NAME.EMAIL_QUEUE).insert({
+          email: email,
+          site_name: siteName,
+          order_code: result.orderCode,
+          file_path: "",
+          status: KEY_MODIFY_DATA.FAILED,
         });
-
-      await supabaseAdmin.from(DB_TABLE_NAME.EMAIL_QUEUE).insert({
-        email: email,
-        site_name: siteName,
-        order_code: result.orderCode,
-        file_path: filePath,
-        status: KEY_MODIFY_DATA.PENDING,
-      });
+      }
 
       return NextResponse.json(
         { data: { focTickets, customerTickets }, messages: "" },
+        { status: 200 }
+      );
+    } else {
+      const resMess = messages?.[0] || "Lỗi khi tạo vé";
+      await supabaseAdmin
+        .from(DB_TABLE_NAME.ORDERS)
+        .update({
+          status: KEY_MODIFY_DATA.ERROR,
+          description: resMess,
+        })
+        .eq("id", order_id);
+      return NextResponse.json(
+        { data: { focTickets: [], customerTickets: [] }, messages: resMess },
         { status: 200 }
       );
     }

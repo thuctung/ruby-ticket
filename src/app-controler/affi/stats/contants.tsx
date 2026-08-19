@@ -24,6 +24,7 @@ export const KEY_MODIFY_DATA = {
   ["ERROR"]: "error",
   ["CANCEL"]: "cancel",
   ["ONHOLD"]: "onhold",
+  ["FAILED"]: "failed",
 };
 
 export const StatusData = {
