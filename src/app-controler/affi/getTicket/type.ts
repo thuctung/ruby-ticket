@@ -14,6 +14,7 @@ export type SendTicketInSystemMailType = {
   paymentCode?: string;
   siteName?: string;
   fullName?: string;
+  payloadUpdateBalance?: PayloadUdateOrderBalanceType;
 };
 
 export type PayloadUdateOrderBalanceType = {
@@ -26,17 +27,12 @@ export type PayloadUdateOrderBalanceType = {
   orderCode: string;
 };
 
-export type UpdateSuccessOrderParam = {
-  orderCode: string;
-  tickets: TicketResultQRType[];
-  referenceCode: string;
-  orderId: string;
-};
-
 export type CreateOrderSunGroupPayload = {
   thirdPartyNumber: string;
   products: ProductSubmitType[];
   email: string;
   phone: string;
   fullname: string;
+  order_id: string;
+  date_use: string;
 };

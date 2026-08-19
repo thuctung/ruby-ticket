@@ -1,6 +1,6 @@
 import { SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { formatVND } from "@/helpers/money";
-import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
+import { ProductSubmitType, TicketReponseType, TicketResultQRType } from "@/types/ticket";
 
 import { jsPDF } from "jspdf";
 import QRCodePDF from "qrcode";
@@ -218,7 +218,7 @@ export const downloadTicketPDF = async (
     pdf.text("Ngày sử dụng/ Use date", leftX, y);
 
     pdf.setFontSize(7);
-    pdf.text("Giá/Price", rightX - 67, y);
+    if (t.publicPrice) pdf.text("Giá/Price", rightX - 67, y);
 
     y += 10;
 
@@ -231,8 +231,7 @@ export const downloadTicketPDF = async (
       leftX,
       y
     );
-
-    pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
+    if (t.publicPrice) pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
 
     y += 10;
 
@@ -350,27 +349,42 @@ export const downloadTicketPDF = async (
 export const rebuildDataTicket = (
   finalList: TicketReponseType,
   orderId: string,
-  date_use: string
+  date_use: string,
+  productSelected?: ProductSubmitType[]
 ) => {
   const result: TicketResultQRType[] | any = finalList.items.flatMap((item) =>
-    item.tickets.map((ticketChild) => ({
-      productName: item.productName,
-      productCode: item.productCode,
-      siteCode: item.siteCode,
-      unitPrice: item.unitPrice,
-      productGroup: item.productGroup,
-      isFaceIdRequired: item.isFaceIdRequired,
+    item.tickets.map((ticketChild) => {
+      let ticketItemSelect = null;
+      if (productSelected?.length) {
+        ticketItemSelect = productSelected.find(
+          (proSelect) => item.productCode === proSelect.productCode
+        );
+      }
 
-      ticketNumber: ticketChild.ticketNumber,
-      validDateFrom: ticketChild.validDateFrom,
-      validDateTo: ticketChild.validDateTo,
-      status: ticketChild.status,
-      verifyCode: ticketChild.verifyCode,
-      orderCode: finalList.orderCode,
-      orderId,
-      date_use,
-      pnr: finalList.pnr,
-    }))
+      return {
+        productName: item.productName,
+        productCode: item.productCode,
+        siteCode: item.siteCode,
+        unitPrice: item.unitPrice,
+        productGroup: item.productGroup,
+        isFaceIdRequired: item.isFaceIdRequired,
+
+        ticketNumber: ticketChild.ticketNumber,
+        validDateFrom: ticketChild.validDateFrom,
+        validDateTo: ticketChild.validDateTo,
+        status: ticketChild.status,
+        verifyCode: ticketChild.verifyCode,
+        orderCode: finalList.orderCode,
+        orderId,
+        date_use,
+        pnr: finalList.pnr,
+        publicPrice: ticketItemSelect?.publicPrice || 0,
+        siteName: ticketItemSelect?.siteName || "",
+        restaurantName: ticketItemSelect?.restaurantName,
+        personType: ticketItemSelect?.personType,
+        time: ticketItemSelect?.time,
+      };
+    })
   );
 
   return result;

@@ -1,43 +1,38 @@
 "use client";
 
-import { useState } from "react";
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 import { formatVND } from "@/lib/money";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
 import {
-  TicketResultQRType,
   TicketSubmitAgentType,
   ParamCreateTicketAgentType,
   SubmitSelectTicket,
-  TicketReponseType,
   ProductSubmitType,
+  ResTicketFormatType,
 } from "@/types/ticket";
 import {
   createOrderTicket,
   createTemplateTicketThanTaiMountain,
   getStatusProfile,
   getTicketFromSunGroup,
-  updateOrderAndBalaceInSystem,
-  updateStatusOrderFail,
-  updateSuccessOrder,
 } from "./api";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
-import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
+import { downloadTicketPDF, generateThirdPartyCode } from "@/helpers/ticket";
 import { toast } from "react-toastify";
-import { ACC_STATUS, ERROR_MESSAGE, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
+import { ACC_STATUS, SITE_CODES } from "@/commons/constant";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import GetTicketForm from "@/components/GetTicketForm";
-import { PayloadUdateOrderBalanceType, SendTicketInSystemMailType } from "./type";
+import {
+  CreateOrderSunGroupPayload,
+  PayloadUdateOrderBalanceType,
+  SendTicketInSystemMailType,
+} from "./type";
 import { KEY_MODIFY_DATA } from "../stats/contants";
-import { generateBookingVoucherClient } from "@/helpers/e-voucher-client";
-import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
-import { senTicketToMail } from "@/app-controler/checkout-client/api";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -77,59 +72,24 @@ export default function GetTicketPageControler() {
     values: SubmitSelectTicket
   ) => {
     const { products, totalMoney, date_use, haveFOC, callback } = values;
-
+    const payloadGetTicket: CreateOrderSunGroupPayload = {
+      thirdPartyNumber,
+      products,
+      order_id,
+      date_use,
+      email: profile.email || "",
+      fullname: profile.full_name || "",
+      phone: profile.phone || "",
+    };
     if (order_id) {
-      const tickets: TicketReponseType | undefined = await getTicketFromSunGroup(
-        products,
-        thirdPartyNumber,
-        {
-          email: profile.email,
-          fullname: profile.full_name,
-          phone: profile.phone,
-        }
-      );
-
-      if (tickets && typeof tickets !== "string") {
-        const result: TicketResultQRType[] | any = rebuildDataTicket(tickets, order_id, date_use);
-        let siteName = "";
-        const addPublicPrice = result.map((item: TicketResultQRType) => {
-          const ticketItemSelect = products.find(
-            (proSelect) => item.productCode === proSelect.productCode
-          );
-          siteName = SITE_SUB_GROUP[item.siteCode as keyof typeof SITE_SUB_GROUP] || "";
-          return {
-            ...item,
-            publicPrice: ticketItemSelect?.publicPrice || 0,
-            siteName,
-            restaurantName: ticketItemSelect?.restaurantName,
-            personType: ticketItemSelect?.personType,
-            time: ticketItemSelect?.time,
-          };
-        });
-
-        const { focTickets, customerTickets } = getTicketFOCAndCutomer(addPublicPrice);
+      const data: ResTicketFormatType | undefined = await getTicketFromSunGroup(payloadGetTicket);
+      if (data) {
+        const { customerTickets, focTickets } = data;
         await downloadTicketPDF(customerTickets, haveFOC ? focTickets : []);
-
         updateBalaceProfile(totalMoney);
-
-        updateSuccessOrder({
-          orderCode: tickets.orderCode,
-          tickets: result,
-          referenceCode: tickets.referenceCode,
-          orderId: order_id,
-        });
         toast.success(`Rút vé thành công`);
-
-        senTicketToMail({
-          email: profile.email || "",
-          customerTickets,
-          focTickets: haveFOC ? focTickets : [],
-          orderCode: tickets.orderCode,
-          siteName,
-        });
         if (callback) callback(true);
       } else {
-        updateStatusOrderFail(order_id, tickets || ERROR_MESSAGE.ERROR_SYSTEM_CREATE_TICKET);
         if (callback) callback(false);
       }
     } else {
@@ -146,6 +106,15 @@ export default function GetTicketPageControler() {
     callback?: Function
   ) => {
     if (profile.email && profile.phone) {
+      const updateBalance: PayloadUdateOrderBalanceType = {
+        balance: updateBalaceProfile(totalMoney),
+        user_id: profile.user_id,
+        order_id,
+        description: "",
+        status: KEY_MODIFY_DATA.SUCCESS,
+        orderCode: thirdPartyNumber,
+        amount: totalMoney,
+      };
       const payload: SendTicketInSystemMailType = {
         orderCode: thirdPartyNumber,
         dateUse,
@@ -153,24 +122,13 @@ export default function GetTicketPageControler() {
         phone: profile.phone,
         fullName: profile.full_name || "",
         listTicket: products.map((item) => ({ name: item.productsName, quantity: item.quantity })),
+        payloadUpdateBalance: updateBalance,
       };
       const data = await createTemplateTicketThanTaiMountain(payload);
       if (data) {
-        generateBookingVoucherClient(payload);
-        const payloadUpdate: PayloadUdateOrderBalanceType = {
-          balance: updateBalaceProfile(totalMoney),
-          user_id: profile.user_id,
-          order_id,
-          description: "",
-          status: KEY_MODIFY_DATA.SUCCESS,
-          orderCode: thirdPartyNumber,
-          amount: totalMoney,
-        };
-        updateOrderAndBalaceInSystem(payloadUpdate);
         toast.success("Đặt vé thành công");
         if (callback) callback(true);
       } else {
-        updateStatusOrderFail(order_id, ERROR_MESSAGE.ERROR_SYSTEM_CREATE_TICKET);
         if (callback) callback(false);
       }
     }

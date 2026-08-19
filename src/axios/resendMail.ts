@@ -1,20 +1,14 @@
 import { Resend } from "resend";
-import { env } from "@/lib/env";
-import { downloadTicketPDFServer } from "@/helpers/ticket-server";
-import { SendTicketMailType } from "@/app-controler/checkout-client/type";
+import { SendMailBaNaType } from "@/types/send-mail";
 
-const resend = new Resend(env.SEND_MAIL_KEY);
+const resendMail = new Resend(process.env.SEND_MAIL_KEY);
 
-export async function POST(req: Request) {
-  const { email, customerTickets, focTickets, orderCode, siteName }: SendTicketMailType =
-    await req.json();
-
-  const pdfBuffer = await downloadTicketPDFServer(customerTickets, focTickets);
-
-  await resend.emails.send({
+export const sendMailTicketBaNa = async (payloadSendMailBaNa: SendMailBaNaType) => {
+  const { mail, siteName, orderCode, fileAttch } = payloadSendMailBaNa;
+  return await resendMail.emails.send({
     from: "Ruby Travel System<noreply@rubytraveldanang.com>",
-    to: email,
-    subject: `Đặt vé ${siteName}  ${orderCode}`,
+    to: "thuctung190298@gmail.com",
+    subject: `Đặt vé ${siteName} ${orderCode}`,
     html: `
           <p>
             Cảm ơn bạn đã đặt vé tại <strong>Ruby Travel</strong>.
@@ -32,10 +26,10 @@ export async function POST(req: Request) {
     attachments: [
       {
         filename: `${orderCode}.pdf`,
-        content: pdfBuffer,
+        content: fileAttch,
       },
     ],
   });
+};
 
-  return new Response("ok", { status: 200 });
-}
+export default resendMail;

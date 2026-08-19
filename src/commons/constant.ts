@@ -152,6 +152,8 @@ export const DB_TABLE_NAME = {
   PRODUCTS: "products",
   PRODUCT_CATEGORY: "category",
   FUNC_UPDATE_ORDER_BALANCE: "update_order_and_balance",
+  STORAGE_EMAIL_VOUCHERS: "email-vouchers",
+  EMAIL_QUEUE: "email_queue",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";

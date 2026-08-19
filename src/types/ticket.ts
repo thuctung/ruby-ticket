@@ -222,3 +222,8 @@ export type TicketReponseType = {
   items: TicketItemReponseType[];
   pnr: string;
 };
+
+export type ResTicketFormatType = {
+  customerTickets: TicketResultQRType[];
+  focTickets: TicketResultQRType[];
+};

@@ -1,4 +1,3 @@
-import { formatVND } from "@/helpers/money";
 import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
 
 import { jsPDF } from "jspdf";
@@ -170,8 +169,8 @@ export const downloadTicketPDFServer = async (
     pdf.setFontSize(7);
     pdf.text("Ngày sử dụng/ Use date", leftX, y);
 
-    pdf.setFontSize(7);
-    pdf.text("Giá", rightX - 67, y);
+    // pdf.setFontSize(7);
+    // pdf.text("Giá", rightX - 67, y);
 
     y += 10;
 
@@ -185,7 +184,7 @@ export const downloadTicketPDFServer = async (
       y
     );
 
-    pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
+    // pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
 
     y += 10;
 
@@ -298,33 +297,4 @@ export const downloadTicketPDFServer = async (
   }
 
   return Buffer.from(pdf.output("arraybuffer"));
-};
-
-export const rebuildDataTicket = (
-  finalList: TicketReponseType,
-  orderId: string,
-  date_use: string
-) => {
-  const result: TicketResultQRType[] | any = finalList.items.flatMap((item) =>
-    item.tickets.map((ticketChild) => ({
-      productName: item.productName,
-      productCode: item.productCode,
-      siteCode: item.siteCode,
-      unitPrice: item.unitPrice,
-      productGroup: item.productGroup,
-      isFaceIdRequired: item.isFaceIdRequired,
-
-      ticketNumber: ticketChild.ticketNumber,
-      validDateFrom: ticketChild.validDateFrom,
-      validDateTo: ticketChild.validDateTo,
-      status: ticketChild.status,
-      verifyCode: ticketChild.verifyCode,
-      orderCode: finalList.orderCode,
-      orderId,
-      date_use,
-      pnr: finalList.pnr,
-    }))
-  );
-
-  return result;
 };

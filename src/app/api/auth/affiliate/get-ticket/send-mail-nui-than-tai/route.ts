@@ -1,25 +1,36 @@
-import { Resend } from "resend";
 import { env } from "@/lib/env";
 import { SendTicketInSystemMailType } from "@/app-controler/affi/getTicket/type";
 import { generateBookingVoucher } from "@/helpers/e-voucher";
+import { NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase/server";
+import { DB_TABLE_NAME, ERROR_MESSAGE } from "@/commons/constant";
+import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
+import resendMail from "@/axios/resendMail";
 
-const resend = new Resend(env.SEND_MAIL_KEY);
 const adminMail = env.SEND_MAIL_ADMIN;
 export async function POST(req: Request) {
   const body: SendTicketInSystemMailType = await req.json();
-  const { email, listTicket, phone, dateUse, orderCode, paymentCode, fullName } = body;
-  const pdfBuffer = await generateBookingVoucher(body);
-
-  const toMail = ["sales2@nuithantai.vn", "sales7@nuithantai.vn", adminMail];
-  if (email !== adminMail) {
-    toMail.push(email);
-  }
-
-  await resend.emails.send({
-    from: "Ruby Travel System<noreply@rubytraveldanang.com>",
-    to: toMail,
-    subject: `Đặt vé Núi Thần Tài ${orderCode}, Ngày ${dateUse}`,
-    html: `
+  const {
+    email,
+    listTicket,
+    phone,
+    dateUse,
+    orderCode,
+    paymentCode,
+    fullName,
+    payloadUpdateBalance,
+  } = body;
+  try {
+    const pdfBuffer: any = await generateBookingVoucher(body);
+    const toMail = ["sales2@nuithantai.vn", "sales7@nuithantai.vn", adminMail];
+    if (email !== adminMail) {
+      toMail.push(email);
+    }
+    await resendMail.emails.send({
+      from: "Ruby Travel System<noreply@rubytraveldanang.com>",
+      to: "tungkiz190298@gmail.com",
+      subject: `Đặt vé Núi Thần Tài ${orderCode}, Ngày ${dateUse}`,
+      html: `
       <div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
          <h2 style="color: #d32f2f;">Xác nhận đặt vé thành công</h2>
           <p> Cảm ơn bạn đã đặt vé. Đơn hàng của bạn đã được ghi nhận với thông tin như sau: </p>
@@ -85,16 +96,42 @@ export async function POST(req: Request) {
             <p> Trân trọng,<br /> Ruby Travel </p>
        </div>
     `,
-    attachments: [
-      {
-        filename: `NUI_THAN_TAI_${orderCode}_${dateUse}.pdf`,
-        content: pdfBuffer,
-      },
-    ],
-  });
+      attachments: [
+        {
+          filename: `NUI_THAN_TAI_${orderCode}_${dateUse}.pdf`,
+          content: pdfBuffer,
+        },
+      ],
+    });
 
-  return Response.json({
-    success: true,
-    pdf: Buffer.from(pdfBuffer).toString("base64"),
-  });
+    if (payloadUpdateBalance) {
+      await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_UPDATE_ORDER_BALANCE, {
+        p_order_id: payloadUpdateBalance.order_id,
+        p_user_id: payloadUpdateBalance.user_id,
+        p_balance: payloadUpdateBalance.balance,
+        p_amount: payloadUpdateBalance.amount,
+        p_status: payloadUpdateBalance.status,
+        p_description: payloadUpdateBalance.description,
+        p_ordercode: payloadUpdateBalance.orderCode,
+      });
+    }
+
+    return new Response(pdfBuffer, {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": 'attachment; filename="evoucher.pdf"',
+      },
+    });
+  } catch (e) {
+    if (payloadUpdateBalance) {
+      await supabaseAdmin
+        .from(DB_TABLE_NAME.ORDERS)
+        .update({
+          status: KEY_MODIFY_DATA.ERROR,
+          description: ERROR_MESSAGE.ERROR_SYSTEM_CREATE_TICKET,
+        })
+        .eq("id", payloadUpdateBalance.order_id);
+    }
+    return NextResponse.json(e, { status: 500 });
+  }
 }

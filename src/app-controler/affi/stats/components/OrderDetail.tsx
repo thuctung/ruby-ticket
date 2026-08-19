@@ -1,8 +1,11 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
-import { OrderDetailType } from "@/types";
+import { OrderDetailType, OrderHistoryType } from "@/types";
+import { getOrdeTicketDetail } from "../api";
+import { TicketResultQRType } from "@/types/ticket";
+import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
+import { downloadTicketPDF, rebuildDataTicket } from "@/helpers/ticket";
+import { SITE_CODES } from "@/commons/constant";
 
 export interface OrderTicketItem {
   id: string | number;
@@ -15,6 +18,7 @@ export interface OrderDetailDialogProps {
   open: boolean;
   onClose: () => void;
   orderDetails: OrderDetailType[];
+  currentOrder: OrderHistoryType;
 }
 
 const formatCurrency = (value: number) =>
@@ -24,7 +28,12 @@ const formatCurrency = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
-export default function OrderDetailDialog({ open, onClose, orderDetails }: OrderDetailDialogProps) {
+export default function OrderDetailDialog({
+  open,
+  onClose,
+  currentOrder,
+  orderDetails,
+}: OrderDetailDialogProps) {
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -52,6 +61,17 @@ export default function OrderDetailDialog({ open, onClose, orderDetails }: Order
     if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
       onClose();
     }
+  };
+
+  const handleDownloadFile = async () => {
+    const data = await getOrdeTicketDetail(currentOrder.order_code);
+    const result: TicketResultQRType[] | any = rebuildDataTicket(
+      data,
+      currentOrder.id,
+      currentOrder.date_use
+    );
+    const { focTickets, customerTickets } = getTicketFOCAndCutomer(result);
+    await downloadTicketPDF(customerTickets, focTickets);
   };
 
   return (
@@ -125,6 +145,14 @@ export default function OrderDetailDialog({ open, onClose, orderDetails }: Order
           >
             Đóng
           </button>
+          {currentOrder.site_code === SITE_CODES.BANAHILL ? (
+            <button
+              onClick={handleDownloadFile}
+              className="rounded-lg border border-gray-200 px-4 py-2 bg-red-200 text-sm font-medium text-red-600 transition hover:bg-red-300"
+            >
+              Tải vé
+            </button>
+          ) : null}
         </div>
       </div>
     </div>

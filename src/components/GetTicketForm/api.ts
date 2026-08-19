@@ -3,7 +3,6 @@ import {
   GET_PRODUCT_IN_SYSTEM,
   GET_SITE_BY_FORM_TYPE,
   GET_SITE_BY_STATUS,
-  SUCCESS_ORDER_TICKET,
   SUN_GET_PRODOCT_LIST,
 } from "@/commons/apiURL";
 import { DB_TABLE_NAME } from "@/commons/constant";
@@ -69,19 +68,6 @@ export const getProductBySiteSun = async (siteCodes: string, date: string) => {
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
   } finally {
     setGlobalLoading(false);
-  }
-};
-
-export const updateSuccessOrder = async (payload: any) => {
-  try {
-    const { data, error }: any = await api.post(SUCCESS_ORDER_TICKET, payload);
-    if (error) {
-      setToastMessage(error.message);
-      return;
-    }
-  } catch (e) {
-    setToastMessage("Có lỗi xảy ra");
-  } finally {
   }
 };
 

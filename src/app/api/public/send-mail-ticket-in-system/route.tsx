@@ -1,14 +1,12 @@
-import { Resend } from "resend";
 import { env } from "@/lib/env";
 import { SendTicketInSystemMailType } from "@/app-controler/affi/getTicket/type";
-
-const resend = new Resend(env.SEND_MAIL_KEY);
+import resendMail from "@/axios/resendMail";
 
 export async function POST(req: Request) {
   const body: SendTicketInSystemMailType = await req.json();
   const { email, listTicket, phone, dateUse, orderCode, paymentCode, siteName, fullName } = body;
   const adminMail = env.SEND_MAIL_ADMIN;
-  await resend.emails.send({
+  await resendMail.emails.send({
     from: "Ruby Travel System<noreply@rubytraveldanang.com>",
     to: [email, adminMail],
     subject: `Đặt vé ${siteName} Ngày: ${dateUse}`,

@@ -18,14 +18,8 @@ export const UPDATE_STATUS_TOPUP_MGT = "/api/auth/admin/topup-mgt/update-status"
 
 export const CREATE_ORDER_TICKET = "/api/auth/affiliate/get-ticket/create-order";
 
-export const UPDATE_STATUS_ORDER_ERROR = "/api/auth/affiliate/get-ticket/update-status-order";
-
-export const SUCCESS_ORDER_TICKET = "/api/auth/affiliate/get-ticket/success-order";
-
 export const SEND_MAIL_TICKET_NUI_THAN_TAI =
   "/api/auth/affiliate/get-ticket/send-mail-nui-than-tai";
-
-export const UPDATE_ORDER_BALANCE = "/api/auth/affiliate/get-ticket/update-order-balance";
 
 export const GET_TRANSACTION = "/api/auth/affiliate/transaction/get-transaction";
 
@@ -47,11 +41,7 @@ export const GET_HOME_HIGHLIGHTS = "/api/public/home/highlights";
 
 export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";
 
-export const CLIENT_BUY_TICKET_FINAL = "/api/public/buy-ticket-final";
-
 export const CLIENT_UPDATE_STATUS_ORDER_ERROR = "/api/public/update-status-order";
-
-export const CLIENT_SEND_TICET_TO_MAIL = "/api/public/send-ticket-mail";
 
 export const SEND_MAIL_TICKET_IN_SYSTEM = "/api/public/send-mail-ticket-in-system";
 
@@ -119,3 +109,5 @@ export const SUN_TICKET_LISTING = "/api/sun-api/ticket-listing";
 export const SUN_BOOKING_CREATE = "/api/sun-api/booking-create";
 
 export const SUN_BOOKING_CONFIRM = "/api/sun-api/booking-confirm";
+
+export const CRON_AUTO_SEND_MAIL = "/api/cron/send-mail";

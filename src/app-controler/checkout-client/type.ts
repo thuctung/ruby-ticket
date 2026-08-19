@@ -91,3 +91,11 @@ export interface CustomerInfoErrors {
   email?: string;
   phone?: string;
 }
+
+export type PayloadGetTicketSunType = {
+  productSelected: ProductSubmitType[];
+  orderCode: string;
+  orderId: string;
+  dateUse: string;
+  customerEmail: string;
+};

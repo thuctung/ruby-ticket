@@ -46,6 +46,7 @@ export default function AffiliateStatsControler() {
   const [totalPages, setTotalPage] = useState(0);
 
   const [orderList, setOrderList] = useState<OrderHistoryType[]>([]);
+  const [curentRow, setCurrentRow] = useState<OrderHistoryType>();
 
   const [countTicket, setCountTicket] = useState({ quantity: 0, total: 0 });
 
@@ -100,6 +101,7 @@ export default function AffiliateStatsControler() {
   };
 
   const onShowDialogDetail = async (orderItem: OrderHistoryType) => {
+    setCurrentRow(orderItem);
     const data = await getOrderDetail(orderItem.id);
     const result: OrderDetailType[] = data?.map((item: any) => ({
       ...item,
@@ -200,11 +202,14 @@ export default function AffiliateStatsControler() {
           />
         </CardContent>
       </Card>
-      <OrderDetailDialog
-        open={orderDetails.length > 0}
-        onClose={() => setOrderDetails([])}
-        orderDetails={orderDetails}
-      />
+      {curentRow && orderDetails.length ? (
+        <OrderDetailDialog
+          open={orderDetails.length > 0}
+          onClose={() => setOrderDetails([])}
+          orderDetails={orderDetails}
+          currentOrder={curentRow}
+        />
+      ) : null}
     </div>
   );
 }
