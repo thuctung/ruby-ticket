@@ -45,6 +45,7 @@ export async function POST(req: Request) {
       );
       const siteName = get(ticketBuild, [0, "siteName"]) || "";
       const { focTickets, customerTickets } = getTicketFOCAndCutomer(ticketBuild);
+
       await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_COMPLETE_ORDER, {
         p_order_id: order_id,
         p_provider_order_code: result.orderCode,
@@ -54,12 +55,14 @@ export async function POST(req: Request) {
 
       const pdfBuffer = await downloadTicketPDFServer(customerTickets, focTickets);
       const filePath = `email-vouchers/${result.orderCode}.pdf`;
+
       await supabaseAdmin.storage
         .from(DB_TABLE_NAME.STORAGE_EMAIL_VOUCHERS)
         .upload(filePath, pdfBuffer, {
           contentType: "application/pdf",
           upsert: true,
         });
+
       await supabaseAdmin.from(DB_TABLE_NAME.EMAIL_QUEUE).insert({
         email: email,
         site_name: siteName,

@@ -16,6 +16,7 @@ import { getPerSonTypeName } from "@/components/GetTicketForm/constants";
 import { get } from "lodash";
 import { SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { getFontBase64, getFontBoldBase64, getImage } from "./loadFont";
+import { formatVND } from "@/lib/money";
 
 export const downloadTicketPDFServer = async (
   tickets: TicketResultQRType[],
@@ -169,8 +170,8 @@ export const downloadTicketPDFServer = async (
     pdf.setFontSize(7);
     pdf.text("Ngày sử dụng/ Use date", leftX, y);
 
-    // pdf.setFontSize(7);
-    // pdf.text("Giá", rightX - 67, y);
+    pdf.setFontSize(7);
+    pdf.text("Giá", rightX - 67, y);
 
     y += 10;
 
@@ -184,7 +185,7 @@ export const downloadTicketPDFServer = async (
       y
     );
 
-    // pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
+    pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), rightX - 67, y);
 
     y += 10;
 
