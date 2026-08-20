@@ -1,5 +1,5 @@
 import { MapPin, Ticket, X } from "lucide-react";
-import { Destination } from "@/data/destinations";
+import { Destination } from "./destinations";
 
 type Props = {
   place: Destination | null;
@@ -27,11 +27,7 @@ export default function DetailModal({ place, onClose, onBuy }: Props) {
           <X size={18} strokeWidth={2.5} />
         </button>
 
-        <img
-          src={place.img}
-          alt={place.name}
-          className="h-56 w-full object-cover"
-        />
+        <img src={place.img} alt={place.name} className="h-56 w-full object-cover" />
 
         <div className="flex flex-col gap-2.5 px-6 py-6">
           <div className="flex items-center gap-1.5 font-mono text-[11.5px] font-medium uppercase tracking-wide text-jade">
@@ -41,9 +37,7 @@ export default function DetailModal({ place, onClose, onBuy }: Props) {
 
           <h2 className="font-display text-2xl font-semibold">{place.name}</h2>
 
-          <p className="text-[14.5px] leading-relaxed text-ink/70">
-            {place.desc}
-          </p>
+          <p className="text-[14.5px] leading-relaxed text-ink/70">{place.desc}</p>
 
           <div className="mt-2.5 flex items-center justify-between border-t-[1.5px] border-dashed border-ink/20 pt-4">
             <div className="flex flex-col gap-0.5">
