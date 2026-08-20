@@ -42,7 +42,6 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
     }
     setQty(ticket.code, num);
   };
-
   return (
     <div
       className={` relative overflow-hidden rounded-2xl border hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 sm:flex-row ${bgImage ? "border-white/60 shadow-sm" : " border-gray-100 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_60%,#eff6ff_100%)] shadow-sm "}  `}
@@ -112,7 +111,7 @@ const TicketCard = React.memo(({ ticket, setQty, quantities, formType, agentPric
         {/* Bottom */}
         <div className="mt-5 flex items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            {featues(ticket?.site?.code).map((feature) => {
+            {featues(ticket?.site?.code || ticket?.site_code).map((feature) => {
               const Icon = FEATURE_ICON_BANA[feature] ?? Compass;
               return (
                 <span

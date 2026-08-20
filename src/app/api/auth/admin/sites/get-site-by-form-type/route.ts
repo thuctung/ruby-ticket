@@ -7,7 +7,10 @@ import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 export async function POST(request: Request) {
   const { formType } = await request.json();
 
-  let query = supabaseAdmin.from(DB_TABLE_NAME.SITES).select("*");
+  let query = supabaseAdmin
+    .from(DB_TABLE_NAME.SITES)
+    .select("*")
+    .order("order", { ascending: true });
 
   if (formType === BOOKING_FORM_TYPE.AFFILATE) {
     query.eq("status_affilate", true);

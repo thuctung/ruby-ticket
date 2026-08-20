@@ -154,6 +154,7 @@ export const DB_TABLE_NAME = {
   FUNC_UPDATE_ORDER_BALANCE: "update_order_and_balance",
   STORAGE_EMAIL_VOUCHERS: "email-vouchers",
   EMAIL_QUEUE: "email_queue",
+  TICKETS: "tickets",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -206,7 +207,7 @@ export const MENUS = [
     iconColor: "text-blue-600",
   },
   {
-    link: "/#experiences",
+    link: "/trai-nghiem-du-lich",
     name: "Trải nghiệm",
     icon: Sparkles,
     iconBg: "bg-violet-50",
@@ -283,6 +284,8 @@ export const SITE_CODES = {
   BANAHILL: "BNC",
   NUITHANTAI: "NUITHANTAI",
   DUTHUYEN: "DUTHUYEN",
+  KWHOIAN: "KWHOIAN",
+  CONGTROI: "CONGTROI",
 };
 
 export const BEST_SELLER = "BEST_SELLER";

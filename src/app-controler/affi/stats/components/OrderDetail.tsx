@@ -6,6 +6,7 @@ import { TicketResultQRType } from "@/types/ticket";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
 import { downloadTicketPDF, rebuildDataTicket } from "@/helpers/ticket";
 import { SITE_CODES } from "@/commons/constant";
+import { KEY_MODIFY_DATA } from "../contants";
 
 export interface OrderTicketItem {
   id: string | number;
@@ -73,7 +74,6 @@ export default function OrderDetailDialog({
     const { focTickets, customerTickets } = getTicketFOCAndCutomer(result);
     await downloadTicketPDF(customerTickets, focTickets);
   };
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
@@ -145,7 +145,8 @@ export default function OrderDetailDialog({
           >
             Đóng
           </button>
-          {currentOrder.site_code === SITE_CODES.BANAHILL ? (
+          {currentOrder.site_code === SITE_CODES.BANAHILL &&
+          currentOrder.status === KEY_MODIFY_DATA.SUCCESS ? (
             <button
               onClick={handleDownloadFile}
               className="rounded-lg border border-gray-200 px-4 py-2 bg-red-200 text-sm font-medium text-red-600 transition hover:bg-red-300"

@@ -11,5 +11,6 @@ export type SiteType = {
   in_system: boolean;
   name: string;
   status: boolean;
+  order: number;
   status_affilate: boolean;
 };

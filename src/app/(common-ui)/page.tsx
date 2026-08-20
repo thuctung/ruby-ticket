@@ -6,9 +6,10 @@ export const dynamic = "force-static";
 
 export default async function Home() {
   const clientSupbase = await createSupabaseBrowserClient();
-  const { data } = await clientSupbase
+  const { data }: any = await clientSupbase
     .from(DB_TABLE_NAME.SITES)
     .select("code,name,pre_price,status")
+    .order("order", { ascending: true })
     .limit(20);
   return <HomePage sites={data || []} />;
 }

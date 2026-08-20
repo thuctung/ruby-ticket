@@ -130,7 +130,7 @@ export default function AffiliateStatsControler() {
     },
     {
       key: "third_party_number",
-      title: "Mã tạo vé",
+      title: "Third party number",
     },
     {
       key: "status",
@@ -152,6 +152,10 @@ export default function AffiliateStatsControler() {
       title: "",
       render: (row) => <Button onClick={() => onShowDialogDetail(row)}>Chi tiết </Button>,
       align: "center",
+    },
+    {
+      key: "description",
+      title: "Mô tả",
     },
   ];
   const fetchSiteList = async () => {

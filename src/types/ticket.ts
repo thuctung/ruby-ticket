@@ -5,6 +5,8 @@ export interface SiteType {
   status: string;
   name: string;
   in_system: boolean;
+  pre_price: number;
+  exp?: string;
 }
 
 export type TicketType = {
