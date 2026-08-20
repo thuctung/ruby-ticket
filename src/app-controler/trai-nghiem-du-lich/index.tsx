@@ -1,17 +1,8 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import { Ticket } from "lucide-react";
-import { Destination, DESTINATIONS } from "./compoents/destinations";
+import { Destination } from "./compoents/destinations";
 import DestinationCard from "./compoents/DestinationCard";
-import DetailModal from "./compoents/DetailModal";
 import { SiteType } from "../admin/site/type";
 
 const DestinationsPageController = ({ sites }: { sites: SiteType[] | null }) => {
-  const [selected, setSelected] = useState<Destination | null>(null);
-  const [toast, setToast] = useState<string | null>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   const handleBuy = (place: Destination) => {};
 
   return (
@@ -37,25 +28,16 @@ const DestinationsPageController = ({ sites }: { sites: SiteType[] | null }) => 
         {/* Lưới card */}
         <div className="mx-auto grid max-w-6xl grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-7">
           {sites &&
-            sites.map((place) => (
+            sites.map((place: any) => (
               <DestinationCard
                 key={place.id}
                 place={place}
-                onDetail={setSelected}
+                onDetail={() => console.log("")}
                 onBuy={handleBuy}
               />
             ))}
         </div>
       </div>
-
-      <DetailModal place={selected} onClose={() => setSelected(null)} onBuy={handleBuy} />
-
-      {toast && (
-        <div className="fixed bottom-7 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2 rounded-full border border-gold bg-ink px-5 py-3 text-[13.5px] font-medium text-paper shadow-[0_14px_30px_rgba(0,0,0,0.4)]">
-          <Ticket size={15} strokeWidth={2.5} />
-          {toast}
-        </div>
-      )}
     </main>
   );
 };

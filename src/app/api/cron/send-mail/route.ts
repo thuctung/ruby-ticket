@@ -1,18 +1,21 @@
 import { NextResponse } from "next/server";
 import { sendMailTicketBaNa } from "@/axios/resendMail";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { DB_TABLE_NAME } from "@/commons/constant";
+import { downloadTicketPDFServer } from "@/helpers/ticket-server";
+import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
 
 export async function GET(req: Request) {
   try {
     const { data: mails, error } = await supabaseAdmin
-      .from("email_queue")
+      .from(DB_TABLE_NAME.EMAIL_QUEUE)
       .select("*")
       .eq("status", "pending")
-      .lt("retry_count", 2)
+      .lt("retry_count", 3)
       .order("created_at", {
         ascending: true,
       })
-      .limit(10);
+      .limit(2);
 
     if (error) {
       throw error;
@@ -30,21 +33,20 @@ export async function GET(req: Request) {
     for (const mail of mails) {
       try {
         await supabaseAdmin
-          .from("email_queue")
+          .from(DB_TABLE_NAME.EMAIL_QUEUE)
           .update({
             status: "processing",
             processing_at: new Date().toISOString(),
           })
           .eq("id", mail.id);
 
-        const { data: pdfFile, error: downloadError } = await supabaseAdmin.storage
-          .from("email-vouchers")
-          .download(mail.file_path);
+        const { data }: any = await supabaseAdmin
+          .from(DB_TABLE_NAME.TICKETS)
+          .select("*")
+          .eq("orderId", mail.order_id);
 
-        if (downloadError || !pdfFile) {
-          throw downloadError || new Error("PDF not found");
-        }
-        const pdfBuffer = Buffer.from(await pdfFile.arrayBuffer());
+        const { customerTickets } = getTicketFOCAndCutomer(data);
+        const pdfBuffer = await downloadTicketPDFServer(customerTickets, []);
 
         // Send Resend
         await sendMailTicketBaNa({
@@ -55,7 +57,7 @@ export async function GET(req: Request) {
         });
 
         await supabaseAdmin
-          .from("email_queue")
+          .from(DB_TABLE_NAME.EMAIL_QUEUE)
           .update({
             status: "sent",
             sent_at: new Date().toISOString(),
@@ -63,12 +65,12 @@ export async function GET(req: Request) {
           })
           .eq("id", mail.id);
 
-        await supabaseAdmin.storage.from("email-vouchers").remove([mail.file_path]);
+        await supabaseAdmin.from(DB_TABLE_NAME.TICKETS).delete().eq("orderId", mail.order_id);
         successCount++;
       } catch (error) {
         failedCount++;
         await supabaseAdmin
-          .from("email_queue")
+          .from(DB_TABLE_NAME.EMAIL_QUEUE)
           .update({
             status: "pending",
             retry_count: (mail.retry_count || 0) + 1,

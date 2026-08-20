@@ -2,9 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Ticket } from "lucide-react";
-import { DESTINATIONS, Destination } from "@/data/destinations";
-import DestinationCard from "@/components/DestinationCard";
-import DetailModal from "@/components/DetailModal";
+import { Destination, DESTINATIONS } from "./destinations";
+import DestinationCard from "./DestinationCard";
 
 export default function DestinationsPage() {
   const [selected, setSelected] = useState<Destination | null>(null);
@@ -37,28 +36,17 @@ export default function DestinationsPage() {
           khắp dải đất hình chữ S
         </h1>
         <p className="max-w-lg text-base leading-relaxed text-paper/65">
-          Chọn điểm đến, xem chi tiết hành trình và giữ vé chỉ trong một cú
-          chạm — mỗi tấm vé dưới đây là một cánh cửa mở ra một vùng đất.
+          Chọn điểm đến, xem chi tiết hành trình và giữ vé chỉ trong một cú chạm — mỗi tấm vé dưới
+          đây là một cánh cửa mở ra một vùng đất.
         </p>
       </div>
 
       {/* Lưới card */}
       <div className="mx-auto grid max-w-5xl grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-7">
-        {DESTINATIONS.map((place) => (
-          <DestinationCard
-            key={place.id}
-            place={place}
-            onDetail={setSelected}
-            onBuy={handleBuy}
-          />
+        {DESTINATIONS.map((place: any) => (
+          <DestinationCard key={place.id} place={place} onDetail={setSelected} onBuy={handleBuy} />
         ))}
       </div>
-
-      <DetailModal
-        place={selected}
-        onClose={() => setSelected(null)}
-        onBuy={handleBuy}
-      />
 
       {toast && (
         <div className="fixed bottom-7 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2 rounded-full border border-gold bg-ink px-5 py-3 text-[13.5px] font-medium text-paper shadow-[0_14px_30px_rgba(0,0,0,0.4)]">
