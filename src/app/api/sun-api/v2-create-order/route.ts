@@ -44,6 +44,7 @@ export async function POST(req: Request) {
             email: email,
             order_id: order_id,
             site_name: siteName || "",
+            order_code: result.orderCode,
             status: KEY_MODIFY_DATA.PENDING,
           }),
         ]);
