@@ -7,19 +7,12 @@ import { EXPERIENCES } from "./contants";
 import { CollaboratorSection } from "./components/CollaboratorSection";
 import Feedback from "./components/Feedback";
 import { FaqSection } from "./components/FaqSection";
+import { SiteType } from "@/types/ticket";
 
-type LocationRow = {
-  code?: string;
-  name?: string;
-  pre_price?: number | string;
-  status?: boolean;
-  in_system?: boolean;
-};
-
-export default function HomePage({ sites }: { sites: LocationRow[] }) {
+export default function HomePage({ sites }: { sites: SiteType[] }) {
   const lang = "vi";
 
-  const sideCard = () => {
+  const sideCard: any = () => {
     const list = sites
       .map((item) => {
         const code = String(item.code);
@@ -35,7 +28,7 @@ export default function HomePage({ sites }: { sites: LocationRow[] }) {
           status: item.status,
         };
       })
-      .filter(Boolean) as Array<{
+      .filter(Boolean) as unknown as Array<{
       id: string;
       code: string;
       name: string;
@@ -43,7 +36,6 @@ export default function HomePage({ sites }: { sites: LocationRow[] }) {
       exp: (typeof EXPERIENCES)[number];
       status: boolean;
     }>;
-
     return list;
   };
 

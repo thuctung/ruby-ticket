@@ -15,6 +15,7 @@ const EMPTY_FORM: SiteType = {
   status: false,
   in_system: false,
   status_affilate: false,
+  order: 100,
 };
 
 const initValue = {
@@ -42,6 +43,7 @@ export default function SitesPageController() {
     },
     {
       key: "status",
+      align: "center",
       title: "Mở cho khách lẻ",
       render: (row) =>
         row.status ? (
@@ -52,6 +54,7 @@ export default function SitesPageController() {
     },
     {
       key: "status",
+      align: "center",
       title: "Mở cho đại lý",
       render: (row) =>
         row.status_affilate ? (
@@ -62,6 +65,7 @@ export default function SitesPageController() {
     },
     {
       key: "in_system",
+      align: "center",
       title: "Khu vực",
       render: (row) =>
         row.in_system ? (
@@ -69,6 +73,11 @@ export default function SitesPageController() {
         ) : (
           <span className="text-[blue]">Ngoài hệ thống</span>
         ),
+    },
+    {
+      key: "order",
+      align: "center",
+      title: "Thứ tự hiển thị",
     },
     {
       key: "",

@@ -12,11 +12,9 @@ import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
 import { get } from "lodash";
 
 export async function POST(req: Request) {
+  const body: CreateOrderSunGroupPayload = await req.json();
+  const { date_use, order_id, thirdPartyNumber, products, email, phone, fullname } = body;
   try {
-    const body: CreateOrderSunGroupPayload = await req.json();
-
-    const { date_use, order_id, thirdPartyNumber, products, email, phone, fullname } = body;
-
     const { data }: any = await sunWorldApi.post(`/v2/order/create`, {
       thirdPartyNumber,
       products,
@@ -84,12 +82,21 @@ export async function POST(req: Request) {
           description: resMess,
         })
         .eq("id", order_id);
+
       return NextResponse.json(
         { data: { focTickets: [], customerTickets: [] }, messages: resMess },
         { status: 200 }
       );
     }
-  } catch (e) {
-    return NextResponse.json(e, { status: 500 });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error);
+    await supabaseAdmin
+      .from(DB_TABLE_NAME.ORDERS)
+      .update({
+        status: KEY_MODIFY_DATA.ERROR,
+        description: errorMessage,
+      })
+      .eq("id", order_id);
+    return NextResponse.json(error, { status: 500 });
   }
 }

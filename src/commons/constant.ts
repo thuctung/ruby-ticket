@@ -206,7 +206,7 @@ export const MENUS = [
     iconColor: "text-blue-600",
   },
   {
-    link: "/#experiences",
+    link: "/trai-nghiem-du-lich",
     name: "Trải nghiệm",
     icon: Sparkles,
     iconBg: "bg-violet-50",
