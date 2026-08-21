@@ -4,7 +4,6 @@ import { CommonType } from "@/types";
 import {
   CLIENT_CREATE_ORDER_TICKET,
   CLIENT_UPDATE_STATUS_ORDER_ERROR,
-  CRON_AUTO_SEND_MAIL,
   SEND_MAIL_TICKET_IN_SYSTEM,
   SUN_BOOKING_CANCLE,
   SUN_BOOKING_CONFIRM,
@@ -12,15 +11,12 @@ import {
 } from "@/commons/apiURL";
 import {
   ClientOrderItem,
-  CustomerBuyFilnalType,
   CustomerOrderType,
   PayloadGetTicketSunType,
-  SendTicketMailType,
   UpdateOrderType,
 } from "./type";
 import { get } from "lodash";
 import { SendTicketInSystemMailType } from "../affi/getTicket/type";
-import { ProductSubmitType } from "@/types/ticket";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 export const customerCreateOrderTicket = async (params: ClientOrderItem) => {
@@ -64,7 +60,6 @@ export const getTicketSunWorld = async (payload: PayloadGetTicketSunType) => {
     if (messages) {
       setToastMessage(messages);
     }
-    api.get(CRON_AUTO_SEND_MAIL);
     return data;
   } catch {
     setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");

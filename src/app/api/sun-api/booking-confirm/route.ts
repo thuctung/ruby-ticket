@@ -4,7 +4,6 @@ import { TicketResultQRType } from "@/types/ticket";
 import { rebuildDataTicket } from "@/helpers/ticket";
 import { PayloadGetTicketSunType } from "@/app-controler/checkout-client/type";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
-import { downloadTicketPDFServer } from "@/helpers/ticket-server";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { DB_TABLE_NAME } from "@/commons/constant";
 import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";

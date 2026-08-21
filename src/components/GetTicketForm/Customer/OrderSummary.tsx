@@ -1,26 +1,7 @@
-import { Hourglass, RefreshCw, ShieldCheck, Ticket as TicketIcon, X } from "lucide-react";
-import { CATEGORY_STYLES, Ticket } from "./type";
+import { Hourglass, ShieldCheck, Ticket as X } from "lucide-react";
 import { formatVND } from "@/helpers/money";
 import { getPriceAgentAndMultiple } from "../constants";
 import { useState } from "react";
-
-const PERKS = [
-  {
-    icon: TicketIcon,
-    title: "Xác nhận tức thì",
-    desc: "Vé điện tử sẽ được gửi ngay sau khi thanh toán",
-  },
-  {
-    icon: RefreshCw,
-    title: "Hỗ trợ 24/7",
-    desc: "Đội ngũ hỗ trợ luôn sẵn sàng giúp đỡ bạn",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Đổi trả linh hoạt",
-    desc: "Hỗ trợ đổi/huỷ vé theo chính sách",
-  },
-];
 
 type OrderSummaryProps = {
   selectedLines: any;

@@ -2,7 +2,6 @@ import api from "@/axios";
 import {
   AFF_GET_STATUS,
   CREATE_ORDER_TICKET,
-  CRON_AUTO_SEND_MAIL,
   SEND_MAIL_TICKET_NUI_THAN_TAI,
   SUN_V2_CREATE_ORDER,
 } from "@/commons/apiURL";
@@ -40,7 +39,6 @@ export const getTicketFromSunGroup = async (payload: CreateOrderSunGroupPayload)
       setToastMessage(messages || "Lỗi không tạo được vé!");
       return;
     }
-    api.get(CRON_AUTO_SEND_MAIL);
     return data as unknown as ResTicketFormatType;
   } catch (e) {
     setToastMessage("Lỗi không tạo được vé!");

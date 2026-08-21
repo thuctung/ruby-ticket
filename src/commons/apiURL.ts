@@ -109,5 +109,3 @@ export const SUN_TICKET_LISTING = "/api/sun-api/ticket-listing";
 export const SUN_BOOKING_CREATE = "/api/sun-api/booking-create";
 
 export const SUN_BOOKING_CONFIRM = "/api/sun-api/booking-confirm";
-
-export const CRON_AUTO_SEND_MAIL = "/api/cron/send-mail";
