@@ -4,10 +4,16 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 import { DB_TABLE_NAME } from "@/commons/constant";
 import { downloadTicketPDFServer } from "@/helpers/ticket-server";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
+import { MailQueueType } from "@/types/send-mail";
 
 export async function GET(req: Request) {
   try {
-    const { data: mails, error } = await supabaseAdmin
+    const authHeader = req.headers.get("authorization");
+    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const { data, error } = await supabaseAdmin
       .from(DB_TABLE_NAME.EMAIL_QUEUE)
       .select("*")
       .eq("status", "pending")
@@ -16,17 +22,17 @@ export async function GET(req: Request) {
         ascending: true,
       })
       .limit(2);
-
     if (error) {
       throw error;
     }
 
-    if (!mails?.length) {
+    if (!data?.length) {
       return NextResponse.json({
         success: true,
         message: "No pending emails",
       });
     }
+    const mails: MailQueueType[] = data;
 
     let successCount = 0;
     let failedCount = 0;
@@ -44,9 +50,11 @@ export async function GET(req: Request) {
           .from(DB_TABLE_NAME.TICKETS)
           .select("*")
           .eq("orderId", mail.order_id);
-
-        const { customerTickets } = getTicketFOCAndCutomer(data);
-        const pdfBuffer = await downloadTicketPDFServer(customerTickets, []);
+        const { customerTickets, focTickets } = getTicketFOCAndCutomer(data);
+        const pdfBuffer = await downloadTicketPDFServer(
+          customerTickets,
+          mail.is_send_foc ? focTickets : []
+        );
 
         // Send Resend
         await sendMailTicketBaNa({

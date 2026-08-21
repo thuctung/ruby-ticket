@@ -35,4 +35,5 @@ export type CreateOrderSunGroupPayload = {
   fullname: string;
   order_id: string;
   date_use: string;
+  haveFOC: boolean;
 };

@@ -80,6 +80,7 @@ export default function GetTicketPageControler() {
       email: profile.email || "",
       fullname: profile.full_name || "",
       phone: profile.phone || "",
+      haveFOC,
     };
     if (order_id) {
       const data: ResTicketFormatType | undefined = await getTicketFromSunGroup(payloadGetTicket);

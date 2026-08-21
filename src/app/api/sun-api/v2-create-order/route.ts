@@ -9,10 +9,11 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 
 import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
 import { get } from "lodash";
+import { updateOrderError } from "@/helpers/update-status-order";
 
 export async function POST(req: Request) {
   const body: CreateOrderSunGroupPayload = await req.json();
-  const { date_use, order_id, thirdPartyNumber, products, email, phone, fullname } = body;
+  const { date_use, order_id, thirdPartyNumber, products, email, phone, fullname, haveFOC } = body;
   try {
     const { data }: any = await sunWorldApi.post(`/v2/order/create`, {
       thirdPartyNumber,
@@ -46,6 +47,7 @@ export async function POST(req: Request) {
             site_name: siteName || "",
             order_code: result.orderCode,
             status: KEY_MODIFY_DATA.PENDING,
+            is_send_foc: haveFOC,
           }),
         ]);
         const { focTickets, customerTickets } = getTicketFOCAndCutomer(ticketBuild);
@@ -82,14 +84,3 @@ export async function POST(req: Request) {
     return NextResponse.json(error, { status: 500 });
   }
 }
-
-const updateOrderError = async (orderId: string, errorMessage: string, orderCode = null) => {
-  return await supabaseAdmin
-    .from(DB_TABLE_NAME.ORDERS)
-    .update({
-      status: KEY_MODIFY_DATA.ERROR,
-      order_code: orderCode,
-      description: errorMessage,
-    })
-    .eq("id", orderId);
-};
