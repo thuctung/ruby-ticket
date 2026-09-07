@@ -1,5 +1,6 @@
 "use client";
 
+import { PHONE_ADMIN } from "@/commons/constant";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -529,7 +530,7 @@ export default function TravelServices() {
 
           return (
             <Link
-              href="tel:0705551668"
+              href={`tel:${PHONE_ADMIN}`}
               key={s.id}
               {...(extraProps as any)}
               onMouseEnter={() => setHovered(s.id)}

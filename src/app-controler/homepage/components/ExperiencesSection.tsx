@@ -5,6 +5,7 @@ import HoverImage from "@/components/ui/hover-image";
 import { t } from "@/lib/i18n/t";
 import { ChevronRight } from "lucide-react";
 import { ExperienceCard, SideCard } from "@/types";
+import { PHONE_ADMIN } from "@/commons/constant";
 
 type LangKey = "vi" | "en" | "zh" | "ko";
 
@@ -95,7 +96,7 @@ export function ExperiencesSection({
                           <ChevronRight className="h-4 w-4" />
                         </a>
                       ) : (
-                        <a href="tel:0705551668" className="flex items-center gap-2">
+                        <a href={`tel:${PHONE_ADMIN}`} className="flex items-center gap-2">
                           Liên hệ
                         </a>
                       )}
