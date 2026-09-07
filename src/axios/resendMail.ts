@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { SendMailBaNaType } from "@/types/send-mail";
+import { PHONE_ADMIN } from "@/commons/constant";
 
 const resendMail = new Resend(process.env.SEND_MAIL_KEY);
 
@@ -19,7 +20,7 @@ export const sendMailTicketBaNa = async (payloadSendMailBaNa: SendMailBaNaType) 
             <strong>Mã đơn hàng:</strong> ${orderCode}<br />
           </p>
          <p style="margin-top: 24px;">
-                  Vé điện tử được đính kèm trong email này. Vui lòng xuất trình mã khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: 0705 551 668.
+                  Vé điện tử được đính kèm trong email này. Vui lòng xuất trình mã khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: ${PHONE_ADMIN}.
             </p>
             <p> Trân trọng,<br /> Ruby Travel </p>
     `,
