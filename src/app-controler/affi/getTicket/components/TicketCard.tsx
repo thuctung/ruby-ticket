@@ -7,7 +7,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, FULL_DATE_TIME_FORMAT } from "@/helpers/dateTime";
 import { formatVND } from "@/helpers/money";
-import { SITE_CODES } from "@/commons/constant";
+import { PHONE_ADMIN, SITE_CODES } from "@/commons/constant";
 
 export default function TicketCard({
   ticketItem,
@@ -134,7 +134,7 @@ export default function TicketCard({
       <div className="bg-red-700 px-5 py-3.5 text-center text-white">
         <span className="text-[15px] font-extrabold tracking-wider">RUBY TRAVEL</span>
         <span className="mx-2 opacity-70">·</span>
-        <span className="text-xs">Hotline: 0705 551 668</span>
+        <span className="text-xs">Hotline: {PHONE_ADMIN}</span>
       </div>
     </div>
   );

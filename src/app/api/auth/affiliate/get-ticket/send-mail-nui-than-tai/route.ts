@@ -3,7 +3,7 @@ import { SendTicketInSystemMailType } from "@/app-controler/affi/getTicket/type"
 import { generateBookingVoucher } from "@/helpers/e-voucher";
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME, ERROR_MESSAGE } from "@/commons/constant";
+import { DB_TABLE_NAME, ERROR_MESSAGE, PHONE_ADMIN } from "@/commons/constant";
 import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
 import resendMail from "@/axios/resendMail";
 
@@ -91,7 +91,7 @@ export async function POST(req: Request) {
               </tbody>
             </table>
             <p style="margin-top: 24px;">
-                  Vé điện tử được đính kèm trong email này. Vui lòng xuất trình mã khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: 0705 551 668.
+                  Vé điện tử được đính kèm trong email này. Vui lòng xuất trình mã khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: ${PHONE_ADMIN}.
             </p>
             <p> Trân trọng,<br /> Ruby Travel </p>
        </div>
