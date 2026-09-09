@@ -63,6 +63,8 @@ export const getProductBySiteSun = async (siteCodes: string, date: string) => {
         `SAP không cấu hình mở bán cho sản phẩm vào ngày ${dayjs(date, SERVER_DATE_FORMAT).format(BASIC_DATE_FORMAT)}`
       );
     }
+    console.log("data", data.result);
+
     return groupTickets(data.result);
   } catch (e) {
     setToastMessage("Có lỗi xảy ra! Thử lại sau");

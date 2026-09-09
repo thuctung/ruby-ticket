@@ -1,4 +1,4 @@
-import { PHONE_ADMIN, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
+import { PHONE_ADMIN, PHONE_FILE_PDF, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { formatVND } from "@/helpers/money";
 import { ProductSubmitType, TicketReponseType, TicketResultQRType } from "@/types/ticket";
 
@@ -338,7 +338,7 @@ export const downloadTicketPDF = async (
 
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(9);
-    pdf.text(`· Hotline: ${PHONE_ADMIN}`, PAGE_W / 2 + 36, PAGE_H - 22, {
+    pdf.text(`· Hotline: ${PHONE_FILE_PDF}`, PAGE_W / 2 + 36, PAGE_H - 22, {
       align: "center",
     });
   }

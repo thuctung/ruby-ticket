@@ -14,7 +14,7 @@ import {
 } from "@/app-controler/affi/getTicket/components/constants";
 import { getPerSonTypeName } from "@/components/GetTicketForm/constants";
 import { get } from "lodash";
-import { PHONE_ADMIN, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
+import { PHONE_FILE_PDF, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { getFontBase64, getFontBoldBase64, getImage } from "./loadFont";
 import { formatVND } from "@/lib/money";
 
@@ -292,7 +292,7 @@ export const downloadTicketPDFServer = async (
 
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(9);
-    pdf.text(`· Hotline: ${PHONE_ADMIN}`, PAGE_W / 2 + 36, PAGE_H - 22, {
+    pdf.text(`· Hotline: ${PHONE_FILE_PDF}`, PAGE_W / 2 + 36, PAGE_H - 22, {
       align: "center",
     });
   }

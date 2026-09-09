@@ -167,6 +167,8 @@ export const BANK_INFO = {
 
 export const PHONE_ADMIN = process.env.NEXT_PUBLIC_PHONE_ADMIN || "0905 477 169";
 
+export const PHONE_FILE_PDF = "0705 551 668";
+
 export const SUN_GROUP = {
   swgSubscriptionKey: process.env.NEXT_PUBLIC_SUN_SWG_SUBSCRIPTION_KEY || "",
   serviceURL: process.env.NEXT_PUBLIC_SUN_SERVICE_URL || "",

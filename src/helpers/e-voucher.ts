@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import { SendTicketInSystemMailType } from "@/app-controler/affi/getTicket/type";
 import { getFontBase64, getFontBoldBase64, getImage } from "./loadFont";
-import { PHONE_ADMIN } from "@/commons/constant";
+import { PHONE_FILE_PDF } from "@/commons/constant";
 
 const MARGIN = 6;
 
@@ -186,7 +186,7 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
 
   pdf.setFont("Roboto", "normal");
   pdf.setFontSize(9);
-  pdf.text(`· Hotline: ${PHONE_ADMIN}`, PAGE_W / 2 + 36, PAGE_H - 22, {
+  pdf.text(`· Hotline: ${PHONE_FILE_PDF}`, PAGE_W / 2 + 36, PAGE_H - 22, {
     align: "center",
   });
 

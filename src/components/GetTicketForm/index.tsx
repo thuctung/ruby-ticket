@@ -115,7 +115,6 @@ export default function GetTicketForm({
       } else {
         data = await getProductionInSystem(siteCode);
       }
-
       if (data) {
         setListProductSun(data);
       } else {
