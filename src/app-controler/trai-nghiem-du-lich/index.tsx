@@ -28,9 +28,9 @@ const DestinationsPageController = ({ sites }: { sites: SiteType[] | null }) => 
         {/* Lưới card */}
         <div className="mx-auto grid max-w-6xl grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-7">
           {sites &&
-            sites.map((place: any) => (
+            sites.map((place: any, index: number) => (
               <DestinationCard
-                key={place.id}
+                key={index}
                 place={place}
                 onDetail={() => console.log("")}
                 onBuy={handleBuy}

@@ -1,0 +1,91 @@
+{
+  "hero": {
+    "title1": "Explore Da Nang",
+    "title2": "book fast, travel easy",
+    "desc": "Pick a date (from today onward) and choose experiences like Ba Na Hills, Vinpearl, Hoi An Memories, Nui Than Tai or a Han River cruise. Pay with QR and receive a QR ticket via email.",
+    "cardTitle": "Today’s picks",
+    "cardDesc": "Recommended experiences",
+    "city": "Da Nang",
+    "miniPill": "Pay with QR • Receive QR via email"
+  },
+  "banner": {
+    "bookNow": "Đặt Vé Ngay"
+  },
+  "buyTickets": "Mua Ngay",
+  "priceFrom": "Giá từ",
+  "featuredExperience": "Trải nghiệm nổi bật",
+  "customerExperience": "Trải Nghiệm Khách Hàng",
+  "services": {
+    "tour": "Tour",
+    "groupCustomer": "KHÁCH ĐOÀN",
+    "combo": "Combo",
+    "travel": "DU LỊCH",
+    "ticket": "Vé",
+    "entertainment": "VUI CHƠI GIẢI TRÍ",
+    "service": "Dịch vụ",
+    "laundry": "GIẶT SẤY",
+    "motorbikeRental": "Thuê xe máy",
+    "spa": "Spa",
+    "massage": "Massage",
+    "flight": "Máy bay",
+    "booking": "Đặt",
+    "vehicle": "Xe"
+  },
+  "experiences": {
+    "themePark": "Công viên giải trí",
+    "hotSpring": "Suối nước nóng",
+    "riverCruise": "Du thuyền sông",
+    "show": "Show diễn",
+    "waterPark": "Công viên nước",
+    "mikayuki": "Mikayuki",
+    "top": "Nổi bật",
+    "relax": "Thư giãn",
+    "chill": "Chill",
+    "mustSee": "Không thể bỏ lỡ",
+    "hot": "Hot",
+    "banaHills": "Bà Nà Hills",
+    "vinpearlNamHoiAn": "Vinpearl Nam Hội An",
+    "kyUcHoiAn": "Ký ức Hội An",
+    "nuiThanTai": "Núi Thần Tài",
+    "duThuyenSongHan": "Du thuyền Sông Hàn",
+    "mikazuki": "Mikazuki",
+    "descriptions": {
+      "themePark": "Cáp treo • Cầu Vàng • Khu vui chơi",
+      "hotSpring": "Tắm khoáng • Nghỉ dưỡng trong ngày",
+      "riverCruise": "Chill sông Hàn • Ngắm cầu về đêm",
+      "show": "Show diễn buổi tối đáng xem",
+      "waterPark": "Resort & Trải nghiệm giải trí",
+      "mikazuki": "Phù Tang giữa lòng Đà Nẵng"
+    }
+  },
+  "affiliate": {
+    "title": "Cộng tác viên",
+    "flow": "Đăng ký tài khoản → gửi yêu cầu cộng tác viên → admin duyệt → (nếu là agent) nạp ví trước để xuất vé nhanh cho khách",
+    "registerCta": "Đăng ký làm Affiliate",
+    "viewFaqCta": "Xem câu hỏi",
+    "subtitle": "Dành cho bạn muốn bán vé",
+    "features": {
+      "dashboard": "Có trang riêng quản lý đơn, theo dõi doanh số",
+      "walletTitle": "Agent wallet",
+      "walletDesc": "Agent nạp tiền trước, hệ thống trừ ví khi xuất vé",
+      "performance": "Tối ưu hiệu suất bán vé"
+    }
+  },
+  "faq": {
+    "title": "Câu Hỏi Thường Gặp",
+    "questions": [
+      {
+        "question": "Sau khi thanh toán thành công, tôi nhận vé bằng cách nào?",
+        "answer": "Mã vé điện tử (QR Code) sẽ được gửi tự động qua Email và Số điện thoại (Zalo/SMS) bạn đã đăng ký trong vòng 1-3 phút sau khi hệ thống ghi nhận thanh toán thành công."
+      },
+      {
+        "question": "Tôi có thể đổi hoặc hoàn trả vé đã mua không?",
+        "answer": "Chính sách đổi trả phụ thuộc vào quy định riêng của từng khu du lịch. Vui lòng kiểm tra kỹ phần \"Điều kiện vé\" trước khi thanh toán hoặc liên hệ Hotline để được hỗ trợ cụ thể."
+      },
+      {
+        "question": "Đại lý có cần cam kết doanh số tháng không?",
+        "answer": "Chúng tôi có nhiều cấp bậc đại lý từ CTV tự do không áp doanh số đến đại lý kim cương. Hãy để lại thông tin tại form đăng ký, chuyên viên sẽ tư vấn gói phù hợp cho bạn."
+      }
+    ]
+  }
+}

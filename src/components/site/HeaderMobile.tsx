@@ -1,11 +1,13 @@
 import { ChevronRight, Menu } from "lucide-react";
+import { t } from "@/lib/i18n/t";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "../ui/button";
 import { MENUS } from "@/commons/constant";
 import Image from "next/image";
+import { LangKey } from "@/types";
 
-export function HeaderMobile({ pathname }: { pathname: string }) {
+export function HeaderMobile({ lang }: { lang: LangKey }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -40,7 +42,7 @@ export function HeaderMobile({ pathname }: { pathname: string }) {
           {MENUS.map((item) => (
             <a
               key={item.name}
-              href={item.link}
+              href={`/${lang}${item.link}`}
               className="flex items-center gap-3 px-2.5 py-2.5 rounded-xl hover:bg-gray-50 transition-colors group mb-0.5"
             >
               <span
@@ -51,7 +53,7 @@ export function HeaderMobile({ pathname }: { pathname: string }) {
               >
                 <item.icon className={["w-[18px] h-[18px]", item.iconColor].join(" ")} />
               </span>
-              <span className="flex-1 text-sm text-gray-700 font-medium">{item.name}</span>
+              <span className="flex-1 text-sm text-gray-700 font-medium">{t(lang, item.name)}</span>
               <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-gray-400 transition-colors" />
             </a>
           ))}

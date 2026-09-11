@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { TESTIMONIALS } from "../contants";
 import Image from "next/image";
+import { LangKey } from "@/lib/i18n";
+import { t } from "@/lib/i18n/t";
 
 const CARDS_PER_VIEW = 2; // số card hiển thị cùng lúc (desktop)
 const AUTO_SLIDE_INTERVAL = 2000;
 
-const Feedback = () => {
+const Feedback = ({ lang }: { lang: LangKey }) => {
   // Nhân đôi mảng để tạo hiệu ứng loop vô hạn mượt
   const slides = [...TESTIMONIALS, ...TESTIMONIALS];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -52,7 +54,7 @@ const Feedback = () => {
       <div className="max-w-5xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold text-neutral-900">
-            Trải Nghiệm Khách Hàng
+            {t(lang, "home.customerExperience")}
           </h2>
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-3 rounded-full" />
         </div>

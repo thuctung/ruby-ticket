@@ -8,10 +8,10 @@ import { CollaboratorSection } from "./components/CollaboratorSection";
 import Feedback from "./components/Feedback";
 import { FaqSection } from "./components/FaqSection";
 import { SiteType } from "@/types/ticket";
+import { LangKey } from "@/types";
+import { t } from "@/lib/i18n/t";
 
-export default function HomePage({ sites }: { sites: SiteType[] }) {
-  const lang = "vi";
-
+export default function HomePage({ sites, locale }: { sites: SiteType[]; locale: LangKey }) {
   const sideCard: any = () => {
     const list = sites
       .map((item) => {
@@ -22,10 +22,11 @@ export default function HomePage({ sites }: { sites: SiteType[] }) {
         return {
           id: code,
           code,
-          name: item.name || "",
+          name: t(locale, exp.nameKey) || "",
           pre_price: price,
           exp,
           status: item.status,
+          category: t(locale, exp.category) || "",
         };
       })
       .filter(Boolean) as unknown as Array<{
@@ -41,15 +42,15 @@ export default function HomePage({ sites }: { sites: SiteType[] }) {
 
   return (
     <div className="bg-white text-neutral-900 antialiased font-sans selection:bg-blue-500 selection:text-white">
-      <Banner />
+      <Banner lang={locale} />
 
-      <TravelServices />
+      <TravelServices lang={locale} />
 
-      <ExperiencesSection lang={lang} sidseCard={sideCard()} fallbackExperiences={EXPERIENCES} />
+      <ExperiencesSection lang={locale} sidseCard={sideCard()} fallbackExperiences={EXPERIENCES} />
       {/* <TopPartnersSection /> */}
-      <Feedback />
-      <CollaboratorSection lang={lang} />
-      <FaqSection lang={lang} />
+      <Feedback lang={locale} />
+      <CollaboratorSection lang={locale} />
+      <FaqSection lang={locale} />
     </div>
   );
 }

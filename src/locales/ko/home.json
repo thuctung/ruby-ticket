@@ -1,0 +1,91 @@
+{
+  "hero": {
+    "title1": "Explore Da Nang",
+    "title2": "book fast, travel easy",
+    "desc": "Pick a date (from today onward) and choose experiences like Ba Na Hills, Vinpearl, Hoi An Memories, Nui Than Tai or a Han River cruise. Pay with QR and receive a QR ticket via email.",
+    "cardTitle": "Today’s picks",
+    "cardDesc": "Recommended experiences",
+    "city": "Da Nang",
+    "miniPill": "Pay with QR • Receive QR via email"
+  },
+  "banner": {
+    "bookNow": "지금 예약하기"
+  },
+  "buyTickets": "구매",
+  "priceFrom": "최저가",
+  "featuredExperience": "인기 체험",
+  "customerExperience": "고객 체험",
+  "services": {
+    "tour": "투어",
+    "groupCustomer": "단체 고객",
+    "combo": "콤보",
+    "travel": "여행",
+    "ticket": "티켓",
+    "entertainment": "놀이 및 오락",
+    "service": "서비스",
+    "laundry": "세탁",
+    "motorbikeRental": "오토바이 대여",
+    "spa": "스파",
+    "massage": "마사지",
+    "flight": "항공권",
+    "booking": "예약",
+    "vehicle": "차량"
+  },
+  "experiences": {
+    "themePark": "테마파크",
+    "hotSpring": "온천",
+    "riverCruise": "리버 크루즈",
+    "show": "쇼",
+    "waterPark": "워터파크",
+    "mikayuki": "Mikayuki",
+    "top": "인기",
+    "relax": "휴식",
+    "chill": "칠링",
+    "mustSee": "꼭 가봐야 할 곳",
+    "hot": "핫",
+    "banaHills": "바나힐",
+    "vinpearlNamHoiAn": "빈펄 남호이안",
+    "kyUcHoiAn": "호이안 메모리즈 쇼",
+    "nuiThanTai": "누이턴타이",
+    "duThuyenSongHan": "한강 크루즈",
+    "mikazuki": "Mikazuki",
+    "descriptions": {
+      "themePark": "케이블카 • 골든브릿지 • 테마파크",
+      "hotSpring": "미네랄 온천 • 당일 힐링",
+      "riverCruise": "한강 감성 • 야경 속 다리 조망",
+      "show": "놓칠 수 없는 저녁 공연",
+      "waterPark": "리조트 & 엔터테인먼트 체험",
+      "mikazuki": "다낭 속 작은 일본"
+    }
+  },
+  "affiliate": {
+    "title": "제휴 파트너",
+    "flow": "계정 등록 → 제휴 신청 제출 → 관리자 승인 → (에이전트인 경우) 지갑 선충전으로 고객에게 빠른 티켓 발급",
+    "registerCta": "제휴 파트너 등록하기",
+    "viewFaqCta": "자주 묻는 질문 보기",
+    "subtitle": "티켓을 판매하고 싶은 분들을 위한",
+    "features": {
+      "dashboard": "주문 관리와 매출 추적을 위한 전용 페이지",
+      "walletTitle": "에이전트 지갑",
+      "walletDesc": "에이전트가 미리 충전하면 티켓 발급 시 지갑에서 자동 차감",
+      "performance": "티켓 판매 성과 최적화"
+    }
+  },
+  "faq": {
+    "title": "자주 묻는 질문",
+    "questions": [
+      {
+        "question": "결제가 완료되면 티켓은 어떻게 받나요?",
+        "answer": "시스템에서 결제 완료를 확인한 후 1~3분 이내에, 등록하신 이메일과 전화번호(Zalo/SMS)로 전자 티켓(QR 코드)이 자동으로 발송됩니다."
+      },
+      {
+        "question": "구매한 티켓을 교환하거나 환불할 수 있나요?",
+        "answer": "교환 및 환불 정책은 각 관광지의 규정에 따라 다릅니다. 결제 전 \"티켓 이용 조건\"을 꼭 확인하시거나, 자세한 안내를 위해 고객센터로 문의해 주세요."
+      },
+      {
+        "question": "대리점은 월 매출 목표를 달성해야 하나요?",
+        "answer": "매출 목표가 없는 프리랜서 파트너부터 다이아몬드 등급 대리점까지 다양한 등급을 제공합니다. 등록 양식에 정보를 남겨주시면 담당자가 적합한 플랜을 안내해 드립니다."
+      }
+    ]
+  }
+}

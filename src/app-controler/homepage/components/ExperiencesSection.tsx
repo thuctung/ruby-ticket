@@ -33,9 +33,8 @@ export function ExperiencesSection({
       <div className="mx-auto max-w-6xl px-6">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900">
-            {t(lang, "section.experiences.title")}
+            {t(lang, "home.featuredExperience")}
           </h2>
-          <p className="text-lg text-slate-500">{t(lang, "section.experiences.desc")}</p>
           <div className="mt-2 mx-auto w-12 h-1 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
         </div>
 
@@ -50,7 +49,7 @@ export function ExperiencesSection({
                   <div
                     className={`absolute top-4 left-4 z-20 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-lg bg-gradient-to-r ${item.exp.color}`}
                   >
-                    {item.exp.category}
+                    {item.category}
                   </div>
                   <HoverImage
                     alt={item.exp.alt}
@@ -77,7 +76,7 @@ export function ExperiencesSection({
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">
-                        {t(lang, "section.experiences.priceFrom")}
+                        {t(lang, "home.priceFrom")}
                       </div>
                       <div className="text-xl font-extrabold text-blue-600">
                         {displayPrice(item.pre_price)}
@@ -92,12 +91,12 @@ export function ExperiencesSection({
                           href={`/mua-ve-tham-quan?product=${item.code}`}
                           className="flex items-center gap-2"
                         >
-                          Mua Ngay
+                          {t(lang, "home.buyTickets")}
                           <ChevronRight className="h-4 w-4" />
                         </a>
                       ) : (
                         <a href={`tel:${PHONE_ADMIN}`} className="flex items-center gap-2">
-                          Liên hệ
+                          {t(lang, "common.footer.contact")}
                         </a>
                       )}
                     </Button>

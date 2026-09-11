@@ -39,13 +39,14 @@ export type SideCard = {
   pre_price: number;
   exp: ExperienceCard;
   status: boolean;
+  category: string;
 };
 
 export type ExperienceCard = {
   key: string;
-  nameKey: I18nKey;
-  taglineKey: I18nKey;
-  badgeKey: I18nKey;
+  nameKey: string;
+  taglineKey: string;
+  badgeKey: string;
   image1: string;
   image2: string;
   color: string;

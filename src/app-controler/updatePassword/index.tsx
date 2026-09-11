@@ -59,7 +59,7 @@ export default function UpdatePassword() {
 
   return (
     <main className="min-h-screen flex flex-col bg-white text-foreground">
-      <Header />
+      <Header locale="vi" />
       <main className="flex flex-1 items-start justify-center px-4 pt-32">
         <div className="w-full max-w-md">
           <div className="rounded-2xl border border-gray-200 p-8 shadow-sm">
@@ -111,7 +111,7 @@ export default function UpdatePassword() {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer locale="vi" />
     </main>
   );
 }

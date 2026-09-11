@@ -1,0 +1,91 @@
+{
+  "hero": {
+    "title1": "Explore Da Nang",
+    "title2": "book fast, travel easy",
+    "desc": "Pick a date (from today onward) and choose experiences like Ba Na Hills, Vinpearl, Hoi An Memories, Nui Than Tai or a Han River cruise. Pay with QR and receive a QR ticket via email.",
+    "cardTitle": "Today’s picks",
+    "cardDesc": "Recommended experiences",
+    "city": "Da Nang",
+    "miniPill": "Pay with QR • Receive QR via email"
+  },
+  "banner": {
+    "bookNow": "立即预订"
+  },
+  "buyTickets": "购买",
+  "priceFrom": "起价",
+  "featuredExperience": "精选体验",
+  "customerExperience": "客户体验",
+  "services": {
+    "tour": "旅游团",
+    "groupCustomer": "团体客户",
+    "combo": "套餐",
+    "travel": "旅行",
+    "ticket": "门票",
+    "entertainment": "娱乐",
+    "service": "服务",
+    "laundry": "洗衣烘干",
+    "motorbikeRental": "摩托车租赁",
+    "spa": "水疗",
+    "massage": "按摩",
+    "flight": "机票",
+    "booking": "预订",
+    "vehicle": "车辆"
+  },
+  "experiences": {
+    "themePark": "主题公园",
+    "hotSpring": "温泉",
+    "riverCruise": "河上游船",
+    "show": "表演秀",
+    "waterPark": "水上乐园",
+    "mikayuki": "Mikayuki",
+    "top": "热门",
+    "relax": "放松",
+    "chill": "悠闲",
+    "mustSee": "必看",
+    "hot": "热门",
+    "banaHills": "巴拿山",
+    "vinpearlNamHoiAn": "会安南方Vinpearl",
+    "kyUcHoiAn": "会安记忆秀",
+    "nuiThanTai": "神财山",
+    "duThuyenSongHan": "韩江游船",
+    "mikazuki": "Mikazuki",
+    "descriptions": {
+      "themePark": "缆车 • 金桥 • 主题乐园",
+      "hotSpring": "矿物温泉 • 一日度假",
+      "riverCruise": "韩江悠闲时光 • 夜赏跨江大桥",
+      "show": "不容错过的夜间表演",
+      "waterPark": "度假村与娱乐体验",
+      "mikazuki": "岘港中的日本风情"
+    }
+  },
+  "affiliate": {
+    "title": "分销合作伙伴",
+    "flow": "注册账户 → 提交分销合作申请 → 管理员审核 → （如为代理商）提前充值钱包以快速为客户出票",
+    "registerCta": "注册成为分销合作伙伴",
+    "viewFaqCta": "查看常见问题",
+    "subtitle": "适合想要销售门票的您",
+    "features": {
+      "dashboard": "专属后台管理订单，追踪销售业绩",
+      "walletTitle": "代理商钱包",
+      "walletDesc": "代理商提前充值，出票时系统自动扣除钱包余额",
+      "performance": "优化售票效率"
+    }
+  },
+  "faq": {
+    "title": "常见问题",
+    "questions": [
+      {
+        "question": "支付成功后，我如何领取门票？",
+        "answer": "电子票（二维码）将在系统确认支付成功后1-3分钟内，自动发送至您注册的电子邮箱和电话号码（Zalo/短信）。"
+      },
+      {
+        "question": "已购买的门票可以更换或退款吗？",
+        "answer": "换票/退票政策视各旅游景点的具体规定而定。请在付款前仔细查看\"门票条款\"部分，或联系热线获取具体支持。"
+      },
+      {
+        "question": "代理商是否需要承诺每月销售额？",
+        "answer": "我们提供多个代理等级，从无需销售额要求的自由合作伙伴，到钻石级代理商。请在注册表中留下您的信息，我们的专员将为您推荐合适的方案。"
+      }
+    ]
+  }
+}

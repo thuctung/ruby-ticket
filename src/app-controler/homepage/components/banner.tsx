@@ -1,5 +1,7 @@
 "use client";
 
+import { t } from "@/lib/i18n/t";
+import { LangKey } from "@/types";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 const BANNER_IMAGES = [
@@ -21,7 +23,7 @@ const BANNER_IMAGES = [
   },
 ];
 
-export function Banner() {
+export function Banner({ lang }: { lang: LangKey }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -59,7 +61,7 @@ export function Banner() {
           href="/mua-ve-tham-quan"
           className="inline-block bg-[#E0115F] hover:bg-[#C00F4E] text-white font-semibold text-xs mb-10 mr-10 sm:text-sm md:text-base px-5 py-2.5 md:px-6 md:py-3 rounded-md transition-all shadow-lg shadow-[#E0115F]/30 active:scale-95"
         >
-          Đặt Vé Ngay
+          {t(lang, "home.banner.bookNow")}
         </a>
       </div>
 

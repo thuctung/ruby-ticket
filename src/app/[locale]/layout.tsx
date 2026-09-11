@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 // @ts-ignore: CSS module declarations not found in this environment
-import "./globals.css";
+import "../globals.css";
 import ToastMessage from "@/components/ui/toast-message";
 import { LoadingGlobal } from "@/components/ui/loading";
 // @ts-ignore: CSS module declarations not found in this environment
 import "react-datepicker/dist/react-datepicker.css";
 import { Suspense } from "react";
-
+import { notFound } from "next/navigation";
 import { body, mono } from "@/helpers/font-client";
+import { LANGS } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Ruby Travel",
@@ -17,14 +18,21 @@ export const metadata: Metadata = {
     icon: "/icon.png",
   },
 };
+export function generateStaticParams() {
+  return LANGS.map((l) => ({ locale: l.key }));
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+  if (!LANGS.some((l) => l.key === locale)) notFound();
   return (
-    <html lang="vi" className={`${body.variable} ${mono.variable}`}>
+    <html lang={locale} className={`${body.variable} ${mono.variable}`}>
       <meta name="google-site-verification" content="SI9lUDpDSzVXJTFANBGfg32-6nUdgAh6t0LD-0axg8E" />
       <body className={body.className}>
         <Suspense fallback={<LoadingGlobal />}>{children}</Suspense>

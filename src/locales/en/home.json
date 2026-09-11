@@ -1,0 +1,91 @@
+{
+  "hero": {
+    "title1": "Explore Da Nang",
+    "title2": "book fast, travel easy",
+    "desc": "Pick a date (from today onward) and choose experiences like Ba Na Hills, Vinpearl, Hoi An Memories, Nui Than Tai or a Han River cruise. Pay with QR and receive a QR ticket via email.",
+    "cardTitle": "Today’s picks",
+    "cardDesc": "Recommended experiences",
+    "city": "Da Nang",
+    "miniPill": "Pay with QR • Receive QR via email"
+  },
+  "banner": {
+    "bookNow": "Book Now"
+  },
+  "buyTickets": "Get",
+  "priceFrom": "From",
+  "featuredExperience": "Featured Experiences",
+  "customerExperience": "Customer Experiences",
+  "services": {
+    "tour": "Tour",
+    "groupCustomer": "Group Customers",
+    "combo": "Combo",
+    "travel": "Travel",
+    "ticket": "Ticket",
+    "entertainment": "Entertainment",
+    "service": "Service",
+    "laundry": "Laundry",
+    "motorbikeRental": "Motorbike Rental",
+    "spa": "Spa",
+    "massage": "Massage",
+    "flight": "Flight",
+    "booking": "Booking",
+    "vehicle": "Vehicle"
+  },
+  "experiences": {
+    "themePark": "Theme Park",
+    "hotSpring": "Hot Spring",
+    "riverCruise": "River Cruise",
+    "show": "Show",
+    "waterPark": "Water Park",
+    "mikayuki": "Mikayuki",
+    "top": "Top",
+    "relax": "Relax",
+    "chill": "Chill",
+    "mustSee": "Must-see",
+    "hot": "Hot",
+    "banaHills": "Ba Na Hills",
+    "vinpearlNamHoiAn": "Vinpearl Nam Hoi An",
+    "kyUcHoiAn": "Hoi An Memories",
+    "nuiThanTai": "Nui Than Tai",
+    "duThuyenSongHan": "Han River Cruise",
+    "mikazuki": "Mikazuki",
+    "descriptions": {
+      "themePark": "Cable car • Golden Bridge • Theme park",
+      "hotSpring": "Mineral baths • Day retreat",
+      "riverCruise": "Han River chill • Night bridge views",
+      "show": "A must-see evening show",
+      "waterPark": "Resort & entertainment experience",
+      "mikazuki": "A piece of Japan in Da Nang"
+    }
+  },
+  "affiliate": {
+    "title": "Affiliate",
+    "flow": "Register an account → submit affiliate request → admin approves → (if agent) top up wallet in advance to issue tickets quickly for customers",
+    "registerCta": "Register as Affiliate",
+    "viewFaqCta": "View FAQ",
+    "subtitle": "For those who want to sell tickets",
+    "features": {
+      "dashboard": "Dedicated dashboard to manage orders and track sales",
+      "walletTitle": "Agent Wallet",
+      "walletDesc": "Agents top up in advance; the system deducts the wallet when tickets are issued",
+      "performance": "Optimize ticket sales performance"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "questions": [
+      {
+        "question": "How do I receive my ticket after a successful payment?",
+        "answer": "An electronic ticket (QR Code) will be sent automatically via the Email and phone number (Zalo/SMS) you registered, within 1-3 minutes after the system confirms your payment."
+      },
+      {
+        "question": "Can I exchange or refund a ticket I've purchased?",
+        "answer": "Exchange and refund policies depend on each attraction's specific rules. Please check the \"Ticket Conditions\" section carefully before payment, or contact our Hotline for further assistance."
+      },
+      {
+        "question": "Do agents need to commit to a monthly sales target?",
+        "answer": "We offer multiple agent tiers, from a free affiliate with no sales target to a diamond-level agent. Leave your details on the registration form and our team will advise the right plan for you."
+      }
+    ]
+  }
+}

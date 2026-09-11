@@ -15,7 +15,7 @@ import {
 import { t } from "@/lib/i18n/t";
 
 import { useProfileStore } from "@/stores/useProfileStore";
-import { CommonType, ProfileType } from "@/types";
+import { CommonType, LangKey, ProfileType } from "@/types";
 
 import { MENUS } from "@/commons/constant";
 import { usePathname, useRouter } from "next/navigation";
@@ -25,11 +25,12 @@ import Image from "next/image";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
 import { UserPopup } from "./PopupUser";
 import { HeaderMobile } from "./HeaderMobile";
+import Languages from "./Languages";
 
-export default function Header() {
+export default function Header({ locale }: { locale: LangKey }) {
   const router = useRouter();
   const pathname = usePathname();
-  const lang = useLang();
+  const lang = locale;
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const supabase = createSupabaseBrowserClient();
@@ -115,12 +116,12 @@ export default function Header() {
                       }
                     }
                 }}
-                href={item.link}
+                href={`/${lang}${item.link}`}
                 className={`relative pb-1 text-[15px] font-medium transition-colors ${
                   item.link === pathname ? "text-red-600" : "text-gray-600 hover:text-gray-900"
                 }`}
               >
-                {item.name}
+                {t(lang, item.name)}
                 {item.link === pathname && (
                   <span className="absolute -bottom-[13px] left-0 right-0 h-0.5 rounded-full bg-red-600" />
                 )}
@@ -131,11 +132,11 @@ export default function Header() {
           {/* Right side */}
           <div className="flex items-center gap-2">
             {/* Language */}
-            {/* <Languages /> */}
+            <Languages />
 
             {!profile.user_id ? (
               <Button asChild>
-                <Link href="/login">{t(lang, "auth.login")}</Link>
+                <Link href="/login">{t(lang, "common.auth.login")}</Link>
               </Button>
             ) : (
               <DropdownMenu>
@@ -158,7 +159,7 @@ export default function Header() {
             )}
 
             {/* Mobile menu */}
-            <HeaderMobile pathname={pathname} />
+            <HeaderMobile lang={lang} />
           </div>
         </div>
       </header>

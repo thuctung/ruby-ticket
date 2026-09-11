@@ -1,18 +1,21 @@
 import { ConfirmProvider } from "@/components/site/Confirm";
 import Footer from "@/components/site/Footer";
 import Header from "@/components/site/Header";
-import FloatingContact from "@/components/site/FloatingContact";
+import { LangKey } from "@/types";
 
-export default function RootLayout({
+export default async function LocaleLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
   return (
     <main className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header />
+      <Header locale={locale as LangKey} />
       {children}
-      <Footer />
+      <Footer locale={locale as LangKey} />
       <ConfirmProvider />
     </main>
   );

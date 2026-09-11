@@ -205,28 +205,28 @@ export const TYPE_TRANSFER = {
 export const MENUS = [
   {
     link: "/#travel-services",
-    name: "Khám phá dịch vụ",
+    name: "common.header.exploreServices",
     icon: Compass,
     iconBg: "bg-blue-50",
     iconColor: "text-blue-600",
   },
   {
     link: "/trai-nghiem-du-lich",
-    name: "Trải nghiệm",
+    name: "common.header.experience",
     icon: Sparkles,
     iconBg: "bg-violet-50",
     iconColor: "text-violet-600",
   },
   {
     link: "/mua-ve-tham-quan",
-    name: "Mua vé tham quan",
+    name: "common.header.buyTickets",
     icon: Ticket,
     iconBg: "bg-green-50",
     iconColor: "text-green-600",
   },
   {
     link: "/thanh-tuu",
-    name: "Thành tựu",
+    name: "common.header.achievements",
     icon: Award,
     iconBg: "bg-yellow-50",
     iconColor: "text-yellow-600",
@@ -234,14 +234,14 @@ export const MENUS = [
 
   {
     link: "/faq",
-    name: "Hỏi đáp (FAQ)",
+    name: "common.header.faq",
     icon: HelpCircle,
     iconBg: "bg-gray-50",
     iconColor: "text-gray-600",
   },
   {
     link: "/dang-ky-dai-ly",
-    name: "Đăng ký đại lý",
+    name: "common.header.agencyRegister",
     icon: Store,
     iconBg: "bg-purple-50",
     iconColor: "text-purple-600",
