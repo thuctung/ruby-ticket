@@ -37,12 +37,27 @@ const FormSite = ({ mode, currentSite, onClose, onSubmit }: FormSiteProps) => {
           className={inputClass(false)}
         />
       </Field>
+      <Field label="Thứ tự hiển thị">
+        <input
+          value={site.order}
+          type="number"
+          min={0}
+          onChange={(e) => setSite((f) => ({ ...f, order: Number(e.target.value) }))}
+          placeholder="VD: Sun World Vũng Tàu"
+          className={inputClass(false)}
+        />
+      </Field>
 
-      <div className="flex gap-6 pt-1">
+      <div className="flex gap-6 pt-1 flex-wrap mt-4">
         <ToggleCustom
-          label="Hoạt động"
+          label="Khách lẻ"
           checked={site.status}
           onChange={(v) => setSite((f) => ({ ...f, status: v }))}
+        />
+        <ToggleCustom
+          label="Đại lý"
+          checked={site.status_affilate}
+          onChange={(v) => setSite((f) => ({ ...f, status_affilate: v }))}
         />
         <ToggleCustom
           label="Trong hệ thống"

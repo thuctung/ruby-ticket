@@ -1,3 +1,5 @@
+import { PHONE_ADMIN } from "@/commons/constant";
+
 export default function Footer() {
   return (
     <footer className="bg-neutral-950 text-neutral-400 py-16 text-sm">
@@ -52,7 +54,7 @@ export default function Footer() {
           <div>
             <h4 className="text-white text-base font-bold mb-4 tracking-wider">Liên Hệ</h4>
             <p className="leading-relaxed">
-              Hotline: <span className="text-white">0705 551 668</span>
+              Hotline: <span className="text-white">{PHONE_ADMIN}</span>
               <br />
               Email: <span className="text-white">{process.env.NEXT_PUBLIC_EMAIL_COMPANY}</span>
             </p>

@@ -101,7 +101,7 @@ export default function Login() {
               </button>
 
               <Link
-                href="/register"
+                href="/dang-ky-dai-ly"
                 className="w-full block text-center bg-white border border-slate-200 hover:border-blue-200 text-slate-600 font-bold py-4 rounded-2xl transition-all hover:bg-blue-50/50"
               >
                 Đăng ký làm Affiliate

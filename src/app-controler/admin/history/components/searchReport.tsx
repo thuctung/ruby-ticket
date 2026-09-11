@@ -104,7 +104,7 @@ export function SearchReport({
               value={searchValue.email}
               onChange={(value: string) => onChangeForm("email", value)}
               placeholder="Chọn tên đại lý"
-              searchPlaceholder="Gõ để tìm..."
+              searchPlaceholder="Nhập để tìm..."
             />
           </div>
           {/* Tên/Email aff */}
@@ -118,6 +118,18 @@ export function SearchReport({
               value={searchValue.email || ""}
               className="h-12"
               onChange={(value: string) => onChangeForm("email", value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+              Third party code
+            </label>
+            <Input
+              type="text"
+              placeholder=""
+              value={searchValue.third_party_number || ""}
+              className="h-12"
+              onChange={(value: string) => onChangeForm("third_party_number", value)}
             />
           </div>
         </div>

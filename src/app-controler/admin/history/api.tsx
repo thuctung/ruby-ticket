@@ -12,11 +12,12 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
   try {
     setGlobalLoading(true);
     const { currentPage, searchValue } = params;
-    const { location, from, to, email, payment_method, status, siteCode } = searchValue;
+    const { location, from, to, email, payment_method, status, siteCode, third_party_number } =
+      searchValue;
     const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
-    const body: any = {
+    const body: AdminSearchReport = {
       currentPage,
       location: location === "all" ? "" : location,
       from: dayjs(dateFrom).format(SERVER_DATE_FORMAT),
@@ -25,6 +26,7 @@ export const getTicketSaleAdmin = async (params: SearchTableType<AdminSearchRepo
       payment_method,
       status,
       siteCode,
+      third_party_number,
     };
 
     const response = await api.post(GET_ADMIN_REPORT, {

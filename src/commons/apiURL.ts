@@ -18,14 +18,8 @@ export const UPDATE_STATUS_TOPUP_MGT = "/api/auth/admin/topup-mgt/update-status"
 
 export const CREATE_ORDER_TICKET = "/api/auth/affiliate/get-ticket/create-order";
 
-export const UPDATE_STATUS_ORDER_ERROR = "/api/auth/affiliate/get-ticket/update-status-order";
-
-export const SUCCESS_ORDER_TICKET = "/api/auth/affiliate/get-ticket/success-order";
-
 export const SEND_MAIL_TICKET_NUI_THAN_TAI =
   "/api/auth/affiliate/get-ticket/send-mail-nui-than-tai";
-
-export const UPDATE_ORDER_BALANCE = "/api/auth/affiliate/get-ticket/update-order-balance";
 
 export const GET_TRANSACTION = "/api/auth/affiliate/transaction/get-transaction";
 
@@ -47,11 +41,9 @@ export const GET_HOME_HIGHLIGHTS = "/api/public/home/highlights";
 
 export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";
 
-export const CLIENT_BUY_TICKET_FINAL = "/api/public/buy-ticket-final";
-
 export const CLIENT_UPDATE_STATUS_ORDER_ERROR = "/api/public/update-status-order";
 
-export const CLIENT_SEND_TICET_TO_MAIL = "/api/public/send-ticket-mail";
+export const SEND_MAIL_TICKET_IN_SYSTEM = "/api/public/send-mail-ticket-in-system";
 
 export const GET_ORDER_HISTORY = "/api/auth/affiliate/stats/order-history";
 
@@ -82,6 +74,8 @@ export const SUN_BOOKING_CANCLE = "/api/sun-api/booking-cancel";
 export const GET_PRODUCT_IN_SYSTEM = "/api/auth/products";
 
 export const GET_SITE_BY_STATUS = "/api/auth/admin/sites/get-site-by-status";
+
+export const GET_SITE_BY_FORM_TYPE = "/api/auth/admin/sites/get-site-by-form-type";
 
 export const GET_ALL_SITE = "/api/auth/admin/sites/get-all-site";
 

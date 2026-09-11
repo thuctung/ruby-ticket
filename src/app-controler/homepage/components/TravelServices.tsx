@@ -1,5 +1,6 @@
 "use client";
 
+import { PHONE_ADMIN } from "@/commons/constant";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -512,10 +513,7 @@ export default function TravelServices() {
     <section id="travel-services" className="w-full pt-20 py-10 px-4">
       {/* Section header */}
       <div className="text-center mb-8">
-        <h2
-          className="text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900"
-          style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}
-        >
+        <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900">
           Khám phá dịch vụ
         </h2>
         <div className="mt-2 mx-auto w-12 h-1 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
@@ -532,7 +530,7 @@ export default function TravelServices() {
 
           return (
             <Link
-              href="tel:0705551668"
+              href={`tel:${PHONE_ADMIN}`}
               key={s.id}
               {...(extraProps as any)}
               onMouseEnter={() => setHovered(s.id)}

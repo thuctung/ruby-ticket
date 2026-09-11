@@ -1,61 +1,44 @@
 "use client";
 
-import { Fraunces, Be_Vietnam_Pro } from "next/font/google";
+import { body, mono } from "@/helpers/font-client";
+
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
-import dayjs from "dayjs";
-import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
-import { BookingFormProps, getPriceAgentAndMultiple, PRODUCT_TYPE } from "./constants";
+import { BookingFormProps, getPriceAgentAndMultiple, PRODUCT_TYPE, toDate } from "./constants";
 import { formatVND } from "@/helpers/money";
-
-const display = Fraunces({
-  subsets: ["latin", "vietnamese"],
-  weight: ["500", "600", "700"],
-  variable: "--font-display",
-});
-
-const body = Be_Vietnam_Pro({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-body",
-});
-
-const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
 const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
 
 export default function AffilateBookingForm({
   siteCode,
-  setSiteCode,
   listSite,
-  setFieldFormData,
   formData,
   listProduct,
-  setQty,
   quantities,
   totalTickets,
   selectedLines,
   total,
-  sideName,
+  siteName,
   exportGuideTicket,
-  setExportGuideTicket,
   agentPrice,
   formType,
+  loading,
+  setExportGuideTicket,
+  setFieldFormData,
+  setSiteCode,
+  setQty,
   handleBuyTicket,
 }: BookingFormProps) {
   return (
     <div
-      className={`${display.variable} ${body.variable} min-h-screen bg-[#EEF1EC] font-[family-name:var(--font-body)] text-[#1C2620]`}
+      className={`${body.variable} ${mono.variable} min-h-screen bg-[#EEF1EC] font-[family-name:var(--font-body)] text-[#1C2620]`}
     >
-      <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:py-14">
+      <div className="mx-auto  px-4 py-10 sm:px-6 lg:py-14">
         <div className="mb-8 sm:mb-10">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8A9A8E]">
             Đặt vé tham quan
           </p>
-          <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-[#1F3A2F] sm:text-4xl">
-            Sun World
-          </h1>
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_360px] lg:items-start lg:gap-8">
@@ -86,7 +69,7 @@ export default function AffilateBookingForm({
                 <Field label="Ngày đi">
                   <DatePickerCustom
                     value={formData.date_use}
-                    onChange={(val: any) => setFieldFormData("date_use", val)}
+                    onChange={(val: any) => setFieldFormData("date_use", val, true)}
                     minDate={toDate}
                     name="date_use"
                     id="date_use"
@@ -168,7 +151,7 @@ export default function AffilateBookingForm({
                   Tóm tắt đơn hàng
                 </h2>
                 <dl className="mt-5 space-y-3 text-sm">
-                  <Row label="Điểm đến" value={sideName} />
+                  <Row label="Điểm đến" value={siteName} />
                   <Row label="Ngày đi" value={formData.date_use} strong />
                 </dl>
                 {selectedLines.length > 0 && (
@@ -259,11 +242,12 @@ export default function AffilateBookingForm({
 
                 <button
                   type="button"
-                  disabled={totalTickets === 0}
+                  disabled={totalTickets === 0 || loading}
                   className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#1F3A2F] py-3.5 text-sm font-semibold text-white transition hover:bg-[#183024] disabled:cursor-not-allowed disabled:bg-[#B7C2BB]"
                   onClick={handleBuyTicket}
                 >
-                  <TicketIcon /> Xuất vé
+                  <TicketIcon />
+                  {loading ? "Đang tạo..." : "Xuất vé"}
                 </button>
               </div>
             </div>

@@ -6,8 +6,7 @@ import {
   customerCreateOrder,
   customerCreateOrderTicket,
   getTicketSunWorld,
-  senTicketToMail,
-  updateStatusGetTicketFinal,
+  senMailOrderProductInSystem,
   updateStatusOrder,
 } from "./api";
 import {
@@ -31,12 +30,11 @@ import { LodingMessage } from "@/components/ui/loading-message";
 import { getCodeTopup } from "@/helpers/genCode";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
-import { ClientOrderItem, CustomerBuyFilnalType, CustomerOrderType } from "./type";
-import { downloadTicketPDF, generateThirdPartyCode, rebuildDataTicket } from "@/helpers/ticket";
+import { ClientOrderItem, CustomerOrderType, PayloadGetTicketSunType } from "./type";
+import { downloadTicketPDF, generateThirdPartyCode } from "@/helpers/ticket";
 import { toast } from "react-toastify";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { getTicketFOCAndCutomer } from "./contants";
 import GetTicketForm from "@/components/GetTicketForm";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import { SendTicketInSystemMailType } from "../affi/getTicket/type";
@@ -109,11 +107,15 @@ export default function CheckoutControlerPage() {
       message: "Thông tin mua vé đã đúng, xác nhận mua vé?",
       okFunc: async () => handleBuyTicket(values),
       textOk: "Mua",
+      onCancle: () => {
+        if (values.callback) values.callback(false);
+      },
     });
   };
 
   const handleBuyTicket = async (values: SubmitSelectTicket) => {
-    const { formData, totalMoney, siteCode, products, date_use, in_system } = values;
+    const { formData, totalMoney, siteCode, products, date_use, in_system, siteName, callback } =
+      values;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
     const thirdPartyNum = generateThirdPartyCode(in_system);
     const { email, phone, fullname }: any = formData;
@@ -129,8 +131,9 @@ export default function CheckoutControlerPage() {
     };
     let passProcess = true;
     let dataOrderSunWorld: TicketReponseType | any = {};
+
+    // STEP 1: CREATE ORDER WITH SUN WORLD
     if (siteCode === SITE_CODES.BANAHILL) {
-      // STEP 1: CREATE ORDER WITH SUN WORLD
       dataOrderSunWorld = await customerCreateOrder(paramCreateOrder);
       if (!dataOrderSunWorld) {
         passProcess = false;
@@ -174,32 +177,40 @@ export default function CheckoutControlerPage() {
           thirdPartyNum,
           in_system,
           paymentCode,
+          siteName,
         });
+        if (callback) callback(true);
 
         // CANCLE ORDER TIMEOUT :
         timeCancelOrderRef.current = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
       }
     }
+    if (callback) callback();
   };
 
-  const sendMailTicketInSystem = async (
-    orderId: string,
-    products: ProductSubmitType[],
-    thirdPartyNumber: string,
-    dateUse: string,
-    formData: any,
-    paymentCode: string
-  ) => {
+  const sendMailTicketInSystem = async () => {
+    const { siteCode, orderId, dateUse, formData, thirdPartyNum, siteName, products, paymentCode } =
+      currentOrderData;
     const payload: SendTicketInSystemMailType = {
-      orderCode: thirdPartyNumber,
+      orderCode: thirdPartyNum,
       dateUse,
       email: formData.email,
       phone: formData.phone,
+      fullName: formData.fullname,
       paymentCode,
-      listTicket: products.map((item) => ({ name: item.productsName, quantity: item.quantity })),
+      siteName,
+      listTicket: products.map((item: ProductSubmitType) => ({
+        name: item.productsName,
+        quantity: item.quantity,
+      })),
     };
-    const data = await createTemplateTicketThanTaiMountain(payload);
 
+    const senTicket =
+      siteCode === SITE_CODES.NUITHANTAI
+        ? createTemplateTicketThanTaiMountain
+        : senMailOrderProductInSystem;
+
+    const data = await senTicket(payload);
     const payloadUpdate = {
       orderId: orderId,
       status_payment: PAYMENT_STATUS.SUCCESS,
@@ -210,10 +221,31 @@ export default function CheckoutControlerPage() {
       payloadUpdate.status = KEY_MODIFY_DATA.SUCCESS;
       payloadUpdate.description = "";
       toast.success("Đặt vé thành công");
+      setCurrentOrderData(initOrderData);
     } else {
       toast.error("Có lỗi xảy ra, liên hệ để được hỗ trợ");
     }
     updateStatusOrder(payloadUpdate);
+  };
+
+  const confirmBookingSunworld = async () => {
+    const { orderCode, orderId, dateUse } = currentOrderData;
+    const paramGetTicket: PayloadGetTicketSunType = {
+      orderCode,
+      productSelected,
+      orderId,
+      dateUse,
+      customerEmail,
+    };
+
+    const ticketCustomer: TicketResultQRType[] = await getTicketSunWorld(paramGetTicket);
+    if (ticketCustomer?.length) {
+      downloadTicketPDF(ticketCustomer, []);
+      setProductSelected([]);
+      setCustomerEmail("");
+      setCurrentOrderData(initOrderData);
+      toast.success(`Vé đã được gửi qua email: ${customerEmail}`);
+    }
   };
 
   const getTicketSuccess = async () => {
@@ -222,71 +254,13 @@ export default function CheckoutControlerPage() {
       clearTimeout(timeCancelOrderRef.current);
       timeCancelOrderRef.current = null;
     }
-
-    const {
-      orderCode,
-      orderId,
-      dateUse,
-      in_system,
-      thirdPartyNum,
-      formData,
-      products,
-      paymentCode,
-    } = currentOrderData;
+    const { in_system } = currentOrderData;
     if (in_system) {
-      sendMailTicketInSystem(orderId, products, thirdPartyNum, dateUse, formData, paymentCode);
+      sendMailTicketInSystem();
       return;
-    }
-
-    const ticketSuccess: TicketReponseType = await getTicketSunWorld(orderCode);
-
-    const payloadFinal: CustomerBuyFilnalType = {
-      isError: true,
-      orderCode: orderCode,
-      orderId: orderId,
-    };
-
-    if (ticketSuccess) {
-      // succes step: update status order
-      const result: TicketResultQRType[] | any = rebuildDataTicket(ticketSuccess, orderId, dateUse);
-
-      const formatTickets = result.map((item: TicketResultQRType) => {
-        const ticketItemSelect = productSelected.find(
-          (proSelect) => item.productCode === proSelect.productCode
-        );
-        return {
-          ...item,
-          publicPrice: ticketItemSelect?.publicPrice || 0,
-          siteName: ticketItemSelect?.siteName || "",
-          restaurantName: ticketItemSelect?.restaurantName,
-          personType: ticketItemSelect?.personType,
-          time: ticketItemSelect?.time,
-        };
-      });
-
-      payloadFinal.tickets = result;
-      payloadFinal.isError = false;
-      payloadFinal.referenceCode = ticketSuccess.referenceCode;
-
-      const { customerTickets } = getTicketFOCAndCutomer(formatTickets);
-      // SEND TICKET TO MAIL AND DOWN FILE PDF
-      await senTicketToMail({
-        email: customerEmail,
-        customerTickets,
-        focTickets: [],
-        orderCode,
-      });
-      downloadTicketPDF(customerTickets, []);
-      toast.success(`Vé đã được gửi qua email: ${customerEmail}`);
-      // reset data
-      setProductSelected([]);
-      setCustomerEmail("");
-      setCurrentOrderData(initOrderData);
     } else {
-      payloadFinal.description = ERROR_MESSAGE.SUN_WORLD_TICKET;
-      toast.error("Có lỗi xảy ra, vui lòng liên hệ để được hỗ trợ");
+      confirmBookingSunworld();
     }
-    await updateStatusGetTicketFinal(payloadFinal);
   };
 
   const handleCancleBooking = async () => {

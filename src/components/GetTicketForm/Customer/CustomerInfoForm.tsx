@@ -19,7 +19,9 @@ export default function CustomerInfoForm({ value, errors, onChange }: CustomerIn
     <section className=" mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="rounded-2xl border border-gray-100  bg-white p-6 shadow-xl ring-1 ring-black/5 sm:p-8">
         <h2 className="text-lg font-bold text-gray-900">Thông tin liên hệ</h2>
-        <p className="mt-1 text-sm text-gray-500">Vé điện tử sẽ được gửi đến email dưới.</p>
+        <p className="mt-1 text-sm text-gray-500">
+          Vé điện tử sẽ được gửi đến email của quý khách.
+        </p>
 
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">

@@ -23,9 +23,15 @@ type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
   onReset: () => void;
   searchValue: SearchTicketSale;
+  siteList: SiteType[];
 };
 
-export function SearchTicketForm({ searchValue, onReset, onChangeForm }: SearchTicketFormProps) {
+export function SearchTicketForm({
+  searchValue,
+  siteList,
+  onReset,
+  onChangeForm,
+}: SearchTicketFormProps) {
   const [filter, setFilter] = useState<SearchTicketSale>({
     ...searchValue,
   });
@@ -85,6 +91,23 @@ export function SearchTicketForm({ searchValue, onReset, onChangeForm }: SearchT
             {Object.keys(StatusData).map((key: string) => (
               <option key={key} value={key}>
                 {StatusData[key]}
+              </option>
+            ))}
+          </SelectBox>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+            Địa điểm
+          </label>
+          <SelectBox
+            value={filter.siteCode || ""}
+            className="w-full appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-9 text-sm font-medium text-[#2A1414] outline-none transition focus:border-[#C81418] focus:ring-2 focus:ring-red-100 disabled:opacity-60"
+            onChange={(value) => handleChangeFilter("siteCode", value)}
+          >
+            <option value="">Chọn công viên</option>
+            {siteList.map((site) => (
+              <option key={site.code} value={site.code}>
+                {site.name}
               </option>
             ))}
           </SelectBox>

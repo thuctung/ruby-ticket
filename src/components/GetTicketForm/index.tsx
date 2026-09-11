@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   getPriceBuyAgentLevel,
   getProductBySiteSun,
   getProductionInSystem,
-  getSiteByStatus,
+  getSiteByFormType,
 } from "./api";
 import {
   ProductSubmitType,
@@ -16,16 +16,15 @@ import {
 
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
-import { getPriceAgentAndMultiple, BOOKING_FORM_TYPE } from "./constants";
-import AffilateBookingForm from "./AffilateForm";
+import { getPriceAgentAndMultiple, BOOKING_FORM_TYPE, toDate } from "./constants";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { ProfileType } from "@/types";
 import { get } from "lodash";
-import { CUSTOMER, SITE_CODES } from "@/commons/constant";
+import { CUSTOMER } from "@/commons/constant";
 import { useSearchParams } from "next/navigation";
 import CustomerForm from "./Customer";
+import AffilateBooking from "./Affilate";
 
-const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 const initFormValues = {
   email: "",
   phone: "",
@@ -53,17 +52,18 @@ export default function GetTicketForm({
   const [siteCode, setSiteCode] = useState("");
   const [exportGuideTicket, setExportGuideTicket] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const [listProduct, setListProductSun] = useState<ResultListProductType[]>([]);
 
   const [agentPrice, setAgentPrice] = useState(0);
 
   const [formData, setFormData] = useState<any>(initFormValues);
 
-  const sideName = useMemo(() => {
+  const currentSite: SiteType | undefined = useMemo(() => {
     if (listSite.length && siteCode) {
-      return listSite.find((item) => item.code === siteCode)?.name || "";
+      return listSite.find((item) => item.code === siteCode);
     }
-    return "";
   }, [listSite, siteCode]);
 
   const selectedLines = useMemo(() => {
@@ -79,9 +79,12 @@ export default function GetTicketForm({
     return sum + price * (quantities[t.code] ?? 0);
   }, 0);
 
-  const setQty = (key: string, next: number) => {
-    setQuantities((q) => ({ ...q, [key]: next }));
-  };
+  const setQty = useCallback(
+    (key: string, next: number) => {
+      setQuantities((q) => ({ ...q, [key]: next }));
+    },
+    [setQuantities]
+  );
 
   const setFieldFormData = (key: string, val: any, needCalPrice = false) => {
     setFormData((p: any) => ({ ...p, [key]: val }));
@@ -94,16 +97,17 @@ export default function GetTicketForm({
   };
 
   const getSiteActive = async () => {
-    const data = await getSiteByStatus(true);
+    const data = await getSiteByFormType(formType);
     if (data?.length) {
       setListSides(data);
     }
   };
 
   const fetchProductBySite = async (siteCode: string) => {
-    if (listSite.length) {
+    setQuantities({});
+    if (currentSite) {
       let data: any = [];
-      if (siteCode === SITE_CODES.BANAHILL) {
+      if (!currentSite.in_system) {
         data = await getProductBySiteSun(
           siteCode,
           dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
@@ -111,14 +115,22 @@ export default function GetTicketForm({
       } else {
         data = await getProductionInSystem(siteCode);
       }
-
       if (data) {
         setListProductSun(data);
+      } else {
+        setListProductSun([]);
       }
     }
   };
 
+  const onCloseLoading = (result: boolean) => {
+    if (result) {
+      setQuantities({});
+    }
+    setLoading(false);
+  };
   const handleBuyTicket = () => {
+    setLoading(true);
     const products: ProductSubmitType[] = selectedLines.map((item) => {
       const priceSell = getPriceAgentAndMultiple(item, formType, agentPrice);
 
@@ -148,6 +160,8 @@ export default function GetTicketForm({
       formData: formData,
       haveFOC: exportGuideTicket,
       in_system,
+      siteName: currentSite?.name || "",
+      callback: onCloseLoading,
     });
   };
 
@@ -162,13 +176,13 @@ export default function GetTicketForm({
       if (level) fetchPriceAgentLevel(siteCode, level);
       setQuantities({});
     }
-  }, [siteCode, profile.agent_level, formType, formData.date_use]);
+  }, [siteCode, profile.agent_level, formType]);
 
   useEffect(() => {
     if (siteCode) {
       fetchProductBySite(siteCode);
     }
-  }, [siteCode]);
+  }, [siteCode, formData.date_use]);
 
   useEffect(() => {
     if (productURL && listSite.length) {
@@ -190,9 +204,10 @@ export default function GetTicketForm({
     quantities,
     totalTickets,
     total,
-    sideName,
+    siteName: currentSite?.name || "",
     selectedLines,
     exportGuideTicket,
+    loading,
     setExportGuideTicket,
     handleBuyTicket,
     setFieldFormData,
@@ -201,7 +216,7 @@ export default function GetTicketForm({
   };
 
   return formType === BOOKING_FORM_TYPE.AFFILATE ? (
-    <AffilateBookingForm {...commonProps} />
+    <AffilateBooking {...commonProps} />
   ) : (
     <CustomerForm {...commonProps} />
   );

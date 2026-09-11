@@ -50,8 +50,8 @@ export default function TicketStatusControler() {
       align: "left",
     },
     {
-      key: "productCode",
-      title: "Mã vé",
+      key: "ticketNumber",
+      title: "Mã vé ",
     },
     {
       key: "usageStatus",

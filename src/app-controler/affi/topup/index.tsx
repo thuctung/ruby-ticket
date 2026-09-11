@@ -12,7 +12,6 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { DB_TABLE_NAME, PAYMENT_STATUS } from "@/commons/constant";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CustomTable } from "@/components/ui/customs/table";
 import { columnsTopupAffHistory } from "./contant";
 
@@ -28,14 +27,10 @@ export default function AffiliateTopupPageControl() {
   const [curentPage, setCurentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
-  const handleAfterCreateTopup = () => {
-    handleGetHistory();
-  };
-
   const handleSubmitTopup = () => {
     if (urlQR) {
-      creteNewTopup(urlQR.amount, profile.user_id, urlQR.code, handleAfterCreateTopup);
       setIsShowPopup(false);
+      handleGetHistory();
     }
   };
 
@@ -56,6 +51,7 @@ export default function AffiliateTopupPageControl() {
       amount,
     });
     setIsShowPopup(true);
+    creteNewTopup(amount, profile.user_id, code);
   };
 
   useEffect(() => {

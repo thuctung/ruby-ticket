@@ -1069,14 +1069,14 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
           ];
         }
 
-        case "64E2F7D9-97F0-7310-4E04-01954640D3CF": {
+        case "67AD118B-D334-E53A-56A9-019546410185": {
           return [
-            "Vé Buffet trưa dành cho TRẺ EM cao 1.0m-1.4m/Lunch Buffet Ticket for CHILDREN 1.00m-1.40m tall",
-            "Nhà hàng: ARAPANG (12:30 15:00)/Restaurant: ARAPANG (12:30 15:00)",
+            "Vé Buffet trưa dành cho TRẺ EM NGOẠI TỈNH/QUỐC TẾ cao 1.0m-1.4m/Lunch Buffet Ticket for CHILDREN NON-LOCAL/INTERNATIONAL 1.00m-1.40m tall",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE (10:30am-15:00pm)",
           ];
         }
 
-        case "F2408218-A6D5-F736-054C-0195463F28A1": {
+        case "64E2F7D9-97F0-7310-4E04-01954640D3CF": {
           return [
             "Đối tượng: KHÁCH NGOẠI TỈNH/QUỐC TẾ cao trên 1m40/Eligible guests: NON-LOCAL/INTERNATIONAL VISITORS over 1.40m tall",
             "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE (10:30am-15:00pm)",
@@ -1085,7 +1085,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
           ];
         }
 
-        case "67AD118B-D334-E53A-56A9-019546410185": {
+        case "F2408218-A6D5-F736-054C-0195463F28A1": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI NGOẠI TỈNH/QUỐC TẾ (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY NON-LOCAL/INTERNATIONAL VISITORS (over 70 years old). Must present original photo ID at the ticket control gate",
             "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE",

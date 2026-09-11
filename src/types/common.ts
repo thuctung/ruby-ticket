@@ -17,6 +17,7 @@ export type ConfirmType = {
   message: string | null;
   okFunc: Function | null;
   textOk: string | null;
+  onCancle: Function | null;
 };
 
 export type MenuMgtType = {

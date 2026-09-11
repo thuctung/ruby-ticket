@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
-import { getFontBase64Client, getFontBold64Client } from "./ticket";
 import { SendTicketInSystemMailType } from "@/app-controler/affi/getTicket/type";
-import { getFontBase64, getFontBoldBase64, getImageBase64 } from "./ticket-server";
+import { getFontBase64, getFontBoldBase64, getImage } from "./loadFont";
+import { PHONE_FILE_PDF } from "@/commons/constant";
 
 const MARGIN = 6;
 
@@ -27,8 +27,8 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
   pdf.setLineWidth(1);
   pdf.roundedRect(8, 8, PAGE_W - 16, PAGE_H - 16, 10, 10);
 
-  const rubyLogo = getImageBase64("/logo.png");
-  const thanTaiLogo = getImageBase64("/nuithantai/logo.webp");
+  const rubyLogo = getImage("/logo.png");
+  const thanTaiLogo = getImage("/nuithantai/logo.webp");
 
   const fontBase64 = await getFontBase64();
   const fontBold = await getFontBoldBase64();
@@ -86,6 +86,18 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
   pdf.setTextColor(...TEXT_DARK);
   pdf.setFont("Roboto", "bold");
   pdf.text(process.env.NEXT_PUBLIC_EMAIL_COMPANY || "", leftX + 23, y);
+
+  //FULLNAME
+  if (data.fullName) {
+    y += 14;
+    pdf.setTextColor(...RED_LABEL);
+    pdf.setFont("Roboto", "normal");
+    pdf.text("Tên khách hàng:", leftX, y);
+    pdf.setTextColor(...TEXT_DARK);
+    pdf.setFont("Roboto", "bold");
+    pdf.text(data.fullName || "", leftX + 57, y);
+  }
+
   y += 14;
   // SDT
   pdf.setTextColor(...RED_LABEL);
@@ -107,18 +119,36 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
   pdf.text("Tên vé: ", leftX, y);
   pdf.text("Số lượng", rightX, y, { align: "right" });
 
+  y += 12;
+  const qtyColumnWidth = 40;
+  const qtyX = rightX;
+  const nameColumnWidth = rightX - leftX - qtyColumnWidth;
+  // Content
+  pdf.setFontSize(9);
   pdf.setTextColor(...TEXT_DARK);
   pdf.setFont("Roboto", "bold");
-  y += 14;
   data.listTicket.forEach((item) => {
-    pdf.text(item.name, leftX, y);
-    pdf.text(`x${String(item.quantity)}`, rightX - 20, y, { align: "left" });
+    const ticketLines = pdf.splitTextToSize(item.name || "", nameColumnWidth);
 
-    pdf.setDrawColor(180);
-    pdf.setLineWidth(0.3);
+    const lineHeight = 5;
+    const rowHeight = Math.max(ticketLines.length * lineHeight, lineHeight);
+
+    pdf.text(ticketLines, leftX, y);
+
+    pdf.text(`x${item.quantity}`, qtyX, y + 2, {
+      align: "right",
+    });
+
+    // Đường kẻ
+    const dividerY = y + rowHeight;
+
+    pdf.setDrawColor(220);
+    pdf.setLineWidth(0.2);
     pdf.setLineDashPattern([1, 1], 0);
-    pdf.line(leftX, y + 4, rightX, y + 4);
-    y += 18;
+    pdf.line(leftX, dividerY, rightX, dividerY);
+
+    // Sang dòng tiếp theo
+    y += rowHeight + 12;
   });
   pdf.setLineDashPattern([], 0);
 
@@ -156,7 +186,7 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
 
   pdf.setFont("Roboto", "normal");
   pdf.setFontSize(9);
-  pdf.text("·  Hotline: 0705 551 668", PAGE_W / 2 + 36, PAGE_H - 22, {
+  pdf.text(`· Hotline: ${PHONE_FILE_PDF}`, PAGE_W / 2 + 36, PAGE_H - 22, {
     align: "center",
   });
 

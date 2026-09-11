@@ -11,7 +11,10 @@ export async function POST(request: Request) {
   const { searchValue } = body;
 
   const { name, personType, siteCode } = searchValue;
-  let query = supabaseAdmin.from(DB_TABLE_NAME.PRODUCTS).select("*");
+  let query = supabaseAdmin
+    .from(DB_TABLE_NAME.PRODUCTS)
+    .select("*")
+    .order("order", { ascending: true });
   if (name) {
     query.ilike("name", `%${name}%`);
   }

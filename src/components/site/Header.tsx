@@ -30,7 +30,6 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const lang = useLang();
-  console.log("pathname", pathname);
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const supabase = createSupabaseBrowserClient();

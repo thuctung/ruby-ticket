@@ -6,9 +6,11 @@ import { formatVND } from "@/lib/money";
 import { getSaleSumary } from "./api";
 import { AdminSearchReport, SearchTableType, SearchTicketSale } from "@/types";
 import { SearchReport } from "./components/searchReport";
-
+import { getSiteByStatus } from "@/components/GetTicketForm/api";
 import { intForm } from "./constant";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
+import { SiteType } from "@/types/ticket";
+
 import { AllSaleType, SaleSumaryType } from "./type";
 import { CurrentMoney } from "./components/current-money";
 import ShowAllData from "./components/show-all";
@@ -17,6 +19,7 @@ export default function AdminStatsPageControler() {
   const [saleSumaryList, setSaleSumarayList] = useState<SaleSumaryType[]>([]);
 
   const [allSale, setAllSale] = useState<AllSaleType[]>([]);
+  const [siteList, setSiteList] = useState<SiteType[]>([]);
 
   const [params, setParams] = useState<SearchTableType<AdminSearchReport>>({
     searchValue: { ...intForm },
@@ -64,11 +67,19 @@ export default function AdminStatsPageControler() {
       render: (row) => formatVND(row.total_amount),
     },
   ];
-
+  const fetchSiteList = async () => {
+    const data = await getSiteByStatus(true);
+    if (data) {
+      setSiteList(data);
+    }
+  };
   useEffect(() => {
     fetchSaleSumary();
   }, [params]);
 
+  useEffect(() => {
+    fetchSiteList();
+  }, []);
   return (
     <div className="space-y-6">
       <CurrentMoney />
@@ -76,6 +87,7 @@ export default function AdminStatsPageControler() {
         onChangeForm={handleChangeForm}
         onReset={handleResetForm}
         searchValue={params.searchValue}
+        siteList={siteList}
       />
 
       <ShowAllData dataSale={allSale} />

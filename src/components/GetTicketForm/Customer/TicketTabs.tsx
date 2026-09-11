@@ -1,5 +1,9 @@
 import { Baby, PersonStanding, Ticket, Users } from "lucide-react";
+<<<<<<< HEAD
 import { PRODUCT_TYPE } from "../constants";
+=======
+import { BOOKING_FORM_TYPE, PRODUCT_TYPE } from "../constants";
+>>>>>>> production
 import { BEST_SELLER } from "@/commons/constant";
 
 const ICONS = {
@@ -11,25 +15,43 @@ const ICONS = {
 
 interface Props {
   active: string;
+  formType: string;
   listType: string[];
   onChange: (key: string) => void;
 }
 
-export default function TicketTabs({ active, onChange, listType }: Props) {
+export default function TicketTabs({ active, onChange, listType, formType }: Props) {
   const listTab = [
     {
-      key: "ALL",
+      key: "",
       label: "Tất cả",
       icon: Ticket,
     },
   ];
   listType.forEach((item) => {
+<<<<<<< HEAD
     if (item !== "ALL" && item !== BEST_SELLER) {
       listTab.push({
         key: item,
         label: PRODUCT_TYPE[item as keyof typeof PRODUCT_TYPE] || item,
         icon: ICONS[item as keyof typeof ICONS] || Ticket,
       });
+=======
+    if (item) {
+      if (formType === BOOKING_FORM_TYPE.AFFILATE) {
+        listTab.push({
+          key: item,
+          label: PRODUCT_TYPE[item as keyof typeof PRODUCT_TYPE] || item,
+          icon: ICONS[item as keyof typeof ICONS] || Ticket,
+        });
+      } else if (item !== BEST_SELLER) {
+        listTab.push({
+          key: item,
+          label: PRODUCT_TYPE[item as keyof typeof PRODUCT_TYPE] || item,
+          icon: ICONS[item as keyof typeof ICONS] || Ticket,
+        });
+      }
+>>>>>>> production
     }
   });
 

@@ -72,10 +72,7 @@ export default function AdminHistoryPageControler() {
       key: "product_name",
       title: "Tên vé",
     },
-    {
-      key: "order_code",
-      title: "Mã order",
-    },
+
     {
       key: "product_name",
       title: "Ngày rút",
@@ -96,6 +93,14 @@ export default function AdminHistoryPageControler() {
       title: "Tổng tiền",
       className: "font-semibold",
       render: (row) => formatVND(row.total),
+    },
+    {
+      key: "order_code",
+      title: "Mã order",
+    },
+    {
+      key: "third_party_number",
+      title: "Third party code",
     },
     {
       key: "payment_method",
@@ -126,10 +131,7 @@ export default function AdminHistoryPageControler() {
       key: "payment_code",
       title: "Mã thanh toán(Khách lẻ)",
     },
-    {
-      key: "third_party_number",
-      title: "Third party code",
-    },
+
     {
       key: "reference_code",
       title: "Mã tham chiếu",

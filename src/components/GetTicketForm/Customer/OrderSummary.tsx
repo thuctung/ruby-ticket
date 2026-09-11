@@ -1,58 +1,44 @@
-import { Hourglass, RefreshCw, ShieldCheck, Ticket as TicketIcon, X } from "lucide-react";
-import { CATEGORY_STYLES, Ticket } from "./type";
+import { Hourglass, ShieldCheck, Ticket as X } from "lucide-react";
 import { formatVND } from "@/helpers/money";
 import { getPriceAgentAndMultiple } from "../constants";
-
-const PERKS = [
-  {
-    icon: TicketIcon,
-    title: "Xác nhận tức thì",
-    desc: "Vé điện tử sẽ được gửi ngay sau khi thanh toán",
-  },
-  {
-    icon: RefreshCw,
-    title: "Hỗ trợ 24/7",
-    desc: "Đội ngũ hỗ trợ luôn sẵn sàng giúp đỡ bạn",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Đổi trả linh hoạt",
-    desc: "Hỗ trợ đổi/huỷ vé theo chính sách",
-  },
-];
+import { useState } from "react";
 
 type OrderSummaryProps = {
   selectedLines: any;
-  onRemove: (id: string) => void;
-  sideName: string;
+  siteName: string;
   dateUse: string;
   totalTickets: number;
   formType: string;
   agentPrice: number;
   total: number;
-  onBuyTicket: () => void;
   quantities: any;
+  loading: boolean;
+  onBuyTicket: () => void;
+  onRemove: (id: string) => void;
 };
 
 export default function OrderSummary({
   selectedLines,
   quantities,
-  sideName,
+  siteName,
   dateUse,
   total,
   formType,
   totalTickets,
   agentPrice,
+  loading,
   onRemove,
   onBuyTicket,
 }: OrderSummaryProps) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <aside className="sticky top-20 h-fit rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+    <aside className="sticky h-fit rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
       <h3 className="text-lg font-bold text-gray-900">Thông tin đơn hàng</h3>
       <div className="mt-4 space-y-2.5 text-sm">
         <div className="flex items-center justify-between">
           <span className="text-gray-500">Điểm đến</span>
-          <span className="font-semibold text-[#2A1414]">{sideName}</span>
+          <span className="font-semibold text-[#2A1414]">{siteName}</span>
         </div>
         <div className="flex items-center justify-between">
           <span className="text-gray-500">Ngày đi</span>
@@ -97,12 +83,12 @@ export default function OrderSummary({
       </div>
 
       <button
-        disabled={totalTickets === 0}
+        disabled={totalTickets === 0 || loading}
         onClick={onBuyTicket}
         className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-300"
       >
         <Hourglass size={18} />
-        Đặt vé ngay
+        {loading ? "Đang tạo..." : "Đặt vé ngay"}
       </button>
 
       <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-gray-400">

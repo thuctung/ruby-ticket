@@ -5,6 +5,7 @@ import HoverImage from "@/components/ui/hover-image";
 import { t } from "@/lib/i18n/t";
 import { ChevronRight } from "lucide-react";
 import { ExperienceCard, SideCard } from "@/types";
+import { PHONE_ADMIN } from "@/commons/constant";
 
 type LangKey = "vi" | "en" | "zh" | "ko";
 
@@ -88,14 +89,14 @@ export function ExperiencesSection({
                     >
                       {item.status ? (
                         <a
-                          href={`/checkout?product=${item.code}`}
+                          href={`/mua-ve-tham-quan?product=${item.code}`}
                           className="flex items-center gap-2"
                         >
                           Mua Ngay
                           <ChevronRight className="h-4 w-4" />
                         </a>
                       ) : (
-                        <a href="tel:0705551668" className="flex items-center gap-2">
+                        <a href={`tel:${PHONE_ADMIN}`} className="flex items-center gap-2">
                           Liên hệ
                         </a>
                       )}
@@ -150,7 +151,10 @@ export function ExperiencesSection({
                       asChild
                       className="rounded-xl bg-slate-900 hover:bg-blue-600 px-6 transition-colors"
                     >
-                      <a href={`/checkout?product=${x.key}`} className="flex items-center gap-2">
+                      <a
+                        href={`/mua-ve-tham-quan?product=${x.key}`}
+                        className="flex items-center gap-2"
+                      >
                         Mua Ngay
                         <ChevronRight className="h-4 w-4" />
                       </a>

@@ -27,6 +27,8 @@ import { get } from "lodash";
 import { statusClass, StatusData } from "./contants";
 import { Button } from "@/components/ui/button";
 import OrderDetailDialog from "./components/OrderDetail";
+import { getSiteByStatus } from "@/components/GetTicketForm/api";
+import { SiteType } from "@/types/ticket";
 
 const df_From = dayjs(new Date()).add(-30, "day").format(BASIC_DATE_FORMAT);
 const df_To = dayjs(new Date()).format(BASIC_DATE_FORMAT);
@@ -36,6 +38,7 @@ const intForm: SearchTicketSale = {
   from: df_From,
   to: df_To,
   status: "",
+  siteCode: "",
 };
 
 export default function AffiliateStatsControler() {
@@ -43,11 +46,12 @@ export default function AffiliateStatsControler() {
   const [totalPages, setTotalPage] = useState(0);
 
   const [orderList, setOrderList] = useState<OrderHistoryType[]>([]);
+  const [curentRow, setCurrentRow] = useState<OrderHistoryType>();
 
   const [countTicket, setCountTicket] = useState({ quantity: 0, total: 0 });
 
   const [orderDetails, setOrderDetails] = useState<OrderDetailType[]>([]);
-
+  const [siteList, setSiteList] = useState<SiteType[]>([]);
   const [params, setParams] = useState<SearchTableType<SearchTicketSale>>({
     searchValue: intForm,
     currentPage: 1,
@@ -79,7 +83,8 @@ export default function AffiliateStatsControler() {
     const { data } = await countTicketSale(
       params.searchValue.from,
       params.searchValue.to,
-      profile.user_id
+      profile.user_id,
+      params.searchValue.siteCode
     );
     if (data) {
       const result = data.reduce(
@@ -96,6 +101,7 @@ export default function AffiliateStatsControler() {
   };
 
   const onShowDialogDetail = async (orderItem: OrderHistoryType) => {
+    setCurrentRow(orderItem);
     const data = await getOrderDetail(orderItem.id);
     const result: OrderDetailType[] = data?.map((item: any) => ({
       ...item,
@@ -124,7 +130,7 @@ export default function AffiliateStatsControler() {
     },
     {
       key: "third_party_number",
-      title: "Mã tạo vé",
+      title: "Third party number",
     },
     {
       key: "status",
@@ -147,19 +153,27 @@ export default function AffiliateStatsControler() {
       render: (row) => <Button onClick={() => onShowDialogDetail(row)}>Chi tiết </Button>,
       align: "center",
     },
+    {
+      key: "description",
+      title: "Mô tả",
+    },
   ];
-
+  const fetchSiteList = async () => {
+    const data = await getSiteByStatus(true);
+    if (data) {
+      setSiteList(data);
+    }
+  };
   useEffect(() => {
     if (profile.user_id) {
       fetchTicketSale();
+      handleCountTicketSale();
     }
   }, [params, profile.user_id]);
 
   useEffect(() => {
-    if (profile.user_id) {
-      handleCountTicketSale();
-    }
-  }, [params.searchValue.from, params.searchValue.to, profile.user_id]);
+    fetchSiteList();
+  }, []);
 
   return (
     <div className="space-y-4">
@@ -173,6 +187,7 @@ export default function AffiliateStatsControler() {
             onChangeForm={handleChangeForm}
             onReset={handleResetForm}
             searchValue={params.searchValue}
+            siteList={siteList}
           />
 
           <Revenue
@@ -191,11 +206,14 @@ export default function AffiliateStatsControler() {
           />
         </CardContent>
       </Card>
-      <OrderDetailDialog
-        open={orderDetails.length > 0}
-        onClose={() => setOrderDetails([])}
-        orderDetails={orderDetails}
-      />
+      {curentRow && orderDetails.length ? (
+        <OrderDetailDialog
+          open={orderDetails.length > 0}
+          onClose={() => setOrderDetails([])}
+          orderDetails={orderDetails}
+          currentOrder={curentRow}
+        />
+      ) : null}
     </div>
   );
 }

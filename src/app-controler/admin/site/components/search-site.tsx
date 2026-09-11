@@ -56,12 +56,28 @@ export function SearchSite({ searchValue, onReset, onChangeForm }: SearchTicketF
 
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
-              Trạng thái
+              Trạng thái Khách lẻ
             </label>
 
             <SelectBox
               value={filter.status || ""}
               onChange={(value) => handleChangeFilter("status", value)}
+              className=" h-12"
+            >
+              <option value="">Tất cả</option>
+              <option value="true">Đang mở</option>
+              <option value="false">Đóng</option>
+            </SelectBox>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
+              Trạng thái Đại lý
+            </label>
+
+            <SelectBox
+              value={filter.status_affilate || ""}
+              onChange={(value) => handleChangeFilter("status_affilate", value)}
               className=" h-12"
             >
               <option value="">Tất cả</option>

@@ -21,6 +21,9 @@ export type ProductType = {
   unitPrice: number;
   site_code: string;
   description: string;
+  order: number;
+  status: boolean;
+  multiple: number;
 };
 
 export type CategoryType = {

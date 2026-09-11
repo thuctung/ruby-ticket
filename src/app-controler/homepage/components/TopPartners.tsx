@@ -41,7 +41,7 @@ export default function TopAgencySection() {
               </div>
 
               <Link
-                href="/checkout"
+                href="/mua-ve-tham-quan"
                 className="mt-8 block w-[200px] float-right  rounded-xl bg-amber-500 px-6 py-3 font-semibold text-white transition bg-[#E0115F] hover:bg-[#C00F4E] "
               >
                 Đặt vé Bà Nà Hills

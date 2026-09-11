@@ -36,13 +36,7 @@ export const TESTIMONIALS = [
     content:
       "Đội ngũ hỗ trợ nhiệt tình, đổi lịch vé dễ dàng khi có thay đổi kế hoạch. Trải nghiệm mua vé rất chuyên nghiệp.",
   },
-  {
-    name: "Phạm Văn Đức",
-    location: "Cần Thơ",
-    avatar: "/avatar_04.png",
-    content:
-      "Lần đầu đưa cả gia đình đi Vinpearl mà đặt vé online tiện thế này thì quá yên tâm. Giá tốt hơn hẳn so với mua tại quầy.",
-  },
+
   {
     name: "Đỗ Thị Ngọc Anh",
     location: "Hải Phòng",
@@ -61,22 +55,19 @@ export const TESTIMONIALS = [
     name: "Bùi Thị Thanh Trúc",
     location: "Huế",
     avatar: "/avatar_07.png",
-    content:
-      "Ứng dụng dễ dùng, mẹ mình lớn tuổi mà vẫn tự đặt vé được cho cả nhà. Có gì thắc mắc nhắn hỏi cũng được trả lời rất nhanh.",
+    content: "Ứng dụng dễ dùng. Có gì thắc mắc nhắn hỏi cũng được trả lời rất nhanh.",
   },
   {
     name: "Hoàng Anh Tuấn",
     location: "Bình Dương",
     avatar: "/avatar_08.png",
-    content:
-      "So sánh giá với vài nơi khác thì đây vẫn là rẻ nhất, lại còn có nhiều ưu đãi combo vé + khách sạn khá hời.",
+    content: "So sánh giá với vài nơi khác thì đây vẫn là rẻ , lại còn có nhiều ưu đãi combo vé ",
   },
   {
     name: "Ngô Thị Kim Ngân",
     location: "Vũng Tàu",
     avatar: "/avatar_09.png",
-    content:
-      "Đặt vé buổi tối mà sáng hôm sau đi liền vẫn kịp, hệ thống xác nhận cực nhanh. Chuyến đi Bà Nà của gia đình mình diễn ra suôn sẻ.",
+    content: "Hệ thống xác nhận  nhanh. Chuyến đi Bà Nà của gia đình mình diễn ra suôn sẻ.",
   },
   {
     name: "Trịnh Minh Khoa",

@@ -1,11 +1,11 @@
 "use client";
 
 import DatePickerCustom from "@/components/ui/date-picker";
-import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
+import DropdownSearch from "@/components/ui/dropdown-search";
 import { SiteType } from "@/types/ticket";
-import dayjs from "dayjs";
-import { CalendarDays, ChevronDown, Info, MapPin, Search, Ticket } from "lucide-react";
-import { useState } from "react";
+import { Info, Search } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { toDate } from "../constants";
 
 type SearchBarProp = {
   siteCode: string;
@@ -14,7 +14,6 @@ type SearchBarProp = {
   dateUse: string;
   setDateUse: (value: string) => void;
 };
-const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
 export default function SearchBar({
   siteCode,
@@ -37,28 +36,30 @@ export default function SearchBar({
     setDateUse(state.dateUse);
   };
 
+  const lisStateCover = useMemo(
+    () => listSite.map((item) => ({ value: item.code, label: item.name })),
+    [listSite]
+  );
+
+  useEffect(() => {
+    if (siteCode) {
+      setState((pre) => ({ ...pre, siteCode }));
+    }
+  }, [siteCode]);
+
   return (
-    <section className="relative z-10 mx-auto -mt-16 max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="relative z-10 mx-auto -mt-16 ">
       <div className="rounded-2xl bg-white p-6 shadow-xl ring-1 ring-black/5 sm:p-8">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-end">
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700">Chọn công viên</label>
-            <div className="flex items-center gap-2 rounded-xl border border-gray-200 px-3.5 py-3">
-              <MapPin size={18} className="shrink-0 text-gray-400" />
-              <select
-                value={state.siteCode}
-                className="w-full appearance-none bg-transparent text-[15px] font-medium text-gray-900 outline-none"
-                onChange={(e) => onChangeForm("siteCode", e.target.value)}
-              >
-                <option value="">Chọn công viên</option>
-                {listSite.map((side) => (
-                  <option key={side.code} value={side.code}>
-                    {side.name}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown size={16} className="shrink-0 text-gray-400" />
-            </div>
+            <DropdownSearch
+              options={lisStateCover}
+              value={state.siteCode}
+              onChange={(value: string) => onChangeForm("siteCode", value)}
+              placeholder="Chọn tên công viên"
+              searchPlaceholder="Nhập để tìm..."
+            />
           </div>
 
           <div>

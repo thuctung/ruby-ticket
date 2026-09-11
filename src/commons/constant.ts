@@ -33,6 +33,7 @@ export const TOPUPS_STATUS = {
   PENDING: "pending",
   APPROVED: "completed",
   REJECTED: "rejected",
+  ERROR: "error",
 };
 
 export const LIMIT_TABLE = 10;
@@ -151,6 +152,9 @@ export const DB_TABLE_NAME = {
   PRODUCTS: "products",
   PRODUCT_CATEGORY: "category",
   FUNC_UPDATE_ORDER_BALANCE: "update_order_and_balance",
+  STORAGE_EMAIL_VOUCHERS: "email-vouchers",
+  EMAIL_QUEUE: "email_queue",
+  TICKETS: "tickets",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -160,6 +164,10 @@ export const BANK_INFO = {
   bankNum: process.env.NEXT_PUBLIC_BANK_NUM,
   bankAccName: process.env.NEXT_PUBLIC_BANK_ACC_NAME,
 };
+
+export const PHONE_ADMIN = process.env.NEXT_PUBLIC_PHONE_ADMIN || "0905 477 169";
+
+export const PHONE_FILE_PDF = "0705 551 668";
 
 export const SUN_GROUP = {
   swgSubscriptionKey: process.env.NEXT_PUBLIC_SUN_SWG_SUBSCRIPTION_KEY || "",
@@ -203,14 +211,14 @@ export const MENUS = [
     iconColor: "text-blue-600",
   },
   {
-    link: "/#experiences",
+    link: "/trai-nghiem-du-lich",
     name: "Trải nghiệm",
     icon: Sparkles,
     iconBg: "bg-violet-50",
     iconColor: "text-violet-600",
   },
   {
-    link: "/checkout",
+    link: "/mua-ve-tham-quan",
     name: "Mua vé tham quan",
     icon: Ticket,
     iconBg: "bg-green-50",
@@ -232,7 +240,7 @@ export const MENUS = [
     iconColor: "text-gray-600",
   },
   {
-    link: "/register",
+    link: "/dang-ky-dai-ly",
     name: "Đăng ký đại lý",
     icon: Store,
     iconBg: "bg-purple-50",
@@ -250,7 +258,10 @@ export const SITE_SUB_GROUP = {
   SCB: "Sun world Cát Bà",
   HTI: "Sun World Hòn Thơm",
   SWH: "SunWorld Holding",
+  NUITHANTAI: "Núi Thần Tài",
+  DUTHUYEN: "Du Thuyền Sông Hàn",
   SWV: "Sun World Vũng Tàu",
+  VINPER: "Vinpearl Nam Hội An",
 };
 
 export const LOCAL_SUN_TOKEN = "sun_access_token";
@@ -276,6 +287,9 @@ export const ERROR_MESSAGE = {
 export const SITE_CODES = {
   BANAHILL: "BNC",
   NUITHANTAI: "NUITHANTAI",
+  DUTHUYEN: "DUTHUYEN",
+  KWHOIAN: "KWHOIAN",
+  CONGTROI: "CONGTROI",
 };
 
 export const BEST_SELLER = "BEST_SELLER";

@@ -45,10 +45,11 @@ export interface TicketSalteResponseType {
 export type OrderHistoryType = {
   created_at: string;
   id: string;
-  order_code: number;
+  order_code: string;
   total_amount: number;
   status: string;
   site_code: string;
+  date_use: string;
 };
 
 export type OrderDetailType = {

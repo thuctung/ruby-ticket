@@ -6,19 +6,16 @@ import {
   CustomerInfoSchema,
   getPriceAgentAndMultiple,
   PRODUCT_TYPE,
+  toDate,
 } from "./constants";
 import { SelectBox } from "../ui/customs/selectBox";
 import DatePickerCustom from "../ui/date-picker";
-import dayjs from "dayjs";
-import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { CommonType } from "@/types";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { formatVND } from "@/helpers/money";
 import { useState } from "react";
 
 const currency = (n: number) => n.toLocaleString("vi-VN") + " đ";
-
-const toDate = dayjs(new Date()).format(BASIC_DATE_FORMAT);
 
 export default function CustomerBookingForm({
   siteCode,
@@ -31,7 +28,7 @@ export default function CustomerBookingForm({
   quantities,
   totalTickets,
   total,
-  sideName,
+  siteName,
   selectedLines,
   agentPrice,
   formType,
@@ -310,7 +307,7 @@ export default function CustomerBookingForm({
             <div className="mt-4 space-y-2.5 text-sm">
               <div className="flex items-center justify-between">
                 <span className="text-gray-500">Điểm đến</span>
-                <span className="font-semibold text-[#2A1414]">{sideName}</span>
+                <span className="font-semibold text-[#2A1414]">{siteName}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-500">Ngày đi</span>

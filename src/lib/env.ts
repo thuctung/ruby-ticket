@@ -16,6 +16,7 @@ const schema = z.object({
   SEND_MAIL_KEY: z.string().min(1),
   SUN_AUTHEN_URL: z.string().min(1),
   SUN_SCOPE: z.string().min(1),
+  SEND_MAIL_ADMIN: z.string().min(1),
 });
 
 export const env = schema.parse({
@@ -36,6 +37,7 @@ export const env = schema.parse({
   SEA_PAY_SECRET_KEY: process.env.SEA_PAY_SECRET_KEY,
 
   SEND_MAIL_KEY: process.env.SEND_MAIL_KEY,
+  SEND_MAIL_ADMIN: process.env.SEND_MAIL_ADMIN,
 });
 
 export const profileSchema = z.object({

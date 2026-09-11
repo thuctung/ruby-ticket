@@ -5,6 +5,8 @@ export interface SiteType {
   status: string;
   name: string;
   in_system: boolean;
+  pre_price: number;
+  exp?: string;
 }
 
 export type TicketType = {
@@ -160,8 +162,10 @@ export type ProductBanaType = {
   performances: PerformancesType[];
   multiple: number;
   site: SiteType;
+  site_code: string;
   openTime: string;
   description?: string;
+  order?: number;
 };
 
 export type ProductSubmitType = {
@@ -189,6 +193,8 @@ export type SubmitSelectTicket = {
   verifyCode?: string;
   haveFOC: boolean;
   in_system: boolean;
+  siteName: string;
+  callback?: Function;
 };
 
 export type TicketInItemType = {
@@ -207,6 +213,8 @@ export type TicketItemReponseType = {
   siteCode: string;
   unitPrice: number;
   tickets: TicketInItemType[];
+  quantity: number;
+  usageDate: string;
 };
 
 export type TicketReponseType = {
@@ -217,4 +225,10 @@ export type TicketReponseType = {
   orderCode: string;
   items: TicketItemReponseType[];
   pnr: string;
+  totalOrderPrice: number;
+};
+
+export type ResTicketFormatType = {
+  customerTickets: TicketResultQRType[];
+  focTickets: TicketResultQRType[];
 };

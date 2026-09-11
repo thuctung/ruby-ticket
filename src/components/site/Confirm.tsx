@@ -22,10 +22,14 @@ export function ConfirmProvider() {
     message: null,
     okFunc: null,
     textOk: "Ok",
+    onCancle: null,
   };
 
   const handleCancel = () => {
     showConfirm(initConfirm);
+    if (confirm.onCancle) {
+      confirm.onCancle && confirm.onCancle();
+    }
   };
 
   const handleOk = () => {
@@ -35,6 +39,7 @@ export function ConfirmProvider() {
         message: null,
         okFunc: null,
         textOk: "OK",
+        onCancle: null,
       };
       showConfirm(initConfirm);
     }

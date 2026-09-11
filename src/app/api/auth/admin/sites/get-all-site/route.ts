@@ -10,8 +10,11 @@ export async function POST(request: Request) {
 
   const { searchValue } = body;
 
-  const { name, status, in_system } = searchValue;
-  let query = supabaseAdmin.from(DB_TABLE_NAME.SITES).select("*");
+  const { name, status, in_system, status_affilate } = searchValue;
+  let query = supabaseAdmin
+    .from(DB_TABLE_NAME.SITES)
+    .select("*")
+    .order("order", { ascending: true });
   if (name) {
     query.ilike("name", `%${name}%`);
   }
@@ -22,6 +25,10 @@ export async function POST(request: Request) {
   if (status) {
     let value = status === "true" ? true : false;
     query.eq("status", value);
+  }
+  if (status_affilate) {
+    let value = status_affilate === "true" ? true : false;
+    query.eq("status_affilate", value);
   }
   const { data, error } = await query;
 

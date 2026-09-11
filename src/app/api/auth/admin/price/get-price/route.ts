@@ -9,7 +9,6 @@ export async function POST(request: Request) {
     .from(DB_TABLE_NAME.AGENT_PRICE)
     .select("*")
     .eq("site_code", siteCode);
-
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

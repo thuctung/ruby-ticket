@@ -1,8 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { AdminBookingStatusResponseType } from "../type";
 import { formatVND } from "@/helpers/money";
+import { downloadTicketPDF, rebuildDataTicket } from "@/helpers/ticket";
+import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
+import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
+import { get } from "lodash";
+import dayjs from "dayjs";
+import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 
 const STATUS_MAP = {
   cancelled: {
@@ -67,11 +72,7 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
-export default function BookingDetailCard({
-  booking,
-}: {
-  booking: AdminBookingStatusResponseType;
-}) {
+export default function BookingDetailCard({ booking }: { booking: TicketReponseType }) {
   const [open, setOpen] = useState(false);
 
   const {
@@ -84,9 +85,29 @@ export default function BookingDetailCard({
     items = [],
   } = booking;
 
+  const handleDownloadFile = async () => {
+    const date_use = get(booking, ["items", 0, "usageDate"]);
+    const result: TicketResultQRType[] | any = rebuildDataTicket(
+      booking,
+      null,
+      dayjs(date_use, SERVER_DATE_FORMAT).format(BASIC_DATE_FORMAT)
+    );
+    const { focTickets, customerTickets } = getTicketFOCAndCutomer(result);
+    await downloadTicketPDF(customerTickets, focTickets);
+  };
+
   return (
     <div className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       {/* Header */}
+      <div className="flex items-start justify-between gap-3 px-5 pt-5">
+        <button
+          onClick={handleDownloadFile}
+          className="rounded-lg border border-gray-200 px-4 py-2 bg-green-200 text-sm font-medium text-green-600 transition hover:bg-green-300"
+        >
+          Tải vé
+        </button>
+      </div>
+
       <div className="flex items-start justify-between gap-3 px-5 pt-5">
         <div>
           <p className="text-[11px] uppercase tracking-wide text-slate-400">Mã đơn hàng</p>

@@ -1,58 +1,31 @@
 import api from "@/axios";
 import {
   GET_PRODUCT_IN_SYSTEM,
+  GET_SITE_BY_FORM_TYPE,
   GET_SITE_BY_STATUS,
-  SUCCESS_ORDER_TICKET,
   SUN_GET_PRODOCT_LIST,
-  SUN_GET_SITE_LIST,
 } from "@/commons/apiURL";
-import { DB_TABLE_NAME, SITE_CODES } from "@/commons/constant";
+import { DB_TABLE_NAME } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
 
-import { groupTicketSunGroup } from "@/helpers/genCode";
+import { groupTickets } from "@/helpers/genCode";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 const clientSupbase = createSupabaseBrowserClient();
 
-export const getProductBySiteSun = async (siteCodes: string, date: string) => {
+export const getSiteByFormType = async (formType: string) => {
   try {
     setGlobalLoading(true);
-    const { data }: any = await api.post(SUN_GET_PRODOCT_LIST, {
-      siteCodes,
-      date,
-    });
-
-    if (data.errors[0]) {
-      setToastMessage(data.messages[0]);
-      return [];
-    }
-    if (data.result.length === 0) {
-      setToastMessage(
-        `SAP không cấu hình mở bán cho sản phẩm vào ngày ${dayjs(date, SERVER_DATE_FORMAT).format(BASIC_DATE_FORMAT)}`
-      );
-    }
-    return groupTicketSunGroup(data.result);
-  } catch (e) {
-    setToastMessage("Có lỗi xảy ra! Thử lại sau");
+    const { data } = await api.post(GET_SITE_BY_FORM_TYPE, { formType });
+    return data;
+  } catch (error: any) {
+    setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {
     setGlobalLoading(false);
-  }
-};
-
-export const updateSuccessOrder = async (payload: any) => {
-  try {
-    const { data, error }: any = await api.post(SUCCESS_ORDER_TICKET, payload);
-    if (error) {
-      setToastMessage(error.message);
-      return;
-    }
-  } catch (e) {
-    setToastMessage("Có lỗi xảy ra");
-  } finally {
   }
 };
 
@@ -73,14 +46,28 @@ export const getPriceBuyAgentLevel = async (site_code: string, agent_code: strin
   }
 };
 
-export const getSiteByStatus = async (status?: boolean) => {
+export const getProductBySiteSun = async (siteCodes: string, date: string) => {
   try {
     setGlobalLoading(true);
-    const { data } = await api.post(GET_SITE_BY_STATUS, { status });
+    const { data }: any = await api.post(SUN_GET_PRODOCT_LIST, {
+      siteCodes,
+      date,
+    });
 
-    return data;
-  } catch (error: any) {
-    setToastMessage(error.message || "Có lỗi xảy ra");
+    if (data.errors[0]) {
+      setToastMessage(data.messages[0]);
+      return [];
+    }
+    if (data.result.length === 0) {
+      setToastMessage(
+        `SAP không cấu hình mở bán cho sản phẩm vào ngày ${dayjs(date, SERVER_DATE_FORMAT).format(BASIC_DATE_FORMAT)}`
+      );
+    }
+    console.log("data", data.result);
+
+    return groupTickets(data.result);
+  } catch (e) {
+    setToastMessage("Có lỗi xảy ra! Thử lại sau");
   } finally {
     setGlobalLoading(false);
   }
@@ -90,7 +77,24 @@ export const getProductionInSystem = async (site_code: string) => {
   try {
     setGlobalLoading(true);
     const { data } = await api.post(GET_PRODUCT_IN_SYSTEM, { site_code });
-    return groupTicketSunGroup(data);
+    if (data.length === 0) {
+      setToastMessage("Không có vé phù hợp");
+      return [];
+    }
+    return groupTickets(data);
+  } catch (error: any) {
+    setToastMessage(error.message || "Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getSiteByStatus = async (status?: boolean) => {
+  try {
+    setGlobalLoading(true);
+    const { data } = await api.post(GET_SITE_BY_STATUS, { status });
+
+    return data;
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {
