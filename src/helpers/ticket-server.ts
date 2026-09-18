@@ -1,4 +1,4 @@
-import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
+import { TicketResultQRType } from "@/types/ticket";
 
 import { jsPDF } from "jspdf";
 import QRCodePDF from "qrcode";

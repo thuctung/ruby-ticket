@@ -266,7 +266,38 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
             "Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ./In case guests wish to use the ticket for 03 days, please contact the Ticket Counter on the first day of use for support.",
           ];
         }
-
+        case "1EB570E9-59E0-FD7D-30D6-019FFEE411CD": {
+          return [
+            "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân BẢN GỐC có ảnh để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Original photo ID required.",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 – 12:30)",
+            "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
+            ,
+          ];
+        }
+        case "15101EBD-4099-73CA-6989-019FFEE75820": {
+          return [
+            "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân BẢN GỐC có ảnh để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Original photo ID required.",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET BHARATA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 12:30)",
+            "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
+            ,
+          ];
+        }
+        case "A8003043-F1C2-0B0A-3CDF-019FFEE82A8F": {
+          return [
+            "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân BẢN GỐC có ảnh để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Original photo ID required.",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET  LA CRIQUE (10:30 – 12:30)",
+            "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
+            ,
+          ];
+        }
+        case "F367B019-4A1C-51F9-58AE-019FFEF07912": {
+          return [
+            "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân BẢN GỐC có ảnh để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Original photo ID required.",
+            "Bao gồm: CÁP TREO KHỨ HỒI +Voucher ẩm thực: Áp dụng tại các nhà hàng Brasserie,Sushi Bar,Bulgogi,1901,Beer Plaza,Kavkaz (09:00 – 16:00)/ROUND-TRIP CABLE CAR+F&B voucher: Applicable at Brasserie,Sushi Bar,Bulgogi, 1901,Beer Plaza, Kavkaz (09:00 – 16:00)",
+            "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
+            ,
+          ];
+        }
         case "72234F87-DC83-48D3-41BA-01954640925C": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI THƯỜNG TRÚ ĐÀ NẴNG (Đà Nẵng + Quảng Nam) (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY RESIDENTS OF DA NANG (over 70 years old). Must present original photo ID at the ticket control gate.",
