@@ -269,7 +269,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "1EB570E9-59E0-FD7D-30D6-019FFEE411CD": {
           return [
             "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân BẢN GỐC có ảnh để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Original photo ID required.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -277,7 +277,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "15101EBD-4099-73CA-6989-019FFEE75820": {
           return [
             "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân BẢN GỐC có ảnh để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Original photo ID required.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET BHARATA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET BHARATA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -285,7 +285,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "A8003043-F1C2-0B0A-3CDF-019FFEE82A8F": {
           return [
             "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân BẢN GỐC có ảnh để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Original photo ID required.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET  LA CRIQUE (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET  LA CRIQUE (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -317,7 +317,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "6678FBF0-0E86-37D8-4981-01954640BBCE": {
           return [
             "Đối tượng: KHÁCH THƯỜNG TRÚ ĐÀ NẴNG cao trên 1m40. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: PERMANENT RESIDENTS OF DA NANG over 1.4m tall. Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30am-12:30pm)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30am-15:00pm)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -326,7 +326,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "F622CB3A-77AE-DF08-4224-01954640947F": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI THƯỜNG TRÚ ĐÀ NẴNG từ 70 tuổi trở lên. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY RESIDENTS OF DA NANG (over 70 years old). Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -335,7 +335,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "36D29FF9-4642-9A90-51BA-01954640E73C": {
           return [
             "Đối tượng: TRẺ EM THƯỜNG TRÚ ĐÀ NẴNG từ 1.0m-1.4m. Xuất trình hộ khẩu/giấy khai sinh/thẻ học sinh/giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: CHILDREN PERMANENTLY RESIDING IN DA NANG 1.0m-1.4m. Must present household registration/birth certificate/student card/original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30am-12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30am-15:00pm)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -344,7 +344,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "C522BC15-0B7A-B290-4917-01954640B983": {
           return [
             "Đối tượng: KHÁCH THƯỜNG TRÚ ĐÀ NẴNG cao trên 1m40. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: PERMANENT RESIDENTS OF DA NANG over 1.4m tall. Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30am-12:30pm)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30am-15:00pm)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -353,7 +353,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "8E6C4D28-60FA-A2F3-4150-019546409011": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI THƯỜNG TRÚ ĐÀ NẴNG từ 70 tuổi trở lên. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY RESIDENTS OF DA NANG (over 70 years old). Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30am-15:00pm)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -362,7 +362,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "8903DC30-9806-3E68-5151-01954640E519": {
           return [
             "Đối tượng: TRẺ EM THƯỜNG TRÚ ĐÀ NẴNG từ 1m00-1m40. Xuất trình hộ khẩu/giấy khai sinh/thẻ học sinh/giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: CHILDREN PERMANENTLY RESIDING IN DA NANG 1m00-1m40. Must present household registration/birth certificate/student card/original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30am-15:00pm)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -396,7 +396,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "E2919353-C2AA-25F5-4F42-01954640DA2B": {
           return [
             "Đối tượng: KHÁCH NGOẠI TỈNH/QUỐC TẾ cao trên 1m40/Eligible guests: NON-LOCAL/INTERNATIONAL VISITORS over 1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET -FOUR SEASONS (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET -FOUR SEASONS (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -405,7 +405,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "D44091AB-284C-5330-47DE-01954640B2F4": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI NGOẠI TỈNH/QUỐC TẾ (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY NON-LOCAL/INTERNATIONAL VISITORS (over 70 years old). Must present original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
           ];
         }
@@ -413,7 +413,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "8A10504F-FAE8-8451-57EE-019546410985": {
           return [
             "Đối tượng: TRẺ EM NGOẠI TỈNH/QUỐC TẾ từ 1m00-1m40./Eligible guests: CHILDREN NON-LOCAL/INTERNATIONAL VISITORS 1.00m-1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -461,7 +461,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "A862C95A-6CB4-1875-4D98-01954640D1B0": {
           return [
             "Đối tượng: KHÁCH NGOẠI TỈNH/QUỐC TẾ cao trên 1m40/Eligible guests: NON-LOCAL/INTERNATIONAL VISITORS over 1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BHARATA (10:30 – 12:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 12:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BHARATA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
           ];
         }
@@ -469,7 +469,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "6B6F8E3C-A9A0-6C50-46A0-01954640AC57": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI NGOẠI TỈNH/QUỐC TẾ (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY NON-LOCAL/INTERNATIONAL VISITORS (over 70 years old). Must present original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BHARATA (10:30 – 12:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 12:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BHARATA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
           ];
         }
@@ -477,7 +477,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "5E8483C1-259F-617D-563F-01954640FF05": {
           return [
             "Đối tượng: TRẺ EM NGOẠI TỈNH/QUỐC TẾ từ 1m00-1m40./Eligible guests:CHILDREN NON-LOCAL/INTERNATIONAL VISITORS 1.00m-1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BHARATA (10:30 – 12:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 12:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BHARATA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -486,7 +486,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "FF002473-7CB0-72C1-4E6E-01954640D5F4": {
           return [
             "Đối tượng: KHÁCH NGOẠI TỈNH/QUỐC TẾ cao trên 1m40/Eligible guests: NON-LOCAL/INTERNATIONAL VISITORS over 1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -495,7 +495,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "CCE114EA-63D6-A654-4709-01954640AE79": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI NGOẠI TỈNH/QUỐC TẾ (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY NON-LOCAL/INTERNATIONAL VISITORS (over 70 years old). Must present original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -504,7 +504,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "F0D9C0CD-61B5-972C-5716-0195464103DF": {
           return [
             "Đối tượng: TRẺ EM NGOẠI TỈNH/QUỐC TẾ từ 1m00-1m40./Eligible guests: CHILDREN NON-LOCAL/INTERNATIONAL VISITORS 1.00m-1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -600,7 +600,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "66A0F7BA-A457-BD55-5A2A-01956A4ECE57": {
           return [
             "Đối tượng: KHÁCH NGOẠI TỈNH/QUỐC TẾ cao trên 1m40/Eligible guests: NON-LOCAL/INTERNATIONAL VISITORS over 1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -609,7 +609,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "52932A70-CA9D-6F89-74AE-01956A4FA6F1": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI NGOẠI TỈNH/QUỐC TẾ (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY NON-LOCAL/INTERNATIONAL VISITORS (over 70 years old). Must present original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -618,7 +618,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "EBDA4CD0-ADE9-0ACE-73B2-01956A4A6E08": {
           return [
             '"Đối tượng: TRẺ EM NGOẠI TỈNH/QUỐC TẾ từ 1m00-1m40./Eligible guests: CHILDREN NON-LOCAL/INTERNATIONAL VISITORS 1.00m-1.40m tall',
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -627,7 +627,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "CD1082DC-90E8-6D4A-30E4-01956A41DD0A": {
           return [
             "Đối tượng: KHÁCH NGOẠI TỈNH/QUỐC TẾ cao trên 1m40/Eligible guests: NON-LOCAL/INTERNATIONAL VISITORS over 1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -636,7 +636,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "6B1EFE07-BC6F-F17A-351C-01956A4347F9": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI NGOẠI TỈNH/QUỐC TẾ (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY NON-LOCAL/INTERNATIONAL VISITORS (over 70 years old). Must present original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -645,7 +645,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "09CCDE8A-950D-8A1F-3B3F-01956A447FE5": {
           return [
             "Đối tượng: TRẺ EM NGOẠI TỈNH/QUỐC TẾ từ 1m00-1m40./Eligible guests: CHILDREN NON-LOCAL/INTERNATIONAL VISITORS 1.00m-1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -820,7 +820,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "E87820F2-4812-9D93-733E-019795EF0379": {
           return [
             "Đối tượng: KHÁCH THƯỜNG TRÚ ĐÀ NẴNG cao trên 1m40. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: PERMANENT RESIDENTS OF DA NANG over 1.40m tall. Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -829,7 +829,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "F5D5B5AE-BA2F-E631-680A-019795C89A30": {
           return [
             "Đối tượng: KHÁCH THƯỜNG TRÚ ĐÀ NẴNG cao trên 1m40. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: PERMANENT RESIDENTS OF DA NANG over 1.40m tall. Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -838,7 +838,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "43231D9C-3631-25D4-44EC-019795EF8DD4": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI THƯỜNG TRÚ ĐÀ NẴNG từ 70 tuổi trở lên. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY RESIDENTS OF DA NANG (over 70 years old). Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -847,7 +847,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "2AC52DC4-64FC-BC59-42AB-019795F007C1": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI THƯỜNG TRÚ ĐÀ NẴNG từ 70 tuổi trở lên. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY RESIDENTS OF DA NANG (over 70 years old). Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET FOUR SEASON (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -856,7 +856,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "8123387A-9BC9-BBF4-364B-019795C8E604": {
           return [
             'Đối tượng: TRẺ EM THƯỜNG TRÚ ĐÀ NẴNG từ 1m00-1m40. Xuất trình hộ khẩu/giấy khai sinh/thẻ học sinh/giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./"Eligible guests: CHILDREN PERMANENTLY RESIDING IN DA NANG 1m00-1m40. Must present household registration/birth certificate/student card/original photo ID at the ticket control gate.',
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET -TAIGA (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET -TAIGA (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -865,7 +865,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "8D086FA6-77BE-DF81-5ECA-019BC742C9A3": {
           return [
             'Đối tượng: TRẺ EM THƯỜNG TRÚ ĐÀ NẴNG từ 1m00-1m40. Xuất trình hộ khẩu/giấy khai sinh/thẻ học sinh/giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./"Eligible guests: CHILDREN PERMANENTLY RESIDING IN DA NANG 1m00-1m40. Must present household registration/birth certificate/student card/original photo ID at the ticket control gate.',
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET -FOUR SEASONS (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BỐN MÙA (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET -FOUR SEASONS (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. For 3-day use, please contact Ticket Counter on first day for support.)",
             ,
           ];
@@ -960,7 +960,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "C539B658-F08F-081C-79BC-019647283C78": {
           return [
             "Đối tượng: KHÁCH NGOẠI TỈNH/QUỐC TẾ cao trên 1m40/Eligible guests: NON-LOCAL/INTERNATIONAL GUESTS over 1.4m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30-12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30-15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -969,7 +969,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "32860C2A-E4EE-A44C-6855-019647269DC9": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI NGOẠI TỈNH/QUỐC TẾ (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY NON-LOCAL/INTERNATIONAL VISITORS (over 70 years old). Must present original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -978,7 +978,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "B6E5512B-1FE7-2FBD-5F73-019647205776": {
           return [
             "Đối tượng: TRẺ EM NGOẠI TỈNH/QUỐC TẾ từ 1.0m-1.4m./Eligible guests:CHILDREN NON-LOCAL/INTERNATIONAL VISITORS 1.00m-1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -987,7 +987,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "432A50A6-3BD2-2CD0-76C2-019647230D9B": {
           return [
             "Đối tượng: KHÁCH THƯỜNG TRÚ ĐÀ NẴNG cao trên 1m40. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: PERMANENT RESIDENTS OF DA NANG over 1.40m tall. Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -996,7 +996,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "57D1B686-F5CA-017C-4AA7-0196472377A8": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI THƯỜNG TRÚ ĐÀ NẴNG từ 70 tuổi trở lên. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY RESIDENTS OF DA NANG (over 70 years old). Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1005,7 +1005,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "CFEB84F1-DD57-BACD-33AC-019795A31469": {
           return [
             "Đối tượng: TRẺ EM THƯỜNG TRÚ ĐÀ NẴNG từ 1.0m-1.4m. Xuất trình hộ khẩu/giấy khai sinh/thẻ học sinh/giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: CHILDREN PERMANENTLY RESIDING IN DA NANG 1.0m-1.4m. Must present household registration/birth certificate/student card/original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1014,7 +1014,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "C10DE671-D186-4A6D-338F-019795A4C372": {
           return [
             "Đối tượng: KHÁCH NGOẠI TỈNH/QUỐC TẾ cao trên 1m40/Eligible guests: NON-LOCAL/INTERNATIONAL VISITORS over 1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1023,7 +1023,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "272B567E-DFAD-06FD-2F64-019795ABB9B0": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI NGOẠI TỈNH/QUỐC TẾ (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY NON-LOCAL/INTERNATIONAL VISITORS (over 70 years old). Must present original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1032,7 +1032,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "8A73DD99-6B31-4863-39E3-019795C6AFF1": {
           return [
             "Đối tượng: TRẺ EM NGOẠI TỈNH/QUỐC TẾ từ 1.0m-1.4m./Eligible guests: CHILDREN NON-LOCAL/INTERNATIONAL VISITORS 1.00m-1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1041,7 +1041,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "338FB4F2-A903-6E8D-34AD-019795C66470": {
           return [
             "Đối tượng: KHÁCH THƯỜNG TRÚ ĐÀ NẴNG cao trên 1m40. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: PERMANENT RESIDENTS OF DA NANG over 1.4m tall. Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1050,7 +1050,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "639E3A08-08CE-E0DF-351D-019795C6D1C9": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI THƯỜNG TRÚ ĐÀ NẴNG từ 70 tuổi trở lên. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY RESIDENTS OF DA NANG (over 70 years old). Must present original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1059,7 +1059,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "016B47B8-F05A-085E-7D82-0196472AD25F": {
           return [
             "Đối tượng: TRẺ EM THƯỜNG TRÚ ĐÀ NẴNG từ 1.0m-1.4m. Xuất trình hộ khẩu/giấy khai sinh/thẻ học sinh/giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: CHILDREN PERMANENTLY RESIDING IN DA NANG 1.0m-1.4m. Must present household registration/birth certificate/student card/original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (12:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (12:30 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30-15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1103,14 +1103,14 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "67AD118B-D334-E53A-56A9-019546410185": {
           return [
             "Vé Buffet trưa dành cho TRẺ EM NGOẠI TỈNH/QUỐC TẾ cao 1.0m-1.4m/Lunch Buffet Ticket for CHILDREN NON-LOCAL/INTERNATIONAL 1.00m-1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE (10:30am-15:00pm)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE (10:30am-15:00pm)/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE (10:30am-15:00pm)",
           ];
         }
 
         case "64E2F7D9-97F0-7310-4E04-01954640D3CF": {
           return [
             "Đối tượng: KHÁCH NGOẠI TỈNH/QUỐC TẾ cao trên 1m40/Eligible guests: NON-LOCAL/INTERNATIONAL VISITORS over 1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE (10:30am-15:00pm)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE(10:30am-15:00pm)/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE (10:30am-15:00pm)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1119,7 +1119,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "F2408218-A6D5-F736-054C-0195463F28A1": {
           return [
             "Đối tượng: KHÁCH CAO TUỔI NGOẠI TỈNH/QUỐC TẾ (từ 70 tuổi trở lên). Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: ELDERLY NON-LOCAL/INTERNATIONAL VISITORS (over 70 years old). Must present original photo ID at the ticket control gate",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE(10:30am-15:00pm)/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE (10:30am-15:00pm)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1128,7 +1128,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "C03A672C-DE1A-09A8-1E87-019F2ABF6FE3": {
           return [
             "Đối tượng: TRẺ EM NGOẠI TỈNH/QUỐC TẾ từ 1.0m-1.4m./Eligible guests: CHILDREN NON-LOCAL/INTERNATIONAL VISITORS 1.00m-1.40m tall",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA LA CRIQUE(10:30am-15:00pm)/Includes: ROUND-TRIP CABLE CAR + BUFFET LA CRIQUE (10:30am-15:00pm)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1173,7 +1173,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "943A1BC6-9ADA-8B9A-212C-019F2ACCA5F1": {
           return [
             "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân bản gốc để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Present the original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BHARATA (10:30 – 12:30)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 12:30)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA BHARATA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET BHARATA (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1191,7 +1191,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "054CC345-F006-F93D-5DD7-019F2ACE9FF5": {
           return [
             "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân bản gốc để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Present the original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA 4SEASON (12:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET 4SEASON (12:30 – 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA 4SEASON (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET 4SEASON (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1200,7 +1200,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "F4DA47B9-BEE5-40DB-0084-019F2ACF8CB3": {
           return [
             "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân bản gốc để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Present the original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (12:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (12:30 – 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA TAIGA (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET TAIGA (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1209,7 +1209,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
         case "DAFE7B89-9EF4-C01A-73D6-019F2AD1C57F": {
           return [
             "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân bản gốc để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Present the original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (12:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (12:30 – 15:00)",
+            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (10:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (10:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
@@ -1217,8 +1217,6 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
 
         default: {
           return [
-            "Đối tượng: KHÁCH từ 25 tuổi trở xuống (sinh từ năm 2001 trở đi). Xuất trình giấy tờ tùy thân bản gốc để xác minh năm sinh/Eligible guests: Guests aged 25 and under (born in 2001 or later). Present the original photo ID at the ticket control gate.",
-            "Bao gồm: CÁP TREO KHỨ HỒI + BUFFET TRƯA ARAPANG (12:30 – 15:00)/Includes: ROUND-TRIP CABLE CAR + BUFFET ARAPANG (12:30 – 15:00)",
             "(Cáp treo sử dụng 1 lần trong thời gian hiệu lực in trên vé.Trường hợp khách hàng có nhu cầu sử dụng vé trong 03 ngày, vui lòng liên hệ Phòng Vé trong ngày sử dụng đầu tiên để được hỗ trợ.)/(CABLE CAR: One-time use within validity. If guests wish to use the ticket for 3 days, please visit the Ticket Counter to register Face ID before the first use.)",
             ,
           ];
