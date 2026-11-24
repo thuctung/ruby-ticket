@@ -1,23 +1,14 @@
-import { Button } from "@/components/ui/button";
 import { ResetButton } from "@/components/ui/customs/ressetButton";
 import { SearchButton } from "@/components/ui/customs/searchButton";
-import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { checkDateRange } from "@/helpers/dateTime";
-import { formatVND } from "@/helpers/money";
 import { SearchTicketSale } from "@/types";
 import { SiteType } from "@/types/ticket";
 import { useState } from "react";
 import { StatusData } from "../contants";
+import { inputCls } from "@/components/ui/const-class";
 
 type SearchTicketFormProps = {
   onChangeForm: (filter: SearchTicketSale) => void;
@@ -47,21 +38,6 @@ export function SearchTicketForm({
   return (
     <div>
       <div className="mb-4 pl-4 flex flex-wrap items-center gap-3">
-        {/* <div className="space-y-2">
-          <Label>Địa điểm</Label>
-
-          <SelectBox
-            value={filter.location || ""}
-            onChange={(value) => handleChangeFilter("location", value)}
-          >
-            <option value="all">Tất cả</option>
-            {SITES.map((item: SiteType) => (
-              <option key={item.code} value={item.code}>
-                {item.name}
-              </option>
-            ))}
-          </SelectBox>
-        </div> */}
         <div className="space-y-2">
           <Label>Từ ngày</Label>
           <DatePickerCustom
@@ -82,10 +58,10 @@ export function SearchTicketForm({
             Trạng thái
           </label>
 
-          <SelectBox
+          <select
+            className={inputCls}
             value={filter.status || ""}
-            onChange={(value) => handleChangeFilter("status", value)}
-            className=" h-12"
+            onChange={(e) => handleChangeFilter("status", e.target.value)}
           >
             <option value="">Tất cả</option>
             {Object.keys(StatusData).map((key: string) => (
@@ -93,16 +69,16 @@ export function SearchTicketForm({
                 {StatusData[key]}
               </option>
             ))}
-          </SelectBox>
+          </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
             Địa điểm
           </label>
-          <SelectBox
+          <select
+            className={inputCls}
             value={filter.siteCode || ""}
-            className="w-full appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-9 text-sm font-medium text-[#2A1414] outline-none transition focus:border-[#C81418] focus:ring-2 focus:ring-red-100 disabled:opacity-60"
-            onChange={(value) => handleChangeFilter("siteCode", value)}
+            onChange={(e) => handleChangeFilter("siteCode", e.target.value)}
           >
             <option value="">Chọn công viên</option>
             {siteList.map((site) => (
@@ -110,7 +86,7 @@ export function SearchTicketForm({
                 {site.name}
               </option>
             ))}
-          </SelectBox>
+          </select>
         </div>
       </div>
       <div className=" flex flex-wrap justify-end  pr-3">

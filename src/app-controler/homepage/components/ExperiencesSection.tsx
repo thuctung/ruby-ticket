@@ -1,23 +1,23 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import HoverImage from "@/components/ui/hover-image";
-import { t } from "@/lib/i18n/t";
 import { ChevronRight } from "lucide-react";
 import { ExperienceCard, SideCard } from "@/types";
 import { PHONE_ADMIN } from "@/commons/constant";
-
-type LangKey = "vi" | "en" | "zh" | "ko";
+import { useTranslation } from "@/lib/i18n/client";
 
 export function ExperiencesSection({
-  lang,
   sidseCard,
   fallbackExperiences,
 }: {
-  lang: LangKey;
   sidseCard: SideCard[];
   fallbackExperiences: ExperienceCard[];
 }) {
+  const { t } = useTranslation();
+
   const displayPrice = (price: number) => {
     if (!price) return "xxx.xxxđ";
 
@@ -33,9 +33,8 @@ export function ExperiencesSection({
       <div className="mx-auto max-w-6xl px-6">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900">
-            {t(lang, "section.experiences.title")}
+            {t("homepage.featuredExperiences")}
           </h2>
-          <p className="text-lg text-slate-500">{t(lang, "section.experiences.desc")}</p>
           <div className="mt-2 mx-auto w-12 h-1 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
         </div>
 
@@ -63,21 +62,21 @@ export function ExperiencesSection({
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between gap-3">
                     <CardTitle className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      {item.name || t(lang, item.exp.nameKey)}
+                      {t(item.exp.nameKey)}
                     </CardTitle>
                     <Badge className="bg-blue-50 text-blue-600 hover:bg-blue-100 border-none font-bold rounded-lg">
-                      {t(lang, item.exp.badgeKey)}
+                      {t(item.exp.taglineKey)}
                     </Badge>
                   </div>
                   <CardDescription className="font-medium text-slate-500 italic">
-                    {t(lang, item.exp.taglineKey)}
+                    {t(item.exp.badgeKey)}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 pt-0">
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">
-                        {t(lang, "section.experiences.priceFrom")}
+                        {t("homepage.startingFrom")}
                       </div>
                       <div className="text-xl font-extrabold text-blue-600">
                         {displayPrice(item.pre_price)}
@@ -129,21 +128,21 @@ export function ExperiencesSection({
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between gap-3">
                     <CardTitle className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      {t(lang, x.nameKey)}
+                      {t(x.nameKey)}
                     </CardTitle>
                     <Badge className="bg-blue-50 text-blue-600 hover:bg-blue-100 border-none font-bold rounded-lg">
-                      {t(lang, x.badgeKey)}
+                      {t(x.badgeKey)}
                     </Badge>
                   </div>
                   <CardDescription className="font-medium text-slate-500 italic">
-                    {t(lang, x.taglineKey)}
+                    {t(x.taglineKey)}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">
-                        {t(lang, "section.experiences.priceFrom")}
+                        {t("section.experiences.priceFrom")}
                       </div>
                       <div className="text-xl font-extrabold text-blue-600">xxx.xxxđ</div>
                     </div>

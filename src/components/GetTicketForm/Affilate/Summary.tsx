@@ -4,7 +4,7 @@ import { BOOKING_FORM_TYPE, getPriceAgentAndMultiple } from "../constants";
 import { useState } from "react";
 import { useIsMobile } from "@/helpers/useResize";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { ProductBanaType } from "@/types/ticket";
+import { AgentPriceType, ProductBanaType, SiteType } from "@/types/ticket";
 
 type OrderSummaryProps = {
   selectedLines: any;
@@ -12,7 +12,8 @@ type OrderSummaryProps = {
   dateUse: string;
   totalTickets: number;
   formType: string;
-  agentPrice: number;
+  mapAgentPrice: Map<string, AgentPriceType>;
+  agentPriceDefault: number;
   total: number;
   quantities: any;
   loading: boolean;
@@ -31,10 +32,11 @@ export default function OrderAffSummary({
   total,
   formType,
   totalTickets,
-  agentPrice,
+  mapAgentPrice,
   loading,
   setExportGuideTicket,
   exportGuideTicket,
+  agentPriceDefault,
   onBuyTicket,
   setQty,
 }: OrderSummaryProps) {
@@ -121,9 +123,9 @@ export default function OrderAffSummary({
                       </button>
                     </div>
                     <div className="flex">
-                      <span className="font-semibold text-red-600">
+                      <span className="font-semibold text-[#2d8020]">
                         {formatVND(
-                          getPriceAgentAndMultiple(t, formType, agentPrice) *
+                          getPriceAgentAndMultiple(t, formType, mapAgentPrice, agentPriceDefault) *
                             (quantities[t.code] ?? 0)
                         )}
                       </span>
@@ -153,21 +155,19 @@ export default function OrderAffSummary({
         <button
           disabled={totalTickets === 0 || loading}
           onClick={onBuyTicket}
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#a8242a] disabled:cursor-not-allowed disabled:bg-gray-300"
         >
           {loading ? "Đang tạo..." : "Xuất vé"}
         </button>
-        {selectedLines.length && formType === BOOKING_FORM_TYPE.AFFILATE ? (
-          <label className="mt-4 flex cursor-pointer items-center gap-2 text-sm text-[#1F3A2F]">
-            <input
-              type="checkbox"
-              checked={exportGuideTicket}
-              onChange={(e) => setExportGuideTicket?.(e.target.checked)}
-              className="h-4 w-4 rounded border-[#DCD6C2] text-[#1F3A2F] focus:ring-[#1F3A2F]"
-            />
-            <span>Xuất vé cho hướng dẫn viên</span>
-          </label>
-        ) : null}
+        <label className="mt-4 flex cursor-pointer items-center gap-2 text-sm text-[#1F3A2F]">
+          <input
+            type="checkbox"
+            checked={exportGuideTicket}
+            onChange={(e) => setExportGuideTicket?.(e.target.checked)}
+            className="h-4 w-4 rounded border-[#DCD6C2] text-[#1F3A2F] focus:ring-[#1F3A2F]"
+          />
+          <span>Xuất vé cho hướng dẫn viên</span>
+        </label>
       </div>
     </aside>
   );

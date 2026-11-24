@@ -5,33 +5,23 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-import { countTicketSale, getOrderDetail, getOrderHistory } from "./api";
-import {
-  CountTicketSaleResponse,
-  OrderDetailType,
-  OrderHistoryType,
-  ProfileType,
-  SearchTableType,
-  SearchTicketSale,
-} from "@/types";
+import { countTicketSale } from "./api";
+import { AdminReportResponseType, ProfileType, SearchTableType, SearchTicketSale } from "@/types";
 import { useProfileStore } from "@/stores/useProfileStore";
-import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
 import { SearchTicketForm } from "./components/searchTicketForm";
 
 import { Revenue } from "./components/Revenue";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
-import { SITE_SUB_GROUP } from "@/commons/constant";
 import { get } from "lodash";
 import { statusClass, StatusData } from "./contants";
-import { Button } from "@/components/ui/button";
-import OrderDetailDialog from "./components/OrderDetail";
 import { getSiteByStatus } from "@/components/GetTicketForm/api";
 import { SiteType } from "@/types/ticket";
-
-const df_From = dayjs(new Date()).add(-30, "day").format(BASIC_DATE_FORMAT);
-const df_To = dayjs(new Date()).format(BASIC_DATE_FORMAT);
+import { df_From, df_To } from "@/app-controler/admin/history/constant";
+import { getTicketSaleAdmin } from "@/app-controler/admin/history/api";
+import { CountTicketType } from "./type";
+import { getSideItem } from "@/commons/constant";
 
 const intForm: SearchTicketSale = {
   location: "",
@@ -41,17 +31,17 @@ const intForm: SearchTicketSale = {
   siteCode: "",
 };
 
+const initCount: CountTicketType = { ticketSale: 0, ticketReund: 0, total: 0, refundCharge: 0 };
 export default function AffiliateStatsControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const [totalPages, setTotalPage] = useState(0);
 
-  const [orderList, setOrderList] = useState<OrderHistoryType[]>([]);
-  const [curentRow, setCurrentRow] = useState<OrderHistoryType>();
+  const [orderList, setOrderList] = useState<AdminReportResponseType[]>([]);
 
-  const [countTicket, setCountTicket] = useState({ quantity: 0, total: 0 });
+  const [countTicket, setCountTicket] = useState(initCount);
 
-  const [orderDetails, setOrderDetails] = useState<OrderDetailType[]>([]);
   const [siteList, setSiteList] = useState<SiteType[]>([]);
+
   const [params, setParams] = useState<SearchTableType<SearchTicketSale>>({
     searchValue: intForm,
     currentPage: 1,
@@ -72,92 +62,33 @@ export default function AffiliateStatsControler() {
   };
 
   const fetchTicketSale = async () => {
-    const { data, totalPages } = await getOrderHistory(params, profile.user_id);
+    if (!profile.email) return;
+    const data = await getTicketSaleAdmin({
+      ...params,
+      searchValue: {
+        ...params.searchValue,
+        email: profile.email,
+      },
+    });
     if (data) {
-      setOrderList(data);
+      const { totalPages, listOrder } = data;
+      setTotalPage(totalPages);
+      setOrderList(listOrder);
     }
-    setTotalPage(totalPages);
   };
 
   const handleCountTicketSale = async () => {
-    const { data } = await countTicketSale(
+    if (!profile.email) return;
+    const data = await countTicketSale(
       params.searchValue.from,
       params.searchValue.to,
-      profile.user_id,
+      profile.email,
       params.searchValue.siteCode
     );
-    if (data) {
-      const result = data.reduce(
-        (acc: { quantity: number; total: number }, item: CountTicketSaleResponse) => {
-          return {
-            quantity: acc.quantity + item.quantity,
-            total: acc.total + item.total,
-          };
-        },
-        { quantity: 0, total: 0 }
-      );
-      setCountTicket(result);
-    }
+    const res = data || initCount;
+    setCountTicket(res);
   };
 
-  const onShowDialogDetail = async (orderItem: OrderHistoryType) => {
-    setCurrentRow(orderItem);
-    const data = await getOrderDetail(orderItem.id);
-    const result: OrderDetailType[] = data?.map((item: any) => ({
-      ...item,
-      order_code: orderItem.order_code,
-      status: orderItem.status,
-    }));
-    setOrderDetails(result);
-  };
-
-  const columnAffStats: TableColumn<OrderHistoryType>[] = [
-    {
-      key: "site_code",
-      title: "Địa điểm",
-      align: "left",
-      render: (row) => get(SITE_SUB_GROUP, row.site_code),
-    },
-    {
-      key: "order_code",
-      title: "Order code",
-      align: "left",
-    },
-    {
-      key: "total",
-      title: "Số tiền",
-      render: (row) => formatVND(row.total_amount),
-    },
-    {
-      key: "third_party_number",
-      title: "Third party number",
-    },
-    {
-      key: "status",
-      title: "Trạng thái",
-      align: "center",
-      render: (row) => (
-        <span className={statusClass[row.status]}>{get(StatusData, row.status)}</span>
-      ),
-    },
-
-    {
-      key: "created_at",
-      title: "Ngày bán",
-      render: (row) => dayjsEx(row.created_at).format(FULL_DATE_FORMAT),
-      align: "center",
-    },
-    {
-      key: "action",
-      title: "",
-      render: (row) => <Button onClick={() => onShowDialogDetail(row)}>Chi tiết </Button>,
-      align: "center",
-    },
-    {
-      key: "description",
-      title: "Mô tả",
-    },
-  ];
   const fetchSiteList = async () => {
     const data = await getSiteByStatus(true);
     if (data) {
@@ -175,6 +106,65 @@ export default function AffiliateStatsControler() {
     fetchSiteList();
   }, []);
 
+  const columnAffStats: TableColumn<AdminReportResponseType>[] = [
+    {
+      key: "order_code",
+      title: "Order code",
+      align: "left",
+    },
+    {
+      key: "site_code",
+      title: "Địa điểm",
+      align: "left",
+      render: (row) => getSideItem(row.site_code, siteList)?.name,
+    },
+    {
+      key: "product_name",
+      title: "Tên vé",
+      align: "left",
+    },
+    {
+      key: "price",
+      title: "Giá vé",
+      render: (row) => formatVND(row.price),
+    },
+    {
+      key: "quantity",
+      title: "Số lượng",
+    },
+    {
+      key: "total",
+      title: "Số tiền",
+      render: (row) => formatVND(row.total),
+    },
+    {
+      key: "third_party_number",
+      title: "Third party number",
+    },
+    {
+      key: "date_use",
+      title: "Ngày sử dụng",
+      render: (row) => dayjsEx(row.date_use).format(BASIC_DATE_FORMAT),
+      align: "center",
+    },
+
+    {
+      key: "status",
+      title: "Trạng thái",
+      align: "center",
+      render: (row) => (
+        <span className={statusClass[row.status]}>{get(StatusData, row.status)}</span>
+      ),
+    },
+
+    {
+      key: "created_at",
+      title: "Ngày rút",
+      render: (row) => dayjsEx(row.created_at).format(FULL_DATE_FORMAT),
+      align: "center",
+    },
+  ];
+
   return (
     <div className="space-y-4">
       <Card className="rounded-2xl">
@@ -189,10 +179,11 @@ export default function AffiliateStatsControler() {
             searchValue={params.searchValue}
             siteList={siteList}
           />
-
           <Revenue
             total={countTicket.total}
-            ticket={countTicket.quantity}
+            ticket={countTicket.ticketSale}
+            cancel={countTicket.ticketReund}
+            refundCharge={countTicket.refundCharge}
             from={params.searchValue.from}
             to={params.searchValue.to}
           />
@@ -206,14 +197,6 @@ export default function AffiliateStatsControler() {
           />
         </CardContent>
       </Card>
-      {curentRow && orderDetails.length ? (
-        <OrderDetailDialog
-          open={orderDetails.length > 0}
-          onClose={() => setOrderDetails([])}
-          orderDetails={orderDetails}
-          currentOrder={curentRow}
-        />
-      ) : null}
     </div>
   );
 }

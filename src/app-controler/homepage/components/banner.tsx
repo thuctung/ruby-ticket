@@ -1,7 +1,9 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n/client";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
+
 const BANNER_IMAGES = [
   {
     src: "/bannber_bana.png",
@@ -23,6 +25,7 @@ const BANNER_IMAGES = [
 
 export function Banner() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,7 +62,7 @@ export function Banner() {
           href="/mua-ve-tham-quan"
           className="inline-block bg-[#E0115F] hover:bg-[#C00F4E] text-white font-semibold text-xs mb-10 mr-10 sm:text-sm md:text-base px-5 py-2.5 md:px-6 md:py-3 rounded-md transition-all shadow-lg shadow-[#E0115F]/30 active:scale-95"
         >
-          Đặt Vé Ngay
+          {t("homepage.bookTicketsNow")}
         </a>
       </div>
 

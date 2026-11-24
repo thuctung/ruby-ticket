@@ -1,16 +1,9 @@
 import { getStatusTopupName } from "@/app-controler/admin/topup-mgt/components/constants";
-import { TOPUPS_STATUS } from "@/commons/constant";
+import { statusClass } from "@/app-controler/admin/topup-mgt/constants";
 import { TableColumn } from "@/components/ui/customs/table";
 import { dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
 import { formatVND } from "@/helpers/money";
 import { TopupHistoryResponseType } from "@/types";
-
-const statusClass: Record<string, string> = {
-  [TOPUPS_STATUS.PENDING]: "text-yellow-600 bg-yellow-100",
-  [TOPUPS_STATUS.APPROVED]: "text-green-600 bg-green-100",
-  [TOPUPS_STATUS.REJECTED]: "text-red-600 bg-red-100",
-  [TOPUPS_STATUS.ERROR]: "text-red-600 bg-red-100",
-};
 
 export const columnsTopupAffHistory: TableColumn<TopupHistoryResponseType>[] = [
   {

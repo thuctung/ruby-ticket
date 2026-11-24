@@ -1,14 +1,15 @@
 "use client";
 
 import { PHONE_ADMIN } from "@/commons/constant";
+import { useTranslation } from "@/lib/i18n/client";
 import Link from "next/link";
 import { useState } from "react";
 
 const services = [
   {
     id: "tour-khach-doan",
-    label: "Tour",
-    highlight: "KHÁCH ĐOÀN",
+    label: "homepage.tour",
+    highlight: "homepage.groupCustomers",
     href: null,
     color: "#f59e0b",
     gradient: "from-amber-500 to-yellow-400",
@@ -58,8 +59,8 @@ const services = [
   },
   {
     id: "combo-du-lich",
-    label: "Combo",
-    highlight: "DU LỊCH",
+    label: "homepage.combo",
+    highlight: "homepage.travel",
     href: null,
     color: "#ec4899",
     gradient: "from-pink-500 to-rose-400",
@@ -119,8 +120,8 @@ const services = [
   },
   {
     id: "ve-vui-choi",
-    label: "Vé",
-    highlight: "VUI CHƠI GIẢI TRÍ",
+    label: "homepage.tickets",
+    highlight: "homepage.entertainment",
     href: "",
     color: "#10b981",
     gradient: "from-emerald-500 to-teal-400",
@@ -185,8 +186,8 @@ const services = [
   },
   {
     id: "giat-say",
-    label: "Dịch Vụ",
-    highlight: "GIẶT SẤY",
+    label: "homepage.services",
+    highlight: "homepage.laundry",
     href: null,
     color: "#0ea5e9",
     gradient: "from-sky-500 to-cyan-400",
@@ -242,8 +243,8 @@ const services = [
   },
   {
     id: "thue-xe-may",
-    label: "Dịch Vụ",
-    highlight: "THUÊ XE MÁY",
+    label: "homepage.services",
+    highlight: "homepage.motorbikeRental",
     href: null,
     color: "#ef4444",
     gradient: "from-red-500 to-orange-400",
@@ -301,8 +302,8 @@ const services = [
   },
   {
     id: "spa-massage",
-    label: "Spa",
-    highlight: "MASSAGE",
+    label: "homepage.spa",
+    highlight: "homepage.massage",
     href: "",
     color: "#06b6d4",
     gradient: "from-cyan-500 to-teal-400",
@@ -390,8 +391,8 @@ const services = [
   },
   {
     id: "ve-may-bay",
-    label: "Vé",
-    highlight: "MÁY BAY",
+    label: "homepage.tickets",
+    highlight: "homepage.flights",
     href: "",
     color: "#3b82f6",
     gradient: "from-blue-500 to-indigo-400",
@@ -422,8 +423,8 @@ const services = [
   },
   {
     id: "dat-xe",
-    label: "Đặt",
-    highlight: "XE",
+    label: "homepage.booking",
+    highlight: "homepage.car",
     href: "",
     color: "#f97316",
     gradient: "from-orange-500 to-amber-400",
@@ -507,6 +508,8 @@ const services = [
 ];
 
 export default function TravelServices() {
+  const { t } = useTranslation();
+
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
@@ -514,7 +517,7 @@ export default function TravelServices() {
       {/* Section header */}
       <div className="text-center mb-8">
         <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900">
-          Khám phá dịch vụ
+          {t("homepage.exploreServices")}
         </h2>
         <div className="mt-2 mx-auto w-12 h-1 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
       </div>
@@ -573,7 +576,7 @@ export default function TravelServices() {
               {/* Text */}
               <div className="text-center leading-tight">
                 <span className="block text-xs font-medium text-gray-400 uppercase tracking-widest">
-                  {s.label}
+                  {t(s.label)}
                 </span>
                 <span
                   className={[
@@ -581,7 +584,7 @@ export default function TravelServices() {
                     isHovered ? s.text : "text-gray-700",
                   ].join(" ")}
                 >
-                  {s.highlight}
+                  {t(s.highlight)}
                 </span>
               </div>
 

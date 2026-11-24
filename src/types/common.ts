@@ -1,5 +1,28 @@
-import { I18nKey } from "@/lib/i18n/keys";
 import { MouseEventHandler } from "react";
+
+export type OrderItemType = {
+  date_use: string;
+  price: string;
+  product_code: string;
+  product_name: string;
+  quantity: string;
+};
+
+export type OrderType = {
+  id: string;
+  total_amount: string;
+  status: string;
+  created_at: string;
+  user_email: string;
+  phone: string;
+  payment_code: string;
+  order_code: string;
+  site_code: string;
+  third_party_number: string;
+  fullname: string;
+  status_payment: string;
+  order_items: OrderItemType[];
+};
 
 export type CommonType = {
   loadingGlobal: boolean;
@@ -11,6 +34,12 @@ export type CommonType = {
   setToastMessage: (value: string) => void;
 
   showConfirm: (value: ConfirmType) => void;
+};
+
+export type UpdatePaymentStatusType = {
+  message: string;
+  orderCode: string;
+  status: string;
 };
 
 export type ConfirmType = {
@@ -43,9 +72,9 @@ export type SideCard = {
 
 export type ExperienceCard = {
   key: string;
-  nameKey: I18nKey;
-  taglineKey: I18nKey;
-  badgeKey: I18nKey;
+  nameKey: string;
+  taglineKey: string;
+  badgeKey: string;
   image1: string;
   image2: string;
   color: string;

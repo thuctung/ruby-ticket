@@ -1,0 +1,23 @@
+export type OrderHistory = {
+  order_id: string;
+  user_id: string | null;
+  order_code: string;
+  reference_code: string | null;
+  status: string;
+  site_code: string;
+  created_at: string;
+  total_amount: number;
+  payment_method: string;
+  payment_code: string;
+  user_email: string;
+  phone: string;
+  status_payment: string;
+  description: string;
+  third_party_number: string;
+  product_code: string;
+  product_name: string;
+  price: number;
+  quantity: number;
+  date_use: string;
+  total: number;
+};

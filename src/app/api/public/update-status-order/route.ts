@@ -1,5 +1,4 @@
-import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
-import { DB_TABLE_NAME, PAYMENT_STATUS, TYPE_TRANSFER } from "@/commons/constant";
+import { DB_TABLE_NAME } from "@/commons/constant";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 

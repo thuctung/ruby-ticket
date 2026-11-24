@@ -11,7 +11,7 @@ import { getListTopupMgt, updateTopupMgtStatus } from "./apis";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
 import { Button } from "@/components/ui/button";
-import { TOPUPS_STATUS } from "@/commons/constant";
+import { STATUS_COMMON_TYPE } from "@/commons/constant";
 import { dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
 import { statusClass } from "./constants";
 
@@ -69,9 +69,9 @@ export default function TopupMgtControl() {
         <Button
           size="sm"
           onClick={() => handleUpdateStatus(row)}
-          disabled={row.status !== TOPUPS_STATUS.PENDING}
+          disabled={row.status !== STATUS_COMMON_TYPE.PENDING}
         >
-          {TOPUPS_STATUS.PENDING ? "Chấp nhận" : "Đã duyệt"}
+          {STATUS_COMMON_TYPE.PENDING ? "Chấp nhận" : "Đã duyệt"}
         </Button>
       ),
     },

@@ -1,0 +1,45 @@
+{
+  "summary": "Ticket booking, delivery, and usage conditions, as well as restrictions customers should be aware of before making a transaction.",
+  "sections": [
+    {
+      "heading": "1. Booking Conditions",
+      "bullets": [
+        "Customers must provide accurate and complete information and have the right to use the registered contact details.",
+        "Before payment, customers should carefully check the attraction, ticket type, quantity, date of use, eligible customer category, and recipient information.",
+        "An order is considered complete only when it meets the order confirmation and payment conditions published by Ruby Travel."
+      ]
+    },
+    {
+      "heading": "2. Ticket Delivery and Usage Conditions",
+      "bullets": [
+        "Electronic tickets will be sent through the contact channel registered by the customer or displayed according to the instructions provided with the order.",
+        "Customers are responsible for checking the ticket information immediately after receipt and contacting Ruby Travel if any discrepancies are found.",
+        "At the attraction, customers must present their ticket code/QR code and proof of age or eligibility for promotional offers if required by the supplier.",
+        "Each ticket is valid only for the number of admissions, date, time slot, and conditions stated on the ticket or announced by the supplier."
+      ]
+    },
+    {
+      "heading": "3. Supplier Conditions",
+      "paragraphs": [
+        "Attraction and entertainment services are provided by the operators of the respective destinations. Operating hours, cable car routes, open areas, performances, dining services, and amenities may change due to weather, maintenance, operational requirements, or instructions from competent authorities.",
+        "Customers must comply with the rules, safety instructions, and regulations at each attraction. Ruby Travel has no authority to change the supplier's operational policies."
+      ]
+    },
+    {
+      "heading": "4. Restrictions and Grounds for Refusal",
+      "paragraphs": [
+        "Ruby Travel may suspend or refuse to process an order if inaccurate information, signs of fraud, invalid payment, unlawful requests, or product unavailability are detected. Ruby Travel will notify the customer and coordinate the handling of any payment received, if applicable, in accordance with the transaction conditions and applicable laws.",
+        "Customers must not modify tickets, copy them for repeated use, resell them without authorization, or use them for purposes or by persons other than those permitted."
+      ]
+    },
+    {
+      "heading": "5. Customer Responsibilities",
+      "bullets": [
+        "Read the product description and ticket conditions carefully before making payment.",
+        "Arrive at the correct location on the applicable date and within the designated time slot, if any.",
+        "Keep ticket codes/QR codes secure and do not disclose or transfer them to unauthorized persons.",
+        "Contact Ruby Travel promptly if any issue arises before the ticket usage date."
+      ]
+    }
+  ]
+}

@@ -1,4 +1,10 @@
-import { number } from "zod";
+export type CategorySubmitType = {
+  code: string;
+  name: string;
+  en?: string;
+  zh?: string;
+  ko?: string;
+};
 
 export interface SiteType {
   code: string;
@@ -20,10 +26,12 @@ export type TicketByLocationType = {
   code: string;
 };
 
-type AgentPriceType = {
+export type AgentPriceType = {
   agent_code: string;
   price: number;
-  ticket_variant_code: string;
+  product_code: string;
+  site_code: string;
+  type: string;
 };
 
 export type ProductType = {
@@ -149,24 +157,28 @@ type PerformancesType = {
 
 export type ResultListProductType = { personType: string; ticket: ProductBanaType[] };
 
-export type ProductBanaType = {
+export interface ProductBanaType {
   closeTime: string;
   code: string;
-  id: number;
+  id?: number;
   name: string;
   personType: string;
-  pricePolicy: PricePolicyType;
+  pricePolicy?: PricePolicyType;
   restaurantName?: string;
   publicPrice: number;
   unitPrice: number;
-  performances: PerformancesType[];
+  performances?: PerformancesType[];
   multiple: number;
-  site: SiteType;
+  site?: SiteType;
   site_code: string;
-  openTime: string;
+  openTime?: string;
   description?: string;
   order?: number;
-};
+  status?: boolean;
+  category?: string;
+  min_quantity?: number;
+  pinalPrice?: number;
+}
 
 export type ProductSubmitType = {
   productCode: string;
@@ -232,3 +244,33 @@ export type ResTicketFormatType = {
   customerTickets: TicketResultQRType[];
   focTickets: TicketResultQRType[];
 };
+
+export type ProductInCartType = {
+  product: ProductBanaType;
+  quantity: number;
+};
+
+export type LanguageType = {
+  en: string;
+  ko: string;
+  vi: string;
+  zh: string;
+  name: string;
+};
+
+export interface SiteType {
+  code: string;
+  status: string;
+  name: string;
+  in_system: boolean;
+  pre_price: number;
+  exp?: string;
+  price_agent_default?: number;
+  percent_customer_default?: number;
+  en?: string;
+  ko?: string;
+  zh?: string;
+  location_code?: string;
+  location: LanguageType;
+  company_code?: string;
+}

@@ -1,11 +1,12 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { t } from "@/lib/i18n/t";
+import { useTranslation } from "@/lib/i18n/client";
 import { CreditCard, Star } from "lucide-react";
 
-type LangKey = "vi" | "en" | "zh" | "ko";
+export function CollaboratorSection() {
+  const { t } = useTranslation();
 
-export function CollaboratorSection({ lang }: { lang: LangKey }) {
   return (
     <section
       id="agent"
@@ -18,10 +19,10 @@ export function CollaboratorSection({ lang }: { lang: LangKey }) {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
           <div className="lg:col-span-2 space-y-6">
             <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900 text-white">
-              {t(lang, "section.affiliate.title")}
+              {t("homepage.collaborators")}
             </h2>
             <p className="text-lg text-slate-500 leading-relaxed text-white">
-              {t(lang, "section.affiliate.desc")}
+              {t("homepage.collaboratorDescription")}
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Button
@@ -29,7 +30,7 @@ export function CollaboratorSection({ lang }: { lang: LangKey }) {
                 className="h-14 px-8 rounded-2xl bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-100"
                 asChild
               >
-                <a href="/dang-ky-dai-ly">Đăng ký làm Affiliate</a>
+                <a href="/dang-ky-dai-ly"> {t("homepage.registerAffiliate")}</a>
               </Button>
               <Button
                 size="lg"
@@ -37,7 +38,7 @@ export function CollaboratorSection({ lang }: { lang: LangKey }) {
                 className="h-14 px-8 rounded-2xl border-2 hover:bg-slate-50"
                 asChild
               >
-                <a href="#faq">{t(lang, "cta.viewQuestions")}</a>
+                <a href="#faq">{t("homepage.viewQuestions")}</a>
               </Button>
             </div>
           </div>
@@ -49,10 +50,10 @@ export function CollaboratorSection({ lang }: { lang: LangKey }) {
                   <Star className="h-6 w-6" />
                 </div>
                 <CardTitle className="text-lg font-bold text-slate-900">
-                  {t(lang, "section.affiliate.cards.sell.title")}
+                  {t("homepage.forSellers")}
                 </CardTitle>
                 <CardDescription className="text-slate-500 font-medium leading-relaxed">
-                  {t(lang, "section.affiliate.cards.sell.desc")}
+                  {t("homepage.sellerDescription")}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -63,15 +64,15 @@ export function CollaboratorSection({ lang }: { lang: LangKey }) {
                   <CreditCard className="h-6 w-6" />
                 </div>
                 <CardTitle className="text-lg font-bold text-slate-900">
-                  {t(lang, "section.affiliate.cards.wallet.title")}
+                  {t("homepage.agentWallet")}
                 </CardTitle>
                 <CardDescription className="text-slate-500 font-medium leading-relaxed">
-                  {t(lang, "section.affiliate.cards.wallet.desc")}
+                  {t("homepage.agentWalletDescription")}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg inline-block">
-                  {t(lang, "section.affiliate.cards.wallet.note")}
+                  {t("homepage.salesEfficiency")}
                 </div>
               </CardContent>
             </Card>

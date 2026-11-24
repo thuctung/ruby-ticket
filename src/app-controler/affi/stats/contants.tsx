@@ -1,4 +1,4 @@
-import { TYPE_TRANSACTION } from "@/commons/constant";
+import { ROLES, STATUS_COMMON_TYPE, TYPE_TRANSACTION } from "@/commons/constant";
 
 import { StatusType } from "@/types";
 
@@ -6,7 +6,7 @@ export const getTypeName = (status: string) => {
   switch (status) {
     case TYPE_TRANSACTION.ADD:
       return "Nạp tiền";
-    case TYPE_TRANSACTION.TICKET_BUY:
+    case TYPE_TRANSACTION.BUY_TICKET:
       return "Rút vé";
     default:
       return "";
@@ -15,30 +15,22 @@ export const getTypeName = (status: string) => {
 
 export const TYPE_LIST: StatusType[] = [
   { title: getTypeName(TYPE_TRANSACTION.ADD), value: TYPE_TRANSACTION.ADD },
-  { title: getTypeName(TYPE_TRANSACTION.TICKET_BUY), value: TYPE_TRANSACTION.TICKET_BUY },
+  { title: getTypeName(TYPE_TRANSACTION.BUY_TICKET), value: TYPE_TRANSACTION.BUY_TICKET },
 ];
 
-export const KEY_MODIFY_DATA = {
-  ["SUCCESS"]: "success",
-  ["PENDING"]: "pending",
-  ["ERROR"]: "error",
-  ["CANCEL"]: "cancel",
-  ["ONHOLD"]: "onhold",
-  ["FAILED"]: "failed",
-};
-
 export const StatusData = {
-  [KEY_MODIFY_DATA.PENDING]: "Đang xử lý",
-  [KEY_MODIFY_DATA.ERROR]: "Thất bại",
-  [KEY_MODIFY_DATA.SUCCESS]: "Thành công",
-  [KEY_MODIFY_DATA.CANCEL]: "Đã hủy",
-  [KEY_MODIFY_DATA.ONHOLD]: "Đợi thanh toán",
+  [STATUS_COMMON_TYPE.PENDING]: "Đang xử lý",
+  [STATUS_COMMON_TYPE.ERROR]: "Thất bại",
+  [STATUS_COMMON_TYPE.SUCCESS]: "Thành công",
+  [STATUS_COMMON_TYPE.CANCELED]: "Đã hủy",
+  [STATUS_COMMON_TYPE.ONHOLD]: "Đợi thanh toán",
 };
 
 export const statusClass: Record<string, string> = {
-  [KEY_MODIFY_DATA.ERROR]: "text-red-600 bg-red-100",
-  [KEY_MODIFY_DATA.SUCCESS]: "text-green-600 bg-green-100 ",
-  [KEY_MODIFY_DATA.CANCEL]: "text-red-600 bg-red-100 ",
-  [KEY_MODIFY_DATA.ONHOLD]: "text-blue-600 bg-blue-100 ",
-  [KEY_MODIFY_DATA.PENDING]: "text-yellow-600 bg-yellow-100 ",
+  [STATUS_COMMON_TYPE.ERROR]: "text-red-600 bg-red-100",
+  [STATUS_COMMON_TYPE.SUCCESS]: "text-green-600 bg-green-100 ",
+  [STATUS_COMMON_TYPE.COMPLETED]: "text-green-600 bg-green-100 ",
+  [STATUS_COMMON_TYPE.CANCELED]: "text-red-600 bg-red-100 ",
+  [STATUS_COMMON_TYPE.ONHOLD]: "text-blue-600 bg-blue-100 ",
+  [STATUS_COMMON_TYPE.PENDING]: "text-yellow-600 bg-yellow-100 ",
 };

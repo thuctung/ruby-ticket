@@ -2,16 +2,16 @@ import { ExperienceCard } from "@/types";
 
 export const FAQS = [
   {
-    q: "Sau khi thanh toán thành công, tôi nhận vé bằng cách nào?",
-    a: "Mã vé điện tử (QR Code) sẽ được gửi tự động qua Email và Số điện thoại (Zalo/SMS) bạn đã đăng ký trong vòng 1-3 phút sau khi hệ thống ghi nhận thanh toán thành công.",
+    q: "homepage.faq.0.q",
+    a: "homepage.faq.0.a",
   },
   {
-    q: "Tôi có thể đổi hoặc hoàn trả vé đã mua không?",
-    a: 'Chính sách đổi trả phụ thuộc vào quy định riêng của từng khu du lịch. Vui lòng kiểm tra kỹ phần "Điều kiện vé" trước khi thanh toán hoặc liên hệ Hotline để được hỗ trợ cụ thể.',
+    q: "homepage.faq.1.q",
+    a: "homepage.faq.1.a",
   },
   {
-    q: "Đại lý có cần cam kết doanh số tháng không?",
-    a: "Chúng tôi có nhiều cấp bậc đại lý từ CTV tự do không áp doanh số đến đại lý kim cương. Hãy để lại thông tin tại form đăng ký, chuyên viên sẽ tư vấn gói phù hợp cho bạn.",
+    q: "homepage.faq.2.q",
+    a: "homepage.faq.2.a",
   },
 ];
 export const TESTIMONIALS = [
@@ -80,9 +80,9 @@ export const TESTIMONIALS = [
 export const EXPERIENCES: ExperienceCard[] = [
   {
     key: "BNC",
-    nameKey: "product.bana.name",
-    taglineKey: "product.bana.tagline",
-    badgeKey: "product.bana.badge",
+    nameKey: "homepage.sunworldBaNaHills",
+    taglineKey: "homepage.top",
+    badgeKey: "homepage.sunworldDescription",
     image1: "bana1.jpg",
     image2: "bana2.jpg",
     color: "from-amber-500 to-orange-600",
@@ -90,10 +90,10 @@ export const EXPERIENCES: ExperienceCard[] = [
     alt: "Cáp treo Bà Nà Hills",
   },
   {
-    key: "VINPER",
-    nameKey: "product.vinpearl.name",
-    taglineKey: "product.vinpearl.tagline",
-    badgeKey: "product.vinpearl.badge",
+    key: "VIN_NAMHOIAN",
+    nameKey: "homepage.vinpearlNamHoiAn",
+    taglineKey: "homepage.hot",
+    badgeKey: "homepage.vinpearlDescription",
     image1: "namha1.jpg",
     image2: "namha2.jpg",
     color: "from-blue-500 to-cyan-600",
@@ -102,9 +102,9 @@ export const EXPERIENCES: ExperienceCard[] = [
   },
   {
     key: "KWHOIAN",
-    nameKey: "product.hoian.name",
-    taglineKey: "product.hoian.tagline",
-    badgeKey: "product.hoian.badge",
+    nameKey: "homepage.hoiAnMemories",
+    taglineKey: "homepage.mustSee",
+    badgeKey: "homepage.hoiAnMemoriesDescription",
     image1: "hoian1.jpg",
     image2: "hoian2.jpg",
     color: "from-rose-500 to-pink-600",
@@ -112,10 +112,10 @@ export const EXPERIENCES: ExperienceCard[] = [
     alt: "Hội An Ancient Town",
   },
   {
-    key: "NUITHANTAI",
-    nameKey: "product.nuiThanTai.name",
-    taglineKey: "product.nuiThanTai.tagline",
-    badgeKey: "product.nuiThanTai.badge",
+    key: "THANTAI_MOUNTAIN",
+    nameKey: "homepage.thanTaiMountain",
+    taglineKey: "homepage.relax",
+    badgeKey: "homepage.thanTaiDescription",
     image1: "thantai1.jpg",
     image2: "thantai2.jpg",
     color: "from-emerald-500 to-teal-600",
@@ -124,9 +124,9 @@ export const EXPERIENCES: ExperienceCard[] = [
   },
   {
     key: "DUTHUYEN",
-    nameKey: "product.cruise.name",
-    taglineKey: "product.cruise.tagline",
-    badgeKey: "product.cruise.badge",
+    nameKey: "homepage.hanRiverCruise",
+    taglineKey: "homepage.chill",
+    badgeKey: "homepage.hanRiverDescription",
     image1: "duthuyen1.jpg",
     image2: "duthuyen2.jpg",
     color: "from-indigo-500 to-blue-600",
@@ -134,10 +134,10 @@ export const EXPERIENCES: ExperienceCard[] = [
     alt: "Du thuyền sông Hàn",
   },
   {
-    key: "MIKAZUKI",
-    nameKey: "product.mikayuki.name",
-    taglineKey: "product.mikayuki.tagline",
-    badgeKey: "product.mikayuki.badge",
+    key: "MAKAZUKI",
+    nameKey: "homepage.mikazuki",
+    taglineKey: "homepage.hot",
+    badgeKey: "homepage.mikazukiDescription",
     image1: "mikazuki1.webp",
     image2: "mikazuki2.webp",
     color: "from-indigo-500 to-blue-600",

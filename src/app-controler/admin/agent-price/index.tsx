@@ -9,7 +9,7 @@ import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 import CreatePriceForm from "./components/create-price";
 import { getListAgent } from "../agent-mgt/api";
 import { AgentPriceSubmitType, AgentPriceType } from "./type";
-import { CUSTOMER } from "@/commons/constant";
+import { ROLES } from "@/commons/constant";
 import { getSiteByStatus } from "@/components/GetTicketForm/api";
 
 export default function AgentPricePageControler() {
@@ -168,10 +168,10 @@ export default function AgentPricePageControler() {
                         onChange={(e) => handleChangePrice(e.target.value, index)}
                       />
                       <span className="text-xs text-slate-400">
-                        {price.agent_code === CUSTOMER ? "%" : "đ"}
+                        {price.agent_code === ROLES.AFFILIATE ? "%" : "đ"}
                       </span>
                     </div>
-                    {price.agent_code === CUSTOMER ? (
+                    {price.agent_code === ROLES.CUSTOMER ? (
                       <div>
                         <span className="text-[red] text-xs">Phần trăm giảm trên giá công bố</span>
                       </div>

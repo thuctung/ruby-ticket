@@ -1,0 +1,74 @@
+{
+  "breadcrumb": "Tất cả chính sách",
+  "title": "Chính sách bảo mật",
+  "summary": "Quy định về việc thu thập, sử dụng, lưu trữ và bảo vệ thông tin của khách hàng khi sử dụng website Ruby Travel.",
+
+  "sections": [
+    {
+      "heading": "1. Phạm vi áp dụng",
+      "paragraphs": [
+        "Chính sách này áp dụng đối với khách hàng truy cập website, tìm kiếm thông tin, đặt mua vé hoặc liên hệ với Ruby Travel.",
+        "Khi sử dụng website hoặc cung cấp thông tin cho Ruby Travel, khách hàng xác nhận đã đọc và hiểu nội dung chính sách này. Trường hợp pháp luật yêu cầu sự đồng ý riêng cho một hoạt động xử lý dữ liệu, Ruby Travel sẽ thực hiện việc lấy ý kiến theo quy định."
+      ]
+    },
+    {
+      "heading": "2. Thông tin có thể được thu thập",
+      "items": [
+        "Thông tin liên hệ và nhận vé: họ tên, số điện thoại, địa chỉ email và thông tin người nhận vé do khách hàng cung cấp.",
+        "Thông tin đặt dịch vụ: sản phẩm/vé đã chọn, số lượng, ngày sử dụng, mã đơn hàng và yêu cầu hỗ trợ.",
+        "Thông tin giao dịch: phương thức thanh toán, mã giao dịch, trạng thái thanh toán và thông tin cần thiết để đối soát. Ruby Travel không chủ động yêu cầu khách hàng gửi mật khẩu ngân hàng hoặc mã OTP.",
+        "Thông tin kỹ thuật: địa chỉ IP, loại trình duyệt, thiết bị, thời điểm truy cập và dữ liệu cookie cần thiết cho hoạt động của website."
+      ]
+    },
+    {
+      "heading": "3. Mục đích sử dụng thông tin",
+      "items": [
+        "Tiếp nhận và xử lý đơn đặt vé, xác nhận thanh toán và gửi vé hoặc thông tin dịch vụ.",
+        "Liên hệ để xác minh thông tin đơn hàng, thông báo thay đổi từ nhà cung cấp và hỗ trợ sau bán hàng.",
+        "Giải quyết khiếu nại, đối soát giao dịch, phòng chống gian lận và bảo vệ quyền lợi hợp pháp của khách hàng.",
+        "Cải thiện chất lượng website, thống kê hoạt động và thực hiện nghĩa vụ theo quy định pháp luật.",
+        "Gửi thông tin khuyến mãi hoặc tiếp thị khi có căn cứ hợp pháp và/hoặc sự đồng ý phù hợp của khách hàng. Khách hàng có thể yêu cầu ngừng nhận thông tin này."
+      ]
+    },
+    {
+      "heading": "4. Chia sẻ thông tin",
+      "paragraphs": [
+        "Ruby Travel chỉ chia sẻ thông tin ở phạm vi cần thiết với đơn vị phát hành/vận hành điểm tham quan để xác nhận hoặc cung cấp vé; đơn vị thanh toán/ngân hàng để xử lý và đối soát giao dịch; nhà cung cấp hạ tầng công nghệ để vận hành website; hoặc cơ quan có thẩm quyền khi có yêu cầu hợp pháp.",
+        "Ruby Travel không bán dữ liệu cá nhân của khách hàng. Các bên tiếp nhận thông tin có trách nhiệm sử dụng thông tin đúng mục đích và áp dụng biện pháp bảo vệ phù hợp theo thỏa thuận và quy định pháp luật."
+      ]
+    },
+    {
+      "heading": "5. Thời gian lưu trữ và bảo vệ thông tin",
+      "paragraphs": [
+        "Thông tin được lưu trữ trong thời gian cần thiết để thực hiện mục đích đã nêu, giải quyết tranh chấp, đối soát và đáp ứng nghĩa vụ lưu trữ theo pháp luật. Khi không còn cần thiết và không có nghĩa vụ lưu trữ, thông tin sẽ được xóa, hủy hoặc xử lý theo quy định.",
+        "Ruby Travel áp dụng các biện pháp quản lý và kỹ thuật phù hợp để hạn chế truy cập, sử dụng, tiết lộ hoặc thay đổi thông tin trái phép. Tuy nhiên, không phương thức truyền tải hay lưu trữ điện tử nào có thể bảo đảm an toàn tuyệt đối."
+      ]
+    },
+    {
+      "heading": "6. Quyền và yêu cầu của khách hàng",
+      "paragraphs": [
+        "Theo quy định pháp luật hiện hành, khách hàng có thể gửi yêu cầu liên quan đến việc truy cập, cập nhật, chỉnh sửa, rút lại sự đồng ý, hạn chế hoặc phản đối việc xử lý, xóa dữ liệu cá nhân và các quyền khác (nếu áp dụng). Ruby Travel có thể cần xác minh danh tính và có thể từ chối hoặc giới hạn yêu cầu trong trường hợp pháp luật cho phép hoặc yêu cầu lưu trữ bắt buộc.",
+        "Gửi yêu cầu qua email {{email}} với tiêu đề “Yêu cầu về dữ liệu cá nhân”, kèm thông tin đủ để xác định đơn hàng hoặc yêu cầu. Không gửi mật khẩu, mã OTP hoặc thông tin bảo mật ngân hàng."
+      ]
+    },
+    {
+      "heading": "7. Cookie và công nghệ tương tự",
+      "paragraphs": [
+        "Website có thể sử dụng cookie hoặc công nghệ tương tự để duy trì phiên truy cập, ghi nhớ lựa chọn, bảo đảm an ninh và phân tích hiệu quả hoạt động. Khách hàng có thể quản lý cookie trong cài đặt trình duyệt; việc tắt một số cookie có thể ảnh hưởng đến chức năng website."
+      ]
+    },
+    {
+      "heading": "8. Thay đổi chính sách và liên hệ",
+      "paragraphs": [
+        "Ruby Travel có thể cập nhật chính sách để phù hợp với hoạt động hoặc quy định pháp luật. Phiên bản mới sẽ được đăng trên website cùng ngày cập nhật."
+      ],
+      "company": "Đơn vị phụ trách: CÔNG TY CỔ PHẦN ĐÀ NẴNG TOURIST.",
+      "address": "04 Hoàng Văn Thải, Phường Hoà Minh, Quận Liên Chiểu, Thành phố Đà Nẵng, Việt Nam."
+    }
+  ],
+  "support": {
+    "title": "Bạn cần hỗ trợ thêm?",
+    "description": "Liên hệ Ruby Travel qua {{phone}} hoặc {{email}}"
+  },
+  "update": "Cập nhật"
+}

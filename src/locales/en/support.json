@@ -1,0 +1,32 @@
+{
+  "summary": "Official contact channels for assistance when searching for, purchasing, and using tickets.",
+  "sections": [
+    {
+      "heading": "1. Support Channels",
+      "paragraphs": [
+        "Customers can contact Ruby Travel via hotline, email, Zalo, or Facebook. Official contact information is published on this page and in the website footer."
+      ]
+    },
+    {
+      "heading": "2. Order Support",
+      "bullets": [
+        "Provide consultation on products, ticket types, eligible customer categories, and usage dates.",
+        "Check booking and payment statuses.",
+        "Resend electronic tickets or verify ticket information.",
+        "Receive and handle requests for ticket changes, cancellations, refunds, and complaints in accordance with applicable conditions."
+      ]
+    },
+    {
+      "heading": "3. Support Hours",
+      "paragraphs": [
+        "Support hours: 6:00 AM–4:00 PM. Requests received outside these hours will be acknowledged and handled during the next available working period. Actual processing times may depend on responses from suppliers or payment providers."
+      ]
+    },
+    {
+      "heading": "4. Security Notice",
+      "paragraphs": [
+        "Ruby Travel will never ask customers to provide bank passwords, PINs, OTP codes, or account login credentials. Customers should only communicate and make payments through the website or officially published contact channels."
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME } from "@/commons/constant";
+import { DB_TABLE_NAME, ROLES } from "@/commons/constant";
 
 export async function GET(request: Request) {
   const { data, error } = await supabaseAdmin
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
       email
     `
     )
-    .eq("role", "affiliate");
+    .eq("role", ROLES.AFFILIATE);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

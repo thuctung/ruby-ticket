@@ -1,9 +1,9 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
 import {
-  AGENT,
   DB_TABLE_NAME,
   END_DATE_GMT7,
   LIMIT_TABLE,
+  ROLES,
   START_DATE_GMT7,
 } from "@/commons/constant";
 import { SearchTicketSalePayload } from "@/types";
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     .order("created_at", { ascending: false })
     .range(fromIdx, toIdx);
 
-  query = query.eq("payment_method", AGENT);
+  query = query.eq("payment_method", ROLES.AFFILIATE);
 
   if (user_id) {
     query = query.eq("user_id", user_id);
