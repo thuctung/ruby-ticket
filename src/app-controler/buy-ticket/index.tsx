@@ -190,7 +190,7 @@ export default function BuyTicketController() {
 
   return (
     <main className="min-h-screen flex flex-col bg-background text-foreground">
-      <div className="min-h-screen bg-[#008cff14]">
+      <div className="min-h-screen  bg-[#FDF4F6]">
         <Hero />
         <div className=" mx-auto max-w-7xl  sm:px-6 lg:px-8">
           <SearchBar
@@ -200,7 +200,7 @@ export default function BuyTicketController() {
             onSearch={handleSearch}
           />
           {listProductFilter.length > 0 && (
-            <main className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+            <main className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-black/5 sm:p-8">
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px]">
                 <div>
                   <div className="mt-4">

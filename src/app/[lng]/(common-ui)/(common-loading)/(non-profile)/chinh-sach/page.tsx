@@ -4,6 +4,16 @@ import { policies } from "@/lib/policies";
 import { COMPANY_INFO } from "@/commons/constant";
 import { getTranslation } from "@/lib/i18n";
 
+/**
+ * Ruby Travel palette (arbitrary values của Tailwind):
+ *  ruby       #9B1030  – màu thương hiệu chính
+ *  ruby-deep  #5C0A1B  – nền panel giới thiệu
+ *  ruby-soft  #F7DDE3  – đường kẻ nhẹ
+ *  ruby-line  #F0CBD3  – viền
+ *  blush      #FDF4F6  – nền trang
+ *  champagne  #F3DDB0  – điểm nhấn phụ
+ */
+
 export const metadata: Metadata = {
   title: "Chính sách & Điều khoản | Ruby Travel",
   description:
@@ -20,166 +30,118 @@ const supportItems = [
 export default async function PolicyIndexPage({ params }: { params: Promise<{ lng: string }> }) {
   const { lng } = await params;
   const { t } = await getTranslation(lng);
+
   return (
-    <main className="min-h-screen bg-stone-50" style={pageDots}>
-      <section className="relative overflow-hidden bg-stone-900" style={heroDots}>
-        <TicketShape className="pointer-events-none absolute -right-8 top-8 hidden w-72 rotate-6 text-yellow-400/20 md:block lg:right-16" />
-        <TicketShape className="pointer-events-none absolute bottom-4 right-60 hidden w-40 -rotate-12 text-white/10 lg:block" />
+    <main className="min-h-screen bg-[#FDF4F6] text-[#2B0A12]">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+        <div className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:gap-10">
+          {/* ===== Cột trái: giới thiệu, đứng yên khi cuộn danh sách ===== */}
+          <aside className="relative overflow-hidden rounded-3xl bg-[#5C0A1B] p-7 text-white sm:p-9 lg:sticky lg:top-8">
+            <GemFacets className="pointer-events-none absolute -bottom-16 -right-16 h-72 w-72 text-[#9B1030]" />
 
-        <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-14 sm:px-6 lg:px-8">
-          <span className="block h-1 w-12 rounded-full bg-yellow-400" aria-hidden="true" />
-          <h1 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Chính sách &amp; Điều khoản
-          </h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-stone-300">
-            Các thông tin và quy định áp dụng khi khách hàng tìm kiếm, đặt mua và sử dụng vé du lịch
-            tại Ruby Travel. Vui lòng đọc kỹ trước khi thực hiện giao dịch.
-          </p>
-        </div>
-        <div className="absolute inset-x-0 bottom-0 h-3" style={tearEdge} aria-hidden="true" />
-      </section>
+            <div className="relative">
+              <span className="block h-1 w-12 rounded-full bg-[#F3DDB0]" aria-hidden="true" />
+              <h1 className="mt-6 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+                {t("homepage.policy.policy_title")}
+              </h1>
+              <p className="mt-4 text-sm leading-7 text-white/75">
+                {t("homepage.policy.policy_description")}
+              </p>
 
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:px-8">
-        <section aria-labelledby="policy-list-title">
-          <div className="mb-5">
-            <h2 id="policy-list-title" className="text-xl font-bold text-stone-900">
-              Nội dung chính sách
-            </h2>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {policies.map((policy, index) => (
-              <Link
-                key={policy.slug}
-                href={`/chinh-sach/${policy.slug}`}
-                className="group relative flex min-h-36 overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:border-yellow-400 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
-              >
-                <span className="flex w-14 shrink-0 items-center justify-center bg-yellow-50 text-base font-bold text-yellow-700 transition group-hover:bg-yellow-400 group-hover:text-stone-900">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <span
-                  aria-hidden="true"
-                  className="absolute -top-2.5 left-[calc(3.5rem-0.625rem+1px)] h-5 w-5 rounded-full border border-stone-200 bg-stone-50 group-hover:border-yellow-400"
-                />
-                <span
-                  aria-hidden="true"
-                  className="absolute -bottom-2.5 left-[calc(3.5rem-0.625rem+1px)] h-5 w-5 rounded-full border border-stone-200 bg-stone-50 group-hover:border-yellow-400"
-                />
-
-                <span className="min-w-0 flex-1 border-l-2 border-dashed border-stone-200 p-5">
-                  <span className="block font-semibold leading-6 text-stone-900">
-                    {t(policy.title)}
-                  </span>
-                  <span className="mt-2 block text-sm leading-6 text-stone-500">
-                    {policy.summary}
-                  </span>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-yellow-700 group-hover:text-yellow-800">
-                    Xem chi tiết <span aria-hidden="true">→</span>
-                  </span>
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <aside className="space-y-5">
-          <div className="rounded-2xl border border-stone-200 bg-white p-2 shadow-sm">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-50 text-xl">
-                💬
-              </span>
-              <div>
-                <h2 className="font-bold text-stone-900">Hỗ trợ trực tuyến</h2>
-                <p className="text-sm text-stone-500">Ruby Travel luôn sẵn sàng hỗ trợ</p>
+              <div className="mt-8 border-t border-dashed border-[#F3DDB0]/40 pt-6">
+                <p className="font-semibold"> {t("homepage.policy.order_support_title")}</p>
+                <p className="mt-2 text-sm leading-6 text-white/75">
+                  {t("homepage.policy.order_support_description")}
+                </p>
+                <Link
+                  href="/chinh-sach/giai-quyet-khieu-nai"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#F3DDB0] px-5 py-2.5 text-sm font-semibold text-[#5C0A1B] transition-colors hover:bg-[#EBCF96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F3DDB0]"
+                >
+                  {t("homepage.policy.view_support_guide")}
+                  <span aria-hidden="true">→</span>
+                </Link>
               </div>
             </div>
-            <div className="mt-5 space-y-3">
-              {supportItems.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-start gap-3 border-t border-dashed border-stone-200 pt-3"
-                >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-stone-100 text-sm font-bold text-stone-600">
-                    {item.icon}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-xs font-medium uppercase tracking-wide text-stone-400">
-                      {item.label}
-                    </p>
-                    {item.href ? (
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="break-all text-sm font-semibold text-stone-800 hover:text-yellow-700"
-                      >
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="break-all text-sm font-semibold text-stone-800">{item.value}</p>
-                    )}
-                  </div>
-                </div>
+          </aside>
+
+          <section aria-labelledby="policy-list-title">
+            <ul className="divide-y divide-[#F7DDE3] overflow-hidden rounded-3xl border border-[#F0CBD3] bg-white">
+              {policies.map((policy) => (
+                <li key={policy.slug}>
+                  <Link
+                    href={`/chinh-sach/${policy.slug}`}
+                    className="group flex items-center gap-4 border-l-4 border-transparent px-5 py-5 transition-colors hover:border-[#9B1030] hover:bg-[#FDF4F6] focus-visible:border-[#9B1030] focus-visible:bg-[#FDF4F6] focus-visible:outline-none sm:px-7"
+                  >
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-lg font-semibold leading-snug">
+                        {t(policy.title)}
+                      </span>
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#F0CBD3] text-[#9B1030] transition-colors group-hover:border-[#9B1030] group-hover:bg-[#9B1030] group-hover:text-white group-focus-visible:border-[#9B1030] group-focus-visible:bg-[#9B1030] group-focus-visible:text-white"
+                    >
+                      →
+                    </span>
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
+          </section>
+        </div>
+
+        {/* ===== Dải hỗ trợ trực tuyến: trải ngang cuối trang ===== */}
+        <section
+          className="mt-10 rounded-3xl border border-[#F0CBD3] bg-white p-6 sm:p-8 lg:mt-14"
+          aria-labelledby="support-title"
+        >
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <h2 id="support-title" className="text-xl font-semibold">
+              {t("homepage.policy.support_title")}
+            </h2>
+            <p className="text-sm text-[#7A4753]"> {t("homepage.policy.support_description")}</p>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-yellow-200 bg-gradient-to-br from-yellow-50 to-amber-50 p-5 shadow-sm">
-            <span
-              aria-hidden="true"
-              className="absolute -left-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full border border-yellow-200 bg-stone-50"
-            />
-            <span
-              aria-hidden="true"
-              className="absolute -right-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full border border-yellow-200 bg-stone-50"
-            />
-            <TicketShape className="pointer-events-none absolute -bottom-4 -right-6 w-32 rotate-12 text-yellow-400/30" />
-
-            <div className="relative rounded-xl border border-dashed border-yellow-400/70 px-4 py-4">
-              <p className="text-base font-bold text-stone-900">Cần hỗ trợ đơn hàng?</p>
-              <p className="mt-2 text-sm leading-6 text-stone-600">
-                Chuẩn bị mã đơn hàng và thông tin đặt vé để Ruby Travel hỗ trợ nhanh hơn.
-              </p>
-              <Link
-                href="/chinh-sach/giai-quyet-khieu-nai"
-                className="mt-4 inline-flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-yellow-300 transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
-              >
-                Xem cách gửi yêu cầu <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-          </div>
-        </aside>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {supportItems.map((item) => (
+              <li key={item.label} className="flex items-start gap-3 rounded-2xl bg-[#FDF4F6] p-4">
+                <span
+                  aria-hidden="true"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#9B1030] text-base font-bold text-white"
+                >
+                  {item.icon}
+                </span>
+                <div className="min-w-0">
+                  <p className="text-sm text-[#8A5A66]">{item.label}</p>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="break-all text-sm font-semibold text-[#2B0A12] underline-offset-4 hover:text-[#9B1030] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9B1030]"
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <p className="break-all text-sm font-semibold">{item.value}</p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     </main>
   );
 }
 
-const pageDots = {
-  backgroundImage: "radial-gradient(#e7e5e4 1px, transparent 1px)",
-  backgroundSize: "24px 24px",
-};
-
-const tearEdge = {
-  backgroundImage: "radial-gradient(circle at 10px 100%, #fafaf9 7px, transparent 7.5px)",
-  backgroundSize: "20px 12px",
-  backgroundRepeat: "repeat-x",
-};
-
-const heroDots = {
-  backgroundImage: "radial-gradient(rgba(250,204,21,0.12) 1px, transparent 1px)",
-  backgroundSize: "20px 20px",
-};
-
-function TicketShape({ className = "" }: { className?: string }) {
+/** Hoạ tiết các mặt cắt viên ngọc, trang trí cho panel ruby. */
+function GemFacets({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 220 110" fill="none" aria-hidden="true" className={className}>
-      <path
-        d="M14 4h192a10 10 0 0 1 10 10v22a14 14 0 0 0 0 28v32a10 10 0 0 1-10 10H14A10 10 0 0 1 4 96V64a14 14 0 0 0 0-28V14A10 10 0 0 1 14 4Z"
-        stroke="currentColor"
-        strokeWidth="2.5"
-      />
-      <path d="M156 10v90" stroke="currentColor" strokeWidth="2.5" strokeDasharray="6 6" />
+    <svg aria-hidden="true" viewBox="0 0 200 200" className={className} fill="currentColor">
+      <path d="M60 20h80l40 50-80 110L20 70z" opacity="0.55" />
+      <path d="M60 20 100 70 140 20z" opacity="0.5" />
+      <path d="M20 70h160L100 180z" opacity="0.35" />
     </svg>
   );
 }

@@ -1,7 +1,5 @@
 export const GET_PRICE_AGENT = "/api/auth/admin/price/get-price";
 
-export const GET_ORDER_HISTORY = "/api/auth/affiliate/stats/order-history";
-
 export const GET_ORDER_DETAIL = "/api/auth/affiliate/stats/order-detail";
 
 export const GET_PRODUCT_CATEGORY = "/api/auth/admin/ticket-price/get-category";
@@ -66,6 +64,8 @@ export const AFF_GET_STATUS = "/api/auth/affiliate/profile/get-status";
 export const CHANGE_PASSWORD = "/api/auth/affiliate/profile/change-password";
 
 export const GET_ADMIN_REPORT = "/api/auth/admin/history/get-report";
+
+export const GET_AFFILATE_HISTORY = "/api/auth/affiliate/stats/order-history";
 
 export const COUNT_REPORT = "/api/auth/admin/history/count-report";
 
@@ -156,7 +156,7 @@ export const SUN_CHECK_USEGE_TICKET = "/api/sun-api/check-useged-ticket";
 // mOMO
 
 export const CREATE_PAYMENT_WITH_MOMO = "/api/momo/create";
-export const CREATE_PAYMENT_WITH_ONE_PAY = "/api/one-pay/create";
+export const CREATE_PAYMENT_WITH_ONE_PAY = "/api/onepay/create";
 
 export const ORDER_ITEM_AFTER_PAYMENT = "/api/public/get-order-detail";
 export const CUSTOMER_CLAIM_ORDER = "/api/public/claim-order";

@@ -27,7 +27,6 @@ export default function ProcessPaymentMomo({ orderCode, amount }: Props) {
     started.current = orderCode;
 
     let cancelled = false;
-
     const fail = async (reason: string) => {
       if (cancelled) return;
       await updatePaymentStatus({ orderCode, message: reason, status: STATUS_COMMON_TYPE.ERROR });
@@ -49,6 +48,7 @@ export default function ProcessPaymentMomo({ orderCode, amount }: Props) {
         if (!order) {
           return fail("not_found");
         }
+        debugger;
 
         // 2. Kiểm tra số tiền
         if (Number(order.total_amount) !== Number(amount)) {
@@ -134,7 +134,7 @@ export default function ProcessPaymentMomo({ orderCode, amount }: Props) {
         }
 
         // 8. Gọi API tạo vé
-        await getTicketForCustomer({
+        const dataGetTicket = await getTicketForCustomer({
           currentOrderData,
           productSelected: products,
           email: order.user_email,
@@ -145,7 +145,9 @@ export default function ProcessPaymentMomo({ orderCode, amount }: Props) {
             return success(order);
           },
         });
-        return fail("ticket_processing");
+        if (!dataGetTicket) {
+          return fail("ticket_processing");
+        }
       } catch (error) {
         fail("error");
       }

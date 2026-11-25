@@ -6,8 +6,8 @@ import { CategorySubmitType, ProductBanaType } from "@/types/ticket";
 import { useState } from "react";
 import CartIcon from "./CartIcon";
 import { useCartStore } from "@/stores/useCartStore";
-import { Flower2, Minus, Music, Plus, Soup, Sparkles, TramFront } from "lucide-react";
-import { BADGE_STYLES, getCategaryItem, getImageProduct } from "../contants";
+import { Clock3, Flower2, Minus, Music, Plus, Soup, Sparkles, TramFront } from "lucide-react";
+import { BADGE_STYLES, getCategaryItem, getImageProduct, styleBtnAddCard } from "../contants";
 import ProductDetailModal from "./ProdcutDetail";
 import { useTranslation } from "@/lib/i18n/client";
 import { get } from "lodash";
@@ -61,79 +61,101 @@ export default function ProductCard({ product, quantity, lisCategory }: Props) {
   const bgImage = "/bana/cauvang.webp";
 
   return (
-    <div className="group relative mb-3 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-[#f26b1d]/40 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-      {/* Ảnh nền + lớp sương trắng */}
+    <div className="group relative isolate mb-4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+      {/* Background */}
       {bgImage && (
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          className="absolute inset-0 -z-20 bg-cover bg-center opacity-[0.5] transition-transform duration-700 group-hover:scale-105"
           style={{ backgroundImage: `url(${bgImage})` }}
         />
       )}
+
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/60 transition-opacity duration-500 group-hover:opacity-80"
+        className="absolute inset-0 -z-10 bg-gradient-to-br from-white/95 via-white/95 to-orange-50/70"
       />
 
-      <div className="relative flex flex-col gap-4 p-5 md:flex-row md:items-stretch md:justify-between md:gap-6">
-        {/* ───────── Trái: tên, nhãn ───────── */}
-        <div className="flex min-w-0 flex-1 flex-col">
-          <h3 className="font-display text-xl font-bold uppercase leading-tight text-slate-900">
-            {product.name}
-          </h3>
+      {/* Accent line */}
+      <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#f26b1d] to-orange-300 opacity-80" />
 
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span
-              className={`inline-flex rounded-lg px-3 py-1 text-sm font-semibold ${
-                BADGE_STYLES[product.personType] || BADGE_STYLES["DEFAULT"]
-              }`}
-            >
-              {get(getCategaryItem(product.personType, lisCategory), lng) ||
-                getCategaryItem(product.personType, lisCategory)?.name}
-            </span>
-
-            {product.restaurantName && (
-              <span className="flex items-center gap-1.5 text-sm font-semibold text-[#22acf9]">
-                <Soup color="#22acf9" size={16} />
-                {product.restaurantName}
+      <div className="flex flex-col gap-5 p-4 pl-5 sm:p-5 sm:pl-6 lg:flex-row lg:items-center lg:justify-between">
+        {/* LEFT: Ticket information */}
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            {product.multiple > 1 && (
+              <span className="rounded-md bg-pink-50 px-2 py-1 text-xs font-semibold text-pink-600">
+                {t("buyticket.ticket_multiple")}: {product.multiple}
               </span>
             )}
           </div>
+          <span
+            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
+              BADGE_STYLES[product.personType] || BADGE_STYLES["DEFAULT"]
+            }`}
+          >
+            {get(getCategaryItem(product.personType, lisCategory), lng) ||
+              getCategaryItem(product.personType, lisCategory)?.name}
+          </span>
+          <h3 className="mt-2 font-display text-lg font-bold uppercase leading-snug text-slate-900 sm:text-xl">
+            {product.name}
+          </h3>
 
-          {product.multiple > 1 && (
-            <p className="mt-2 text-xs font-medium text-[#ff006c]">
-              {t("buyticket.ticket_multiple")}: {product.multiple}
-            </p>
-          )}
-        </div>
-
-        {/* ───────── Phải: giá + (số lượng & thêm giỏ) ───────── */}
-        <div className="flex w-full shrink-0 flex-col gap-3 md:w-auto md:items-end">
-          {/* Giá */}
-          <div className="text-left md:text-right">
-            <p className="font-display text-2xl font-bold leading-tight text-[#e5252a]">
-              {formatVND(product.pinalPrice || 0)}
-            </p>
-            {hasDiscount && (
-              <p className="mt-0.5 text-sm text-[#b4234a] line-through">
-                {t("buyticket.public_price", "Giá công bố")}: {formatVND(product.publicPrice)}
-              </p>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {product.restaurantName && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-100 bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-600">
+                <Soup size={14} />
+                {product.restaurantName}
+              </span>
+            )}
+            {(product.openTime || product.closeTime) && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500">
+                <Clock3 size={14} className="text-orange-500" />
+                <span>
+                  {product.openTime || "--:--"}
+                  {" - "}
+                  {product.closeTime || "--:--"}
+                </span>
+              </span>
             )}
           </div>
+        </div>
 
-          {/* Hành động: mobile xếp dọc, từ sm trở lên cùng 1 hàng */}
-          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
-            {/* Stepper dạng viên thuốc */}
-            <div className="flex w-full items-center justify-between rounded-full bg-white px-1.5 py-1 shadow-md ring-1 ring-slate-100 sm:w-auto sm:justify-start">
+        {/* RIGHT: Price and actions */}
+        <div className="flex shrink-0 flex-col gap-4 border-t border-slate-200/70 pt-4 lg:min-w-[290px] lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
+          {/* Price */}
+          <div className="flex items-end justify-between gap-3 lg:justify-end">
+            <div className="lg:text-right">
+              <p className="text-xs font-medium text-slate-500">
+                {t("buyticket.public_price", "Giá vé")}
+              </p>
+
+              <p className="mt-0.5 font-display text-2xl font-extrabold tracking-tight text-[#e5252a] sm:text-3xl">
+                {formatVND(product.pinalPrice || 0)}
+              </p>
+
+              {hasDiscount && (
+                <p className="mt-1 text-xs font-medium text-slate-400 line-through">
+                  {t("buyticket.public_price", "Giá công bố")}: {formatVND(product.publicPrice)}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Quantity and cart */}
+          <div className="flex items-center gap-2">
+            {/* Quantity stepper */}
+            <div className="flex h-11 shrink-0 items-center rounded-xl border border-slate-200 bg-white shadow-sm">
               <button
                 type="button"
                 aria-label="Giảm số lượng"
                 disabled={!tampQty}
                 onClick={handleDecrease}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:bg-transparent"
+                className="flex h-full w-9 items-center justify-center rounded-l-xl text-slate-500 transition hover:bg-slate-50 hover:text-orange-600 disabled:cursor-not-allowed disabled:text-slate-300"
               >
                 <Minus size={16} />
               </button>
+
               <input
                 type="number"
                 inputMode="numeric"
@@ -143,25 +165,26 @@ export default function ProductCard({ product, quantity, lisCategory }: Props) {
                 value={tampQty}
                 onChange={handleInputChange}
                 onBlur={handleInputBlur}
-                className="h-8 w-12 bg-transparent text-center text-base font-semibold text-slate-900 outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                className="h-full w-10 bg-transparent text-center text-sm font-bold text-slate-900 outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               />
+
               <button
                 type="button"
                 aria-label="Tăng số lượng"
                 disabled={tampQty >= maxQty}
                 onClick={handleIncrease}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:bg-transparent"
+                className="flex h-full w-9 items-center justify-center rounded-r-xl text-slate-500 transition hover:bg-slate-50 hover:text-orange-600 disabled:cursor-not-allowed disabled:text-slate-300"
               >
                 <Plus size={16} />
               </button>
             </div>
 
-            {/* Nút thêm giỏ: luôn hiện, mờ đi khi số lượng = 0 */}
+            {/* Add to cart */}
             <button
               type="button"
               onClick={handleAddCart}
               disabled={tampQty <= 0}
-              className="flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#f26b1d] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#e05f14] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/50 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none disabled:active:scale-100 sm:w-auto"
+              className={styleBtnAddCard}
             >
               {t("buyticket.add_to_cart")}
               <CartIcon />

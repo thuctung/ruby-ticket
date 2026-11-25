@@ -1,11 +1,11 @@
 import api from "@/axios";
-import { COUNT_TICKET_SALE, GET_REFUND_SUMMARY_AFF } from "@/commons/apiURL";
+import { COUNT_TICKET_SALE, GET_AFFILATE_HISTORY, GET_REFUND_SUMMARY_AFF } from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { CommonType, SearchTableType, SearchTicketSale, SearchTicketSalePayload } from "@/types";
+import { CommonType, SearchTableType, SearchTicketSale } from "@/types";
 import dayjs from "dayjs";
 import { get } from "lodash";
-import { CountTicketSaleParamType, CountTicketType } from "./type";
+import { AffilateReportType, CountTicketSaleParamType, CountTicketType } from "./type";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 
@@ -33,7 +33,7 @@ export const countTicketSale = async (
     ]);
     const ticketSale = get(resSale, ["data", "data", 0]);
     const ticketRefund = get(resRefund, ["data", "data", 0]);
-    
+
     if (ticketSale || ticketRefund) {
       const result: CountTicketType = {
         ticketSale: ticketSale?.total_tickets || 0,
@@ -45,6 +45,38 @@ export const countTicketSale = async (
     }
 
     return null;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getTicketSaleAffilate = async (params: SearchTableType<SearchTicketSale>) => {
+  try {
+    setGlobalLoading(true);
+    const { currentPage, searchValue } = params;
+    const { from, to, email, status, siteCode, third_party_number } = searchValue;
+    const dateFrom = dayjsEx(from, BASIC_DATE_FORMAT);
+    const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
+
+    const body: AffilateReportType = {
+      currentPage,
+      siteCode: siteCode === "all" ? "" : siteCode,
+      from: dayjs(dateFrom).format(SERVER_DATE_FORMAT),
+      to: dayjs(dateTo).format(SERVER_DATE_FORMAT),
+      email,
+      status,
+      third_party_number,
+    };
+
+    const response = await api.post(GET_AFFILATE_HISTORY, {
+      currentPage,
+      searchValue: body,
+    });
+
+    const data = get(response, "data") || [];
+    return data;
   } catch (error) {
     setToastMessage("Có lỗi xảy ra");
   } finally {

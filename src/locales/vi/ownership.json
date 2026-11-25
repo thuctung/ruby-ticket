@@ -11,7 +11,7 @@
         "Tên đơn vị: CÔNG TY CỔ PHẦN ĐÀ NẴNG TOURIST",
         "Tên thương hiệu: {{brand}}",
         "Mã số thuế: {{taxCode}}",
-        "Địa chỉ đăng ký kinh doanh: 04 Hoàng Văn Thải, Phường Hoà Minh, Quận Liên Chiều, Thành phố Đà Nẵng, Việt Nam",
+        "Địa chỉ đăng ký kinh doanh: 72 Hoàng Văn Thái, Hòa Khánh, Đà Nẵng , Việt Nam",
         "Người đại diện: {{personHost}}",
         "Chức vụ: Giám đốc"
       ]
@@ -32,7 +32,7 @@
       "bullets": [
         "Hotline: {{phone}}",
         "Email: {{email}}",
-        "Địa chỉ văn phòng: 04 Hoàng Văn Thải, Phường Hoà Minh, Quận Liên Chiều, Thành phố Đà Nẵng, Việt Nam"
+        "Địa chỉ văn phòng: 72 Hoàng Văn Thái, Hòa Khánh, Đà Nẵng , Việt Nam"
       ]
     },
     {

@@ -62,7 +62,7 @@
     }
   ],
   "footer": {
-    "brand": "Moon Prince",
+    "brand": "Ruyby Travel",
     "description": "Hệ thống phân phối và bán vé điện tử khu vui chơi du lịch hàng đầu.",
     "policies_title": "Chính sách & điều khoản",
     "customer_support": "Hỗ trợ khách hàng",
@@ -74,7 +74,25 @@
     "complaints": "Phương thức tiếp nhận và giải quyết phản ánh, yêu cầu, khiếu nại",
     "support": "Hình thức hỗ trợ trực tuyến",
     "ownership": "Thông tin chủ sở hữu",
-    "copyright": "© 2026 Moon Prince. All rights reserved.",
+    "copyright": "© 2026 Ruyby Travel. All rights reserved.",
     "tagline": "Khám phá hành trình · Lưu giữ trải nghiệm"
-  }
+  },
+  "policy": {
+    "support_title": "Hỗ trợ trực tuyến",
+    "support_description": "Ruby Travel luôn sẵn sàng hỗ trợ",
+    "policy_title": "Chính sách & Điều khoản",
+    "policy_description": "Các thông tin và quy định áp dụng khi khách hàng tìm kiếm, đặt mua và sử dụng vé du lịch tại Ruby Travel. Vui lòng đọc kỹ trước khi thực hiện giao dịch.",
+    "order_support_title": "Cần hỗ trợ đơn hàng?",
+    "order_support_description": "Chuẩn bị mã đơn hàng và thông tin đặt vé để Ruby Travel hỗ trợ nhanh hơn.",
+    "view_support_guide": "Xem cách gửi yêu cầu"
+  },
+  "company_name": "Tên đơn vị",
+  "brand": "Thương hiệu",
+  "tax_code": "Mã số thuế",
+  "representative": "Người đại diện",
+  "position": "Chức vụ",
+  "director": "Giám Đốc",
+  "view_on_map": "   Xem trên bản đồ",
+  "business_address": "Địa chỉ đăng ký kinh doanh",
+  "address": "72 Hoàng Văn Thái, Hòa Khánh, Đà Nẵng, Việt Nam"
 }

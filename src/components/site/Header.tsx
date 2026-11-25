@@ -83,7 +83,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/90 backdrop-blur-md">
         <div className=" flex  items-center justify-between px-4 py-3 md:px-6">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative transition-transform group-hover:scale-105">
@@ -99,9 +99,6 @@ export default function Header() {
             </div>
             <div className="hidden md:block leading-tight">
               <div className="font-bold text-lg  text-red-500">Ruby Travel</div>
-              <div className="hidden text-[10px] font-bold text-blue-600 uppercase tracking-widest sm:block">
-                Đà Nẵng
-              </div>
             </div>
           </Link>
 

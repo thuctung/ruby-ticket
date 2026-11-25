@@ -101,10 +101,8 @@ export default async function Footer({ lng }: { lng: string }) {
         </div>
 
         <div className="mt-10 border-t border-white/15 pt-6 md:mt-12">
-          <div className="flex flex-col items-center justify-between gap-3 text-center text-xs text-emerald-50/55 sm:flex-row sm:text-left">
+          <div className="flex flex-col items-center justify-center gap-3 text-center text-xs text-emerald-50/55 sm:flex-row sm:text-left">
             <p>{t("homepage.footer.copyright")}</p>
-
-            <p className="text-emerald-50/45">{t("homepage.footer.tagline")}</p>
           </div>
         </div>
       </div>

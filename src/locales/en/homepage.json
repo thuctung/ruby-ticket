@@ -62,7 +62,7 @@
     }
   ],
   "footer": {
-    "brand": "Moon Prince",
+    "brand": "Ruyby Travel",
     "description": "A leading distribution and e-ticketing platform for tourist attractions and entertainment destinations.",
     "policies_title": "Policies & Terms",
     "customer_support": "Customer Support",
@@ -75,7 +75,25 @@
     "support": "Online Support",
     "ownership": "Owner Information",
     "owner_info": "Owner Information",
-    "copyright": "© 2026 Moon Prince. All rights reserved.",
+    "copyright": "© 2026 Ruyby Travel. All rights reserved.",
     "tagline": "Discover the journey · Keep the memories"
-  }
+  },
+  "policy": {
+    "support_title": "Online Support",
+    "support_description": "Ruby Travel is always ready to help",
+    "policy_title": "Policies & Terms",
+    "policy_description": "Information and regulations applicable when customers search for, purchase, and use travel tickets through Ruby Travel. Please read carefully before making a transaction.",
+    "order_support_title": "Need help with your order?",
+    "order_support_description": "Have your order code and booking details ready so Ruby Travel can assist you faster.",
+    "view_support_guide": "View how to submit a request"
+  },
+  "company_name": "Company Name",
+  "brand": "Brand",
+  "tax_code": "Tax Identification Number",
+  "representative": "Legal Representative",
+  "position": "Position",
+  "director": "Director",
+  "view_on_map": "View on map",
+  "business_address": "Registered Business Address",
+  "address": "72 Hoang Van Thai, Hoa Khanh, Da Nang, Vietnam"
 }

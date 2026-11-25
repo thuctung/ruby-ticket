@@ -13,13 +13,13 @@ export const sv_Login = async ({ email, password }: LoginParamType) => {
     const supabase = createSupabaseBrowserClient();
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
-      setErrorMessage(error.message);
+      setErrorMessage("Tài khoản hoặc mật khẩu không đúng");
       return;
     }
     if (data.user) {
       const { profile, error: profileError } = await sv_getCurrentProfile(data.user.id);
       if (profileError) {
-        setErrorMessage(profileError.message);
+        setErrorMessage("profileError.message");
         return;
       }
       if (profile.status !== STATUS_COMMON_TYPE.APPROVED) {
@@ -27,7 +27,9 @@ export const sv_Login = async ({ email, password }: LoginParamType) => {
         return;
       }
       setProfile(profile);
+      return profile;
     }
+    return;
   } finally {
     setLoading(false);
   }

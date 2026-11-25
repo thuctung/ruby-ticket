@@ -3,7 +3,7 @@ import { randomBytes } from "node:crypto";
 
 import { buildOnePayUrl, getOnePayConfig } from "@/lib/onepay";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { ROLES, STATUS_COMMON_TYPE } from "@/commons/constant";
+import { DB_TABLE_NAME, ROLES, STATUS_COMMON_TYPE } from "@/commons/constant";
 
 export const runtime = "nodejs";
 
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     // 1. Find existing customer order
     const { data: order, error: orderError } = await supabaseAdmin
-      .from("orders")
+      .from(DB_TABLE_NAME.ORDERS)
       .select(
         `
           id,
@@ -83,18 +83,20 @@ export async function POST(request: NextRequest) {
     // 5. Save payment attempt
     const amountVpc = amount * 100;
 
-    // const { error: insertError } = await supabaseAdmin.from("onepay_transactions").insert({
-    //   order_id: order.id,
-    //   order_code: order.order_code,
-    //   merch_txn_ref: merchTxnRef,
-    //   amount_vpc: amountVpc,
-    //   currency: "VND",
-    //   status: "pending",
-    // });
+    const { error: insertError } = await supabaseAdmin
+      .from(DB_TABLE_NAME.ONEPAY_TRANSACTION)
+      .insert({
+        order_id: order.id,
+        order_code: order.order_code,
+        merch_txn_ref: merchTxnRef,
+        amount_vpc: amountVpc,
+        currency: "VND",
+        status: STATUS_COMMON_TYPE.PENDING,
+      });
 
-    // if (insertError) {
-    //   throw insertError;
-    // }
+    if (insertError) {
+      throw insertError;
+    }
 
     // 6. Build OnePay request
     const config = getOnePayConfig();

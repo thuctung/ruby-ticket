@@ -21,7 +21,7 @@ export const getOrderItem = async (orderCode: string) => {
 export const claimOrder = async (orderCode: string) => {
   try {
     const { data }: any = await api.post(CUSTOMER_CLAIM_ORDER, { orderCode });
-    return get(data, "data");
+    return data;
   } catch (e) {
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
   }

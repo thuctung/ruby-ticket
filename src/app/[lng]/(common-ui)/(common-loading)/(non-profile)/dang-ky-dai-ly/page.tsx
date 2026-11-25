@@ -116,125 +116,172 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="flex flex-col bg-background text-foreground">
-      <div className="mx-auto w-full max-w-2xl flex-1 p-6">
-        <Card className="rounded-2xl">
-          <CardContent className="space-y-5">
-            <div className="text-center mb-7">
-              <h1 className="text-2xl font-bold text-gray-900">Đăng ký cộng tác viên</h1>
+    <main className="bg-[#FDF4F6] text-[#2B0A12]">
+      <div className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+        <div className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:gap-10">
+          {/* ===== Trái: giới thiệu, đứng yên khi cuộn form ===== */}
+          <aside className="relative overflow-hidden rounded-3xl bg-[#5C0A1B] p-7 text-white sm:p-9 lg:sticky lg:top-8">
+            <GemFacets className="pointer-events-none absolute -bottom-16 -right-14 h-64 w-64 text-[#9B1030]" />
+            <div className="relative">
+              <span className="block h-1 w-12 rounded-full bg-[#F3DDB0]" aria-hidden="true" />
+              <h1 className="mt-6 text-3xl font-semibold leading-tight tracking-tight">
+                Đăng ký cộng tác viên
+              </h1>
+              <p className="mt-4 text-sm leading-7 text-white/75">
+                Trở thành cộng tác viên của Ruby Travel để nhận chính sách ưu đãi hấp dẫn, xuất vé
+                QR tức thì và quản lý đơn hàng gọn gàng.
+              </p>
             </div>
+          </aside>
 
-            <Separator />
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="fullName">Họ và tên</Label>
-                <input
-                  type="text"
-                  name="fullName"
+          {/* ===== Phải: biểu mẫu ===== */}
+          <section className="rounded-3xl border border-[#F0CBD3] bg-white p-6 sm:p-9">
+            <fieldset className="space-y-4">
+              <legend className="mb-1 text-lg font-semibold">Thông tin liên hệ</legend>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <Field
+                  id="fullName"
+                  label="Họ và tên"
                   value={values.fullName}
-                  onChange={(e) => setField("fullName", e.target.value)}
+                  onChange={(v) => setField("fullName", v)}
                   placeholder="Nguyễn Văn A"
-                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
+                  error={errors.fullName}
+                  className="md:col-span-2"
                 />
-                {errors.fullName && <p className="text-sm text-destructive">{errors.fullName}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phone">Số điện thoại</Label>
-                <input
-                  type="tel"
+                <Field
                   id="phone"
+                  type="tel"
+                  label="Số điện thoại"
                   value={values.phone}
-                  onChange={(e) => setField("phone", e.target.value)}
+                  onChange={(v) => setField("phone", v)}
                   placeholder="09xxxxxxxx"
-                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
+                  error={errors.phone}
                 />
-                {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <input
+                <Field
+                  id="email"
                   type="email"
-                  name="email"
+                  label="Email"
                   value={values.email}
-                  onChange={(e) => setField("email", e.target.value)}
+                  onChange={(v) => setField("email", v)}
                   placeholder="email@domain.com"
-                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
+                  error={errors.email}
                 />
-                {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
-              </div>
-
-              <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="username">Username (tuỳ chọn)</Label>
-                <input
-                  type="text"
-                  name="username"
-                  value={values.username ?? ""}
-                  onChange={(e) => setField("username", e.target.value)}
-                  placeholder="vd: tung.nguyen"
-                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
-                />
-                {errors.username && <p className="text-sm text-destructive">{errors.username}</p>}
-              </div>
-
-              <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="address">Địa chỉ</Label>
-                <input
-                  type="text"
-                  name="address"
+                <Field
+                  id="address"
+                  label="Địa chỉ"
                   value={values.address}
-                  onChange={(e) => setField("address", e.target.value)}
+                  onChange={(v) => setField("address", v)}
                   placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"
-                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
+                  error={errors.address}
+                  className="md:col-span-2"
                 />
-                {errors.address && <p className="text-sm text-destructive">{errors.address}</p>}
               </div>
+            </fieldset>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Mật khẩu</Label>
-                <input
+            <fieldset className="mt-8 space-y-4 border-t border-dashed border-[#F0CBD3] pt-8">
+              <legend className="mb-1 text-lg font-semibold">Tài khoản đăng nhập</legend>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <Field
+                  id="username"
+                  label="Username (tuỳ chọn)"
+                  value={values.username ?? ""}
+                  onChange={(v) => setField("username", v)}
+                  placeholder="vd: tung.nguyen"
+                  error={errors.username}
+                  className="md:col-span-2"
+                />
+                <Field
                   id="password"
                   type="password"
+                  label="Mật khẩu"
                   value={values.password}
-                  onChange={(e) => setField("password", e.target.value)}
+                  onChange={(v) => setField("password", v)}
                   placeholder="••••••••"
-                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
+                  error={errors.password}
                 />
-                {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="passwordConfirm">Nhập lại mật khẩu</Label>
-                <input
+                <Field
                   id="passwordConfirm"
                   type="password"
+                  label="Nhập lại mật khẩu"
                   value={values.passwordConfirm}
-                  onChange={(e) => setField("passwordConfirm", e.target.value)}
+                  onChange={(v) => setField("passwordConfirm", v)}
                   placeholder="••••••••"
-                  className="w-full bg-[#f0f4fb] rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-400 transition"
+                  error={errors.passwordConfirm}
                 />
-                {errors.passwordConfirm && (
-                  <p className="text-sm text-destructive">{errors.passwordConfirm}</p>
-                )}
               </div>
-            </div>
+            </fieldset>
 
-            {error ? <p className="text-sm text-destructive">{error}</p> : null}
+            {error ? <p className="mt-6 text-sm text-destructive">{error}</p> : null}
+
             <button
               type="submit"
               disabled={submitting}
               onClick={submit}
-              className="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold rounded-xl py-3 mt-2 transition-colors duration-150 shadow-md shadow-blue-200"
+              className="mt-6 w-full rounded-full bg-[#9B1030] py-3.5 font-semibold text-white transition-colors hover:bg-[#7E0C27] active:bg-[#5C0A1B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9B1030] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {submitting ? "Đang gửi..." : "Gửi đăng ký"}
             </button>
 
-            {errors.form && <p className="text-sm text-destructive">{errors.form}</p>}
-          </CardContent>
-        </Card>
+            {errors.form && <p className="mt-3 text-sm text-destructive">{errors.form}</p>}
+          </section>
+        </div>
       </div>
     </main>
+  );
+}
+
+const inputClass =
+  "w-full rounded-xl border border-[#F0CBD3] bg-[#FDF4F6] px-4 py-3 text-sm text-[#2B0A12] placeholder:text-[#B58A95] outline-none transition focus:border-[#9B1030] focus:ring-2 focus:ring-[#9B1030]/25 aria-[invalid=true]:border-destructive";
+
+function Field({
+  id,
+  label,
+  value,
+  onChange,
+  placeholder,
+  error,
+  type = "text",
+  className = "",
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  error?: string;
+  type?: string;
+  className?: string;
+}) {
+  return (
+    <div className={`space-y-2 ${className}`}>
+      <Label htmlFor={id}>{label}</Label>
+      <input
+        id={id}
+        name={id}
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
+        className={inputClass}
+      />
+      {error && (
+        <p id={`${id}-error`} className="text-sm text-destructive">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/** Hoạ tiết các mặt cắt viên ngọc, trang trí cho panel ruby. */
+function GemFacets({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 200 200" className={className} fill="currentColor">
+      <path d="M60 20h80l40 50-80 110L20 70z" opacity="0.55" />
+      <path d="M60 20 100 70 140 20z" opacity="0.5" />
+      <path d="M20 70h160L100 180z" opacity="0.35" />
+    </svg>
   );
 }
