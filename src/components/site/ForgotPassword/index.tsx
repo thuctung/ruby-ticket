@@ -65,7 +65,7 @@ export default function ForgotPassword({
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-blue-500/30 transition-all active:scale-95 cursor-pointer"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#9B1030] text-sm font-semibold text-white transition-colors hover:bg-[#7E0C27] active:bg-[#5C0A1B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9B1030] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {loading ? "Đang gửi..." : "Gửi link khôi phục"}
             </button>

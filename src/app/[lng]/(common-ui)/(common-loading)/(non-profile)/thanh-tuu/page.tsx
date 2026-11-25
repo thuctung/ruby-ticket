@@ -4,7 +4,6 @@ import Image from "next/image";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Award,
   BadgeCheck,
@@ -16,6 +15,7 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
+import { getTranslation } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Thành tựu | Ruby Travel",
@@ -33,213 +33,226 @@ export const metadata: Metadata = {
   ],
 };
 
-const achievements = [
-  {
-    title: "Top 10 doanh số Bà Nà toàn quốc",
-    desc: "Hiệu suất bán hàng ổn định, quy trình xuất vé nhanh và tỉ lệ phản hồi hỗ trợ cao.",
-    icon: Mountain,
-    color: "text-amber-700",
-    bg: "bg-amber-100",
-  },
-  {
-    title: "Đại lý uy tín của Vinpearl",
-    desc: "Nguồn vé rõ ràng, đối soát minh bạch, hỗ trợ đại lý nhanh chóng khi phát sinh.",
-    icon: BadgeCheck,
-    color: "text-blue-700",
-    bg: "bg-blue-100",
-  },
-  {
-    title: "Xuất vé QR tức thì",
-    desc: "Mua xong nhận QR ngay, tiện lợi cho khách lẻ và tối ưu thao tác cho cộng tác viên.",
-    icon: Sparkles,
-    color: "text-emerald-700",
-    bg: "bg-emerald-100",
-  },
-  {
-    title: "Đồng hành cùng cộng tác viên",
-    desc: "Chính sách rõ ràng, công cụ quản lý thuận tiện, hỗ trợ thủ tục nhanh chóng.",
-    icon: Handshake,
-    color: "text-violet-700",
-    bg: "bg-violet-100",
-  },
-] as const;
+const focusRing =
+  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F3DDB0]";
 
-const reasons = [
-  {
-    title: "Giá tốt – nguồn vé uy tín",
-    desc: "Giá cạnh tranh theo từng đối tượng, nguồn vé minh bạch.",
-    icon: Award,
-  },
-  {
-    title: "Thao tác đơn giản",
-    desc: "Chọn điểm đến, chọn ngày, nhập số lượng, thanh toán và nhận vé ngay.",
-    icon: TrendingUp,
-  },
-  {
-    title: "Hỗ trợ nhanh",
-    desc: "Đội ngũ hỗ trợ phản hồi nhanh, hướng dẫn rõ ràng.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Cơ hội kiếm thêm thu nhập",
-    desc: "Trở thành cộng tác viên/đại lý để nhận chính sách ưu đãi hấp dẫn.",
-    icon: Users,
-  },
-] as const;
+export default async function ThanhTuuPage({ params }: { params: Promise<{ lng: string }> }) {
+  const { lng } = await params;
+  const { t } = await getTranslation(lng);
 
-export default function ThanhTuuPage() {
+  const achievements = [
+    {
+      title: "trophy.achievement_bana_title",
+      desc: "trophy.achievement_bana_description",
+      icon: Mountain,
+    },
+    {
+      title: "trophy.achievement_vinpearl_title",
+      desc: "trophy.achievement_vinpearl_description",
+      icon: BadgeCheck,
+    },
+    {
+      title: "trophy.achievement_qr_title",
+      desc: "trophy.achievement_qr_description",
+      icon: Sparkles,
+    },
+    {
+      title: "trophy.achievement_affiliate_title",
+      desc: "trophy.achievement_affiliate_description",
+      icon: Handshake,
+    },
+  ] as const;
+
+  const reasons = [
+    {
+      title: "trophy.competitive_prices_title",
+      desc: "trophy.competitive_prices_description",
+      icon: Award,
+    },
+    {
+      title: "trophy.easy_process_title",
+      desc: "trophy.easy_process_description",
+      icon: TrendingUp,
+    },
+    {
+      title: "trophy.fast_support_title",
+      desc: "trophy.fast_support_description",
+      icon: ShieldCheck,
+    },
+    {
+      title: "trophy.extra_income_title",
+      desc: "trophy.extra_income_description",
+      icon: Users,
+    },
+  ] as const;
+
   return (
-    <main className="min-h-screen bg-background text-slate-900">
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/70 to-background">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-gradient-to-br from-blue-200/70 via-violet-200/60 to-pink-200/60 blur-3xl" />
-          <div className="absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full bg-gradient-to-br from-emerald-200/60 via-cyan-200/50 to-blue-200/60 blur-3xl" />
-        </div>
+    <main className="min-h-screen bg-[#FDF4F6] text-[#2B0A12]">
+      {/* ===== Hero: nền ruby đậm, bên phải là khối nổi bật Top 10 ===== */}
+      <section className="relative overflow-hidden rounded-b-[2.5rem] bg-[#5C0A1B] text-white">
+        <GemFacets className="pointer-events-none absolute -bottom-24 -right-16 h-[420px] w-[420px] text-[#9B1030]" />
 
-        <div className="mx-auto max-w-6xl px-6 py-14 md:py-20">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
+        <div className="relative mx-auto max-w-6xl px-6 py-14 md:py-20">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-center">
             <div className="space-y-6">
-              <Badge className="bg-white/80 text-slate-700 hover:bg-white border border-slate-200 text-[red] rounded-full px-4 py-1.5 shadow-sm">
+              <Badge className="rounded-full border border-[#F3DDB0]/40 bg-transparent px-4 py-1.5 text-[#F3DDB0] shadow-none hover:bg-transparent">
                 Ruby Travel • Đà Nẵng
               </Badge>
 
-              <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl">
-                Thành tựu tạo niềm tin,
-                <span className="block bg-gradient-to-r from-blue-700 via-violet-700 to-pink-700 bg-clip-text text-transparent">
-                  trải nghiệm tạo khác biệt
-                </span>
+              <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+                {t("trophy.achievement_title")}
               </h1>
 
-              <p className="text-base leading-relaxed text-slate-600 md:text-lg">
-                Ruby Travel tự hào nằm trong{" "}
-                <span className="font-bold text-slate-900">Top 10 doanh số Bà Nà toàn quốc</span> và
-                là <span className="font-bold text-slate-900">đại lý uy tín của Vinpearl</span>.
-                Chúng tôi tối ưu quy trình để khách hàng đặt vé nhanh, nhận QR tức thì; cộng tác
-                viên bán dễ, quản lý gọn.
+              <p className="max-w-xl text-base leading-relaxed text-white/75 md:text-lg">
+                {t("trophy.achievement_description")}
               </p>
 
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Button
                   size="lg"
-                  className="h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 px-6 shadow-lg shadow-blue-200"
+                  className={`h-12 rounded-full bg-[#F3DDB0] px-6 font-semibold text-[#5C0A1B] shadow-none hover:bg-[#EBCF96] ${focusRing}`}
                   asChild
                 >
                   <Link href="/mua-ve-tham-quan" className="inline-flex items-center gap-2">
-                    Đặt vé ngay
-                    <ChevronRight className="h-4 w-4" />
+                    {t("trophy.book_now")}
+                    <ChevronRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="h-12 rounded-2xl border-slate-200 bg-white hover:bg-slate-50 text-slate-900 px-6 shadow-sm"
+                  className={`h-12 rounded-full border-[#F3DDB0]/50 bg-transparent px-6 text-white shadow-none hover:bg-white/10 hover:text-white ${focusRing}`}
                   asChild
                 >
                   <Link href="/dang-ky-dai-ly" className="inline-flex items-center gap-2">
-                    Trở thành cộng tác viên
-                    <ChevronRight className="h-4 w-4" />
+                    {t("trophy.become_affiliate")}
+                    <ChevronRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="rounded-[2.5rem] border border-slate-200 bg-white/80 p-6 shadow-2xl shadow-slate-200">
-                <div className="flex items-center gap-3">
-                  <div className="relative h-12 w-12 rounded-2xl bg-white p-2 shadow-sm">
-                    <Image src="/logo.png" alt="Ruby Travel" fill className="object-contain" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-extrabold text-slate-900">Ruby Travel</div>
-                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">
-                      Uy tín • Nhanh • Tiện lợi
-                    </div>
-                  </div>
+            <div className="rounded-3xl border border-[#F3DDB0]/30 bg-white/5 p-6 sm:p-8">
+              <div className="flex items-center gap-3">
+                <div className="relative h-12 w-12 shrink-0 rounded-2xl bg-white p-2">
+                  <Image src="/logo.png" alt="Ruby Travel" fill className="object-contain p-1" />
                 </div>
+                <div>
+                  <p className="font-semibold">Ruby Travel</p>
+                  <p className="text-sm text-white/70"> {t("trophy.trust_fast_convenient")}</p>
+                </div>
+              </div>
 
-                <div className="mt-6 grid grid-cols-2 gap-4">
-                  {achievements.slice(0, 4).map((x) => (
-                    <div
-                      key={x.title}
-                      className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
-                    >
-                      <div
-                        className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl ${x.bg} ${x.color}`}
-                      >
-                        <x.icon className="h-6 w-6" />
-                      </div>
-                      <div className="text-sm font-extrabold text-slate-900">{x.title}</div>
-                      <div className="mt-1 text-xs text-slate-600 leading-relaxed">{x.desc}</div>
-                    </div>
-                  ))}
-                </div>
+              <p className="mt-8 text-6xl font-bold leading-none text-[#F3DDB0] sm:text-7xl">
+                {t("trophy.top_10")}
+              </p>
+              <p className="mt-3 text-white/80"> {t("trophy.top_10_description")}</p>
+
+              <div className="mt-6 flex items-center gap-3 border-t border-dashed border-[#F3DDB0]/40 pt-5">
+                <BadgeCheck className="h-5 w-5 shrink-0 text-[#F3DDB0]" aria-hidden="true" />
+                <p className="text-sm font-medium">{t("trophy.vinpearl_trusted_agent")}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-            {reasons.map((x) => (
-              <Card
-                key={x.title}
-                className="rounded-3xl border-slate-200 bg-white shadow-md hover:shadow-xl transition-shadow"
-              >
-                <CardHeader>
-                  <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
-                    <x.icon className="h-6 w-6" />
-                  </div>
-                  <CardTitle className="text-base font-extrabold">{x.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm text-slate-600 leading-relaxed">
-                  {x.desc}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      {/* ===== Thành tựu: lưới 2x2 liền khối, ngăn bằng đường kẻ mảnh ===== */}
+      <section
+        className="mx-auto max-w-6xl px-6 py-14 md:py-16"
+        aria-labelledby="achievements-title"
+      >
+        <h2 id="achievements-title" className="text-2xl font-semibold md:text-3xl">
+          {t("trophy.outstanding_achievements")}
+        </h2>
 
-          <div className="mt-12 rounded-[2.5rem] border border-slate-200 bg-gradient-to-r from-blue-50 via-violet-50 to-pink-50 p-8">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div className="space-y-2">
-                <div className="text-2xl font-extrabold text-slate-900">
-                  Sẵn sàng trải nghiệm?{" "}
-                  <ChevronRight className="inline-block h-5 w-5 align-[-2px] text-blue-600 mx-1" />
-                  đặt vé
-                </div>
-                <div className="text-sm text-slate-600">
-                  Chọn điểm đến, chọn ngày và nhận QR tức thì. Hoặc đăng ký làm cộng tác viên để bắt
-                  đầu kiếm thêm thu nhập.
-                </div>
+        <ul className="mt-6 grid gap-px overflow-hidden rounded-3xl border border-[#F0CBD3] bg-[#F0CBD3] sm:grid-cols-2">
+          {achievements.map((x) => (
+            <li key={x.title} className="flex gap-4 bg-white p-6 sm:p-8">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#9B1030] text-white">
+                <x.icon className="h-6 w-6" aria-hidden="true" />
+              </span>
+              <div>
+                <h3 className="text-lg font-semibold leading-snug">{t(x.title)}</h3>
+                <p className="mt-1.5 text-sm leading-6 text-[#7A4753]">{t(x.desc)}</p>
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* ===== Lý do chọn + lời kêu gọi hành động ===== */}
+      <section className="mx-auto max-w-6xl px-6 pb-16 md:pb-20">
+        <div className="grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)] lg:items-start lg:gap-10">
+          <aside className="relative order-2 overflow-hidden rounded-3xl bg-[#5C0A1B] p-7 text-white sm:p-9 lg:sticky lg:top-8 lg:order-1">
+            <GemFacets className="pointer-events-none absolute -bottom-16 -right-14 h-64 w-64 text-[#9B1030]" />
+            <div className="relative">
+              <span className="block h-1 w-12 rounded-full bg-[#F3DDB0]" aria-hidden="true" />
+              <h2 className="mt-6 text-2xl font-semibold leading-tight">
+                {t("trophy.ready_to_experience")}
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-white/75">
+                {t("trophy.ready_to_experience_description")}
+              </p>
+
+              <div className="mt-7 flex flex-col gap-3">
                 <Button
                   size="lg"
-                  className="h-12 rounded-2xl bg-blue-600 text-white hover:bg-blue-700 px-6 shadow-lg shadow-blue-200"
+                  className={`h-12 rounded-full bg-[#F3DDB0] px-6 font-semibold text-[#5C0A1B] shadow-none hover:bg-[#EBCF96] ${focusRing}`}
                   asChild
                 >
                   <Link href="/mua-ve-tham-quan" className="inline-flex items-center gap-2">
-                    Mua vé ngay
-                    <ChevronRight className="h-4 w-4" />
+                    {t("trophy.book_now")}
+                    <ChevronRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="h-12 rounded-2xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50 px-6 shadow-sm"
+                  className={`h-12 rounded-full border-[#F3DDB0]/50 bg-transparent px-6 text-white shadow-none hover:bg-white/10 hover:text-white ${focusRing}`}
                   asChild
                 >
                   <Link href="/dang-ky-dai-ly" className="inline-flex items-center gap-2">
-                    Đăng ký đại lý
-                    <ChevronRight className="h-4 w-4" />
+                    {t("trophy.become_affiliate")}
+                    <ChevronRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
               </div>
             </div>
+          </aside>
+
+          <div className="order-1 min-w-0 lg:order-2">
+            <h2 className="mb-4 text-2xl font-semibold md:text-3xl">
+              {" "}
+              {t("trophy.why_choose_title")}
+            </h2>
+            <ul className="divide-y divide-[#F7DDE3] overflow-hidden rounded-3xl border border-[#F0CBD3] bg-white">
+              {reasons.map((x) => (
+                <li key={x.title} className="flex items-start gap-4 p-5 sm:p-7">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F7DDE3] text-[#9B1030]">
+                    <x.icon className="h-6 w-6" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3 className="text-lg font-semibold leading-snug">{t(x.title)}</h3>
+                    <p className="mt-1.5 text-sm leading-6 text-[#7A4753]">{t(x.desc)}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
     </main>
+  );
+}
+
+/** Hoạ tiết các mặt cắt viên ngọc, trang trí cho các khối ruby. */
+function GemFacets({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 200 200" className={className} fill="currentColor">
+      <path d="M60 20h80l40 50-80 110L20 70z" opacity="0.55" />
+      <path d="M60 20 100 70 140 20z" opacity="0.5" />
+      <path d="M20 70h160L100 180z" opacity="0.35" />
+    </svg>
   );
 }

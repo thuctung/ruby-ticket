@@ -190,7 +190,7 @@ export default function BuyTicketController() {
 
   return (
     <main className="min-h-screen flex flex-col bg-background text-foreground">
-      <div className="min-h-screen bg-[#008cff14]">
+      <div className="min-h-screen  bg-[#FDF4F6]">
         <Hero />
         <div className=" mx-auto max-w-7xl  sm:px-6 lg:px-8">
           <SearchBar

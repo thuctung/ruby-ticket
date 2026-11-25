@@ -234,6 +234,7 @@ export default function CartController() {
           break;
         }
         case "card": {
+          localStorage.setItem(PRODUCT_SELECTED_LOCALE, JSON.stringify(products));
           handleOnePay(orderCode, paymentCode);
           break;
         }
@@ -370,72 +371,61 @@ export default function CartController() {
       : `${t("cart.payment")} ${itemsCart.length > 0 ? formatVND(totalPayment) : ""}`;
 
   return (
-    <div className="min-h-screen bg-[#f3f6f4]">
-      <section className="relative overflow-hidden rounded-b-[2rem] bg-gradient-to-br from-[#b3122b] to-[#6b0f1f] pb-24 pt-8 shadow-lg shadow-[#6b0f1f]/30 sm:pb-28 md:pb-32 md:pt-14">
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity"
-          style={{ backgroundImage: "url(/bana/cauvang.webp)" }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-r from-[#5a0a18]/95 via-[#9b1328]/80 to-[#b3122b]/40"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(255,170,150,0.32),transparent_45%)]"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/15 to-transparent"
-        />
+    <div className="min-h-screen bg-[#FDF4F6] text-[#2B0A12]">
+      <div className="mx-auto max-w-6xl px-4 pb-24 pt-8 md:px-6 md:pt-12">
+        <header className="relative overflow-hidden rounded-3xl bg-[#5C0A1B] px-6 py-6 text-white sm:px-8 sm:py-7">
+          <GemFacets className="pointer-events-none absolute -bottom-14 -right-10 h-48 w-48 text-[#9B1030]" />
 
-        <RouteDecor className="pointer-events-none absolute right-0 top-0 h-full w-[300px] opacity-30 sm:w-[460px] sm:opacity-100" />
+          <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F3DDB0] text-[#5C0A1B] md:h-12 md:w-12">
+                <ShoppingCart size={22} aria-hidden="true" />
+              </span>
+              <h1 className="font-display text-2xl font-extrabold sm:text-3xl md:text-4xl">
+                {t("cart.cart")}
+              </h1>
+            </div>
 
-        <div className="relative mx-auto max-w-6xl px-4 md:px-6">
-          <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white shadow-inner ring-1 ring-white/30 backdrop-blur-sm md:h-12 md:w-12">
-              <ShoppingCart size={22} aria-hidden="true" />
-            </span>
-            <h1 className="font-display text-2xl font-extrabold text-white sm:text-3xl md:text-4xl">
-              {t("cart.cart")}
-            </h1>
+            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-[#F3DDB0]/40 px-4 py-1.5 text-sm text-white/90 md:text-base">
+              <Ticket size={16} className="text-[#F3DDB0]" aria-hidden="true" />
+              {itemsCart.length > 0
+                ? `${itemsCart.length} ${t("cart.tickets_awaiting_payment")}`
+                : t("cart.no_tickets_selected")}
+            </p>
           </div>
+        </header>
 
-          <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm text-white/90 ring-1 ring-white/30 backdrop-blur-sm md:text-base">
-            <Ticket size={16} className="text-[#ffd27a]" aria-hidden="true" />
-            {itemsCart.length > 0
-              ? `${itemsCart.length} ${t("cart.tickets_awaiting_payment")}`
-              : t("cart.no_tickets_selected")}
-          </p>
-        </div>
-      </section>
+        <main className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]  lg:gap-8">
+          <aside className="order-1 space-y-4 lg:sticky lg:top-24 lg:order-2">
+            <PaymentMethods value={payment} onChange={setPayment} order={order} />
+            <button
+              type="button"
+              onClick={handleCheckout}
+              disabled={!canCheckout}
+              className="w-full rounded-full bg-[#9B1030] py-3.5 text-base font-bold text-white transition-colors hover:bg-[#7E0C27] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9B1030] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#9B1030]"
+            >
+              {buttonLabel}
+            </button>
+          </aside>
 
-      <main className="relative z-10 mx-auto -mt-16 max-w-6xl px-4 pb-24 sm:-mt-20 md:-mt-24 md:px-6">
-        <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_380px]">
-          <div className="space-y-4">
+          <div className="order-2 min-w-0 space-y-4 lg:order-1">
             <section aria-label="Vé đã chọn">
               <CartItemList items={itemsCart} />
-              <div className="flex justify-end">
-                <button
-                  onClick={backToBuyTicket}
-                  className="
-                group mt-3 inline-flex items-center gap-1.5
-                rounded-full px-4 py-2
-                bg-gradient-to-r from-teal-600 to-emerald-400
-                text-sm font-semibold text-white
-                shadow-md shadow-emerald-600/25
-                transition-all duration-200
-                hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-600/40 hover:brightness-105
-                active:translate-y-0 active:scale-95
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2"
-                >
-                  <Plus className="h-4 w-4 transition-transform duration-200 group-hover:rotate-90" />
-                  {t("cart.buy_more_tickets")}
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={backToBuyTicket}
+                className="group mt-3 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-[#9B1030]/40 py-3 text-sm font-semibold text-[#9B1030] transition-colors hover:border-[#9B1030] hover:bg-[#F7DDE3]/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9B1030]"
+              >
+                <Plus
+                  className="h-4 w-4 transition-transform duration-200 group-hover:rotate-90"
+                  aria-hidden="true"
+                />
+                {t("cart.buy_more_tickets")}
+              </button>
             </section>
+
             <CustomerForm errors={customerErrors} showAllErrors={submitted} />
+
             <OrderSummary
               subtotal={subTotal}
               discount={0}
@@ -446,20 +436,9 @@ export default function CartController() {
               onRemoveCoupon={removeCoupon}
             />
           </div>
+        </main>
+      </div>
 
-          <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-            <PaymentMethods value={payment} onChange={setPayment} order={order} />
-            <button
-              type="button"
-              onClick={handleCheckout}
-              disabled={!canCheckout}
-              className="w-full rounded-full bg-gradient-to-r from-[#e5252a] to-[#ff6b6b] py-3.5 text-base font-bold text-white  transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
-            >
-              {buttonLabel}
-            </button>
-          </aside>
-        </div>
-      </main>
       {openQR && (
         <BankTransferQR
           dataQR={qrPaymant}
@@ -470,5 +449,15 @@ export default function CartController() {
         />
       )}
     </div>
+  );
+}
+
+function GemFacets({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 200 200" className={className} fill="currentColor">
+      <path d="M60 20h80l40 50-80 110L20 70z" opacity="0.55" />
+      <path d="M60 20 100 70 140 20z" opacity="0.5" />
+      <path d="M20 70h160L100 180z" opacity="0.35" />
+    </svg>
   );
 }

@@ -37,9 +37,10 @@ export const getTicketForCustomer = async ({
       callback();
     }
     route.push(`/order-success/${currentOrderData.thirdPartyNum}`);
+    return true;
   }
+  return false;
 };
-
 export const PRODUCT_SELECTED_LOCALE = "PRODUCT_SELECTED_LOCALE";
 
 export const sendMailTicketInSystem = async (orderData: any, callback: Function) => {

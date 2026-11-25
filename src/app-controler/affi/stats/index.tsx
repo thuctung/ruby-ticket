@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-import { countTicketSale } from "./api";
+import { countTicketSale, getTicketSaleAffilate } from "./api";
 import { AdminReportResponseType, ProfileType, SearchTableType, SearchTicketSale } from "@/types";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { BASIC_DATE_FORMAT, dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
@@ -19,12 +19,9 @@ import { statusClass, StatusData } from "./contants";
 import { getSiteByStatus } from "@/components/GetTicketForm/api";
 import { SiteType } from "@/types/ticket";
 import { df_From, df_To } from "@/app-controler/admin/history/constant";
-import { getTicketSaleAdmin } from "@/app-controler/admin/history/api";
 import { CountTicketType } from "./type";
 import { getSideItem } from "@/commons/constant";
-
 const intForm: SearchTicketSale = {
-  location: "",
   from: df_From,
   to: df_To,
   status: "",
@@ -63,7 +60,7 @@ export default function AffiliateStatsControler() {
 
   const fetchTicketSale = async () => {
     if (!profile.email) return;
-    const data = await getTicketSaleAdmin({
+    const data = await getTicketSaleAffilate({
       ...params,
       searchValue: {
         ...params.searchValue,
@@ -71,7 +68,7 @@ export default function AffiliateStatsControler() {
       },
     });
     if (data) {
-      const { totalPages, listOrder } = data;
+      const { totalPages, data: listOrder } = data;
       setTotalPage(totalPages);
       setOrderList(listOrder);
     }

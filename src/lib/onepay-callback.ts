@@ -1,11 +1,13 @@
 import { verifyOnePayHash } from "@/lib/onepay";
 import { supabaseAdmin } from "./supabase/server";
+import { DB_TABLE_NAME } from "@/commons/constant";
 
 type OnePayResult = {
   success: boolean;
   order_code?: string;
   response_code?: string;
   error?: string;
+  amount?: string;
 };
 
 export async function processOnePayResult(params: Record<string, string>): Promise<OnePayResult> {
@@ -42,7 +44,7 @@ export async function processOnePayResult(params: Record<string, string>): Promi
 
   // 4. Find original payment attempt
   const { data: transaction, error } = await supabaseAdmin
-    .from("onepay_transactions")
+    .from(DB_TABLE_NAME.ONEPAY_TRANSACTION)
     .select(
       `
         id,
@@ -75,20 +77,24 @@ export async function processOnePayResult(params: Record<string, string>): Promi
     return {
       success: true,
       order_code: transaction.order_code,
+      amount,
       response_code: "0",
     };
   }
 
   // 7. Process successful payment
   if (responseCode === "0") {
-    const { data, error: rpcError } = await supabaseAdmin.rpc("onepay_finalize_payment", {
-      p_order_id: transaction.order_id,
-      p_merch_txn_ref: merchTxnRef,
-      p_response_code: responseCode,
-      p_transaction_no: transactionNo,
-      p_amount_vpc: Number(amount),
-      p_payload: params,
-    });
+    const { data, error: rpcError } = await supabaseAdmin.rpc(
+      DB_TABLE_NAME.FUNC_ONEPAY_FINALIZE_PAYMENT,
+      {
+        p_order_id: transaction.order_id,
+        p_merch_txn_ref: merchTxnRef,
+        p_response_code: responseCode,
+        p_transaction_no: transactionNo,
+        p_amount_vpc: Number(amount),
+        p_payload: params,
+      }
+    );
 
     if (rpcError) {
       console.error("[OnePay Finalize Error]", rpcError);
@@ -103,6 +109,7 @@ export async function processOnePayResult(params: Record<string, string>): Promi
       return {
         success: false,
         error: "Payment was not confirmed",
+        amount,
         response_code: responseCode,
       };
     }
@@ -110,6 +117,7 @@ export async function processOnePayResult(params: Record<string, string>): Promi
     return {
       success: true,
       order_code: transaction.order_code,
+      amount,
       response_code: responseCode,
     };
   }
@@ -128,8 +136,6 @@ export async function processOnePayResult(params: Record<string, string>): Promi
     .eq("status", "pending");
 
   if (updateError) {
-    console.error("[OnePay Failed Attempt]", updateError);
-
     return {
       success: false,
       error: "Unable to update transaction",
@@ -139,6 +145,7 @@ export async function processOnePayResult(params: Record<string, string>): Promi
   return {
     success: false,
     order_code: transaction.order_code,
+    amount,
     response_code: responseCode,
   };
 }

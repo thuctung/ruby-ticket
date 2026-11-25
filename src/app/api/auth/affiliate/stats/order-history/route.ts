@@ -6,30 +6,28 @@ import {
   ROLES,
   START_DATE_GMT7,
 } from "@/commons/constant";
-import { SearchTicketSalePayload } from "@/types";
 
 export async function POST(req: Request) {
-  const body: SearchTicketSalePayload = await req.json();
-  const { currentPage, user_id, from, to, status, siteCode } = body;
-
+  const { currentPage, searchValue }: any = await req.json();
+  const { email, status, siteCode, from, to } = searchValue;
   const fromIdx = (currentPage - 1) * LIMIT_TABLE;
   const toIdx = fromIdx + LIMIT_TABLE - 1;
 
   let query = supabaseAdmin
-    .from(DB_TABLE_NAME.ORDERS)
+    .from(DB_TABLE_NAME.VIEW_TICKET_SALE)
     .select("*", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(fromIdx, toIdx);
 
   query = query.eq("payment_method", ROLES.AFFILIATE);
 
-  if (user_id) {
-    query = query.eq("user_id", user_id);
+  if (email) {
+    query = query.eq("user_email", email);
   }
   if (siteCode) {
     query = query.eq("site_code", siteCode);
   }
-
+  console.log("status", status);
   if (status) {
     query = query.eq("status", status);
   }

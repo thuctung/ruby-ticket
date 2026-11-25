@@ -62,7 +62,7 @@
     }
   ],
   "footer": {
-    "brand": "Moon Prince",
+    "brand": "Ruyby Travel",
     "description": "领先的旅游景点及娱乐场所电子门票分销与销售平台。",
     "policies_title": "政策与条款",
     "customer_support": "客户服务",
@@ -75,7 +75,25 @@
     "support": "在线客服支持",
     "ownership": "所有者信息",
     "owner_info": "所有者信息",
-    "copyright": "© 2026 Moon Prince. All rights reserved.",
+    "copyright": "© 2026 Ruyby Travel. All rights reserved.",
     "tagline": "探索旅程 · 珍藏体验"
-  }
+  },
+  "policy": {
+    "support_title": "在线客服",
+    "support_description": "Ruby Travel 随时为您提供帮助",
+    "policy_title": "政策与条款",
+    "policy_description": "本页面介绍客户在 Ruby Travel 搜索、购买和使用旅游门票时适用的信息及规定。请在交易前仔细阅读。",
+    "order_support_title": "需要订单帮助吗？",
+    "order_support_description": "请准备好订单编号和预订信息，以便 Ruby Travel 更快地为您提供帮助。",
+    "view_support_guide": "查看如何提交请求"
+  },
+  "company_name": "单位名称",
+  "brand": "品牌",
+  "tax_code": "税号",
+  "representative": "法定代表人",
+  "position": "职务",
+  "director": "董事",
+  "business_address": "营业注册地址",
+  "address": "越南岘港市和庆坊黄文泰街72号",
+  "view_on_map": "在地图上查看"
 }

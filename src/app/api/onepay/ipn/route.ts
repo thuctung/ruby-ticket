@@ -9,8 +9,6 @@ async function handleIPN(request: NextRequest, params: Record<string, string>) {
   const result = await processOnePayResult(params);
 
   if (!result.success && result.error) {
-    console.error("[OnePay IPN Error]", result.error);
-
     return new NextResponse("responsecode=0&desc=invalid", { status: 400 });
   }
 

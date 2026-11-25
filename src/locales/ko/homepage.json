@@ -62,7 +62,7 @@
     }
   ],
   "footer": {
-    "brand": "Moon Prince",
+    "brand": "Ruyby Travel",
     "description": "관광 명소 및 테마파크를 위한 선도적인 전자 티켓 유통 및 판매 플랫폼입니다.",
     "policies_title": "정책 및 약관",
     "customer_support": "고객 지원",
@@ -75,7 +75,25 @@
     "support": "온라인 고객 지원",
     "ownership": "소유자 정보",
     "owner_info": "사업자 정보",
-    "copyright": "© 2026 Moon Prince. All rights reserved.",
+    "copyright": "© 2026 Ruyby Travel. All rights reserved.",
     "tagline": "여정을 발견하고 · 추억을 간직하세요"
-  }
+  },
+  "policy": {
+    "support_title": "온라인 지원",
+    "support_description": "Ruby Travel은 언제나 고객 지원을 제공합니다",
+    "policy_title": "정책 및 약관",
+    "policy_description": "Ruby Travel에서 여행 티켓을 검색, 구매 및 이용할 때 적용되는 정보와 규정입니다. 거래를 진행하기 전에 자세히 읽어주시기 바랍니다.",
+    "order_support_title": "주문 관련 도움이 필요하신가요?",
+    "order_support_description": "Ruby Travel에서 더 빠르게 지원할 수 있도록 주문 번호와 예약 정보를 준비해 주세요.",
+    "view_support_guide": "문의 접수 방법 보기"
+  },
+  "company_name": "회사명",
+  "brand": "브랜드",
+  "tax_code": "사업자등록번호",
+  "representative": "법정 대표자",
+  "position": "직책",
+  "director": "대표이사",
+  "business_address": "사업자 등록 주소",
+  "address": "베트남 다낭시 호아카인, 호앙반타이 거리 72번지",
+  "view_on_map": "지도에서 보기"
 }

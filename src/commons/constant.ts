@@ -157,6 +157,8 @@ export const DB_TABLE_NAME = {
   EMAIL_QUEUE: "email_queue",
   TICKETS: "tickets",
   AGENT_PRICE_DEFAULT: "dafault_agent_price",
+  FUNC_ONEPAY_FINALIZE_PAYMENT: "onepay_finalize_payment",
+  ONEPAY_TRANSACTION: "onepay_transactions",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -351,17 +353,17 @@ export const generatProductCode = (siteCode: string) => {
 };
 
 export const COMPANY_INFO = {
-  brand: process.env.NEXT_PUBLIC_BRAND_NAME,
-  legalName: process.env.NEXT_PUBLIC_COMPANY_NAME,
-  taxCode: process.env.NEXT_PUBLIC_TAX_CODE,
-  address: process.env.NEXT_PUBLIC_ADDRESS,
-  hotline: process.env.NEXT_PUBLIC_HOTLINE,
-  email: process.env.NEXT_PUBLIC_EMAIL,
-  workingHours: process.env.NEXT_PUBLIC_WORKING_HOUR,
-  zaloUrl: process.env.NEXT_PUBLIC_ZALO_URL,
-  facebookUrl: process.env.NEXT_PUBLIC_FACEBOOK_URL,
-  updatedAt: "15/11/2026",
-  personHost: process.env.NEXT_PUBLIC_PERSON_HOST,
-  personRole: process.env.NEXT_PUBLIC_PERSON_ROLE,
-  domain: process.env.NEXT_PUBLIC_APP_URL,
+  brand: process.env.NEXT_PUBLIC_BRAND_NAME!,
+  legalName: process.env.NEXT_PUBLIC_COMPANY_NAME!,
+  taxCode: process.env.NEXT_PUBLIC_TAX_CODE!,
+  address: process.env.NEXT_PUBLIC_ADDRESS!,
+  hotline: process.env.NEXT_PUBLIC_HOTLINE!,
+  email: process.env.NEXT_PUBLIC_EMAIL!,
+  workingHours: process.env.NEXT_PUBLIC_WORKING_HOUR!,
+  zaloUrl: process.env.NEXT_PUBLIC_ZALO_URL!,
+  facebookUrl: process.env.NEXT_PUBLIC_FACEBOOK_URL!,
+  updatedAt: "25/11/2026"!,
+  personHost: process.env.NEXT_PUBLIC_PERSON_HOST!,
+  personRole: process.env.NEXT_PUBLIC_PERSON_ROLE!,
+  domain: process.env.NEXT_PUBLIC_APP_URL!,
 };

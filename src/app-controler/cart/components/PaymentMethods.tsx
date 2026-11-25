@@ -22,12 +22,6 @@ const METHODS: { id: PaymentMethodId; name: string; desc: string; icon: React.Re
     icon: <QrCode className="h-5 w-5" />,
   },
   {
-    id: "momo",
-    name: "cart.momo_payment",
-    desc: "",
-    icon: <Image src="/icons/momo.webp" alt="momo" width={40} height={40} />,
-  },
-  {
     id: "card",
     name: "cart.credit_debit_card",
     desc: "Visa, Mastercard, JCB",

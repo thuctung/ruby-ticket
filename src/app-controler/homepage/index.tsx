@@ -5,6 +5,7 @@ import { EXPERIENCES } from "./contants";
 import { CollaboratorSection } from "./components/CollaboratorSection";
 import { FaqSection } from "./components/FaqSection";
 import { SiteType } from "@/types/ticket";
+import CompanyOwnerInfo from "./components/CompanyInfo";
 
 const HomePageController = async ({ lng, sites }: { lng: string; sites: SiteType[] }) => {
   const sideCard: any = () => {
@@ -41,6 +42,7 @@ const HomePageController = async ({ lng, sites }: { lng: string; sites: SiteType
       <ExperiencesSection sidseCard={sideCard()} fallbackExperiences={EXPERIENCES} />
       <CollaboratorSection />
       <FaqSection />
+      <CompanyOwnerInfo lng={lng} />
     </div>
   );
 };
