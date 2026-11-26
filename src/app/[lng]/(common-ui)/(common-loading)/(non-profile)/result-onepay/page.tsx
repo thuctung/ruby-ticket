@@ -12,9 +12,9 @@ export default async function PaymentResultPage({
   const { lng } = await params;
   const sp = await searchParams;
 
-  // if (sp.payment !== "success") {
-  //   redirect(`/${lng}/order-failed?reason=${sp.order_code}`);
-  // }
+  if (sp.payment !== "success") {
+    redirect(`/${lng}/order-failed?reason=${sp.order_code}`);
+  }
 
   const orderCode = sp.order_code || "";
   const amount = sp.amount || "";

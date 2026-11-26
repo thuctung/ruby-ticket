@@ -50,3 +50,28 @@ export const mapAgentPriceByProductCode = (listAgentPrice: AgentPriceType[]) => 
 
   return mapAgentPrice;
 };
+
+export const styleBtnAddCard = `flex h-11 min-w-0 flex-1 items-center justify-center gap-2
+  whitespace-nowrap rounded-xl px-4
+  bg-gradient-to-r from-[#ff3b3b] via-[#e5092e] to-[#c90032]
+  text-sm font-bold text-white
+  shadow-md shadow-red-500/25
+  transition-all duration-300
+  hover:brightness-110 hover:shadow-lg hover:shadow-red-500/35
+  active:scale-[0.97]
+  focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300/50
+  disabled:cursor-not-allowed disabled:bg-slate-300
+  disabled:bg-none disabled:shadow-none disabled:active:scale-100`;
+
+export const styleBtnPayment = ` w-full mt-5 rounded-xl
+  bg-gradient-to-r from-[#ff3b3b] via-[#e5092e] to-[#c90032]
+  px-3 py-3 font-semibold text-white
+  shadow-md shadow-red-500/30
+  transition-all duration-300
+  hover:brightness-110 hover:shadow-lg hover:shadow-red-500/40
+  active:scale-[0.98]
+  focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300/60
+  disabled:cursor-not-allowed
+  disabled:from-gray-300 disabled:via-gray-300 disabled:to-gray-300
+  disabled:text-white/80 disabled:shadow-none
+  disabled:hover:brightness-100 disabled:active:scale-100`;

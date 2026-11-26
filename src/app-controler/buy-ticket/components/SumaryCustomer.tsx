@@ -9,6 +9,7 @@ import { ProductInCartType } from "@/types/ticket";
 import { useCartStore } from "@/stores/useCartStore";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "@/lib/i18n/client";
+import { styleBtnPayment } from "../contants";
 
 type OrderSummaryProps = {
   siteName: string;
@@ -120,7 +121,7 @@ export default function SummaryCustomer({ siteName }: OrderSummaryProps) {
           onClick={moveToCartPage}
           disabled={listProduct?.length === 0}
           type="button"
-          className="w-full mt-5 rounded-xl bg-gradient-to-r from-[#ffb12b] to-[#f26b1d] px-3 py-3 font-semibold text-white shadow-md shadow-orange-400/30 transition hover:brightness-105 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60 disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-300 disabled:text-white/80 disabled:shadow-none disabled:hover:brightness-100 disabled:active:scale-100"
+          className={styleBtnPayment}
         >
           {t("buyticket.create_order")}
         </button>
