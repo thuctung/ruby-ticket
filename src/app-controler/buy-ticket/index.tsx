@@ -116,7 +116,6 @@ export default function BuyTicketController() {
       data = await getProductionInSystem(code);
     }
 
-    // Đã có request mới hơn thì bỏ kết quả cũ
     if (reqId !== productReqIdRef.current) return;
     setListProductSun(data || []);
   };
@@ -129,14 +128,12 @@ export default function BuyTicketController() {
   };
 
   const onChangeFormData = (key: keyof FormDataType, value: string) => {
-    // Chỉ xoá giỏ hàng khi đổi site, không xoá khi đổi field khác (vd: ngày)
     if (key === "site_code" && value !== formData.site_code) {
       clearCart();
     }
     setFormData({ ...formData, [key]: value });
   };
 
-  // Chỉ dùng cho nút "Tìm kiếm" (người dùng chủ động)
   const handleSearch = () => {
     fetchProductBySite(formData.site_code);
     clearCart();
@@ -200,7 +197,7 @@ export default function BuyTicketController() {
             onSearch={handleSearch}
           />
           {listProductFilter.length > 0 && (
-            <main className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-black/5 sm:p-8">
+            <main className="mx-auto max-w-7xl mt-10 px-4 pb-16 pt-10 sm:px-6 lg:px-8 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-black/5 sm:p-8">
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px]">
                 <div>
                   <div className="mt-4">

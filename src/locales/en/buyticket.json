@@ -29,5 +29,12 @@
   "select_park": "Select a park",
   "usage_date": "Date of use",
   "search": "Search",
-  "select_correct_usage_date": "Please select the correct date of use."
+  "select_correct_usage_date": "Please select the correct date of use.",
+  "hero_description": "Explore the world of entertainment and travel with a wide range of exciting destinations. Book tickets quickly at great prices and enjoy convenient e-tickets with Ruby Travel.",
+  "good_prices": "Great Prices",
+  "good_prices_description": "Attractive Offers",
+  "fast_booking": "Fast & Easy",
+  "fast_booking_description": "Online Booking",
+  "convenient": "Convenient",
+  "convenient_description": "Receive E-tickets"
 }

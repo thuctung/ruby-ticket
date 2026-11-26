@@ -88,10 +88,10 @@ export function ExperiencesSection({
                     >
                       {item.status ? (
                         <a
-                          href={`/mua-ve-tham-quan?product=${item.code}`}
+                          href={`/mua-ve-tham-quan?site=${item.code}`}
                           className="flex items-center gap-2"
                         >
-                          Mua Ngay
+                          {t("homepage.buyNow")}
                           <ChevronRight className="h-4 w-4" />
                         </a>
                       ) : (
@@ -151,7 +151,7 @@ export function ExperiencesSection({
                       className="rounded-xl bg-slate-900 hover:bg-blue-600 px-6 transition-colors"
                     >
                       <a
-                        href={`/mua-ve-tham-quan?product=${x.key}`}
+                        href={`/mua-ve-tham-quan?site=${x.key}`}
                         className="flex items-center gap-2"
                       >
                         Mua Ngay

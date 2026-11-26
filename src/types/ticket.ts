@@ -15,6 +15,28 @@ export interface SiteType {
   exp?: string;
 }
 
+export interface LocationType {
+  code: string;
+  en?: string;
+  ko?: string;
+  zh?: string;
+  name: string;
+}
+export interface SiteExperienceType {
+  code: string;
+  status: string;
+  name: string;
+  pre_price: number;
+  en?: string;
+  ko?: string;
+  zh?: string;
+  description_vi?: string;
+  description_zh?: string;
+  description_en?: string;
+  description_ko?: string;
+  location?: LocationType;
+}
+
 export type TicketType = {
   id: string;
   ticket_type_code: string;

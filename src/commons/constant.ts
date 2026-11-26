@@ -194,7 +194,7 @@ export const TYPE_TRANSFER = {
 
 export const MENUS = [
   {
-    link: "/#experiences",
+    link: "/experience",
     name: "header.experiences",
     icon: Sparkles,
     iconBg: "bg-violet-50",

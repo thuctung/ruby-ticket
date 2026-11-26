@@ -29,5 +29,12 @@
   "select_park": "选择主题公园",
   "usage_date": "使用日期",
   "search": "搜索",
-  "select_correct_usage_date": "请选择正确的使用日期。"
+  "select_correct_usage_date": "请选择正确的使用日期。",
+  "hero_description": "探索精彩纷呈的娱乐与旅游世界，畅游众多热门目的地。通过 Ruby Travel 快速订票，享受优惠价格，并轻松获取便捷的电子门票。",
+  "good_prices": "优惠价格",
+  "good_prices_description": "超值优惠",
+  "fast_booking": "快速便捷",
+  "fast_booking_description": "在线订票",
+  "convenient": "方便快捷",
+  "convenient_description": "获取电子门票"
 }

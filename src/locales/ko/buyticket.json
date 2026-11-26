@@ -29,5 +29,12 @@
   "select_park": "테마파크 선택",
   "usage_date": "이용 날짜",
   "search": "검색",
-  "select_correct_usage_date": "올바른 이용 날짜를 선택해 주세요."
+  "select_correct_usage_date": "올바른 이용 날짜를 선택해 주세요.",
+  "hero_description": "다양한 인기 여행지와 엔터테인먼트 명소를 만나보세요. Ruby Travel과 함께 합리적인 가격으로 빠르고 간편하게 티켓을 예약하고 편리한 전자 티켓을 받아보세요.",
+  "good_prices": "합리적인 가격",
+  "good_prices_description": "매력적인 할인 혜택",
+  "fast_booking": "빠른 예약",
+  "fast_booking_description": "온라인 예약",
+  "convenient": "편리함",
+  "convenient_description": "전자 티켓 수령"
 }
