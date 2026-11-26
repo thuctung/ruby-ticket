@@ -88,7 +88,7 @@ export default function DefaultPriceModal({
                     inputMode="numeric"
                     value={get(rows, item.code)}
                     onChange={(e) => onChangeValue(item.code, Number(e.target.value))}
-                    className="h-10 text-right rounded-md border border-slate-300 px-3 text-sm font-normal text-slate-900 placeholder:text-slate-400 focus:border-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700/30"
+                    className="h-10 text-right rounded-md border border-slate-300 px-3 text-sm font-normal text-slate-900 placeholder:text-slate-400 focus:border-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-700/30"
                   />
                   <span className="text-right text-[11px] text-[#2786ff] mt-2">
                     {getNoteTextDiscountDefault(item.code, Number(get(rows, item.code) || 0))}
@@ -109,7 +109,7 @@ export default function DefaultPriceModal({
           <button
             onClick={handleSave}
             disabled={saving}
-            className="h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2 disabled:opacity-60"
+            className="h-10 rounded-md bg-rose-700 px-5 text-sm font-medium text-white hover:bg-rose-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2 disabled:opacity-60"
           >
             {saving ? "Đang lưu..." : "Lưu"}
           </button>

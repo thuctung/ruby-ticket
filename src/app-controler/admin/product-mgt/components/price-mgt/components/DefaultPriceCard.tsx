@@ -17,7 +17,7 @@ export default function DefaultPriceCard({ site }: Props) {
           min={0}
           value={formatVND(site?.price_agent_default || 0)}
           style={{ backgroundColor: "#eeeeee" }}
-          className="h-10 rounded-md text-right border border-slate-300 px-3 text-sm font-normal text-slate-900 focus:border-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700/30"
+          className="h-10 rounded-md text-right border border-slate-300 px-3 text-sm font-normal text-slate-900 focus:border-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-700/30"
         />
       </label>
 
@@ -27,7 +27,7 @@ export default function DefaultPriceCard({ site }: Props) {
           disabled
           value={`${site?.percent_customer_default || 0}%`}
           style={{ backgroundColor: "#eeeeee" }}
-          className="h-10 rounded-md text-right bg-[#eeeeee] border border-slate-300 px-3 text-sm font-normal text-slate-900 focus:border-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700/30"
+          className="h-10 rounded-md text-right bg-[#eeeeee] border border-slate-300 px-3 text-sm font-normal text-slate-900 focus:border-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-700/30"
         />
       </label>
     </div>

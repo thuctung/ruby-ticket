@@ -127,7 +127,7 @@ export default function AgentPricePageControler() {
           <button
             onClick={handleSavePrice}
             disabled={listPrice.length === 0}
-            className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 text-sm font-semibold"
+            className="h-10 flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 text-sm font-semibold"
           >
             <Save size={18} />
             Lưu thay đổi

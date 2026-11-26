@@ -46,8 +46,6 @@ import { ClientOrderItem, CustomerOrderType } from "../checkout-client/type";
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { paymentMomo, paymentOnePay } from "./apis";
 import { getTicketForCustomer, PRODUCT_SELECTED_LOCALE, sendMailTicketInSystem } from "./helper";
-import { SendTicketInSystemMailType } from "../affi/getTicket/type";
-import { createTemplateTicketThanTaiMountain } from "../affi/getTicket/api";
 
 const initOrderData = {
   dateUse: "",
@@ -63,8 +61,9 @@ export default function CartController() {
   const clientSupbase = createSupabaseBrowserClient();
   const { t } = useTranslation();
 
-  const { items, siteCode, formData, siteList, customerInfo, getSites, setCustomerInfo } =
-    useCartStore((s) => s);
+  const { items, formData, siteList, customerInfo, getSites, setCustomerInfo } = useCartStore(
+    (s) => s
+  );
 
   const itemsCart = Array.from(items?.values?.() ?? []);
   const timeCancelOrderRef = useRef<NodeJS.Timeout | null>(null);
@@ -95,8 +94,10 @@ export default function CartController() {
   const [currentOrderData, setCurrentOrderData] = useState<any>(initOrderData);
   const [productSelected, setProductSelected] = useState<ProductSubmitType[]>([]);
 
-  const currentSite = useMemo(() => getSideItem(siteCode, siteList), [siteCode, siteList]);
-
+  const currentSite = useMemo(
+    () => getSideItem(formData.site_code, siteList),
+    [formData.site_code, siteList]
+  );
   useEffect(() => {
     getSites();
   }, [getSites]);
@@ -162,6 +163,7 @@ export default function CartController() {
   };
 
   const handleBuyTicket = async () => {
+    debugger;
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
 
     const in_system = currentSite?.in_system || false;
@@ -251,7 +253,7 @@ export default function CartController() {
             products,
             orderId: orderID,
             dateUse: formData.date_use,
-            siteCode,
+            siteCode: formData.site_code,
             formData,
             thirdPartyNum,
             in_system,
@@ -294,6 +296,7 @@ export default function CartController() {
     if (in_system) {
       await sendMailTicketInSystem(currentOrderData, () => {
         setCurrentOrderData(initOrderData);
+        route.push(`/order-success/${currentOrderData.thirdPartyNum}`);
       });
       return;
     } else {

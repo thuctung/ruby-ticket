@@ -35,10 +35,9 @@ export const getPriceBuyAgentLevel = async (site_code: string, agent_code: strin
   try {
     const { data, error } = await clientSupbase
       .from(DB_TABLE_NAME.AGENT_PRICE)
-      .select("price")
+      .select("price, product_code,type,agent_code")
       .eq("agent_code", agent_code)
-      .eq("site_code", site_code)
-      .maybeSingle();
+      .eq("site_code", site_code);
     if (error) {
       setToastMessage(error.message);
     }

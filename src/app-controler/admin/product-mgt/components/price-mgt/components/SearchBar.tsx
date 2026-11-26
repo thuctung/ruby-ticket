@@ -18,7 +18,7 @@ export default function SearchBar({ listSite, searchValue, onChangeSearch, onSea
         <select
           value={searchValue.site_code}
           onChange={(e) => onChangeSearch("site_code", e.target.value)}
-          className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm font-normal text-slate-900 focus:border-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700/30"
+          className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm font-normal text-slate-900 focus:border-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-700/30"
         >
           <option value="">Tất cả site</option>
           {listSite.map((s) => (
@@ -35,14 +35,14 @@ export default function SearchBar({ listSite, searchValue, onChangeSearch, onSea
           value={searchValue.name}
           onChange={(e) => onChangeSearch("name", e.target.value)}
           placeholder="Ví dụ: Vé cáp treo người lớn"
-          className="h-10 rounded-md border border-slate-300 px-3 text-sm font-normal text-slate-900 placeholder:text-slate-400 focus:border-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700/30"
+          className="h-10 rounded-md border border-slate-300 px-3 text-sm font-normal text-slate-900 placeholder:text-slate-400 focus:border-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-700/30"
         />
       </label>
 
       <div className="flex gap-2">
         <button
           onClick={onSearch}
-          className="h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2"
+          className="h-10 rounded-md bg-rose-700 px-5 text-sm font-medium text-white hover:bg-rose-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2"
         >
           Tìm kiếm
         </button>

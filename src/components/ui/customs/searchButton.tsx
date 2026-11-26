@@ -5,7 +5,7 @@ export function SearchButton({ onClick, ...prop }: ButtonProp) {
     <button
       {...prop}
       onClick={onClick}
-      className="px-8 py-2.5 rounded-xl bg-blue-600 font-bold text-white shadow-lg shadow-blue-500/30 hover:bg-blue-700 transition-all flex items-center gap-2"
+      className="h-10 rounded-md bg-rose-700 px-5 text-sm font-medium text-white hover:bg-rose-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2"
     >
       Tìm kiếm
     </button>

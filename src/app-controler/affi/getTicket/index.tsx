@@ -97,7 +97,7 @@ export default function GetTicketPageControler() {
     }
   };
 
-  const handleBuyTicketInSystem = async (
+  const handleTicketNuiThanTai = async (
     order_id: string,
     products: ProductSubmitType[],
     thirdPartyNumber: string,
@@ -162,7 +162,7 @@ export default function GetTicketPageControler() {
 
       if (in_system) {
         if (siteCode === SITE_CODES.NUITHANTAI) {
-          handleBuyTicketInSystem(
+          handleTicketNuiThanTai(
             order_id,
             products,
             thirdPartyNumber,

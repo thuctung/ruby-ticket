@@ -77,9 +77,8 @@ export default function SearchBar({
           </div>
           <button
             onClick={handleSearch}
-            className=" flex items-center justify-center  gap-2 h-10 w-full rounded-lg bg-red-600 text-xs font-semibold text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+            className="h-10 rounded-md bg-rose-700 px-5 text-sm font-medium text-white hover:bg-rose-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2"
           >
-            <Search size={18} />
             Tìm kiếm
           </button>
         </div>

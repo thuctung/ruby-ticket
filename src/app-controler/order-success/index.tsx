@@ -207,12 +207,7 @@ function TicketCard({ order, t }: { order: OrderHistory; t: Function }) {
   return (
     <li className="relative flex overflow-hidden rounded-2xl border border-[#F0CBD3] bg-white sm:flex-row">
       {/* Khối ngày sử dụng: điểm nhấn của vé */}
-      <div className="flex w-20 shrink-0 flex-col items-center justify-center bg-[#9B1030] px-2 py-5 text-white sm:w-28">
-        <span className="text-3xl font-semibold leading-none sm:text-4xl">
-          {usageDate.format("DD")}
-        </span>
-        <span className="mt-1.5 text-xs text-white/80">{usageDate.format("MM/YYYY")}</span>
-      </div>
+      <div className="flex w-20 shrink-0 flex-col items-center justify-center bg-[#9B1030] px-2 py-5 text-white sm:w-28"></div>
 
       {/* Đường xé vé */}
       <div aria-hidden="true" className="relative w-0 border-l-2 border-dashed border-[#F3DDB0]">
@@ -227,10 +222,9 @@ function TicketCard({ order, t }: { order: OrderHistory; t: Function }) {
         <dl className="mt-3 grid grid-cols-2 gap-3">
           <Info label={t("cart.usage_date")} value={usageDate.format(BASIC_DATE_FORMAT)} />
           <Info label={t("cart.quantity")} value={order.quantity} />
-          {order.status_payment && <Info label="Người sử dụng" value={order.status_payment} />}
         </dl>
 
-        <div className="mt-4 flex flex-wrap items-end justify-between gap-2 border-t border-[#F7DDE3] pt-3">
+        <div className="flex flex-wrap items-end justify-between gap-2 border-t border-[#F7DDE3] pt-3">
           <p className="text-sm text-[#8A5A66]">
             {t("cart.ticket_price")}:{" "}
             <span className="font-medium text-[#2B0A12]">{formatVND(order.price)}</span>

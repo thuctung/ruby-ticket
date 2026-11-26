@@ -1,5 +1,5 @@
-import TicketPricePageController from "@/app-controler/admin/ticket-price";
+import ProductsManagementController from "@/app-controler/admin/product-mgt";
 
 export default function AdminPricingPage() {
-  return <TicketPricePageController />;
+  return <ProductsManagementController />;
 }

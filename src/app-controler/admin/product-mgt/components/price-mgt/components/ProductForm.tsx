@@ -250,7 +250,7 @@ export default function ProductForm({
                   type="checkbox"
                   checked={!!formData.status}
                   onChange={(e) => onChangeValue("status", e.target.checked)}
-                  className="h-4 w-4 rounded border-slate-300 text-teal-700 focus:ring-2 focus:ring-teal-700/30"
+                  className="h-4 w-4 rounded border-slate-300 text-rose-700 focus:ring-2 focus:ring-rose-700/30"
                 />
                 Status (Kích hoạt)
               </label>
@@ -270,7 +270,7 @@ export default function ProductForm({
             type="button"
             onClick={handleSave}
             disabled={saving}
-            className="h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2 disabled:opacity-60"
+            className="h-10 rounded-md bg-rose-700 px-5 text-sm font-medium text-white hover:bg-rose-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2 disabled:opacity-60"
           >
             {saving ? "Đang lưu..." : "Lưu"}
           </button>

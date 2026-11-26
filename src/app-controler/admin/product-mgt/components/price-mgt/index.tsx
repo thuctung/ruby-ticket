@@ -213,7 +213,7 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
         <>
           <button
             onClick={handleOpenDefaultPrice}
-            className="h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2"
+            className="h-10 rounded-md bg-rose-700 px-5 text-sm font-medium text-white hover:bg-rose-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2"
           >
             Sửa giá mặc định đại lý
           </button>
@@ -221,7 +221,7 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
           {getSideItem(currentSite.code, listSite)?.in_system ? (
             <button
               onClick={handleOpenProductForm}
-              className="h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white ml-3 hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2"
+              className="h-10 rounded-md bg-rose-700 px-5 text-sm font-medium text-white ml-3 hover:bg-rose-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2"
             >
               Thêm vé mới
             </button>

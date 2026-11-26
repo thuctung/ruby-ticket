@@ -53,11 +53,6 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
     lable: "Quản lý nạp tiền",
     icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z",
   },
-  {
-    link: "/admin/get-ticket",
-    lable: "Rút vé",
-    icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 000 4h2a2 2 0 000-4H9z",
-  },
   { link: "/admin/stats", lable: "Thống kê", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
   {
     link: "/admin/agents",
@@ -269,7 +264,7 @@ export const BEST_SELLER = "BEST_SELLER";
 export const ALL = "ALL";
 
 export const fieldStyle =
-  "w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20";
+  "w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-600/20";
 
 const cacheData = new Map();
 

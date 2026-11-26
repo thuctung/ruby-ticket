@@ -29,7 +29,7 @@ export const getBgImg = (siteCode: string) => {
     case "CONGTROI": {
       return "/congtroi.jpg";
     }
-    case "THANTAI_MOUNTAIN": {
+    case "NUITHANTAI": {
       return "/nui-than-tai-3.webp";
     }
     case "DUTHUYEN": {
