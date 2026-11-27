@@ -35,6 +35,7 @@ export interface SiteExperienceType {
   description_en?: string;
   description_ko?: string;
   location?: LocationType;
+  link_image_site: any[];
 }
 
 export type TicketType = {

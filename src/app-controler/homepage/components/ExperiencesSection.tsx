@@ -7,20 +7,11 @@ import { get } from "lodash";
 import { SiteType } from "@/app-controler/admin/site/type";
 import { getTranslation } from "@/lib/i18n";
 import { getCategoryText } from "../contants";
+import { formatVND } from "@/lib/money";
 
 export async function ExperiencesSection({ sites, lng }: { sites: SiteType[]; lng: string }) {
   const { t } = await getTranslation(lng);
 
-  const displayPrice = (price: number) => {
-    if (!price) return "xxx.xxxđ";
-
-    const abs = Math.abs(price);
-    const firstDigit = String(abs)[0] ?? "x";
-
-    if (abs >= 1_000_000) return `${firstDigit}xx.xxx.xxxđ`;
-    if (abs >= 100_000) return `${firstDigit}xx.xxxđ`;
-    return `${firstDigit}đ`;
-  };
   return (
     <section id="experiences" className="py-24 bg-slate-50/50">
       <div className="mx-auto max-w-6xl px-6">
@@ -68,7 +59,7 @@ export async function ExperiencesSection({ sites, lng }: { sites: SiteType[]; ln
                       {t("homepage.startingFrom")}
                     </div>
                     <div className="text-xl font-extrabold text-blue-600">
-                      {displayPrice(item.pre_price)}
+                      {formatVND(item.pre_price)}
                     </div>
                   </div>
                   <Button
@@ -85,7 +76,7 @@ export async function ExperiencesSection({ sites, lng }: { sites: SiteType[]; ln
                       </a>
                     ) : (
                       <a href={`tel:${PHONE_ADMIN}`} className="flex items-center gap-2">
-                        Liên hệ
+                        {t("homepage.contact")}
                       </a>
                     )}
                   </Button>
