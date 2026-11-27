@@ -30,6 +30,7 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const { t } = useTranslation();
+  const { setProfile }: CommonType | any = useProfileStore.getState();
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const supabase = createSupabaseBrowserClient();
@@ -56,29 +57,30 @@ export default function Header() {
     router.push("/");
   };
 
-  const loadUser = async () => {
-    try {
-      setGlobalLoading(true);
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (session) {
-        const user = session.user;
-        const { error }: any = await sv_getCurrentProfile(user.id);
-        if (error) {
-          setToastMessage(error);
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      setTimeout(async () => {
+        if (!session?.user) {
+          setProfile(null);
+          setGlobalLoading(false);
           return;
         }
-      }
-    } catch (e) {
-      setToastMessage("Có lỗi xảy ra");
-    } finally {
-      setGlobalLoading(false);
-    }
-  };
 
-  useEffect(() => {
-    loadUser();
+        try {
+          setGlobalLoading(true);
+          const { error }: any = await sv_getCurrentProfile(session.user.id);
+          if (error) throw error;
+        } catch (e) {
+          setProfile(null);
+          await supabase.auth.signOut(); // session hỏng thì thoát sạch
+          setToastMessage("Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại");
+        } finally {
+          setGlobalLoading(false);
+        }
+      }, 0);
+    });
+
+    return () => sub.subscription.unsubscribe();
   }, []);
 
   return (
