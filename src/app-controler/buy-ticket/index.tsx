@@ -78,8 +78,6 @@ export default function BuyTicketController() {
   const [tickets, personTypes] = useMemo(() => {
     let listTicket: ProductBanaType[] = [];
     const listPersonType: string[] = [];
-    console.log("mapAgentPrice", mapAgentPrice);
-    console.log("agentPriceDefault", agentPriceDefault);
     listProduct.forEach((item) => {
       listTicket = listTicket.concat([...item.ticket]);
       listPersonType.push(item.personType);
@@ -178,7 +176,6 @@ export default function BuyTicketController() {
         getPriceBuyAgentLevel(formData.site_code, priceLevel),
       ]);
       if (cancelled) return;
-      console.log(priceDefault, agentPrice);
       setMapAgentPrice(mapAgentPriceByProductCode(agentPrice));
       setAgentPriceDefault(priceDefault);
     })();

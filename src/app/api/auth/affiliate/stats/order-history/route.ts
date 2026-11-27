@@ -27,7 +27,6 @@ export async function POST(req: Request) {
   if (siteCode) {
     query = query.eq("site_code", siteCode);
   }
-  console.log("status", status);
   if (status) {
     query = query.eq("status", status);
   }

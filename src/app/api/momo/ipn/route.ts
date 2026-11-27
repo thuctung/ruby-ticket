@@ -35,8 +35,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Invalid signature" }, { status: 400 });
   }
 
-  console.log("body", body);
-
   // TODO:
   // 1. Tìm đơn hàng theo orderId
   // 2. Kiểm tra amount khớp với đơn hàng

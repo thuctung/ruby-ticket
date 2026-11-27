@@ -7,9 +7,7 @@ export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
   const params = getOnePayParams(request.nextUrl.searchParams);
-  console.log("params", params);
   const result = await processOnePayResult(params);
-  console.log("result", result);
 
   const resultUrl = new URL(process.env.ONEPAY_RESULT_URL!);
 

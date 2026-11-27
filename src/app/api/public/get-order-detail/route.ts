@@ -4,7 +4,6 @@ import { DB_TABLE_NAME } from "@/commons/constant";
 
 export async function POST(request: Request) {
   const { orderCode }: any = await request.json();
-  console.log("orderCode", orderCode);
   const { data, error } = await supabaseAdmin
     .from(DB_TABLE_NAME.ORDERS)
     .select(`*,order_items:order_items (*)`)

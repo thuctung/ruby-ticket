@@ -135,8 +135,6 @@ export async function POST(request: NextRequest) {
       merch_txn_ref: merchTxnRef,
     });
   } catch (error) {
-    console.error("[OnePay Create Error]", error);
-
     return NextResponse.json({ error: "Unable to create OnePay payment" }, { status: 500 });
   }
 }

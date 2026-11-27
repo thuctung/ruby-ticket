@@ -97,8 +97,6 @@ export async function processOnePayResult(params: Record<string, string>): Promi
     );
 
     if (rpcError) {
-      console.error("[OnePay Finalize Error]", rpcError);
-
       return {
         success: false,
         error: "Unable to finalize payment",
