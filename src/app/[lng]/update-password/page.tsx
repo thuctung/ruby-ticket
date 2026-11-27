@@ -1,7 +1,8 @@
 "use client";
 import UpdatePassword from "@/app-controler/updatePassword";
 
-export default function LoginPage() {
+export default async function UpdatePasswordPage({ params }: { params: Promise<{ lng: string }> }) {
+  const { lng } = await params;
 
-  return <UpdatePassword/>
+  return <UpdatePassword lng={lng} />;
 }

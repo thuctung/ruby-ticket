@@ -7,7 +7,7 @@ import Footer from "@/components/site/Footer";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import Header from "@/components/site/Header";
 
-export default function UpdatePassword() {
+export default function UpdatePassword({ lng }: { lng: string }) {
   const [confirmPass, setConfirmPass] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -111,7 +111,7 @@ export default function UpdatePassword() {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer lng={lng} />
     </main>
   );
 }
