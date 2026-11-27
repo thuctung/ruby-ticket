@@ -73,7 +73,7 @@ export default function BuyTicketController() {
   // Dùng giá trị nguyên thủy làm deps cho effect, tránh chạy lại vì đổi reference
   const siteReady = !!currentSite;
   const inSystem = currentSite?.in_system;
-  const priceLevel = profile?.email ? ROLES.REGISTER : ROLES.CUSTOMER;
+  const priceLevel = ROLES.CUSTOMER;
 
   const [tickets, personTypes] = useMemo(() => {
     let listTicket: ProductBanaType[] = [];

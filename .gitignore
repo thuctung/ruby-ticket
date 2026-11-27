@@ -21,6 +21,8 @@
 /build
 
 /supabase
+/supabase/*
+/supabase/.temp
 
 # misc
 .DS_Store

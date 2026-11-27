@@ -27,7 +27,7 @@ export default function SearchBar({
 }: SearchBarProp) {
   const { t, lng } = useTranslation();
   const lisStateCover = useMemo(
-    () => siteList.map((item) => ({ value: item.code, label: get(item, lng, item.name) })),
+    () => siteList.map((item) => ({ value: item.code, label: get(item, lng) || item.name })),
     [siteList]
   );
 
