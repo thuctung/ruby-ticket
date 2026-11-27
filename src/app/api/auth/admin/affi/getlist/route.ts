@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { SearchAffiType, SearchTableType } from "@/types";
-import { DB_TABLE_NAME, LIMIT_TABLE } from "@/commons/constant";
+import { DB_TABLE_NAME, LIMIT_TABLE, ROLES } from "@/commons/constant";
 
 export async function POST(request: Request) {
   const body: SearchTableType = await request.json();
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     `,
       { count: "exact" }
     )
-    .neq("role", "admin")
+    .neq("role", ROLES.ADMIN)
     .order("updated_at", { ascending: false })
     .range(offset, offset + LIMIT_TABLE - 1);
 

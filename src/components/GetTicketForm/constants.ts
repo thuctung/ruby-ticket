@@ -1,11 +1,18 @@
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
-import { ProductBanaType, ResultListProductType, SiteType } from "@/types/ticket";
+import { AgentPriceType, ProductBanaType, ResultListProductType, SiteType } from "@/types/ticket";
 import dayjs from "dayjs";
 import z from "zod";
 
 export const BOOKING_FORM_TYPE = {
   ["AFFILATE"]: "AFFILATE",
   ["CUSTOMER"]: "CUSTOMER",
+};
+
+export const DISCOUNT_TYPE_PRICE = {
+  ADD_PRICE: "ADD_PRICE",
+  SUBT_PRICE: "SUBT_PRICE",
+  ADD_PERCENT: "ADD_PERCENT",
+  SUBT_PERCENT: "SUBT_PERCENT",
 };
 
 export type BookingFormProps = {
@@ -19,10 +26,12 @@ export type BookingFormProps = {
   total: number;
   siteName: string;
   selectedLines: any[];
-  agentPrice: number;
   formType: string;
+  agentPrice: number;
   exportGuideTicket?: boolean;
-
+  mapAgentPrice: Map<string, AgentPriceType>;
+  currentSite?: SiteType;
+  agentPriceDefault: number;
   setFieldFormData: (key: string, value: any, needCallData?: boolean) => void;
   setSiteCode: (value: string) => void;
   setQty: (code: string, value: number) => void;
@@ -41,19 +50,54 @@ export const CustomerInfoSchema = z.object({
     .regex(/^[0-9+ ]+$/, "SĐT chỉ nên gồm số"),
 });
 
+export const getPriceByType = (agentPriceItem: AgentPriceType, basePrice: number) => {
+  const { type, price } = agentPriceItem;
+  let result = 0;
+  switch (type) {
+    case DISCOUNT_TYPE_PRICE.ADD_PRICE: {
+      result = basePrice + price;
+      break;
+    }
+    case DISCOUNT_TYPE_PRICE.SUBT_PRICE: {
+      result = basePrice - price;
+      break;
+    }
+    case DISCOUNT_TYPE_PRICE.ADD_PERCENT: {
+      result = basePrice + (basePrice * price) / 100;
+      break;
+    }
+    case DISCOUNT_TYPE_PRICE.SUBT_PERCENT: {
+      result = basePrice - (basePrice * price) / 100;
+      break;
+    }
+  }
+
+  return Math.max(0, result);
+};
+
 export const getPriceAgentAndMultiple = (
   ticket: ProductBanaType,
   agentCode: string,
-  agentPrice: number
+  mapAgentPrice: Map<string, AgentPriceType>,
+  agentPriceDefault: number
 ) => {
-  let price =
-    agentCode === BOOKING_FORM_TYPE.AFFILATE
-      ? ticket.unitPrice
-      : ticket.publicPrice - ticket.publicPrice * (agentPrice / 100);
+  let priceResult = 0;
+  const isAffiliate = agentCode === BOOKING_FORM_TYPE.AFFILATE;
+  const basePrice = isAffiliate ? ticket.unitPrice : ticket.publicPrice;
 
-  price = ticket.multiple > 1 ? price / ticket.multiple : price;
+  const agentPriceItem = mapAgentPrice.get(ticket.code);
 
-  return agentCode === BOOKING_FORM_TYPE.AFFILATE ? price + agentPrice : price;
+  if (agentPriceItem && agentPriceItem.price !== 0) {
+    priceResult = getPriceByType(agentPriceItem, basePrice);
+  } else if (isAffiliate) {
+    priceResult = basePrice + agentPriceDefault;
+  } else {
+    priceResult = basePrice - (basePrice * agentPriceDefault) / 100;
+  }
+  priceResult = Math.max(0, priceResult);
+  priceResult = ticket.multiple > 1 ? Math.ceil(priceResult / ticket.multiple) : priceResult;
+
+  return Math.ceil(priceResult / 10) * 10;
 };
 
 export const PRODUCT_TYPE = {

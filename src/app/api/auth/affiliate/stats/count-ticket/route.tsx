@@ -1,32 +1,22 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { AGENT, DB_TABLE_NAME, END_DATE_GMT7, START_DATE_GMT7 } from "@/commons/constant";
-import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
+import { DB_TABLE_NAME, END_DATE_GMT7, START_DATE_GMT7 } from "@/commons/constant";
 import { CountTicketSaleParamType } from "@/app-controler/affi/stats/type";
 
 export async function POST(req: Request) {
   const body: CountTicketSaleParamType = await req.json();
-  const { user_id, from, to, siteCode } = body;
+  const { email, from, to, siteCode } = body;
 
-  let query = supabaseAdmin
-    .from(DB_TABLE_NAME.VIEW_TICKET_SALE)
-    .select("quantity, total")
-    .eq("status", KEY_MODIFY_DATA.SUCCESS)
-    .eq("payment_method", AGENT);
+  const paramAgent: any = {
+    p_start: `${from}${START_DATE_GMT7}`,
+    p_end: `${to}${END_DATE_GMT7}`,
+    p_site_code: siteCode,
+    p_email: email,
+  };
 
-  if (user_id) {
-    query = query.eq("user_id", user_id);
-  }
-  if (from) {
-    query = query.gte("created_at", `${from}${START_DATE_GMT7}`);
-  }
-
-  if (to) {
-    query = query.lte("created_at", `${to}${END_DATE_GMT7}`);
-  }
-  if (siteCode) {
-    query = query.eq("site_code", siteCode);
-  }
-  const { data, error } = await query;
+  const { data, error } = await supabaseAdmin.rpc(
+    DB_TABLE_NAME.FUNC_GET_AGENT_SALE_SUMARY,
+    paramAgent
+  );
 
   if (error) {
     return Response.json({});

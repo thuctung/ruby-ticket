@@ -1,0 +1,48 @@
+{
+  "slug": "khieu-nai",
+  "title": "Complaint Handling Policy",
+  "summary": "Guidelines for submitting feedback and the process by which Ruby Travel receives, reviews, responds to, and resolves complaints.",
+  "sections": [
+    {
+      "heading": "1. Contact Channels",
+      "paragraphs": [
+        "Customers can submit feedback, support requests, or complaints via hotline {{phone}}, email at {{email}}, or the online support channels published on the website."
+      ]
+    },
+    {
+      "heading": "2. Required Information",
+      "items": [
+        "The sender's full name and contact information.",
+        "Order code/ticket code, booking time, and relevant product (if applicable).",
+        "A clear description of the issue, requested resolution, and when it occurred.",
+        "Relevant documents, such as booking confirmations, payment receipts, or screenshots of errors. Please conceal any unnecessary sensitive information."
+      ]
+    },
+    {
+      "heading": "3. Complaint Resolution Process",
+      "items": [
+        "Step 1 – Receipt: Ruby Travel records the complaint details and the customer's contact information.",
+        "Step 2 – Verification: Ruby Travel checks the order, payment status, and ticket information, and contacts the supplier or payment provider when necessary.",
+        "Step 3 – Response: Ruby Travel informs the customer of the verification results, proposed resolution, or any additional information required.",
+        "Step 4 – Completion: Ruby Travel implements the agreed resolution and notifies the customer of the outcome."
+      ]
+    },
+    {
+      "heading": "4. Processing Time",
+      "paragraphs": [
+        "Ruby Travel aims to acknowledge receipt of requests between 6:00 AM and 4:00 PM and respond with the outcome within 24 hours after receiving all required information. If verification with a third party or supplier is necessary, processing may take longer. Ruby Travel will inform the customer of the reason and expected timeline."
+      ]
+    },
+    {
+      "heading": "5. Resolution Principles",
+      "paragraphs": [
+        "Complaints are reviewed based on order information, supporting documents, ticket conditions at the time of purchase, and the supplier's regulations. Ruby Travel prioritizes good-faith, transparent resolution while protecting customers' legitimate rights and interests.",
+        "If customers disagree with the resolution, they may contact Ruby Travel again or submit a request to the competent state authorities in accordance with applicable laws."
+      ]
+    }
+  ],
+  "support": {
+    "title": "Need further assistance?",
+    "description": "Contact Ruby Travel for assistance and answers to your questions."
+  }
+}

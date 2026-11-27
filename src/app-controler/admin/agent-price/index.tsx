@@ -9,7 +9,7 @@ import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 import CreatePriceForm from "./components/create-price";
 import { getListAgent } from "../agent-mgt/api";
 import { AgentPriceSubmitType, AgentPriceType } from "./type";
-import { CUSTOMER } from "@/commons/constant";
+import { ROLES } from "@/commons/constant";
 import { getSiteByStatus } from "@/components/GetTicketForm/api";
 
 export default function AgentPricePageControler() {
@@ -127,7 +127,7 @@ export default function AgentPricePageControler() {
           <button
             onClick={handleSavePrice}
             disabled={listPrice.length === 0}
-            className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 text-sm font-semibold"
+            className="h-10 flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 text-sm font-semibold"
           >
             <Save size={18} />
             Lưu thay đổi
@@ -168,10 +168,10 @@ export default function AgentPricePageControler() {
                         onChange={(e) => handleChangePrice(e.target.value, index)}
                       />
                       <span className="text-xs text-slate-400">
-                        {price.agent_code === CUSTOMER ? "%" : "đ"}
+                        {price.agent_code === ROLES.AFFILIATE ? "%" : "đ"}
                       </span>
                     </div>
-                    {price.agent_code === CUSTOMER ? (
+                    {price.agent_code === ROLES.CUSTOMER ? (
                       <div>
                         <span className="text-[red] text-xs">Phần trăm giảm trên giá công bố</span>
                       </div>

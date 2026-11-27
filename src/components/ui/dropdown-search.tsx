@@ -42,7 +42,7 @@ export default function DropdownSearch({
   const listboxId = useId();
 
   const selectedOption = useMemo(
-    () => options.find((o) => o.value === value) ?? null,
+    () => options?.find((o) => o.value === value) ?? null,
     [options, value]
   );
 

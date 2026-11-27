@@ -3,16 +3,12 @@
 import Link from "next/link";
 import { useEffect } from "react";
 
-import { useLang } from "@/lib/useLang";
-
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { t } from "@/lib/i18n/t";
 
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
@@ -25,15 +21,24 @@ import Image from "next/image";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
 import { UserPopup } from "./PopupUser";
 import { HeaderMobile } from "./HeaderMobile";
+import Languages from "./Languages";
+import { ShoppingCart, User } from "lucide-react";
+import { useTranslation } from "@/lib/i18n/client";
+import { useCartStore } from "@/stores/useCartStore";
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const lang = useLang();
+  const { t } = useTranslation();
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const supabase = createSupabaseBrowserClient();
 
+  const cartCount = useCartStore((s) => {
+    let total = 0;
+    for (const item of s.items.values()) total += item.quantity;
+    return total;
+  });
   const { logout }: any = useProfileStore.getState();
   const { setGlobalLoading, setToastMessage }: CommonType | any = useCommonStore.getState();
 
@@ -78,7 +83,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/90 backdrop-blur-md">
         <div className=" flex  items-center justify-between px-4 py-3 md:px-6">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative transition-transform group-hover:scale-105">
@@ -92,11 +97,8 @@ export default function Header() {
                 priority
               />
             </div>
-            <div className="leading-tight">
+            <div className="hidden md:block leading-tight">
               <div className="font-bold text-lg  text-red-500">Ruby Travel</div>
-              <div className="hidden text-[10px] font-bold text-blue-600 uppercase tracking-widest sm:block">
-                Đà Nẵng
-              </div>
             </div>
           </Link>
 
@@ -116,13 +118,13 @@ export default function Header() {
                     }
                 }}
                 href={item.link}
-                className={`relative pb-1 text-[15px] font-medium transition-colors ${
-                  item.link === pathname ? "text-red-600" : "text-gray-600 hover:text-gray-900"
+                className={`relative pb-1 text-[15px] font-[600] transition-colors ${
+                  item.link === pathname ? "text-[#1c5b41]" : "text-[#1c5b41] hover:text-[#fe9614]"
                 }`}
               >
-                {item.name}
+                {t(`common.${item.name}`)}
                 {item.link === pathname && (
-                  <span className="absolute -bottom-[13px] left-0 right-0 h-0.5 rounded-full bg-red-600" />
+                  <span className="absolute -bottom-[13px] left-0 right-0 h-0.5 rounded-full bg-[#fe9614]" />
                 )}
               </Link>
             ))}
@@ -131,12 +133,23 @@ export default function Header() {
           {/* Right side */}
           <div className="flex items-center gap-2">
             {/* Language */}
-            {/* <Languages /> */}
-
+            <Languages />
+            <Link
+              href="/cart"
+              aria-label="Giỏ hàng"
+              className="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-[#1c5b41] transition-colors hover:bg-slate-100 hover:text-[#fe9614]"
+            >
+              <ShoppingCart className="h-5 w-5" color="#fba307" />
+              {cartCount > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#fe9614] px-1 text-[10px] font-bold leading-none text-white">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </Link>
             {!profile.user_id ? (
-              <Button asChild>
-                <Link href="/login">{t(lang, "auth.login")}</Link>
-              </Button>
+              <Link href="/login">
+                <User color="#fba307" />
+              </Link>
             ) : (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -146,9 +159,11 @@ export default function Header() {
                     aria-label="User menu"
                   >
                     <Avatar className="h-8 w-8">
-                      <AvatarFallback>{initials}</AvatarFallback>
+                      <AvatarFallback color="">{initials}</AvatarFallback>
                     </Avatar>
-                    <span className="hidden text-sm font-medium md:inline">{displayName}</span>
+                    <span className="hidden text-sm font-medium md:inline text-[##fba307]">
+                      {displayName}
+                    </span>
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
@@ -158,7 +173,7 @@ export default function Header() {
             )}
 
             {/* Mobile menu */}
-            <HeaderMobile pathname={pathname} />
+            <HeaderMobile pathname={pathname} t={t} />
           </div>
         </div>
       </header>

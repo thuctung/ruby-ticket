@@ -1,0 +1,75 @@
+{
+  "breadcrumb": "All Policies",
+  "title": "Privacy Policy",
+  "summary": "This policy explains how Ruby Travel collects, uses, stores, and protects customer information when using the Ruby Travel website.",
+  "sections": [
+    {
+      "heading": "1. Scope of Application",
+      "paragraphs": [
+        "This policy applies to customers who visit the website, search for information, purchase tickets, or contact Ruby Travel.",
+        "By using the website or providing information to Ruby Travel, customers confirm that they have read and understood this policy. Where applicable law requires separate consent for a specific data processing activity, Ruby Travel will obtain such consent in accordance with the law."
+      ]
+    },
+    {
+      "heading": "2. Information We May Collect",
+      "items": [
+        "Contact and ticket delivery information: full name, phone number, email address, and recipient information provided by the customer.",
+        "Booking information: selected products or tickets, quantity, date of use, order number, and support requests.",
+        "Transaction information: payment method, transaction reference, payment status, and information necessary for reconciliation. Ruby Travel will never proactively request customers' banking passwords or OTP codes.",
+        "Technical information: IP address, browser type, device information, access timestamps, and cookies necessary for website operations."
+      ]
+    },
+    {
+      "heading": "3. Purposes of Information Use",
+      "items": [
+        "To receive and process ticket bookings, confirm payments, and deliver tickets or service information.",
+        "To contact customers to verify order details, notify them of changes from service providers, and provide after-sales support.",
+        "To handle complaints, reconcile transactions, prevent fraud, and protect customers' legitimate rights and interests.",
+        "To improve website quality, analyze website activity, and fulfill legal obligations.",
+        "To send promotional or marketing information where there is a lawful basis and/or appropriate customer consent. Customers may request to stop receiving such communications."
+      ]
+    },
+    {
+      "heading": "4. Information Sharing",
+      "paragraphs": [
+        "Ruby Travel only shares information to the extent necessary with ticket issuers or attraction operators to verify bookings or provide tickets; payment service providers or banks to process and reconcile transactions; technology infrastructure providers to operate the website; or competent authorities upon lawful request.",
+        "Ruby Travel does not sell customers' personal data. Recipients of such information are responsible for using it only for the intended purposes and applying appropriate protection measures in accordance with agreements and applicable laws."
+      ]
+    },
+    {
+      "heading": "5. Information Retention and Protection",
+      "paragraphs": [
+        "Information is retained for as long as necessary to fulfill the stated purposes, resolve disputes, reconcile transactions, and comply with statutory retention obligations. When the information is no longer necessary and no retention obligation applies, it will be deleted, destroyed, or otherwise processed in accordance with applicable regulations.",
+        "Ruby Travel applies appropriate administrative and technical measures to prevent unauthorized access, use, disclosure, or alteration of information. However, no electronic transmission or storage method can guarantee absolute security."
+      ]
+    },
+    {
+      "heading": "6. Customer Rights and Requests",
+      "paragraphs": [
+        "Under applicable laws, customers may submit requests to access, update, correct, withdraw consent, restrict or object to processing, delete personal data, and exercise other applicable rights. Ruby Travel may need to verify the customer's identity and may refuse or limit a request where permitted by law or where mandatory retention requirements apply.",
+        "Please send requests to {{email}} with the subject line “Personal Data Request”, together with sufficient information to identify the relevant order or request. Do not send passwords, OTP codes, or banking security information."
+      ]
+    },
+    {
+      "heading": "7. Cookies and Similar Technologies",
+      "paragraphs": [
+        "The website may use cookies or similar technologies to maintain browsing sessions, remember preferences, ensure security, and analyze website performance. Customers can manage cookies through their browser settings. Disabling certain cookies may affect website functionality."
+      ]
+    },
+    {
+      "heading": "8. Policy Changes and Contact Information",
+      "paragraphs": [
+        "Ruby Travel may update this policy to reflect changes in its operations or applicable laws. The latest version will be published on the website together with its update date."
+      ],
+      "company": "Responsible entity: Ruby Travel",
+      "address": "72 Hoang Văn Thai, Hoa Khanh, Đa Nang , Viet Nam",
+      "email": "rubytraveldanang@gmail.com",
+      "hotline": "0905477169"
+    }
+  ],
+  "support": {
+    "title": "Need further assistance?",
+    "description": "Contact Ruby Travel at 0905 477 169 or rubytraveldanang@gmail.com."
+  },
+  "update": "Updated"
+}

@@ -1,0 +1,43 @@
+{
+  "summary": "Các phương thức thanh toán, quy trình xác nhận giao dịch và hướng dẫn xử lý khi thanh toán chưa thành công.",
+  "sections": [
+    {
+      "heading": "1. Phương thức thanh toán",
+      "paragraphs": [
+        "Ruby Travel cung cấp các phương thức thanh toán được hiển thị tại bước thanh toán của đơn hàng, có thể bao gồm chuyển khoản ngân hàng/QR thanh toán hoặc phương thức trực tuyến được tích hợp tại thời điểm giao dịch.",
+        "Khách hàng chỉ thực hiện thanh toán theo thông tin do website hoặc nhân viên Ruby Travel cung cấp qua kênh chính thức. Không chuyển tiền vào tài khoản cá nhân không được xác nhận."
+      ]
+    },
+    {
+      "heading": "2. Quy trình thanh toán",
+      "bullets": [
+        "Khách hàng kiểm tra thông tin vé, ngày sử dụng, số lượng, thông tin người nhận và tổng tiền.",
+        "Chọn phương thức thanh toán được hỗ trợ và thực hiện theo hướng dẫn.",
+        "Hệ thống/nhân viên đối soát giao dịch. Đơn hàng chỉ được xác nhận thanh toán khi Ruby Travel nhận được thông báo giao dịch thành công hoặc xác minh được tiền đã vào tài khoản.",
+        "Sau khi thanh toán được xác nhận và vé được phát hành, Ruby Travel gửi thông tin vé theo thông tin liên hệ khách hàng đã cung cấp."
+      ]
+    },
+    {
+      "heading": "3. Lưu ý khi chuyển khoản",
+      "bullets": [
+        "Nhập chính xác số tiền và nội dung chuyển khoản/mã đơn hàng theo hướng dẫn.",
+        "Không chỉnh sửa nội dung thanh toán nếu hệ thống yêu cầu mã tham chiếu cụ thể.",
+        "Lưu lại chứng từ giao dịch cho đến khi đơn hàng được xác nhận.",
+        "Không cung cấp mật khẩu ngân hàng, mã PIN hoặc mã OTP cho bất kỳ ai."
+      ]
+    },
+    {
+      "heading": "4. Thanh toán chưa được ghi nhận",
+      "paragraphs": [
+        "Nếu tài khoản đã bị trừ tiền nhưng đơn hàng vẫn hiển thị chưa thanh toán, khách hàng không nên thanh toán lặp lại ngay. Vui lòng liên hệ {{phone}} hoặc {{email}}, cung cấp mã đơn hàng và chứng từ giao dịch để Ruby Travel kiểm tra với ngân hàng/đơn vị thanh toán.",
+        "Thời gian đối soát và hoàn trả (nếu phát sinh giao dịch trùng, sai hoặc không hoàn tất) phụ thuộc vào ngân hàng, đơn vị thanh toán và kết quả xác minh."
+      ]
+    },
+    {
+      "heading": "5. Hóa đơn và chứng từ",
+      "paragraphs": [
+        "Khách hàng có nhu cầu nhận hóa đơn vui lòng cung cấp thông tin xuất hóa đơn và yêu cầu trong thời điểm phù hợp theo quy định. Việc phát hành hóa đơn được thực hiện theo tư cách pháp lý và nghĩa vụ của đơn vị bán hàng."
+      ]
+    }
+  ]
+}

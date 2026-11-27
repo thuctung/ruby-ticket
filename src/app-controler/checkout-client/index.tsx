@@ -22,8 +22,8 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import {
   DB_TABLE_NAME,
   ERROR_MESSAGE,
-  PAYMENT_STATUS,
   SITE_CODES,
+  STATUS_COMMON_TYPE,
   TYPE_TRANSFER,
 } from "@/commons/constant";
 import { LodingMessage } from "@/components/ui/loading-message";
@@ -33,7 +33,6 @@ import dayjs from "dayjs";
 import { ClientOrderItem, CustomerOrderType, PayloadGetTicketSunType } from "./type";
 import { downloadTicketPDF, generateThirdPartyCode } from "@/helpers/ticket";
 import { toast } from "react-toastify";
-import { KEY_MODIFY_DATA } from "../affi/stats/contants";
 import { useCommonStore } from "@/stores/useCommonStore";
 import GetTicketForm from "@/components/GetTicketForm";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
@@ -85,9 +84,9 @@ export default function CheckoutControlerPage() {
   ) => {
     await updateStatusOrder({
       orderId: orderId,
-      status: KEY_MODIFY_DATA.CANCEL,
+      status: STATUS_COMMON_TYPE.CANCELED,
       description: desc,
-      status_payment: KEY_MODIFY_DATA.ERROR,
+      status_payment: STATUS_COMMON_TYPE.ERROR,
     });
     if (timeCancelOrderRef.current) {
       clearTimeout(timeCancelOrderRef.current);
@@ -152,6 +151,7 @@ export default function CheckoutControlerPage() {
         thirdPartyNum,
         listTicketSubmit: products,
         siteCode,
+        paymentType: "qr",
         paymentCode,
         orderCode: dataOrderSunWorld.orderCode || thirdPartyNum, // in system user thirdPartyNum for ordercde
       };
@@ -213,12 +213,12 @@ export default function CheckoutControlerPage() {
     const data = await senTicket(payload);
     const payloadUpdate = {
       orderId: orderId,
-      status_payment: PAYMENT_STATUS.SUCCESS,
-      status: KEY_MODIFY_DATA.ERROR,
+      status_payment: STATUS_COMMON_TYPE.SUCCESS,
+      status: STATUS_COMMON_TYPE.ERROR,
       description: "Lỗi đặt vé từ khách lẻ",
     };
     if (data) {
-      payloadUpdate.status = KEY_MODIFY_DATA.SUCCESS;
+      payloadUpdate.status = STATUS_COMMON_TYPE.SUCCESS;
       payloadUpdate.description = "";
       toast.success("Đặt vé thành công");
       setCurrentOrderData(initOrderData);
@@ -238,7 +238,7 @@ export default function CheckoutControlerPage() {
       customerEmail,
     };
 
-    const ticketCustomer: TicketResultQRType[] = await getTicketSunWorld(paramGetTicket);
+    const ticketCustomer: TicketResultQRType[] = await getTicketSunWorld(paramGetTicket, true);
     if (ticketCustomer?.length) {
       downloadTicketPDF(ticketCustomer, []);
       setProductSelected([]);
@@ -282,11 +282,11 @@ export default function CheckoutControlerPage() {
             filter: `payment_code=eq.${qrPaymant.code}`,
           },
           (payload) => {
-            if (payload.new.status_payment === KEY_MODIFY_DATA.SUCCESS) {
+            if (payload.new.status_payment === STATUS_COMMON_TYPE.SUCCESS) {
               toast.success("Thanh toán thành công!");
               clientSupbase.removeChannel(chanenSupbase.current);
               getTicketSuccess();
-            } else if (payload.new.status_payment === KEY_MODIFY_DATA.ERROR) {
+            } else if (payload.new.status_payment === STATUS_COMMON_TYPE.ERROR) {
               toast.error("Thanh toán thất bại! Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ");
               handleDoneQR();
             }

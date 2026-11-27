@@ -5,6 +5,7 @@ export async function POST(req: Request) {
   try {
     const body: any = await req.json();
     const { siteCodes, date } = body;
+
     const { data }: any = await sunWorldApi.get(`/ota/product/listing`, {
       params: {
         lang: "vi",
@@ -16,6 +17,7 @@ export async function POST(req: Request) {
     });
     return NextResponse.json(data, { status: 200 });
   } catch (e) {
+    console.log(e);
     return NextResponse.json(e, { status: 500 });
   }
 }

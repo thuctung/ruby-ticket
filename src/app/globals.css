@@ -45,6 +45,19 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --font-sans: var(--font-be-vietnam), ui-sans-serif, system-ui, sans-serif;
+
+  --color-ruby-50: #fff1f3;
+  --color-ruby-100: #ffe0e5;
+  --color-ruby-200: #ffc6cf;
+  --color-ruby-300: #ff9aab;
+  --color-ruby-400: #f95f7b;
+  --color-ruby-500: #ea2f55;
+  --color-ruby-600: #c60b3d;
+  --color-ruby-700: #a3082f;
+  --color-ruby-800: #860a2b;
+  --color-ruby-900: #720d28;
+  --color-ruby-950: #400213;
 }
 
 :root {

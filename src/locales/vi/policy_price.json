@@ -1,0 +1,33 @@
+{
+  "summary": "Thông tin về giá vé, đối tượng áp dụng, phụ thu, ưu đãi và nguyên tắc hiển thị giá trên Ruby Travel.",
+  "sections": [
+    {
+      "heading": "1. Giá vé niêm yết",
+      "paragraphs": [
+        "Giá bán được hiển thị tại trang thông tin sản phẩm hoặc trong quá trình đặt vé trên website. Giá áp dụng là giá được hệ thống hiển thị tại bước xác nhận đơn hàng trước khi khách hàng thanh toán.",
+        "Tùy sản phẩm, giá có thể được phân theo người lớn, trẻ em, người cao tuổi, khách hàng thuộc nhóm ưu đãi hoặc loại vé/combo. Điều kiện độ tuổi, chiều cao, giấy tờ chứng minh và quyền lợi đi kèm được nêu tại trang sản phẩm hoặc theo quy định của nhà cung cấp."
+      ]
+    },
+    {
+      "heading": "2. Thành phần giá và phụ phí",
+      "paragraphs": [
+        "Giá hiển thị sẽ nêu rõ các dịch vụ đã bao gồm và chưa bao gồm trong phạm vi thông tin Ruby Travel nhận được từ nhà cung cấp. Các khoản phụ thu, dịch vụ tùy chọn hoặc chi phí phát sinh (nếu có) sẽ được thông báo trước khi khách hàng xác nhận thanh toán.",
+        "Khách hàng nên kiểm tra kỹ ngày sử dụng, loại vé, số lượng, đối tượng áp dụng và quyền lợi của combo trước khi đặt hàng."
+      ]
+    },
+    {
+      "heading": "3. Khuyến mãi và ưu đãi",
+      "paragraphs": [
+        "Chương trình khuyến mãi được áp dụng theo thời gian, số lượng, đối tượng và điều kiện công bố cụ thể. Một số ưu đãi không được cộng dồn hoặc không áp dụng đồng thời với chương trình khác.",
+        "Trường hợp chương trình có yêu cầu giấy tờ xác minh, khách hàng cần xuất trình giấy tờ hợp lệ theo hướng dẫn của nhà cung cấp tại thời điểm sử dụng."
+      ]
+    },
+    {
+      "heading": "4. Điều chỉnh giá và sai sót hiển thị",
+      "paragraphs": [
+        "Giá vé có thể thay đổi theo chính sách của nhà cung cấp, mùa cao điểm, ngày sử dụng hoặc chương trình ưu đãi. Việc thay đổi giá không ảnh hưởng đến đơn hàng đã được Ruby Travel xác nhận hợp lệ, trừ trường hợp có sai sót rõ ràng hoặc trường hợp pháp luật/điều kiện giao dịch có quy định khác.",
+        "Nếu phát hiện giá hiển thị có sai sót, Ruby Travel sẽ liên hệ khách hàng để xác minh và thống nhất phương án phù hợp trước khi thu thêm khoản tiền hoặc hủy giao dịch. Ruby Travel không tự ý thu thêm tiền khi chưa có thông báo và căn cứ phù hợp."
+      ]
+    }
+  ]
+}

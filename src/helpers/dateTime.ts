@@ -43,3 +43,7 @@ export const checkDateRange = (start: string, end: string, showMesage = true) =>
   }
   return true;
 };
+export const covertDateFormToServer = (date: string) => {
+  const dateFrom = dayjsEx(date, BASIC_DATE_FORMAT);
+  return dayjs(dateFrom).format(SERVER_DATE_FORMAT);
+};

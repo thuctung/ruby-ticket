@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { sendMailTicketBaNa } from "@/axios/resendMail";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME } from "@/commons/constant";
+import { DB_TABLE_NAME, STATUS_COMMON_TYPE } from "@/commons/constant";
 import { downloadTicketPDFServer } from "@/helpers/ticket-server";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
 import { MailQueueType } from "@/types/send-mail";
@@ -16,7 +16,7 @@ export async function GET(req: Request) {
     const { data, error } = await supabaseAdmin
       .from(DB_TABLE_NAME.EMAIL_QUEUE)
       .select("*")
-      .eq("status", "pending")
+      .eq("status", STATUS_COMMON_TYPE.PENDING)
       .lt("retry_count", 3)
       .order("created_at", {
         ascending: true,
@@ -80,7 +80,7 @@ export async function GET(req: Request) {
         await supabaseAdmin
           .from(DB_TABLE_NAME.EMAIL_QUEUE)
           .update({
-            status: "pending",
+            status: STATUS_COMMON_TYPE.PENDING,
             retry_count: (mail.retry_count || 0) + 1,
             error_message: error instanceof Error ? error.message : String(error),
           })

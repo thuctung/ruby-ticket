@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME, ROLES } from "@/commons/constant";
+import { DB_TABLE_NAME, ROLES, STATUS_COMMON_TYPE } from "@/commons/constant";
 
 const schema = z.object({
   fullName: z.string().trim().min(2),
@@ -67,8 +67,8 @@ export async function POST(req: Request) {
       full_name: fullName,
       phone,
       address,
-      role: "affiliate",
-      status: "pending",
+      role: ROLES.AFFILIATE,
+      status: STATUS_COMMON_TYPE.PENDING,
     });
     if (profileErr) {
       return NextResponse.json(

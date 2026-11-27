@@ -405,3 +405,14 @@ export const generateThirdPartyCode = (in_system: boolean): string => {
   }
   return code;
 };
+
+export const generateThirdPartyCodeRefund = (siteCode: string): string => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const length = 14;
+  const randomValues = crypto.getRandomValues(new Uint32Array(length));
+  const code = Array.from(randomValues, (value) => {
+    return chars[value % chars.length];
+  }).join("");
+
+  return `RF_${siteCode}_${code}`;
+};

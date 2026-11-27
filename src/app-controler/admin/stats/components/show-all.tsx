@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { formatVND } from "@/helpers/money";
 import { AllSaleType } from "../type";
-import { AGENT, CUSTOMER } from "@/commons/constant";
+import { ROLES } from "@/commons/constant";
 import { isEmpty } from "lodash";
 
 // ---------------------------------------------------------------------------
@@ -19,9 +19,11 @@ export default function ShowAllData({ dataSale }: { dataSale: AllSaleType[] }) {
   const totals = useMemo(() => {
     if (!isEmpty(coverData)) {
       const tickets =
-        (coverData[CUSTOMER]?.total_tickets || 0) + (coverData[AGENT]?.total_tickets || 0);
+        (coverData[ROLES.CUSTOMER]?.total_tickets || 0) +
+        (coverData[ROLES.AFFILIATE]?.total_tickets || 0);
       const amount =
-        (coverData[CUSTOMER]?.total_amount || 0) + (coverData[AGENT]?.total_amount || 0);
+        (coverData[ROLES.CUSTOMER]?.total_amount || 0) +
+        (coverData[ROLES.AFFILIATE]?.total_amount || 0);
       return {
         tickets,
         amount,
@@ -56,10 +58,10 @@ export default function ShowAllData({ dataSale }: { dataSale: AllSaleType[] }) {
                   </span>
                 </td>
                 <td className="px-6 py-3 text-right text-slate-700">
-                  {coverData[AGENT]?.total_tickets || 0}
+                  {coverData[ROLES.AFFILIATE]?.total_tickets || 0}
                 </td>
                 <td className="px-6 py-3 text-right font-semibold text-slate-900">
-                  {formatVND(coverData[AGENT]?.total_amount || 0)}
+                  {formatVND(coverData[ROLES.AFFILIATE]?.total_amount || 0)}
                 </td>
               </tr>
               <tr className="border-b border-slate-100">
@@ -70,10 +72,10 @@ export default function ShowAllData({ dataSale }: { dataSale: AllSaleType[] }) {
                   </span>
                 </td>
                 <td className="px-6 py-3 text-right text-slate-700">
-                  {coverData[CUSTOMER]?.total_tickets || 0}
+                  {coverData[ROLES.CUSTOMER]?.total_tickets || 0}
                 </td>
                 <td className="px-6 py-3 text-right font-semibold text-slate-900">
-                  {formatVND(coverData[CUSTOMER]?.total_amount || 0)}
+                  {formatVND(coverData[ROLES.CUSTOMER]?.total_amount || 0)}
                 </td>
               </tr>
             </tbody>
