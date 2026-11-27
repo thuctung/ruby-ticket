@@ -13,4 +13,11 @@ export type SiteType = {
   status: boolean;
   order: number;
   status_affilate: boolean;
+  pre_price: number;
+  en: string;
+  ko: string;
+  zh: string;
+  company_code: string;
+  location_code: string;
+  link_image_site?: string[];
 };

@@ -91,6 +91,11 @@ export const GET_SITE_BY_FORM_TYPE = "/api/auth/admin/sites/get-site-by-form-typ
 
 export const GET_ALL_SITE = "/api/auth/admin/sites/get-all-site";
 
+export const GET_COMPANYS = "/api/auth/admin/company/get-list";
+
+export const GET_LOCATIONS = "/api/auth/admin/location/get-list";
+export const DELETE_SITE_IMAGE = "/api/auth/admin/sites/delete-image";
+
 export const UPDATE_SITE = "/api/auth/admin/sites/update-site";
 
 export const GET_PROD = "/api/auth/admin/sites/update-site";

@@ -1,14 +1,11 @@
-import { Input } from "@/components/ui/customs/input";
 import { ResetButton } from "@/components/ui/customs/ressetButton";
 import { SearchButton } from "@/components/ui/customs/searchButton";
 import { SelectBox } from "@/components/ui/customs/selectBox";
-import DatePickerCustom from "@/components/ui/date-picker";
 
 import { checkDateRange } from "@/helpers/dateTime";
-import { Calendar, User } from "lucide-react";
 import { useState } from "react";
-import { StatusData } from "@/app-controler/affi/stats/contants";
 import { SearchSiteType } from "../type";
+import { inputCls } from "@/components/ui/const-class";
 
 type SearchTicketFormProps = {
   onChangeForm: (filter: SearchSiteType) => void;
@@ -45,12 +42,12 @@ export function SearchSite({ searchValue, onReset, onChangeForm }: SearchTicketF
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
               Tên site
             </label>
-            <Input
+            <input
               type="text"
               placeholder="name"
               value={filter.name || ""}
-              className="h-12"
-              onChange={(value: string) => handleChangeFilter("name", value)}
+              className={inputCls}
+              onChange={(e) => handleChangeFilter("name", e.target.value)}
             />
           </div>
 
@@ -62,7 +59,6 @@ export function SearchSite({ searchValue, onReset, onChangeForm }: SearchTicketF
             <SelectBox
               value={filter.status || ""}
               onChange={(value) => handleChangeFilter("status", value)}
-              className=" h-12"
             >
               <option value="">Tất cả</option>
               <option value="true">Đang mở</option>
@@ -78,7 +74,6 @@ export function SearchSite({ searchValue, onReset, onChangeForm }: SearchTicketF
             <SelectBox
               value={filter.status_affilate || ""}
               onChange={(value) => handleChangeFilter("status_affilate", value)}
-              className=" h-12"
             >
               <option value="">Tất cả</option>
               <option value="true">Đang mở</option>
@@ -94,7 +89,6 @@ export function SearchSite({ searchValue, onReset, onChangeForm }: SearchTicketF
             <SelectBox
               value={filter.in_system || ""}
               onChange={(value) => handleChangeFilter("in_system", value)}
-              className=" h-12"
             >
               <option value="">Tất cả</option>
               <option value="true">Trong hệ thống</option>

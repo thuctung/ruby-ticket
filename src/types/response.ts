@@ -96,3 +96,16 @@ export type AdminReportResponseType = {
   status: string;
   site_code: string;
 };
+export type CompanyType = {
+  company_code: string;
+  company_name: string;
+  id: string;
+};
+
+export type LocationType = {
+  code: string;
+  en: string;
+  ko: string;
+  zh: string;
+  name: string;
+};
