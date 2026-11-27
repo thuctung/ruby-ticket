@@ -13,7 +13,14 @@ export async function POST(request: Request) {
   const { name, status, in_system, status_affilate } = searchValue;
   let query = supabaseAdmin
     .from(DB_TABLE_NAME.SITES)
-    .select("*")
+    .select(
+      `
+    *,
+    link_image_site (
+      url
+    )
+  `
+    )
     .order("order", { ascending: true });
   if (name) {
     query.ilike("name", `%${name}%`);

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import LazyImage from "./lazy-image";
 
 type Props = {
   image: string;
@@ -12,16 +13,15 @@ type Props = {
 export default function HoverImage({ image, hoverImage, className, alt }: Props) {
   return (
     <div className={`group relative overflow-hidden ${className}`}>
-      {/* default image */}
-      <Image
-        src={image}
+      <LazyImage
         alt={alt || ""}
-        loading="lazy"
+        src={image}
         fill
+        wrapperClassName="h-full"
         className="object-cover transition-all duration-500 ease-out group-hover:scale-110 group-hover:opacity-0 group-hover:brightness-110"
       />
-
       {/* hover image */}
+
       <Image
         src={hoverImage}
         alt={alt || ""}

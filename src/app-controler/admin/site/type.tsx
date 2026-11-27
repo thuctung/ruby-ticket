@@ -20,4 +20,8 @@ export type SiteType = {
   company_code: string;
   location_code: string;
   link_image_site?: string[];
+  description_zh?: string;
+  description_vi?: string;
+  description_ko?: string;
+  description_en?: string;
 };

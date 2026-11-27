@@ -11,7 +11,7 @@ export function SelectBox({
   return (
     <select
       {...prop}
-      className={`w-full bg-white border-none shadow-sm rounded-2xl p-2 outline-none cursor-pointer ${className}`}
+      className={`w-full h-10 rounded-md border border-slate-300 bg-white px-3 text-sm font-normal text-slate-900 focus:border-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700/30 ${className}`}
       value={value}
       onChange={(e) => onChange && onChange(e.target.value)}
     >

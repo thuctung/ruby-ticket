@@ -77,71 +77,33 @@ export const TESTIMONIALS = [
       "Là người hay đi du lịch nhiều nơi, mình đánh giá đây là một trong những nền tảng đặt vé mượt và đáng tin cậy nhất hiện nay.",
   },
 ];
-export const EXPERIENCES: ExperienceCard[] = [
-  {
-    key: "BNC",
-    nameKey: "homepage.sunworldBaNaHills",
-    taglineKey: "homepage.top",
-    badgeKey: "homepage.sunworldDescription",
-    image1: "bana1.jpg",
-    image2: "bana2.jpg",
-    color: "from-amber-500 to-orange-600",
-    category: "Theme Park",
-    alt: "Cáp treo Bà Nà Hills",
-  },
-  {
-    key: "VINPER",
-    nameKey: "homepage.vinpearlNamHoiAn",
-    taglineKey: "homepage.hot",
-    badgeKey: "homepage.vinpearlDescription",
-    image1: "namha1.jpg",
-    image2: "namha2.jpg",
-    color: "from-blue-500 to-cyan-600",
-    category: "Water Park",
-    alt: "Vinpearl Nam Hội An",
-  },
-  {
-    key: "KWHOIAN",
-    nameKey: "homepage.hoiAnMemories",
-    taglineKey: "homepage.mustSee",
-    badgeKey: "homepage.hoiAnMemoriesDescription",
-    image1: "hoian1.jpg",
-    image2: "hoian2.jpg",
-    color: "from-rose-500 to-pink-600",
-    category: "Show",
-    alt: "Hội An Ancient Town",
-  },
-  {
-    key: "NUITHANTAI",
-    nameKey: "homepage.thanTaiMountain",
-    taglineKey: "homepage.relax",
-    badgeKey: "homepage.thanTaiDescription",
-    image1: "thantai1.jpg",
-    image2: "thantai2.jpg",
-    color: "from-emerald-500 to-rose-600",
-    category: "Hot Spring",
-    alt: "Núi Thần Tài",
-  },
-  {
-    key: "DUTHUYEN",
-    nameKey: "homepage.hanRiverCruise",
-    taglineKey: "homepage.chill",
-    badgeKey: "homepage.hanRiverDescription",
-    image1: "duthuyen1.jpg",
-    image2: "duthuyen2.jpg",
-    color: "from-indigo-500 to-blue-600",
-    category: "River Cruise",
-    alt: "Du thuyền sông Hàn",
-  },
-  {
-    key: "MIKAZUKI",
-    nameKey: "homepage.mikazuki",
-    taglineKey: "homepage.hot",
-    badgeKey: "homepage.mikazukiDescription",
-    image1: "mikazuki1.webp",
-    image2: "mikazuki2.webp",
-    color: "from-indigo-500 to-blue-600",
-    category: "Mikayuki",
-    alt: "Mikazuki",
-  },
-] as const;
+
+export const getCategoryText = (siteCode: string) => {
+  switch (siteCode) {
+    case "BNC":
+      return {
+        text: "Theme Park",
+        color: "from-amber-500 to-orange-600",
+      };
+    case "VINPER":
+      return {
+        text: "Water Park",
+        color: "from-blue-500 to-cyan-600",
+      };
+    case "KWHOIAN":
+      return {
+        text: "Show",
+        color: "from-rose-500 to-pink-600",
+      };
+    case "DUTHUYEN":
+      return {
+        text: "River Cruise",
+        color: "from-blue-500 to-cyan-600",
+      };
+    default:
+      return {
+        text: "Discovery",
+        color: "from-indigo-500 to-blue-600",
+      };
+  }
+};

@@ -10,8 +10,8 @@ export default async function HomePage({ params }: { params: Promise<{ lng: stri
 
   const { data }: any = await clientSupbase
     .from(DB_TABLE_NAME.SITES)
-    .select("code,name,pre_price,status")
+    .select(`* , link_image_site ( url)`)
     .order("order", { ascending: true })
-    .limit(20);
+    .limit(6);
   return <HomePageController lng={lng} sites={data || []} />;
 }

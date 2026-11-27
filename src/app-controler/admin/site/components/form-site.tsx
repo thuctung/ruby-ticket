@@ -260,6 +260,40 @@ export default function FormSite({
               </section>
 
               <section className="es-card">
+                <h3>Mô tả</h3>
+
+                <div className="es-fields two">
+                  <Field label="Tiếng Việt">
+                    <input
+                      value={form.description_vi ?? ""}
+                      onChange={(e) => set("description_vi", e.target.value)}
+                    />
+                  </Field>
+
+                  <Field label="Tiếng Anh">
+                    <input
+                      value={form.description_en ?? ""}
+                      onChange={(e) => set("description_en", e.target.value)}
+                    />
+                  </Field>
+
+                  <Field label="Tiếng Hàn">
+                    <input
+                      value={form.description_ko ?? ""}
+                      onChange={(e) => set("description_ko", e.target.value)}
+                    />
+                  </Field>
+
+                  <Field label="Tiếng Trung">
+                    <input
+                      value={form.description_zh ?? ""}
+                      onChange={(e) => set("description_zh", e.target.value)}
+                    />
+                  </Field>
+                </div>
+              </section>
+
+              <section className="es-card">
                 <div className="es-fields three">
                   <Field label="Giá quảng cáo" error={errors.pre_price}>
                     <input
@@ -294,7 +328,7 @@ export default function FormSite({
             </div>
 
             {/* Image */}
-            {/* <section className="es-card es-image">
+            <section className="es-card es-image">
               <h3>Ảnh site</h3>
 
               <div className="es-image-row">
@@ -360,7 +394,7 @@ export default function FormSite({
                 hidden
                 onChange={(e) => handleFile(e.target.files?.[0])}
               />
-            </section> */}
+            </section>
           </div>
         </main>
 
