@@ -1,0 +1,61 @@
+{
+  "summary": "Regulations on electronic ticket delivery, requests for ticket changes or cancellations, and refund processing for tourism services.",
+  "sections": [
+    {
+      "heading": "1. Ticket Delivery Methods",
+      "paragraphs": [
+        "Ruby Travel provides tickets in electronic format or other formats described on the product page. Tickets are delivered via email, Zalo, phone number, or another ticket delivery channel selected or provided by the customer during the booking process.",
+        "Ticket delivery time depends on payment status, the supplier's ticket issuance capability, and the order information. If tickets are not received within the expected timeframe, customers should check their spam folder/messages and contact Ruby Travel for assistance."
+      ]
+    },
+    {
+      "heading": "2. Checking Tickets After Receipt",
+      "bullets": [
+        "Check the product name, quantity, date of use, ticket type, and applicable conditions.",
+        "Notify Ruby Travel immediately if the ticket is not received, contains incorrect information, or appears to have an invalid ticket code.",
+        "Do not modify the ticket content, QR code, or any information displayed on the ticket."
+      ]
+    },
+    {
+      "heading": "3. Ticket Changes and Date Changes",
+      "paragraphs": [
+        "Ticket exchanges, date changes, ticket type changes, or other information changes are subject to the conditions of each product and supplier. Some tickets may not be changeable after issuance or once they have been used.",
+        "Customers must submit their requests via {{phone}} or {{email}} before the date of use, providing the order code and details of the requested changes. Ruby Travel will check the supplier's conditions and notify customers of any additional fees, if applicable, before proceeding.",
+        "A request is considered approved only when Ruby Travel confirms it in writing or by message through an official communication channel."
+      ]
+    },
+    {
+      "heading": "4. Ticket Cancellation and Refund Conditions",
+      "paragraphs": [
+        "Cancellation and refund conditions are subject to the policy of each ticket type or supplier, as well as the information published on the product page or provided before payment. Customers should carefully review these conditions before placing an order.",
+        "Ruby Travel may not issue a refund for tickets designated as non-refundable, already used, expired, issued under promotional programs with non-cancellation conditions, or otherwise ineligible for refunds under the supplier's policy, unless otherwise required by law or a specific agreement.",
+        "If a service is cancelled or cannot be provided due to an issue attributable to Ruby Travel or the supplier, Ruby Travel will coordinate with the customer to arrange an appropriate solution, such as rescheduling, changing to another product, or refunding the eligible amount in accordance with the applicable notice and regulations."
+      ]
+    },
+    {
+      "heading": "5. Refund Request Process",
+      "bullets": [
+        "Step 1: The customer submits a request, order code, reason, and contact information.",
+        "Step 2: Ruby Travel checks the ticket status, transaction details, and the supplier's refund conditions.",
+        "Step 3: Ruby Travel notifies the customer of the result, refundable amount (if any), applicable deductions (if any), and refund method.",
+        "Step 4: After the customer confirms the necessary information, Ruby Travel or the relevant service provider processes the refund and notifies the customer of the result."
+      ]
+    },
+    {
+      "heading": "6. Refund Methods and Processing Time",
+      "paragraphs": [
+        "Refunds will be made to the original payment method or another valid account agreed upon by the parties, subject to the capabilities of the bank or payment provider and applicable regulations. Ruby Travel will never ask customers to provide their password or OTP to receive a refund.",
+        "Estimated processing hours are from 6:00 AM to 4:00 PM after the request has been approved and Ruby Travel has received all required information. The time it takes for the refunded amount to appear in the customer's account may depend on the bank or payment provider."
+      ]
+    },
+    {
+      "heading": "7. Important Cases to Note",
+      "bullets": [
+        "The customer provides incorrect contact information or fails to check the ticket after receiving it.",
+        "The customer arrives on the wrong date or at the wrong location, or does not meet the usage conditions stated on the ticket.",
+        "The ticket has already been scanned, used, transferred, or its QR code has been exposed, resulting in use by another person.",
+        "Force majeure events or operational changes by the supplier will be considered in accordance with the ticket conditions and applicable laws."
+      ]
+    }
+  ]
+}

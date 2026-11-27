@@ -1,0 +1,43 @@
+{
+  "summary": "Payment methods, transaction confirmation procedures, and instructions for handling unsuccessful payments.",
+  "sections": [
+    {
+      "heading": "1. Payment Methods",
+      "paragraphs": [
+        "Ruby Travel provides payment methods displayed at the order checkout stage. These may include bank transfers, QR payments, or online payment methods integrated at the time of the transaction.",
+        "Customers should only make payments using information provided through the official Ruby Travel website or official communication channels. Do not transfer money to any unverified personal account."
+      ]
+    },
+    {
+      "heading": "2. Payment Process",
+      "bullets": [
+        "Customers should check their ticket details, date of use, quantity, recipient information, and total amount.",
+        "Select an available payment method and follow the provided instructions.",
+        "The system or Ruby Travel staff will verify the transaction. An order is only confirmed as paid after Ruby Travel receives a successful transaction notification or verifies that the funds have been credited to the account.",
+        "Once payment is confirmed and the tickets are issued, Ruby Travel will send the ticket information using the contact details provided by the customer."
+      ]
+    },
+    {
+      "heading": "3. Bank Transfer Notes",
+      "bullets": [
+        "Enter the exact payment amount and transfer description/order code as instructed.",
+        "Do not modify the payment description if the system requires a specific reference code.",
+        "Keep the transaction receipt until the order has been confirmed.",
+        "Never share your banking password, PIN, or OTP with anyone."
+      ]
+    },
+    {
+      "heading": "4. Payment Not Yet Recorded",
+      "paragraphs": [
+        "If money has been deducted from your account but the order is still displayed as unpaid, do not immediately make another payment. Please contact {{phone}} or {{email}} and provide your order code and transaction receipt so Ruby Travel can verify the transaction with the bank or payment provider.",
+        "The time required for transaction reconciliation and refunds (if duplicate, incorrect, or incomplete transactions occur) depends on the bank, payment provider, and verification results."
+      ]
+    },
+    {
+      "heading": "5. Invoices and Payment Documents",
+      "paragraphs": [
+        "Customers who require an invoice should provide the necessary invoicing information and submit their request within the applicable timeframe. Invoices are issued in accordance with the legal status and obligations of the selling entity."
+      ]
+    }
+  ]
+}

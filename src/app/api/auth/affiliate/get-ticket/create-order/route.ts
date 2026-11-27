@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { AGENT, DB_TABLE_NAME } from "@/commons/constant";
+import { DB_TABLE_NAME, ROLES } from "@/commons/constant";
 import { ParamCreateTicketAgentType } from "@/types/ticket";
 
 export async function POST(req: Request) {
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     p_user_email: email,
     p_date_use: date_use,
     p_order_des: "Rút vé",
-    p_payment_method: AGENT,
+    p_payment_method: ROLES.AFFILIATE,
     p_side_code: side_code,
     p_third_party_num: thirdPartyNumber,
   });

@@ -1,10 +1,10 @@
 import { formatVND } from "@/lib/money";
 
-type RevenueProps = { total: number; ticket: number; from: string; to: string };
+type RevenueProps = { total: number; ticket: number;cancel:number; from: string; to: string,refundCharge:number };
 
-export function Revenue({ total, ticket, from, to }: RevenueProps) {
+export function Revenue({ total, ticket,cancel, from, to,refundCharge }: RevenueProps) {
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 max-w-2xl">
+    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
       <div className="flex items-center gap-2 mb-6 text-gray-500">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,20 +28,35 @@ export function Revenue({ total, ticket, from, to }: RevenueProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
           <p className="text-blue-600 text-sm font-semibold uppercase tracking-wider mb-1">
-            Tổng tiền
+            Số vé bán
           </p>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-blue-900">{formatVND(total)}</span>
+            <span className="text-2xl font-bold text-blue-900">{ticket}</span>
           </div>
         </div>
 
         <div className="bg-orange-50 p-4 rounded-xl border border-orange-100">
           <p className="text-orange-600 text-sm font-semibold uppercase tracking-wider mb-1">
-            Số vé đã bán
+            Số vé hủy
           </p>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-orange-900">{ticket}</span>
-            <span className="text-orange-700 font-medium">vé</span>
+            <span className="text-2xl font-bold text-orange-900">{cancel}</span>
+          </div>
+        </div>
+        <div className="bg-green-50 p-4 rounded-xl border border-green-100">
+          <p className="text-green-600 text-sm font-semibold uppercase tracking-wider mb-1">
+            Tổng tiền
+          </p>
+          <div className="flex items-baseline gap-1">
+            <span className="text-2xl font-bold text-green-900">{formatVND(total)}</span>
+          </div>
+        </div>
+        <div className="bg-green-50 p-4 rounded-xl border border-green-100">
+          <p className="text-green-600 text-sm font-semibold uppercase tracking-wider mb-1">
+            Phí hủy vé
+          </p>
+          <div className="flex items-baseline gap-1">
+            <span className="text-2xl font-bold text-green-900">{formatVND(refundCharge)}</span>
           </div>
         </div>
       </div>

@@ -1,17 +1,13 @@
-"use client";
-
 import { Banner } from "./components/banner";
 import TravelServices from "./components/TravelServices";
 import { ExperiencesSection } from "./components/ExperiencesSection";
 import { EXPERIENCES } from "./contants";
 import { CollaboratorSection } from "./components/CollaboratorSection";
-import Feedback from "./components/Feedback";
 import { FaqSection } from "./components/FaqSection";
 import { SiteType } from "@/types/ticket";
+import CompanyOwnerInfo from "./components/CompanyInfo";
 
-export default function HomePage({ sites }: { sites: SiteType[] }) {
-  const lang = "vi";
-
+const HomePageController = async ({ lng, sites }: { lng: string; sites: SiteType[] }) => {
   const sideCard: any = () => {
     const list = sites
       .map((item) => {
@@ -42,14 +38,12 @@ export default function HomePage({ sites }: { sites: SiteType[] }) {
   return (
     <div className="bg-white text-neutral-900 antialiased font-sans selection:bg-blue-500 selection:text-white">
       <Banner />
-
       <TravelServices />
-
-      <ExperiencesSection lang={lang} sidseCard={sideCard()} fallbackExperiences={EXPERIENCES} />
-      {/* <TopPartnersSection /> */}
-      <Feedback />
-      <CollaboratorSection lang={lang} />
-      <FaqSection lang={lang} />
+      <ExperiencesSection sidseCard={sideCard()} fallbackExperiences={EXPERIENCES} />
+      <CollaboratorSection />
+      <FaqSection />
+      <CompanyOwnerInfo lng={lng} />
     </div>
   );
-}
+};
+export default HomePageController;

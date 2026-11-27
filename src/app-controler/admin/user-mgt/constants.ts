@@ -1,14 +1,13 @@
-import { ACC_STATUS } from "@/commons/constant";
+import { STATUS_COMMON_TYPE } from "@/commons/constant";
 import { StatusType } from "@/types";
 
-export const CUSTOMER = "customer";
 export const getStatusName = (status: string) => {
   switch (status) {
-    case ACC_STATUS.APPROVED:
+    case STATUS_COMMON_TYPE.APPROVED:
       return "Đang hoạt động";
-    case ACC_STATUS.PENDING:
+    case STATUS_COMMON_TYPE.PENDING:
       return "Đợi duyệt";
-    case ACC_STATUS.SUSPENDED:
+    case STATUS_COMMON_TYPE.SUSPENDED:
       return "Tạm dừng";
     default:
       return "";
@@ -16,13 +15,13 @@ export const getStatusName = (status: string) => {
 };
 
 export const listAccStatus: StatusType[] = [
-  { title: getStatusName(ACC_STATUS.APPROVED), value: ACC_STATUS.APPROVED },
-  { title: getStatusName(ACC_STATUS.PENDING), value: ACC_STATUS.PENDING },
-  { title: getStatusName(ACC_STATUS.SUSPENDED), value: ACC_STATUS.SUSPENDED },
+  { title: getStatusName(STATUS_COMMON_TYPE.APPROVED), value: STATUS_COMMON_TYPE.APPROVED },
+  { title: getStatusName(STATUS_COMMON_TYPE.PENDING), value: STATUS_COMMON_TYPE.PENDING },
+  { title: getStatusName(STATUS_COMMON_TYPE.SUSPENDED), value: STATUS_COMMON_TYPE.SUSPENDED },
 ];
 
 export const statusClass: Record<string, string> = {
-  [ACC_STATUS.PENDING]: "text-yellow-600 bg-yellow-100",
-  [ACC_STATUS.APPROVED]: "text-green-600 bg-green-100",
-  [ACC_STATUS.SUSPENDED]: "text-red-600 bg-red-100",
+  [STATUS_COMMON_TYPE.PENDING]: "text-yellow-600 bg-yellow-100",
+  [STATUS_COMMON_TYPE.APPROVED]: "text-green-600 bg-green-100",
+  [STATUS_COMMON_TYPE.SUSPENDED]: "text-red-600 bg-red-100",
 };

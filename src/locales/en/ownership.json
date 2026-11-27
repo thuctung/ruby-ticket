@@ -1,0 +1,61 @@
+{
+  "slug": "thong-tin-chu-so-huu",
+  "title": "homepage.footer.ownership",
+  "summary": "Information about the entity that owns, manages, and operates the Ruby Travel website, along with its official contact details.",
+  "sections": [
+    {
+      "heading": "1. Website Ownership Information",
+      "paragraphs": [
+        "Ruby Travel is a platform that provides information, consultation, and customer support for finding and purchasing tickets to attractions, entertainment venues, recreational activities, and other travel services.",
+        "The Ruby Travel website is managed and operated by the following owner:"
+      ],
+      "bullets": [
+        "Legal entity name:  Ruby Travel",
+        "Brand name: {{brand}}",
+        "Tax identification number: {{taxCode}}",
+        "Registered business address: 72 Hoang Văn Thai, Hoa Khanh, Đa Nang , Viet Nam",
+        "Legal representative: {{personHost}}",
+        "Position: Director"
+      ]
+    },
+    {
+      "heading": "2. Website Information",
+      "bullets": [
+        "Website address: {{domain}}",
+        "Business activities: Tourism, ticket booking services for attractions and entertainment venues.",
+        "Service coverage: Domestic and international customers."
+      ]
+    },
+    {
+      "heading": "3. Official Contact Information",
+      "paragraphs": [
+        "Customers can contact Ruby Travel through the official channels below for consultation, ticket booking assistance, payment support, and assistance with service-related issues."
+      ],
+      "bullets": [
+        "Hotline: {{phone}}",
+        "Email: {{email}}",
+        "Office address: 72 Hoang Van Thai Street, Hoa Minh Ward, Lien Chieu District, Da Nang"
+      ]
+    },
+    {
+      "heading": "4. Management and Operational Responsibilities",
+      "paragraphs": [
+        "The website owner is responsible for managing, maintaining, and operating the Ruby Travel website; providing information about products, services, and prices; and receiving and handling customer support requests, feedback, and complaints in accordance with the published policies.",
+        "Ruby Travel strives to provide clear and transparent information and protect customers' legitimate rights and interests throughout their use of the services."
+      ]
+    },
+    {
+      "heading": "5. Intellectual Property Rights",
+      "paragraphs": [
+        "The Ruby Travel brand name, website content, images, interface, and other website components are protected under applicable intellectual property laws, except for content, images, and trademarks owned by third parties.",
+        "Any copying, use, or commercial exploitation of website content without the owner's consent may be subject to legal action in accordance with applicable laws."
+      ]
+    },
+    {
+      "heading": "6. Information Commitment",
+      "paragraphs": [
+        "Ruby Travel confirms that the ownership details and contact channels published on this website are official. If there are any changes to the owner, address, or contact information, this page will be updated to help customers access the latest information."
+      ]
+    }
+  ]
+}

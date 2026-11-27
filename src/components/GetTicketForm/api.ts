@@ -1,5 +1,6 @@
 import api from "@/axios";
 import {
+  GET_PRICE_AGENT_DEFAULT,
   GET_PRODUCT_IN_SYSTEM,
   GET_SITE_BY_FORM_TYPE,
   GET_SITE_BY_STATUS,
@@ -13,6 +14,7 @@ import { CommonType } from "@/types";
 import { groupTickets } from "@/helpers/genCode";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
+import { get } from "lodash";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 const clientSupbase = createSupabaseBrowserClient();
@@ -33,10 +35,9 @@ export const getPriceBuyAgentLevel = async (site_code: string, agent_code: strin
   try {
     const { data, error } = await clientSupbase
       .from(DB_TABLE_NAME.AGENT_PRICE)
-      .select("price")
+      .select("price, product_code,type,agent_code")
       .eq("agent_code", agent_code)
-      .eq("site_code", site_code)
-      .maybeSingle();
+      .eq("site_code", site_code);
     if (error) {
       setToastMessage(error.message);
     }
@@ -63,6 +64,7 @@ export const getProductBySiteSun = async (siteCodes: string, date: string) => {
         `SAP không cấu hình mở bán cho sản phẩm vào ngày ${dayjs(date, SERVER_DATE_FORMAT).format(BASIC_DATE_FORMAT)}`
       );
     }
+
     return groupTickets(data.result);
   } catch (e) {
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
@@ -97,5 +99,17 @@ export const getSiteByStatus = async (status?: boolean) => {
     setToastMessage(error.message || "Có lỗi xảy ra");
   } finally {
     setGlobalLoading(false);
+  }
+};
+
+export const getListAgentPriceDefaultBySite = async (site_code: string, agent_code: string) => {
+  try {
+    const { data }: any = await api.post(GET_PRICE_AGENT_DEFAULT, { site_code, agent_code });
+    if (data.data.length) {
+      return get(data, ["data", 0, "price"]);
+    }
+    return 0;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
   }
 };

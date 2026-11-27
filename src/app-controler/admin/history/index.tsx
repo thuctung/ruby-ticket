@@ -13,7 +13,7 @@ import { AdminReportResponseType, ListAffDropdownType } from "./type";
 import { BASIC_DATE_FORMAT, dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
 import { get } from "lodash";
 import { statusClass, StatusData } from "@/app-controler/affi/stats/contants";
-import { CUSTOMER } from "@/commons/constant";
+import { ROLES } from "@/commons/constant";
 import { getSiteByStatus } from "@/components/GetTicketForm/api";
 
 export default function AdminHistoryPageControler() {
@@ -106,7 +106,7 @@ export default function AdminHistoryPageControler() {
       key: "payment_method",
       title: "Người mua",
       render: (row) =>
-        row.payment_method === CUSTOMER ? (
+        row.payment_method === ROLES.CUSTOMER ? (
           <span className="text-green-500">Khách lẻ</span>
         ) : (
           <span className="text-yellow-500">Đại lý</span>

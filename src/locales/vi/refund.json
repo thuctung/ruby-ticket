@@ -1,0 +1,61 @@
+{
+  "summary": "Quy định về phương thức cung cấp vé điện tử, yêu cầu đổi/hủy và xử lý hoàn tiền đối với dịch vụ du lịch.",
+  "sections": [
+    {
+      "heading": "1. Phương thức cung cấp vé",
+      "paragraphs": [
+        "Ruby Travel cung cấp vé dưới hình thức vé điện tử hoặc hình thức khác được mô tả tại trang sản phẩm. Vé được gửi qua email, Zalo, số điện thoại hoặc kênh nhận vé đã được khách hàng lựa chọn/cung cấp trong quá trình đặt hàng.",
+        "Thời điểm gửi vé phụ thuộc vào trạng thái thanh toán, khả năng phát hành của nhà cung cấp và thông tin đơn hàng. Nếu chưa nhận được vé trong thời gian dự kiến, khách hàng vui lòng kiểm tra thư rác/tin nhắn và liên hệ Ruby Travel để được hỗ trợ."
+      ]
+    },
+    {
+      "heading": "2. Kiểm tra vé sau khi nhận",
+      "bullets": [
+        "Kiểm tra tên sản phẩm, số lượng, ngày sử dụng, loại vé và thông tin áp dụng.",
+        "Thông báo ngay cho Ruby Travel nếu vé không nhận được, sai thông tin hoặc mã vé có dấu hiệu không hợp lệ.",
+        "Không tự ý chỉnh sửa nội dung, mã QR hoặc thông tin trên vé."
+      ]
+    },
+    {
+      "heading": "3. Điều kiện đổi vé hoặc thay đổi ngày sử dụng",
+      "paragraphs": [
+        "Việc đổi vé, đổi ngày, đổi loại vé hoặc thay đổi thông tin phụ thuộc vào điều kiện của từng sản phẩm và nhà cung cấp. Một số loại vé có thể không hỗ trợ đổi sau khi phát hành hoặc sau khi đã sử dụng.",
+        "Khách hàng cần gửi yêu cầu qua {{phone}} hoặc {{email}} trước ngày sử dụng, cung cấp mã đơn hàng và nội dung cần thay đổi. Ruby Travel sẽ kiểm tra điều kiện với nhà cung cấp và thông báo phí phát sinh (nếu có) trước khi thực hiện.",
+        "Yêu cầu chỉ được xem là chấp thuận khi Ruby Travel xác nhận bằng văn bản/tin nhắn qua kênh liên hệ chính thức."
+      ]
+    },
+    {
+      "heading": "4. Điều kiện hủy vé và hoàn tiền",
+      "paragraphs": [
+        "Điều kiện hủy và hoàn tiền được áp dụng theo chính sách của từng loại vé/nhà cung cấp và thông tin được công bố tại trang sản phẩm hoặc trước khi khách hàng thanh toán. Khách hàng cần đọc kỹ điều kiện này trước khi đặt mua.",
+        "Trường hợp vé được xác định là không hoàn, đã sử dụng, đã quá hạn, phát hành theo chương trình ưu đãi có điều kiện không hủy hoặc thuộc trường hợp nhà cung cấp không chấp nhận hoàn, Ruby Travel có thể không thực hiện hoàn tiền, trừ khi pháp luật hoặc thỏa thuận cụ thể có quy định khác.",
+        "Nếu dịch vụ bị hủy hoặc không thể cung cấp do lỗi từ Ruby Travel/nhà cung cấp, Ruby Travel sẽ phối hợp với khách hàng để áp dụng phương án phù hợp như đổi lịch, đổi sản phẩm hoặc hoàn khoản tiền đủ điều kiện theo thông báo và quy định áp dụng."
+      ]
+    },
+    {
+      "heading": "5. Quy trình yêu cầu hoàn tiền",
+      "bullets": [
+        "Bước 1: Khách hàng gửi yêu cầu, mã đơn hàng, lý do và thông tin liên hệ.",
+        "Bước 2: Ruby Travel kiểm tra tình trạng vé, giao dịch và điều kiện hoàn của nhà cung cấp.",
+        "Bước 3: Ruby Travel thông báo kết quả, số tiền được hoàn (nếu có), khoản phí khấu trừ hợp lệ (nếu có) và phương thức hoàn.",
+        "Bước 4: Sau khi khách hàng xác nhận thông tin cần thiết, Ruby Travel/đơn vị liên quan tiến hành hoàn tiền và thông báo kết quả."
+      ]
+    },
+    {
+      "heading": "6. Phương thức và thời gian hoàn tiền",
+      "paragraphs": [
+        "Tiền được hoàn về phương thức thanh toán ban đầu hoặc tài khoản hợp lệ do các bên thống nhất, tùy khả năng của ngân hàng/đơn vị thanh toán và quy định áp dụng. Ruby Travel không yêu cầu khách hàng cung cấp mật khẩu hoặc mã OTP để nhận tiền hoàn.",
+        "Thời gian xử lý dự kiến: 6:00-16:00 kể từ khi yêu cầu được duyệt và Ruby Travel có đủ thông tin. Thời gian tiền hiển thị trong tài khoản có thể phụ thuộc vào ngân hàng hoặc đơn vị thanh toán."
+      ]
+    },
+    {
+      "heading": "7. Trường hợp cần lưu ý",
+      "bullets": [
+        "Khách hàng nhập sai thông tin liên hệ hoặc không kiểm tra vé sau khi nhận.",
+        "Khách hàng đến sai ngày/địa điểm hoặc không đáp ứng điều kiện sử dụng được ghi trên vé.",
+        "Vé đã được quét, sử dụng, chuyển nhượng hoặc bị lộ mã QR dẫn đến việc sử dụng bởi người khác.",
+        "Các trường hợp bất khả kháng hoặc thay đổi vận hành từ nhà cung cấp sẽ được xem xét theo điều kiện vé và quy định pháp luật."
+      ]
+    }
+  ]
+}

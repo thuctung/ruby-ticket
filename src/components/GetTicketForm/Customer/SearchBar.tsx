@@ -5,13 +5,14 @@ import DropdownSearch from "@/components/ui/dropdown-search";
 import { SiteType } from "@/types/ticket";
 import { Info, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { toDate } from "../constants";
+import { BOOKING_FORM_TYPE, toDate } from "../constants";
 
 type SearchBarProp = {
   siteCode: string;
   setSiteCode: (value: string) => void;
   listSite: SiteType[];
   dateUse: string;
+  formType?: string;
   setDateUse: (value: string) => void;
 };
 
@@ -21,6 +22,7 @@ export default function SearchBar({
   setDateUse,
   setSiteCode,
   listSite,
+  formType,
 }: SearchBarProp) {
   const [state, setState] = useState({
     siteCode: siteCode,
@@ -52,7 +54,7 @@ export default function SearchBar({
       <div className="rounded-2xl bg-white p-6 shadow-xl ring-1 ring-black/5 sm:p-8">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-end">
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">Chọn công viên</label>
+            <label className="text-[11px] font-semibold">Chọn công viên</label>
             <DropdownSearch
               options={lisStateCover}
               value={state.siteCode}
@@ -63,7 +65,7 @@ export default function SearchBar({
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">Ngày sử dụng</label>
+            <label className="text-[11px] font-semibold">Ngày sử dụng</label>
             <DatePickerCustom
               name="date_use"
               id="date_use"
@@ -73,19 +75,12 @@ export default function SearchBar({
               className="shadow-none border border-gray-200 h-12 rounded-xl"
             />
           </div>
-
           <button
-            className="flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-red-700 md:h-[50px]"
             onClick={handleSearch}
+            className="h-10 rounded-md bg-rose-700 px-5 text-sm font-medium text-white hover:bg-rose-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2"
           >
-            <Search size={18} />
             Tìm kiếm
           </button>
-        </div>
-
-        <div className="mt-5 flex items-start gap-2 text-sm text-gray-500">
-          <Info size={16} className="mt-0.5 shrink-0" />
-          <span>Vui lòng chọn đúng ngày sử dụng. </span>
         </div>
       </div>
     </section>

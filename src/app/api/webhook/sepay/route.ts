@@ -1,5 +1,4 @@
-import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
-import { DB_TABLE_NAME, TYPE_TRANSFER } from "@/commons/constant";
+import { DB_TABLE_NAME, STATUS_COMMON_TYPE, TYPE_TRANSFER } from "@/commons/constant";
 import { env } from "@/lib/env";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
@@ -36,11 +35,11 @@ export async function POST(req: any) {
           .eq("payment_code", payment_code)
           .single();
 
-        if (order && order.status === KEY_MODIFY_DATA.PENDING) {
-          let status_payment = KEY_MODIFY_DATA.SUCCESS;
+        if (order && order.status === STATUS_COMMON_TYPE.PENDING) {
+          let status_payment = STATUS_COMMON_TYPE.SUCCESS;
           let description = "";
           if (transferAmount < order.total_amount) {
-            status_payment = KEY_MODIFY_DATA.ERROR;
+            status_payment = STATUS_COMMON_TYPE.ERROR;
             description = "Số tiền thanh toán không đúng";
             resMessage = "Số tiền thanh toán không đúng";
           }

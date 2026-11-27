@@ -1,0 +1,92 @@
+"use client";
+
+import { useState } from "react";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+
+import { BASIC_DATE_FORMAT, dayjsEx } from "@/helpers/dateTime";
+import { SearchTicketStatus } from "./components/searchTicketForm";
+
+import { CustomTable, TableColumn } from "@/components/ui/customs/table";
+
+import { get } from "lodash";
+import { statusClass, StatusData } from "../../constant";
+import { SiteType } from "@/types/ticket";
+import { ParamStatusTicketType, TicketStatusType } from "../../type";
+import { getStatusTicket } from "../../api";
+import { toast } from "react-toastify";
+
+export default function TicketStatus({ listSideSun }: { listSideSun: SiteType[] }) {
+  const [ticketLits, setTicketList] = useState<TicketStatusType[]>([]);
+
+  const handleSearch = async (value: ParamStatusTicketType) => {
+    if (!value.orderCode || !value.siteCode) {
+      toast.error("Chưa chọn thông tin");
+      return;
+    }
+    const data = await getStatusTicket(value);
+    if (!data.length) {
+      toast.warning("Không có thông tin đơn hàng");
+      return;
+    }
+    setTicketList(data);
+  };
+
+  const columnAffStats: TableColumn<TicketStatusType>[] = [
+    {
+      key: "productName",
+      title: "Tên vé",
+      align: "left",
+    },
+    {
+      key: "ticketNumber",
+      title: "Mã vé ",
+    },
+    {
+      key: "status",
+      title: "Hiệu lực",
+      align: "center",
+      render: (row) => (
+        <span className={statusClass[row.status]}>{get(StatusData, row.status)}</span>
+      ),
+    },
+    {
+      key: "usageStatus",
+      title: "Trạng thái",
+      align: "center",
+      render: (row) => (
+        <span className={statusClass[row.usageStatus]}>{get(StatusData, row.usageStatus)}</span>
+      ),
+    },
+    {
+      key: "validDateFrom",
+      title: "Ngày hiệu lực",
+      render: (row) => dayjsEx(row.validDateFrom).format(BASIC_DATE_FORMAT),
+      align: "center",
+    },
+    {
+      key: "validDateTo",
+      title: "Ngày hết hạn",
+      align: "center",
+      render: (row) => dayjsEx(row.validDateTo).format(BASIC_DATE_FORMAT),
+    },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <Card className="rounded-2xl">
+        <CardHeader>
+          <CardTitle>Tra cứu thông tin vé </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <Separator />
+          <SearchTicketStatus onSearch={handleSearch} listSite={listSideSun} />
+
+          <Separator />
+          <CustomTable columns={columnAffStats} data={ticketLits} totalPages={1} />
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

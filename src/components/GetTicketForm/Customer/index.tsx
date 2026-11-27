@@ -1,19 +1,19 @@
 "use client";
 
 import { AlertCircle } from "lucide-react";
-import { BookingFormProps, CustomerInfoSchema } from "../constants";
+import { BOOKING_FORM_TYPE, BookingFormProps, CustomerInfoSchema } from "../constants";
 import { CommonType } from "@/types";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { useMemo, useState } from "react";
 import SearchBar from "./SearchBar";
-import CustomerInfoForm from "./CustomerInfoForm";
-import TicketCard from "./TicketCard";
 import TicketTabs from "./TicketTabs";
 import { ProductBanaType } from "@/types/ticket";
 import { geNoteSiteCode } from "./constants";
 import OrderAffSummary from "../Affilate/Summary";
 import { getOrder } from "../Affilate/constants";
 import { SITE_CODES } from "@/commons/constant";
+import ProductCard from "./ProductCard";
+import SummaryCustomer from "./SumaryCustomer";
 
 export default function CustomerForm({
   siteCode,
@@ -25,10 +25,12 @@ export default function CustomerForm({
   total,
   siteName,
   selectedLines,
-  agentPrice,
+  currentSite,
+  mapAgentPrice,
   formType,
   loading,
   exportGuideTicket,
+  agentPriceDefault,
   setExportGuideTicket,
   setQty,
   setFieldFormData,
@@ -70,7 +72,7 @@ export default function CustomerForm({
       result = tickets.filter((item) => item.personType === filter);
     }
     if (siteCode === SITE_CODES.BANAHILL) {
-      return result.sort((a, b) => getOrder(a.id) - getOrder(b.id));
+      return result.sort((a, b) => getOrder(a?.id || 1) - getOrder(b?.id || 1));
     }
     return result;
   }, [filter, tickets, siteCode]);
@@ -84,16 +86,15 @@ export default function CustomerForm({
           setSiteCode={setSiteCode}
           dateUse={formData.date_use}
           setDateUse={(value) => setFieldFormData("date_use", value)}
+          formType={BOOKING_FORM_TYPE.CUSTOMER}
         />
       </div>
-
-      <CustomerInfoForm value={formData} errors={{}} onChange={setFieldFormData} />
 
       {listTicketFilter.length > 0 && (
         <main className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px]">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Danh sách vé</h2>
+              <h2 className="text-2xl font-bold text-green-900">Danh sách vé</h2>
 
               <div className="mt-4">
                 <TicketTabs
@@ -115,19 +116,19 @@ export default function CustomerForm({
                   </div>
                 </div>
                 {listTicketFilter.map((ticket) => (
-                  <TicketCard
+                  <ProductCard
                     key={ticket.code}
-                    ticket={ticket}
-                    quantities={quantities[ticket.code]}
-                    formType={formType}
-                    agentPrice={agentPrice}
                     setQty={setQty}
+                    product={ticket}
+                    quantities={quantities[ticket.code]}
+                    mapAgentPrice={mapAgentPrice}
+                    agentPriceDefault={agentPriceDefault}
                   />
                 ))}
               </div>
             </div>
 
-            <OrderAffSummary
+            <SummaryCustomer
               siteName={siteName}
               dateUse={formData.date_use}
               selectedLines={selectedLines}
@@ -135,7 +136,8 @@ export default function CustomerForm({
               onRemove={(code) => setQty(code, 0)}
               totalTickets={totalTickets}
               formType={formType}
-              agentPrice={agentPrice}
+              mapAgentPrice={mapAgentPrice}
+              agentPriceDefault={agentPriceDefault}
               total={total}
               onBuyTicket={onBuyTicket}
               loading={loading}

@@ -1,6 +1,7 @@
 import { env } from "@/lib/env";
 import { SendTicketInSystemMailType } from "@/app-controler/affi/getTicket/type";
 import resendMail from "@/axios/resendMail";
+import { PHONE_ADMIN } from "@/commons/constant";
 
 export async function POST(req: Request) {
   const body: SendTicketInSystemMailType = await req.json();
@@ -64,7 +65,7 @@ export async function POST(req: Request) {
               </tbody>
             </table>
             <p style="margin-top: 24px;">
-                 Vui lòng xuất trình thông tin khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: 0705 551 668. 
+                 Vui lòng xuất trình thông tin khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: ${PHONE_ADMIN}. 
             </p>
             <p> Trân trọng,<br /> Ruby Travel </p>
        </div>

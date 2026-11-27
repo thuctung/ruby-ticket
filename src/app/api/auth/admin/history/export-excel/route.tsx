@@ -1,6 +1,11 @@
 import { AdminSearchReport } from "@/types";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME, END_DATE_GMT7, START_DATE_GMT7 } from "@/commons/constant";
+import {
+  DB_TABLE_NAME,
+  END_DATE_GMT7,
+  START_DATE_GMT7,
+  STATUS_COMMON_TYPE,
+} from "@/commons/constant";
 import * as XLSX from "xlsx";
 import { dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
 
@@ -25,7 +30,7 @@ export async function POST(req: Request) {
   if (to) {
     query = query.lte("created_at", `${to}${END_DATE_GMT7}`);
   }
-  query = query.eq("status", "success");
+  query = query.eq("status", STATUS_COMMON_TYPE.SUCCESS);
 
   const { data, error } = await query;
 

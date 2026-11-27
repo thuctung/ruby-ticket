@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ACC_STATUS } from "@/commons/constant";
+import { STATUS_COMMON_TYPE } from "@/commons/constant";
 import { SearchAffiType, StatusType } from "@/types";
 import { SearchButton } from "@/components/ui/customs/searchButton";
 import { ResetButton } from "@/components/ui/customs/ressetButton";
@@ -13,7 +13,7 @@ type AffiliateSearch = {
   listStatus: StatusType[];
 };
 
-export function AffiliateSearch({ listStatus, onSearch ,}: any) {
+export function AffiliateSearch({ listStatus, onSearch }: any) {
   const [filters, setFilters] = useState({
     username: "",
     email: "",

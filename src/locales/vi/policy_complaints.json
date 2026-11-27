@@ -1,0 +1,46 @@
+{
+  "summary": "Hướng dẫn gửi phản ánh và quy trình Ruby Travel tiếp nhận, kiểm tra, phản hồi và xử lý khiếu nại.",
+  "sections": [
+    {
+      "heading": "1. Kênh tiếp nhận",
+      "paragraphs": [
+        "Khách hàng có thể gửi phản ánh, yêu cầu hỗ trợ hoặc khiếu nại qua hotline {{phone}}, email {{email}} hoặc các kênh hỗ trợ trực tuyến được công bố trên website."
+      ]
+    },
+    {
+      "heading": "2. Thông tin cần cung cấp",
+      "items": [
+        "Họ tên và thông tin liên hệ của người gửi.",
+        "Mã đơn hàng/mã vé, thời điểm đặt vé và sản phẩm liên quan (nếu có).",
+        "Mô tả rõ vấn đề, yêu cầu mong muốn và thời điểm phát sinh.",
+        "Tài liệu liên quan như xác nhận đặt vé, chứng từ thanh toán hoặc hình ảnh lỗi. Vui lòng che thông tin nhạy cảm không cần thiết."
+      ]
+    },
+    {
+      "heading": "3. Quy trình xử lý",
+      "items": [
+        "Bước 1 – Tiếp nhận: Ruby Travel ghi nhận nội dung và thông tin liên hệ của khách hàng.",
+        "Bước 2 – Xác minh: kiểm tra đơn hàng, trạng thái thanh toán, thông tin vé và làm việc với nhà cung cấp hoặc đơn vị thanh toán khi cần.",
+        "Bước 3 – Phản hồi: thông báo kết quả xác minh, phương án xử lý hoặc thông tin cần bổ sung.",
+        "Bước 4 – Hoàn tất: thực hiện phương án đã thống nhất và thông báo kết quả cho khách hàng."
+      ]
+    },
+    {
+      "heading": "4. Thời gian xử lý",
+      "paragraphs": [
+        "Ruby Travel cố gắng xác nhận đã nhận yêu cầu trong vòng 6:00-16:00 và phản hồi kết quả trong vòng 24h kể từ khi nhận đủ thông tin. Trường hợp cần xác minh với bên thứ ba hoặc nhà cung cấp, thời gian xử lý có thể kéo dài; Ruby Travel sẽ thông báo lý do và tiến độ dự kiến."
+      ]
+    },
+    {
+      "heading": "5. Nguyên tắc giải quyết",
+      "paragraphs": [
+        "Khiếu nại được xem xét trên cơ sở thông tin đơn hàng, chứng từ, điều kiện vé tại thời điểm mua và quy định của nhà cung cấp. Ruby Travel ưu tiên giải quyết thiện chí, minh bạch và bảo vệ quyền lợi hợp pháp của khách hàng.",
+        "Nếu không đồng ý với kết quả xử lý, khách hàng có thể phản hồi lại Ruby Travel hoặc gửi yêu cầu đến cơ quan nhà nước có thẩm quyền theo quy định pháp luật."
+      ]
+    }
+  ],
+  "support": {
+    "title": "Bạn cần hỗ trợ thêm?",
+    "description": "Liên hệ với Ruby Travel để được hỗ trợ và giải đáp các thắc mắc của bạn."
+  }
+}

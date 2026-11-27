@@ -1,4 +1,4 @@
-import { SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
+import { PHONE_ADMIN, PHONE_FILE_PDF, SITE_CODES, SITE_SUB_GROUP } from "@/commons/constant";
 import { formatVND } from "@/helpers/money";
 import { ProductSubmitType, TicketReponseType, TicketResultQRType } from "@/types/ticket";
 
@@ -338,7 +338,7 @@ export const downloadTicketPDF = async (
 
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(9);
-    pdf.text("·  Hotline: 0705 551 668", PAGE_W / 2 + 36, PAGE_H - 22, {
+    pdf.text(`· Hotline: ${PHONE_FILE_PDF}`, PAGE_W / 2 + 36, PAGE_H - 22, {
       align: "center",
     });
   }
@@ -404,4 +404,15 @@ export const generateThirdPartyCode = (in_system: boolean): string => {
     return `${year2Digit}RUBY${code}`;
   }
   return code;
+};
+
+export const generateThirdPartyCodeRefund = (siteCode: string): string => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const length = 14;
+  const randomValues = crypto.getRandomValues(new Uint32Array(length));
+  const code = Array.from(randomValues, (value) => {
+    return chars[value % chars.length];
+  }).join("");
+
+  return `RF_${siteCode}_${code}`;
 };

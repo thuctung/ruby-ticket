@@ -1,12 +1,14 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { TESTIMONIALS } from "../contants";
-import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
-const CARDS_PER_VIEW = 2; // số card hiển thị cùng lúc (desktop)
+const CARDS_PER_VIEW = 2;
 const AUTO_SLIDE_INTERVAL = 2000;
 
 const Feedback = () => {
-  // Nhân đôi mảng để tạo hiệu ứng loop vô hạn mượt
+  const { t } = useTranslation();
   const slides = [...TESTIMONIALS, ...TESTIMONIALS];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
@@ -22,18 +24,16 @@ const Feedback = () => {
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  // Khi chạy hết mảng gốc, nhảy về đầu không có transition (tạo cảm giác loop vô hạn)
   useEffect(() => {
     if (currentIndex === TESTIMONIALS.length) {
       const timeout = setTimeout(() => {
         setIsTransitioning(false);
         setCurrentIndex(0);
-      }, 700); // khớp với thời gian transition bên dưới
+      }, 700);
       return () => clearTimeout(timeout);
     }
   }, [currentIndex]);
 
-  // Bật lại transition ở frame kế tiếp sau khi đã "nhảy" về 0
   useEffect(() => {
     if (!isTransitioning) {
       const raf = requestAnimationFrame(() => setIsTransitioning(true));
@@ -52,7 +52,7 @@ const Feedback = () => {
       <div className="max-w-5xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold text-neutral-900">
-            Trải Nghiệm Khách Hàng
+            {t("homepage.customerExperiencess")}
           </h2>
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-3 rounded-full" />
         </div>

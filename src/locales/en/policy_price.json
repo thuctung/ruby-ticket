@@ -1,0 +1,33 @@
+{
+  "summary": "Information about ticket prices, applicable customer categories, surcharges, promotions, and pricing display principles on Ruby Travel.",
+  "sections": [
+    {
+      "heading": "1. Listed Ticket Prices",
+      "paragraphs": [
+        "Prices are displayed on the product information page or during the booking process on the website. The applicable price is the price shown by the system at the order confirmation step before the customer makes payment.",
+        "Depending on the product, prices may vary for adults, children, seniors, customers eligible for special offers, or different ticket/combo types. Age and height requirements, proof of eligibility, and included benefits are specified on the product page or in accordance with the supplier's regulations."
+      ]
+    },
+    {
+      "heading": "2. Price Components and Surcharges",
+      "paragraphs": [
+        "The displayed price will specify which services are included and excluded, based on the information Ruby Travel receives from the supplier. Any surcharges, optional services, or additional costs (if applicable) will be disclosed before the customer confirms payment.",
+        "Customers are advised to carefully check the usage date, ticket type, quantity, applicable customer category, and combo benefits before placing an order."
+      ]
+    },
+    {
+      "heading": "3. Promotions and Special Offers",
+      "paragraphs": [
+        "Promotional programs are subject to specific periods, quantities, eligible customer categories, and published terms and conditions. Some offers cannot be combined or used simultaneously with other promotions.",
+        "If a promotion requires eligibility verification, customers must present valid documents in accordance with the supplier's instructions at the time of use."
+      ]
+    },
+    {
+      "heading": "4. Price Adjustments and Display Errors",
+      "paragraphs": [
+        "Ticket prices may change according to the supplier's policies, peak seasons, usage dates, or promotional programs. Price changes do not affect orders that have been validly confirmed by Ruby Travel, except in cases of obvious errors or where otherwise stipulated by law or applicable transaction terms.",
+        "If an error is found in a displayed price, Ruby Travel will contact the customer to verify the information and agree on an appropriate solution before collecting any additional payment or canceling the transaction. Ruby Travel will not charge additional amounts without prior notice and a valid basis."
+      ]
+    }
+  ]
+}

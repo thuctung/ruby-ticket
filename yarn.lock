@@ -430,6 +430,13 @@
   resolved "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.11.tgz"
   integrity sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==
 
+"@formatjs/intl-localematcher@^0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-localematcher/-/intl-localematcher-0.6.2.tgz#e9ebe0b4082d7d48e5b2d753579fb7ece4eaefea"
+  integrity sha512-XOMO2Hupl0wdd172Y06h6kLpBz6Dv+J4okPLl4LPtzbr8f66WbIoy4ev98EBuZ6ZK4h5ydTN6XneT4QVpD7cdA==
+  dependencies:
+    tslib "^2.8.0"
+
 "@hono/node-server@^1.19.9":
   version "1.19.11"
   resolved "https://registry.npmjs.org/@hono/node-server/-/node-server-1.19.11.tgz"
@@ -1532,45 +1539,45 @@
   dependencies:
     tslib "2.8.1"
 
-"@supabase/cli-darwin-arm64@2.110.0":
-  version "2.110.0"
-  resolved "https://registry.yarnpkg.com/@supabase/cli-darwin-arm64/-/cli-darwin-arm64-2.110.0.tgz#095bea572bf7051697a3d9b7212a01fe7b84fb54"
-  integrity sha512-VC+3vipRUtLrZKVYuxfRtP1gUPwUa+oZSeOJTRPSjLYN1FlnXIFcVDp/Xe21tZLYbVZBx3zJmy50OG2vTeNL3Q==
+"@supabase/cli-darwin-arm64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@supabase/cli-darwin-arm64/-/cli-darwin-arm64-3.3.0.tgz#ae31b11c870070cd315e8290c56490fe100c36af"
+  integrity sha512-ePg+/9ZK+ywjmgX8MWwnlhRfipAlX2ohlWNEEWyvsoATYVEoViH724NpI7hCUAt/7tPvu5mAcyHsg+ayVb3qmw==
 
-"@supabase/cli-darwin-x64@2.110.0":
-  version "2.110.0"
-  resolved "https://registry.yarnpkg.com/@supabase/cli-darwin-x64/-/cli-darwin-x64-2.110.0.tgz#861f6211429a7539bd0affd1e8e605776ec1b214"
-  integrity sha512-PtDmolyEXqm6hpsNOTBB15xWadhbFOelaKaxBTflk1TBJO1Hugrzw4xophbi8hg4vG9HXh4GNc7TY24BA93zqA==
+"@supabase/cli-darwin-x64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@supabase/cli-darwin-x64/-/cli-darwin-x64-3.3.0.tgz#327d32ceb26b795a3756e080a3f3ea99ec843ec6"
+  integrity sha512-UADIlr3hiAPbxuiLukjM/+FwSqymFKL4pR0Map8REnx8K5j4TPWyoWJhHHm8KtX9b/1Cw2Q0bVSdU/w5k5V8LA==
 
-"@supabase/cli-linux-arm64-musl@2.110.0":
-  version "2.110.0"
-  resolved "https://registry.yarnpkg.com/@supabase/cli-linux-arm64-musl/-/cli-linux-arm64-musl-2.110.0.tgz#17758821220b668d3bcc8c445c824a4c9b5846f5"
-  integrity sha512-RyPgJr7hAdyhlxwUR36+s6P6rENupfN+meN+3+c/9XYT5cRwGuaJRnM4nsh9s1fs33lu7v22oy2N7IHZfgujew==
+"@supabase/cli-linux-arm64-musl@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@supabase/cli-linux-arm64-musl/-/cli-linux-arm64-musl-3.3.0.tgz#476cdde859fac996d3bcfbf2f3899ef4e228dde9"
+  integrity sha512-U0cgrlngmcBoovmdqD/VR3i0UrKtKd/ccs7Z4CcODc7Uf/xtun+euabR6rPEVdoQKFYyAob/i4GhWSsTWrhvzA==
 
-"@supabase/cli-linux-arm64@2.110.0":
-  version "2.110.0"
-  resolved "https://registry.yarnpkg.com/@supabase/cli-linux-arm64/-/cli-linux-arm64-2.110.0.tgz#40a8be3ae988de7cbac39a95c67b9f997e8892af"
-  integrity sha512-FHSVK7sR5quvAfDqwoA850ci3EP0hu6tjL1MDMWokkSwvILaHYp2AWq6jzZwa78dk+/SGeVPl8andkfyvH2qeg==
+"@supabase/cli-linux-arm64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@supabase/cli-linux-arm64/-/cli-linux-arm64-3.3.0.tgz#336c1d9bf975c37be272cde905c9b032f4cf42ae"
+  integrity sha512-I6+Xmf7N+N+vkKWOiHh10Yo5JFYBVk3kbfbAyRPdIgyR8yke957NtetFxA6ITV3flwi9pIt4NpWxNfpgHiuQJw==
 
-"@supabase/cli-linux-x64-musl@2.110.0":
-  version "2.110.0"
-  resolved "https://registry.yarnpkg.com/@supabase/cli-linux-x64-musl/-/cli-linux-x64-musl-2.110.0.tgz#948ac2f1dc0e6c7233ce509dd5cb9be5f853068f"
-  integrity sha512-GLYhJhOhQmkkH3gygZy8x0VLmnGuLk0giSGAc19FtA12qfXdVsVeTiZWBzIEFvrJ4nK8NWqf0K4HIe2C4sBFqg==
+"@supabase/cli-linux-x64-musl@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@supabase/cli-linux-x64-musl/-/cli-linux-x64-musl-3.3.0.tgz#0a432aefad7619c98ff621d5fa8491263598dde6"
+  integrity sha512-TuwignxFsxLhIaDGgujZGwyg0QpOQlnmZp4sqsTb3UW14QD6rPOFa0PfGBNo7um4cSqYQo6VZe18HLWe5CdHdA==
 
-"@supabase/cli-linux-x64@2.110.0":
-  version "2.110.0"
-  resolved "https://registry.yarnpkg.com/@supabase/cli-linux-x64/-/cli-linux-x64-2.110.0.tgz#378c700c65cedd2718392d705c3bf6d47c89c699"
-  integrity sha512-mShXx1+8yQfpxEzVyBxH8plbrHoXE/6j/8jIzQXmzuOFbVyaJzJU3HMmuEUsptcgwj/FpWoE1HrI77TmzWrJ/w==
+"@supabase/cli-linux-x64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@supabase/cli-linux-x64/-/cli-linux-x64-3.3.0.tgz#fbaee56a935b6de823c38703246c64795b4b1675"
+  integrity sha512-5bVWEI9ysK3D40+tx1EYhGwhfe2sQ3wuNkK7RvKgrsANlriH39jP7zHLGtAArQ91EUQctkx++VqIEVr0NcfgDw==
 
-"@supabase/cli-windows-arm64@2.110.0":
-  version "2.110.0"
-  resolved "https://registry.yarnpkg.com/@supabase/cli-windows-arm64/-/cli-windows-arm64-2.110.0.tgz#1d55c8bd49da2c97c4e1e90185918874af433b6b"
-  integrity sha512-gLiQLv9geh3TV3t/uAd2GhNfLMJW/l8jyBclc2sPiljM5wosIKsxm8Uf9e97mgVVHgGLrRR1igXtru1YU+n8AQ==
+"@supabase/cli-windows-arm64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@supabase/cli-windows-arm64/-/cli-windows-arm64-3.3.0.tgz#00f501e9d95ac815c9a8665c6ab5a7d218072a0e"
+  integrity sha512-Hy6NnCpohlqvXzN/GOdpAMaXq0c2ZpDvTyb8IJtHV+r3miu5EUqD+1/yBJp62BfsRXMTGizGowL4qsbAcpYQSw==
 
-"@supabase/cli-windows-x64@2.110.0":
-  version "2.110.0"
-  resolved "https://registry.npmjs.org/@supabase/cli-windows-x64/-/cli-windows-x64-2.110.0.tgz"
-  integrity sha512-J4dXRahjAEQy3w0cTtJsvwCuoMY7OHAYPaR81Gxac0315HvSf+8Cf2cEpwAkUKpAhUpCE0pa1Gl3BrmKtd7qaw==
+"@supabase/cli-windows-x64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@supabase/cli-windows-x64/-/cli-windows-x64-3.3.0.tgz#c7e57a5472b6f079ad5f5973876c0b19bbf093c9"
+  integrity sha512-3jSKk6W9hAr3R9LKxrfDKCkv+VFii3ydsdhAm8+yF039NEDeNq95D8NwsokQMmYPeXgr3si33gWaHqlQWNQfZg==
 
 "@supabase/functions-js@2.99.2":
   version "2.99.2"
@@ -3738,6 +3745,11 @@ hono@^4.11.4:
   resolved "https://registry.npmjs.org/hono/-/hono-4.12.7.tgz"
   integrity sha512-jq9l1DM0zVIvsm3lv9Nw9nlJnMNPOcAtsbsgiUhWcFzPE99Gvo6yRTlszSLLYacMeQ6quHD6hMfId8crVHvexw==
 
+html-parse-stringify@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/html-parse-stringify/-/html-parse-stringify-4.0.1.tgz#7264be901df0fef8829eb04632191be0aa94f55e"
+  integrity sha512-0zHsZJrK7S3K2aucXWL6ycoYJ/iNtIcFHC/nYQgFklPtrv5LpJctIiSCroWZWeuoXvuyFdzp6KzjJQ+OT5MfFw==
+
 html2canvas@^1.0.0-rc.5, html2canvas@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npmjs.org/html2canvas/-/html2canvas-1.4.1.tgz"
@@ -3774,6 +3786,11 @@ human-signals@^8.0.1:
   version "8.0.1"
   resolved "https://registry.npmjs.org/human-signals/-/human-signals-8.0.1.tgz"
   integrity sha512-eKCa6bwnJhvxj14kZk5NCPc6Hb6BdsU9DZcOnmQKSnO1VKrfV0zCvtttPZUsBvjmNDn8rpcJfpwSYnHBjc95MQ==
+
+i18next@^27.2.6:
+  version "27.2.6"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-27.2.6.tgz#7f8294d60a4adb81959a508a2d359fc6f06db596"
+  integrity sha512-ScRHHL/oAHaEgi78K770XIDQmOiq3BLjD4zxEoDeva4NLXXLPb83mzeSjFw7SefkwCEpLNC+560Pg0Q3BnCLsA==
 
 iceberg-js@^0.8.1:
   version "0.8.1"
@@ -4145,10 +4162,15 @@ jiti@^2.6.1:
   resolved "https://registry.npmjs.org/jiti/-/jiti-2.6.1.tgz"
   integrity sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==
 
-jose@^6.1.3, jose@^6.2.3:
+jose@^6.1.3:
   version "6.2.5"
   resolved "https://registry.npmjs.org/jose/-/jose-6.2.5.tgz"
   integrity sha512-2E5L2yRp03FnwreJLJX8/r7mHiZICCf8kG7fAsTWkSQTDAcc46NIZoQLKy+EJ8sPoJlxyS4OQR5H70LjIZZlIQ==
+
+jose@^6.2.10:
+  version "6.2.18"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-6.2.18.tgz#81428d8ed8f7fc9332025836b4ec2d4365a67afb"
+  integrity sha512-doV4thUwgkrycJH4yLeqwTGIIZphHl+pk7CPReuMIhYhncmgzdko85MaCG4YQFTxqMFr1/oEH32tZuKKovcDEg==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
@@ -4561,6 +4583,14 @@ negotiator@^1.0.0:
   resolved "https://registry.npmjs.org/negotiator/-/negotiator-1.0.0.tgz"
   integrity sha512-8Ofs/AUQh8MaEcrlq5xOX0CQ9ypTF5dl78mjlMNfOK08fzpgTHQRQPBxcPlEtIw0yRpws+Zo/3r+5WRby7u3Gg==
 
+next-i18n-router@^5.5.8:
+  version "5.5.8"
+  resolved "https://registry.yarnpkg.com/next-i18n-router/-/next-i18n-router-5.5.8.tgz#5d6512639532e416213973f0eb24e77332ec36ce"
+  integrity sha512-m6wFayccaeUBjvTmaWoBovinHchqgmzqnTJHVdmfvwBjKiS8oPQDogGZyNmZBhFeFtWSjI9UOEoxL9lzodw3lg==
+  dependencies:
+    "@formatjs/intl-localematcher" "^0.6.2"
+    negotiator "^1.0.0"
+
 next@16.1.6:
   version "16.1.6"
   resolved "https://registry.npmjs.org/next/-/next-16.1.6.tgz"
@@ -4582,6 +4612,14 @@ next@16.1.6:
     "@next/swc-win32-arm64-msvc" "16.1.6"
     "@next/swc-win32-x64-msvc" "16.1.6"
     sharp "^0.34.4"
+
+nextjs-toploader@^3.9.17:
+  version "3.9.17"
+  resolved "https://registry.yarnpkg.com/nextjs-toploader/-/nextjs-toploader-3.9.17.tgz#3bb54918738c31ac1efbaf6a01518dbee27ebf99"
+  integrity sha512-9OF0KSSLtoSAuNg2LZ3aTl4hR9mBDj5L9s9DZiFCbMlXehyICGjkIz5dVGzuATU2bheJZoBdFgq9w07AKSuQQw==
+  dependencies:
+    nprogress "^0.2.0"
+    prop-types "^15.8.1"
 
 node-domexception@^1.0.0:
   version "1.0.0"
@@ -4626,6 +4664,11 @@ npm-run-path@^6.0.0:
   dependencies:
     path-key "^4.0.0"
     unicorn-magic "^0.3.0"
+
+nprogress@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
+  integrity sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==
 
 object-assign@^4, object-assign@^4.1.1:
   version "4.1.1"
@@ -5126,6 +5169,13 @@ react-dom@19.2.3:
   integrity sha512-yELu4WmLPw5Mr/lmeEpox5rw3RETacE++JgHqQzd2dg+YbJuat3jH4ingc+WPZhxaoFzdv9y33G+F7Nl5O0GBg==
   dependencies:
     scheduler "^0.27.0"
+
+react-i18next@^18.0.3:
+  version "18.0.3"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-18.0.3.tgz#1d85c7a09454f2163acad1bc830d14801f9c500a"
+  integrity sha512-S84rtVuaKuiRtoCOspbGEaDlFjka+KvK/A5YCOr4LQ41XF3iJOrJ5rqQTD/jJHFVUf6X1i4ZMN5PGGgpz8NN6g==
+  dependencies:
+    html-parse-stringify "^4.0.1"
 
 react-is@^16.13.1:
   version "16.13.1"
@@ -5773,22 +5823,22 @@ styled-jsx@5.1.6:
   dependencies:
     client-only "0.0.1"
 
-supabase@^2.110.0:
-  version "2.110.0"
-  resolved "https://registry.npmjs.org/supabase/-/supabase-2.110.0.tgz"
-  integrity sha512-63QKsdLSVOFKTqABIAeOpg12daBZb9WYqc1NeMNimDP+gFGY8YsIh7VOJawUENXhIWWRlWNprHCOmafCc3LD7Q==
+supabase@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-3.3.0.tgz#c2aeaf389b3a3d04a885611f4264ce351a99a6b0"
+  integrity sha512-r0duXpzkwrQ3tT+3HgwK3sJ4tmANpnrMkokZoysitUpPVshXHQhpPNKhGA55OrpAcl0JrZgC2prsGRGDbv8AfQ==
   dependencies:
     eciesjs "^0.5.0"
-    jose "^6.2.3"
+    jose "^6.2.10"
   optionalDependencies:
-    "@supabase/cli-darwin-arm64" "2.110.0"
-    "@supabase/cli-darwin-x64" "2.110.0"
-    "@supabase/cli-linux-arm64" "2.110.0"
-    "@supabase/cli-linux-arm64-musl" "2.110.0"
-    "@supabase/cli-linux-x64" "2.110.0"
-    "@supabase/cli-linux-x64-musl" "2.110.0"
-    "@supabase/cli-windows-arm64" "2.110.0"
-    "@supabase/cli-windows-x64" "2.110.0"
+    "@supabase/cli-darwin-arm64" "3.3.0"
+    "@supabase/cli-darwin-x64" "3.3.0"
+    "@supabase/cli-linux-arm64" "3.3.0"
+    "@supabase/cli-linux-arm64-musl" "3.3.0"
+    "@supabase/cli-linux-x64" "3.3.0"
+    "@supabase/cli-linux-x64-musl" "3.3.0"
+    "@supabase/cli-windows-arm64" "3.3.0"
+    "@supabase/cli-windows-x64" "3.3.0"
 
 supports-color@^7.1.0:
   version "7.2.0"

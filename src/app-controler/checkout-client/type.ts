@@ -1,4 +1,5 @@
 import { ProductSubmitType, TicketResultQRType } from "@/types/ticket";
+import { PaymentMethodId } from "../cart/types";
 
 export type ClientOrderItem = {
   userEmail: string;
@@ -11,6 +12,7 @@ export type ClientOrderItem = {
   siteCode: string;
   paymentCode: string;
   orderCode: string;
+  paymentType: PaymentMethodId;
 };
 
 export type CustomerOrderType = {

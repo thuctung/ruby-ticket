@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Phone, Facebook, Headset } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PHONE_ADMIN } from "@/commons/constant";
 
 const FloatingContact = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -16,7 +17,7 @@ const FloatingContact = () => {
         </svg>
       ),
       label: "Zalo",
-      href: "https://zalo.me/0705551668",
+      href: `https://zalo.me/${PHONE_ADMIN.replace(/\s/g, "")}`,
       color: "bg-[#0068FF]",
       hoverColor: "hover:bg-[#0056d6]",
     },
@@ -32,7 +33,7 @@ const FloatingContact = () => {
       name: "Phone",
       icon: <Phone className="h-6 w-6 fill-white text-white" />,
       label: "Hotline",
-      href: "tel:0705551668",
+      href: `tel:${PHONE_ADMIN}`,
       color: "bg-[#E11D48]", // Ruby Red
       hoverColor: "hover:bg-[#be123c]",
     },

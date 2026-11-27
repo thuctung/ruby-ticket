@@ -1,0 +1,45 @@
+{
+  "summary": "Các điều kiện đặt vé, nhận vé, sử dụng vé và những giới hạn khách hàng cần lưu ý trước khi giao dịch.",
+  "sections": [
+    {
+      "heading": "1. Điều kiện đặt vé",
+      "bullets": [
+        "Khách hàng cần cung cấp thông tin chính xác, đầy đủ và có quyền sử dụng thông tin liên hệ đã đăng ký.",
+        "Khách hàng kiểm tra kỹ điểm tham quan, loại vé, số lượng, ngày sử dụng, đối tượng áp dụng và thông tin người nhận trước khi thanh toán.",
+        "Đơn hàng chỉ được xem là hoàn tất khi đáp ứng điều kiện xác nhận đơn và thanh toán được Ruby Travel công bố."
+      ]
+    },
+    {
+      "heading": "2. Điều kiện nhận và sử dụng vé",
+      "bullets": [
+        "Vé điện tử được gửi qua kênh liên hệ khách hàng đã đăng ký hoặc hiển thị theo hướng dẫn của đơn hàng.",
+        "Khách hàng có trách nhiệm kiểm tra thông tin trên vé ngay sau khi nhận và liên hệ Ruby Travel nếu phát hiện sai lệch.",
+        "Khi đến điểm tham quan, khách hàng xuất trình mã vé/QR và giấy tờ chứng minh độ tuổi hoặc điều kiện ưu đãi nếu nhà cung cấp yêu cầu.",
+        "Mỗi vé chỉ có giá trị sử dụng theo số lần, ngày, khung giờ và điều kiện ghi trên vé hoặc thông báo của nhà cung cấp."
+      ]
+    },
+    {
+      "heading": "3. Điều kiện từ nhà cung cấp",
+      "paragraphs": [
+        "Dịch vụ tham quan, vui chơi do đơn vị vận hành điểm đến cung cấp. Giờ hoạt động, tuyến cáp, khu vực mở cửa, chương trình biểu diễn, dịch vụ ăn uống và tiện ích có thể thay đổi do thời tiết, bảo trì, vận hành hoặc yêu cầu của cơ quan có thẩm quyền.",
+        "Khách hàng cần tuân thủ nội quy, hướng dẫn an toàn và quy định tại điểm tham quan. Ruby Travel không có quyền thay đổi quy định vận hành của nhà cung cấp."
+      ]
+    },
+    {
+      "heading": "4. Hạn chế và trường hợp từ chối cung cấp",
+      "paragraphs": [
+        "Ruby Travel có thể tạm dừng hoặc từ chối xử lý đơn hàng khi phát hiện thông tin không chính xác, dấu hiệu gian lận, thanh toán không hợp lệ, yêu cầu trái pháp luật hoặc sản phẩm không còn khả năng cung cấp. Ruby Travel sẽ thông báo và phối hợp xử lý khoản tiền đã nhận (nếu có) theo điều kiện giao dịch và quy định pháp luật.",
+        "Khách hàng không được tự ý sửa đổi, sao chép để sử dụng nhiều lần, bán lại trái phép hoặc sử dụng vé sai mục đích/đối tượng."
+      ]
+    },
+    {
+      "heading": "5. Trách nhiệm của khách hàng",
+      "bullets": [
+        "Đọc kỹ mô tả sản phẩm và các điều kiện vé trước khi thanh toán.",
+        "Đến đúng địa điểm, ngày và khung giờ áp dụng (nếu có).",
+        "Bảo mật mã vé/QR, không công khai hoặc chuyển cho người không có quyền sử dụng.",
+        "Liên hệ Ruby Travel ngay khi có vấn đề phát sinh trước ngày sử dụng vé."
+      ]
+    }
+  ]
+}

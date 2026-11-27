@@ -9,7 +9,7 @@ import BankTransferQR from "./components/qrToBank";
 import { getBankInfo } from "@/helpers/getQRBank";
 import { getCodeTopup } from "@/helpers/genCode";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-import { DB_TABLE_NAME, PAYMENT_STATUS } from "@/commons/constant";
+import { DB_TABLE_NAME, STATUS_COMMON_TYPE } from "@/commons/constant";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
 import { CustomTable } from "@/components/ui/customs/table";
@@ -73,10 +73,10 @@ export default function AffiliateTopupPageControl() {
             filter: `payment_code=eq.${urlQR.code}`,
           },
           (payload) => {
-            if (payload.new.status === PAYMENT_STATUS.COMPLETED) {
+            if (payload.new.status === STATUS_COMMON_TYPE.COMPLETED) {
               handleGetHistory();
               sv_getCurrentProfile(profile.user_id);
-            } else if (payload.new.status === PAYMENT_STATUS.FAILED) {
+            } else if (payload.new.status === STATUS_COMMON_TYPE.FAILED) {
               setToastMessage("Thanh toán thất bại! Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ");
             }
           }
