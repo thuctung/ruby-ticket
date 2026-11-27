@@ -90,7 +90,7 @@ export const EXPERIENCES: ExperienceCard[] = [
     alt: "Cáp treo Bà Nà Hills",
   },
   {
-    key: "VIN_NAMHOIAN",
+    key: "VINPER",
     nameKey: "homepage.vinpearlNamHoiAn",
     taglineKey: "homepage.hot",
     badgeKey: "homepage.vinpearlDescription",
@@ -134,7 +134,7 @@ export const EXPERIENCES: ExperienceCard[] = [
     alt: "Du thuyền sông Hàn",
   },
   {
-    key: "MAKAZUKI",
+    key: "MIKAZUKI",
     nameKey: "homepage.mikazuki",
     taglineKey: "homepage.hot",
     badgeKey: "homepage.mikazukiDescription",
