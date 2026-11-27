@@ -526,7 +526,6 @@ export default function TravelServices() {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-w-4xl mx-auto">
         {services.map((s) => {
           const isHovered = hovered === s.id;
-          const Tag = s.href ? "a" : "button";
           const extraProps = s.href
             ? { href: s.href, target: "_blank", rel: "noopener noreferrer" }
             : {};

@@ -5,19 +5,8 @@ import { getPolicy, policies } from "@/lib/policies";
 import { COMPANY_INFO } from "@/commons/constant";
 import { getTranslation } from "@/lib/i18n";
 
-/**
- * Ruby Travel palette (arbitrary values của Tailwind):
- *  ruby       #9B1030  – màu thương hiệu chính
- *  ruby-deep  #5C0A1B  – nền khối tiêu đề
- *  ruby-soft  #F7DDE3  – đường kẻ nhẹ
- *  ruby-line  #F0CBD3  – viền
- *  blush      #FDF4F6  – nền trang
- *  champagne  #F3DDB0  – điểm nhấn phụ
- */
-
 type Props = { params: Promise<{ slug: string; lng: string }> };
 export const dynamic = "force-static";
-export const dynamicParams = false;
 
 export function generateStaticParams() {
   return policies.map((policy) => ({ slug: policy.slug }));

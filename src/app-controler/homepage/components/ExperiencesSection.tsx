@@ -45,7 +45,7 @@ export async function ExperiencesSection({ sites, lng }: { sites: SiteType[]; ln
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                    {get(item, lng) || item.name}
+                    {get(item, lng, item.name) || item.name}
                   </CardTitle>
                 </div>
                 <CardDescription className="font-medium text-slate-500 italic">

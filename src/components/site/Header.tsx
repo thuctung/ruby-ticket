@@ -42,9 +42,9 @@ export default function Header() {
   const { logout }: any = useProfileStore.getState();
   const { setGlobalLoading, setToastMessage }: CommonType | any = useCommonStore.getState();
 
-  const displayName = profile ? profile.username : "User";
+  const displayName = profile ? profile?.username : "User";
   const initials = (() => {
-    const base = displayName ?? "U";
+    const base = displayName || "U";
     const parts = base.trim().split(/\s+/).slice(0, 2);
     return parts.map((p: any) => p[0]?.toUpperCase()).join("");
   })();
@@ -146,7 +146,7 @@ export default function Header() {
                 </span>
               )}
             </Link>
-            {!profile.user_id ? (
+            {!profile?.user_id ? (
               <Link href="/login">
                 <User color="#fba307" />
               </Link>
