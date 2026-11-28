@@ -1,7 +1,5 @@
 "use client";
 
-import { APP_URL } from "@/commons/constant";
-import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useState } from "react";
 import { sendEmailResetPassword } from "./api";
 

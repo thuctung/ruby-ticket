@@ -9,6 +9,7 @@ export async function POST(request: Request) {
     redirectTo: `${APP_URL}/update-password`,
   });
   if (error) {
+    console.log("error", error);
     return NextResponse.json(data, { status: 500 });
   }
 
