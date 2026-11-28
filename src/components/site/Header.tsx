@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -57,20 +57,32 @@ export default function Header() {
     router.push("/");
   };
 
+  const lastUserId = useRef<string | null>(null);
+
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      // Token refresh không đổi user, không cần load lại profile
+      if (event === "TOKEN_REFRESHED") return;
+
+      // Tránh await supabase trực tiếp trong callback (có thể deadlock)
       setTimeout(async () => {
         if (!session?.user) {
+          lastUserId.current = null;
           setProfile(null);
           setGlobalLoading(false);
           return;
         }
+
+        // Cùng user (vd: SIGNED_IN bắn lại khi quay lại tab) thì bỏ qua
+        if (session.user.id === lastUserId.current) return;
+        lastUserId.current = session.user.id;
 
         try {
           setGlobalLoading(true);
           const { error }: any = await sv_getCurrentProfile(session.user.id);
           if (error) throw error;
         } catch (e) {
+          lastUserId.current = null;
           setProfile(null);
           await supabase.auth.signOut(); // session hỏng thì thoát sạch
           setToastMessage("Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại");

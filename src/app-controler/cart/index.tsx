@@ -103,7 +103,7 @@ export default function CartController() {
   }, [getSites]);
 
   useEffect(() => {
-    if (profile.email) {
+    if (profile?.email) {
       const { full_name, email, phone } = profile;
       setCustomerInfo({
         fullname: full_name || "",
@@ -111,7 +111,7 @@ export default function CartController() {
         phone: phone || "",
       });
     }
-  }, [profile.email]);
+  }, [profile?.email]);
 
   const totalPayment = useMemo(() => {
     return subTotal;

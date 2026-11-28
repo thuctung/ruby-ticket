@@ -35,7 +35,7 @@ export async function refreshSunworldToken() {
   });
 
   if (data) {
-    supabaseAdmin.from(DB_TABLE_NAME.SYSTEM_SETTINGS).upsert({
+    const res = await supabaseAdmin.from(DB_TABLE_NAME.SYSTEM_SETTINGS).upsert({
       key: "sunworld_token",
       value: data.access_token,
       expires_at: data.expires_on,

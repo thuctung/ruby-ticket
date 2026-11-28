@@ -41,7 +41,7 @@ export async function GET(req: Request) {
         await supabaseAdmin
           .from(DB_TABLE_NAME.EMAIL_QUEUE)
           .update({
-            status: "processing",
+            status: STATUS_COMMON_TYPE.PROCESSING,
             processing_at: new Date().toISOString(),
           })
           .eq("id", mail.id);
@@ -67,7 +67,7 @@ export async function GET(req: Request) {
         await supabaseAdmin
           .from(DB_TABLE_NAME.EMAIL_QUEUE)
           .update({
-            status: "sent",
+            status: STATUS_COMMON_TYPE.SENT,
             sent_at: new Date().toISOString(),
             error_message: null,
           })

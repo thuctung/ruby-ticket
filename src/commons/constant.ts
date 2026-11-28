@@ -33,6 +33,7 @@ export const STATUS_COMMON_TYPE = {
   CANCELED: "CANCELED",
   ACTIVE: "ACTIVE",
   ONHOLD: "ONHOLD",
+  PROCESSING: "PROCESSING",
 };
 
 export const LIMIT_TABLE = 10;
